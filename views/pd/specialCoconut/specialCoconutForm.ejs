@@ -1,0 +1,182 @@
+<%- include('../../includes/header')-%>
+        <div class="wrapper">
+          <%- include('../../includes/topbar')-%>
+            <div class="page-wrap">
+              <%- include('../../includes/sidebar')-%>
+              <div class="main-content">
+                <div class="container-fluid">
+                    <div class="row clearfix">
+                    <div id="signupbox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <div class="panel-title"><h2>বিশেষ নারিকেল কর্মসূচি ফর্ম</h2></div>
+                                <p><%
+                                if(success !=''){ %>
+                                <%= success %>
+                                    <% } %>
+                                </p>
+                                </div>  
+                            <div class="panel-body" >
+                                <form action="/center/specialCoconutForms" id="FieldTrialForm" class="form-horizontal" method="post"  role="form">
+                                    <div id="signupalert" style="display:none" class="alert alert-danger">
+                                        <p>Error:</p>
+                                        <span></span>
+                                    </div>
+
+                                        
+                                    <div class="form-group">
+                                        <label for="center" class="col-md-3 control-label">সেন্টারের নাম</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="center" placeholder="সেন্টারের নাম">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="boraddo" class="col-md-3 control-label">মোট বরাদ্দকৃত অর্থের পরিমাণ</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="boraddo" placeholder="মোট বরাদ্দকৃত অর্থের পরিমাণ">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="target" class="col-md-3 control-label">বীজ ক্রয়ের লক্ষ্যমাত্রা</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="target" placeholder="বীজ ক্রয়ের লক্ষ্যমাত্রা">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="boughtNarikel" class="col-md-3 control-label">ক্রয়কৃত বীজ নারিকেলের সংখ্যা</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="boughtNarikel" placeholder="ক্রয়কৃত বীজ নারিকেলের সংখ্যা">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="seedProduction" class="col-md-3 control-label">উৎপাদিত চারার সংখ্যা</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="seedProduction" placeholder="উৎপাদিত চারার সংখ্যা">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="deadSeed" class="col-md-3 control-label">মরা/বিক্রির অযোগ্য চারার সংখ্যা</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="deadSeed" placeholder="মরা/বিক্রির অযোগ্য চারার সংখ্যা">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="salableSeedTarget" class="col-md-3 control-label">বিক্রিযোগ্য চারার সংখ্যা (লক্ষ্যমাত্রা)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="salableSeedTarget" placeholder="বিক্রিযোগ্য চারার সংখ্যা (লক্ষ্যমাত্রা)">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="salableSeedAchieved" class="col-md-3 control-label">বিক্রিযোগ্য চারার সংখ্যা (অর্জিত)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="salableSeedAchieved" placeholder="বিক্রিযোগ্য চারার সংখ্যা (অর্জিত)">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="salableSeedPercentage" class="col-md-3 control-label">বিক্রিযোগ্য চারার শতকরা হার</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="salableSeedPercentage" placeholder="বিক্রিযোগ্য চারার শতকরা হার">
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="form-group">
+                                        <label for="salableSeedNumber" class="col-md-3 control-label">মোট বিক্রিযোগ্য চারার সংখ্যা</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="salableSeedNumber" placeholder="মোট বিক্রিযোগ্য চারার সংখ্যা">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="soldSeed" class="col-md-3 control-label">বিক্রিত চারার সংখ্যা</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="soldSeed" placeholder="বিক্রিত চারার সংখ্যা">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="soldSeedPrice" class="col-md-3 control-label">বিক্রিত চারার মোট মূল্য</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="soldSeedPrice" placeholder="বিক্রিত চারার মোট মূল্য">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="presentMojud" class="col-md-3 control-label">বর্তমান মজুদ সংখ্যা</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="presentMojud" placeholder="বর্তমান মজুদ সংখ্যা">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="earnedMoneyDD" class="col-md-3 control-label">বিক্রয় লব্দ অর্থের পরিমাণ(ডিডি/এমটি)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="earnedMoneyDD" placeholder="বিক্রয় লব্দ অর্থের পরিমাণ(ডিডি/এমটি)">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="earnedMoneyDate" class="col-md-3 control-label">বিক্রয় লব্দ অর্থের পরিমাণ(তারিখ)</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="earnedMoneyDate" placeholder="বিক্রয় লব্দ অর্থের পরিমাণ(তারিখ)">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="earnedMoneyHead" class="col-md-3 control-label">বিক্রয় লব্দ অর্থের পরিমাণ(হেড অফিসে প্রেরিত টাকার পরিমাণ)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="earnedMoneyHead" placeholder="বিক্রয় লব্দ অর্থের পরিমাণ(হেড অফিসে প্রেরিত টাকার পরিমাণ)">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="earnedMoneyLocalBank" class="col-md-3 control-label">বিক্রয় লব্দ অর্থের পরিমাণ(স্থানীয় ব্যাংকের হিসাব জমা)</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="earnedMoneyLocalBank" placeholder="বিক্রয় লব্দ অর্থের পরিমাণ(স্থানীয় ব্যাংকের হিসাব জমা)">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="comment" class="col-md-3 control-label">মন্তব্য</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="comment" placeholder="মন্তব্য">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="year" class="col-md-3 control-label">বছর</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="year" placeholder="বছর">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="year" class="col-md-3 control-label">userid</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="user_id" placeholder="id" value="<%= user_id %>" >
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <!-- Button -->                                        
+                                        <div class="col-md-offset-3 col-md-9">
+                                        <input type="submit" name="submit" value="submit" class="btn btn-primary">   
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                        
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<%- include('../../includes/footer')-%>

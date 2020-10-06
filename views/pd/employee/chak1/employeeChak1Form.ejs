@@ -1,0 +1,129 @@
+<%- include('../../../includes/header')-%>
+        <div class="wrapper">
+          <%- include('../../../includes/topbar')-%>
+            <div class="page-wrap">
+              <%- include('../../../includes/sidebar')-%>
+              <div class="main-content">
+                <div class="container-fluid">
+                    <div class="row clearfix">
+                    <div id="signupbox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <div class="panel-title"><h2>ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য ফর্ম</h2></div>
+                                <p><%
+                                if(success !=''){ %>
+                                <%= success %>
+                                    <% } %>
+                                </p>
+                                </div>  
+                            <div class="panel-body" >
+                                <form action="/center/chak1Forms" id="FieldTrialForm" class="form-horizontal" method="post"  role="form">
+                                    <div id="signupalert" style="display:none" class="alert alert-danger">
+                                        <p>Error:</p>
+                                        <span></span>
+                                    </div>
+
+                                        
+                                    <div class="form-group">
+                                        <label for="center" class="col-md-3 control-label">হরটিকালচার সেন্টারের নাম</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="center" placeholder="হরটিকালচার সেন্টারের নাম">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="porichito" class="col-md-3 control-label">পরিচিতি নং</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="porichito" placeholder="পরিচিতি নং">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="kormokorta" class="col-md-3 control-label">কর্মকর্তার নাম ও মোবাইল নং</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="kormokorta" placeholder="কর্মকর্তার নাম ও মোবাইল নং">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="nijDistrict" class="col-md-3 control-label">নিজ জেলা</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="nijDistrict" placeholder="নিজ জেলা">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="podobi" class="col-md-3 control-label">পদবী</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="podobi" placeholder="পদবী">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="birthDate" class="col-md-3 control-label">জন্ম তারিখ</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="birthDate" placeholder="জন্ম তারিখ">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="firstdate" class="col-md-3 control-label">চাকুরীতে প্রথম যোগদানের তারিখ</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="firstdate" placeholder="চাকুরীতে প্রথম যোগদানের তারিখ">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="presentDate" class="col-md-3 control-label">বর্তমান কর্মস্থলে যোগদানের তারিখ</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="presentDate" placeholder="বর্তমান কর্মস্থলে যোগদানের তারিখ">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="pastWorkstation" class="col-md-3 control-label">পূর্ববর্তী কর্মস্থল ও যোগদানের তারিখ</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="pastWorkstation" placeholder="পূর্ববর্তী কর্মস্থল ও যোগদানের তারিখ">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="comment" class="col-md-3 control-label">মন্তব্য</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="comment" placeholder="মন্তব্য">
+                                        </div>
+                                    </div>
+
+                                   
+                                    <div class="form-group">
+                                        <label for="year" class="col-md-3 control-label">বছর</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="year" placeholder="বছর">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="year" class="col-md-3 control-label">userid</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="user_id" placeholder="id" value="<%= user_id %>" >
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <!-- Button -->                                        
+                                        <div class="col-md-offset-3 col-md-9">
+                                        <input type="submit" name="submit" value="submit" class="btn btn-primary">   
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                        
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<%- include('../../../includes/footer')-%>

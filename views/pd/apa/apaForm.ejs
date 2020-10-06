@@ -1,0 +1,163 @@
+<%- include('../../includes/header')-%>
+        <div class="wrapper">
+          <%- include('../../includes/topbar')-%>
+            <div class="page-wrap">
+              <%- include('../../includes/sidebar')-%>
+              <div class="main-content">
+                <div class="container-fluid">
+                    <div class="row clearfix">
+                    <div id="signupbox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <div class="panel-title"><h2>এপিএ ফর্ম</h2></div>
+                                <p><%
+                                if(success !=''){ %>
+                                <%= success %>
+                                    <% } %>
+                                </p>
+                                </div>  
+                            <div class="panel-body" >
+                                <form action="/center/apaForms" id="FieldTrialForm" class="form-horizontal" method="post"  role="form">
+                                    <div id="signupalert" style="display:none" class="alert alert-danger">
+                                        <p>Error:</p>
+                                        <span></span>
+                                    </div>
+
+                                        
+                                    <div class="form-group">
+                                        <label for="uddessho" class="col-md-3 control-label">কৌশলগত উদ্দেশ্য</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="uddessho" placeholder="কৌশলগত উদ্দেশ্য">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="maan" class="col-md-3 control-label">কৌশলগত উদ্দেশ্যের মান</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="maan" placeholder="কৌশলগত উদ্দেশ্যের মান">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="work" class="col-md-3 control-label">কার্যক্রম</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="work" placeholder="কার্যক্রম">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="shuchok" class="col-md-3 control-label">কর্মসম্পাদন সূচক</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="shuchok" placeholder="কর্মসম্পাদন সূচক">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="ekok" class="col-md-3 control-label">একক</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="ekok" placeholder="একক">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="shuchokMaan" class="col-md-3 control-label">কর্মসম্পাদন সূচক এর মান</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="shuchokMaan" placeholder="কর্মসম্পাদন সূচক এর মান">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="achievement1" class="col-md-3 control-label">প্রকৃত অর্জন(২০১৭-১৮)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="achievement1" placeholder="প্রকৃত অর্জন(২০১৭-১৮)">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="achievement2" class="col-md-3 control-label">প্রকৃত অর্জন(২০১৮-১৯)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="achievement2" placeholder="প্রকৃত অর্জন(২০১৮-১৯)">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="best" class="col-md-3 control-label">লক্ষ্যমাত্রা/নির্ণায়ক ২০১৯-২০ (অসাধারণ ১০০%)</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="best" placeholder="লক্ষ্যমাত্রা/নির্ণায়ক ২০১৯-২০ (অসাধারণ ১০০%)">
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="form-group">
+                                        <label for="otiUttam" class="col-md-3 control-label">লক্ষ্যমাত্রা/নির্ণায়ক ২০১৯-২০ (অতি উত্তম ৯০%)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="otiUttam" placeholder="লক্ষ্যমাত্রা/নির্ণায়ক ২০১৯-২০ (অতি উত্তম ৯০%)">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="uttam" class="col-md-3 control-label">লক্ষ্যমাত্রা/নির্ণায়ক ২০১৯-২০ (উত্তম ৮০%)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="uttam" placeholder="লক্ষ্যমাত্রা/নির্ণায়ক ২০১৯-২০ (উত্তম ৮০%)">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="cholti" class="col-md-3 control-label">লক্ষ্যমাত্রা/নির্ণায়ক ২০১৯-২০ (চলতি মান ৭০%)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="cholti" placeholder="লক্ষ্যমাত্রা/নির্ণায়ক ২০১৯-২০ (চলতি মান ৭০%)">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="below" class="col-md-3 control-label">লক্ষ্যমাত্রা/নির্ণায়ক ২০১৯-২০ (চলতি মানের নিম্নে ৬০%)</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="below" placeholder="লক্ষ্যমাত্রা/নির্ণায়ক ২০১৯-২০ (চলতি মানের নিম্নে ৬০%)">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="firstThree" class="col-md-3 control-label">প্রথম ত্রৈমাসিক অর্জন</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="firstThree" placeholder="প্রথম ত্রৈমাসিক অর্জন">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="secondThree" class="col-md-3 control-label">দ্বিতীয় ত্রৈমাসিক অর্জন</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="secondThree" placeholder="দ্বিতীয় ত্রৈমাসিক অর্জন">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="year" class="col-md-3 control-label">বছর</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="year" placeholder="বছর">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="year" class="col-md-3 control-label">userid</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="user_id" placeholder="id" value="<%= user_id %>" >
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <!-- Button -->                                        
+                                        <div class="col-md-offset-3 col-md-9">
+                                        <input type="submit" name="submit" value="submit" class="btn btn-primary">   
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                        
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<%- include('../../includes/footer')-%>

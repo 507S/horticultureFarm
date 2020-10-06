@@ -1,0 +1,196 @@
+<%- include('../../includes/header')-%>
+        <div class="wrapper">
+          <%- include('../../includes/topbar')-%>
+            <div class="page-wrap">
+              <%- include('../../includes/sidebar')-%>
+              <div class="main-content">
+                <div class="container-fluid">
+                    <div class="row clearfix">
+                    <div id="signupbox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <div class="panel-title"><h2>মাসিক প্রতিবেদন ফর্ম</h2></div>
+                                <p><%
+                                if(success !=''){ %>
+                                <%= success %>
+                                    <% } %>
+                                </p>
+                                </div>  
+                            <div class="panel-body" >
+                                <form action="/center/monthlyProgressForms" id="FieldTrialForm" class="form-horizontal" method="post"  role="form">
+                                    <div id="signupalert" style="display:none" class="alert alert-danger">
+                                        <p>Error:</p>
+                                        <span></span>
+                                    </div>
+
+                                        
+                                    <div class="form-group">
+                                        <label for="category" class="col-md-3 control-label">ক্যাটাগরি নাম</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="category" placeholder="ক্যাটাগরি নাম">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="subCategory" class="col-md-3 control-label">সাব-ক্যাটাগরি নাম</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="subCategory" placeholder="সাব-ক্যাটাগরি নাম">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="biboron" class="col-md-3 control-label">বিবরণ</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="biboron" placeholder="বিবরণ">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="breed" class="col-md-3 control-label">জাত</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="breed" placeholder="জাত">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="productionTarget" class="col-md-3 control-label">উৎপাদন (লক্ষ্যমাত্রা)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="productionTarget" placeholder="উৎপাদন (লক্ষ্যমাত্রা)">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="productionCurrent" class="col-md-3 control-label">উৎপাদন (চলতি মাস)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="productionCurrent" placeholder="উৎপাদন (চলতি মাস)">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="productionLast" class="col-md-3 control-label">উৎপাদন (পূর্বমাস পর্যন্ত)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="productionLast" placeholder="উৎপাদন (পূর্বমাস পর্যন্ত)">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="productionTotal" class="col-md-3 control-label">মোট উৎপাদন (চলতি+পূর্ব মাস)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="productionTotal" placeholder="মোট উৎপাদন (চলতি+পূর্ব মাস)">
+                                        </div>
+                                    </div>
+
+                                    
+
+                                    <div class="form-group">
+                                        <label for="daePrapti" class="col-md-3 control-label">ডিএই চালানে প্রাপ্তি</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="daePrapti" placeholder="ডিএই চালানে প্রাপ্তি">
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="form-group">
+                                        <label for="lastYear" class="col-md-3 control-label">পূর্ব বছরের জের</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="lastYear" placeholder="পূর্ব বছরের জের">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="grandTotalProduction" class="col-md-3 control-label">সর্বমোট (মোট+ডিএই চালানে প্রাপ্তি+পূর্ব বছরের জের)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="grandTotalProduction" placeholder="সর্বমোট (মোট+ডিএই চালানে প্রাপ্তি+পূর্ব বছরের জের)">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="bitotonCurrentMonth" class="col-md-3 control-label">বিতরণ (চলতি মাস)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="bitotonCurrentMonth" placeholder="বিতরণ (চলতি মাস)">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="bitotonLastMonth" class="col-md-3 control-label">বিতরণ (পূর্বমাস পর্যন্ত)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="bitotonLastMonth" placeholder="বিতরণ (পূর্বমাস পর্যন্ত)">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="bitoronTotal" class="col-md-3 control-label">বিতরণ মোট (চলতি+পূর্ব মাস)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="bitoronTotal" placeholder="বিতরণ মোট (চলতি+পূর্ব মাস)">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="daeProdan" class="col-md-3 control-label">ডিএই চালানে প্রদান</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="daeProdan" placeholder="ডিএই চালানে প্রদান">
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="form-group">
+                                        <label for="deadWriteup" class="col-md-3 control-label">মৃত/বিনষ্ট রাইটআপ</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="deadWriteup" placeholder="মৃত/বিনষ্ট রাইটআপ">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="grandTotalBitoron" class="col-md-3 control-label">সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="grandTotalBitoron" placeholder="সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ)">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="mojud" class="col-md-3 control-label">নীট মজুদ</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="mojud" placeholder="নীট মজুদ">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="comment" class="col-md-3 control-label">মন্তব্য</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="comment" placeholder="মন্তব্য">
+                                        </div>
+                                    </div>
+
+                                    
+                                    <div class="form-group">
+                                        <label for="year" class="col-md-3 control-label">বছর</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="year" placeholder="বছর">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="year" class="col-md-3 control-label">userid</label>
+                                        <div class="col-md-9">
+                                            <input type="number" class="form-control" name="user_id" placeholder="id" value="<%= user_id %>" >
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <!-- Button -->                                        
+                                        <div class="col-md-offset-3 col-md-9">
+                                        <input type="submit" name="submit" value="submit" class="btn btn-primary">   
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                        
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<%- include('../../includes/footer')-%>

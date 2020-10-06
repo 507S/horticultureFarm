@@ -1,0 +1,63 @@
+<%if (records.length >0){ %>
+    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+    <thead>
+    <tr>
+        <th>হরটিকালচার সেন্টারের নাম</th>
+        <th>পরিচিতি নং</th>
+        <th>কর্মকর্তার নাম ও মোবাইল নং</th>
+        <th>নিজ জেলা</th>
+        <th>পদবী</th>
+        <th>জন্ম তারিখ</th>
+        <th>চাকুরীতে প্রথম যোগদানের তারিখ</th>
+        <th>বর্তমান কর্মস্থলে যোগদানের তারিখ</th>
+        <th>পূর্ববর্তী কর্মস্থল ও যোগদানের তারিখ</th>
+        <th>মন্তব্য</th>
+        <th>পরিবর্তন/মুছুন</th>
+    </tr>
+    </thead>
+    <tbody>
+        <% records.forEach(function(row){ %>
+            <tr>
+                <td><%= row.center %></td>
+                <td><%= row.porichito %></td>
+                <td><%= row.kormokorta %></td>
+                <td><%= row.nijDistrict %></td>
+                <td><%= row.podobi %></td>
+                <td><%= row.birthDate %></td>
+                <td><%= row.firstdate %></td>
+                <td><%= row.presentDate %></td>
+                <td><%= row.pastWorkstation %></td>
+                <td><%= row.comment %></td>
+                <td><a class="btn btn-primary btn-xs" href="/edit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger btn-xs" href="/delete/<%= row.id %>"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>
+<% }else{ %>
+    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th>হরটিকালচার সেন্টারের নাম</th>
+            <th>পরিচিতি নং</th>
+            <th>কর্মকর্তার নাম ও মোবাইল নং</th>
+            <th>নিজ জেলা</th>
+            <th>পদবী</th>
+            <th>জন্ম তারিখ</th>
+            <th>চাকুরীতে প্রথম যোগদানের তারিখ</th>
+            <th>বর্তমান কর্মস্থলে যোগদানের তারিখ</th>
+            <th>পূর্ববর্তী কর্মস্থল ও যোগদানের তারিখ</th>
+            <th>মন্তব্য</th>
+            <th>পরিবর্তন/মুছুন</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% records.forEach(function(row){ %>
+            <tr>
+                <td colspan="10">No data Found</td>
+            </tr>
+        <% }) %>
+        </tbody>
+    </table>
+<% } %>

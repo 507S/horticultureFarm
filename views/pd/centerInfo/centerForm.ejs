@@ -1,0 +1,95 @@
+<%- include('../../includes/header')-%>
+        <div class="wrapper">
+          <%- include('../../includes/topbar')-%>
+            <div class="page-wrap">
+              <%- include('../../includes/sidebar')-%>
+              <div class="main-content">
+                <div class="container-fluid">
+                    <div class="row clearfix">
+                    <div id="signupbox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <div class="panel-title"><h2>সেন্টারের যোগাযোগের তথ্য ফর্ম</h2></div>
+                                <p><%
+                                if(success !=''){ %>
+                                <%= success %>
+                                    <% } %>
+                                </p>
+                                </div>  
+                            <div class="panel-body" >
+                                <form action="/pd/centerForms" id="FieldTrialForm" class="form-horizontal" method="post"  role="form">
+                                    <div id="signupalert" style="display:none" class="alert alert-danger">
+                                        <p>Error:</p>
+                                        <span></span>
+                                    </div>
+
+                                        
+                                    <div class="form-group">
+                                        <label for="center" class="col-md-3 control-label">সেন্টারের নাম</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="center" placeholder="সেন্টারের নাম">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="kormokorta" class="col-md-3 control-label">কর্মকর্তার নাম</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="kormokorta" placeholder="কর্মকর্তার নাম">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="podobi" class="col-md-3 control-label">পদবী</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="podobi" placeholder="পদবী">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="mobile" class="col-md-3 control-label">মোবাইল নং</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="mobile" placeholder="মোবাইল নং">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="email" class="col-md-3 control-label">ই-মেইল</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="email" placeholder="ই-মেইল">
+                                        </div>
+                                    </div>
+
+                                   
+                                    <div class="form-group">
+                                        <label for="year" class="col-md-3 control-label">বছর</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="year" placeholder="বছর">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="user_id" class="col-md-3 control-label">userid</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="user_id" placeholder="id" value="<%= user_id %>">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <!-- Button -->                                        
+                                        <div class="col-md-offset-3 col-md-9">
+                                        <input type="submit" name="submit" value="submit" class="btn btn-primary">   
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                        
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<%- include('../../includes/footer')-%>

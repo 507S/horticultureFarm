@@ -1,0 +1,193 @@
+<div class="app-sidebar colored">
+    <div class="sidebar-header">
+        <a class="header-brand" href="../index.ejs">
+            <% console.log("sidebar", locals.type) %> 
+            <span class="text"><%= locals.type %> Admin </span>
+        </a>
+       
+      </div>
+    
+
+
+      <% if(locals.type === "pd"){%>
+        <div class="sidebar-content">
+            <div class="nav-container">
+                <nav id="main-menu-navigation" class="navigation-main">
+                    <div class="nav-lavel">Navigation</div>
+                    <div class="nav-item active">
+                        <a href="/pd/dashboard"><i class="ik ik-bar-chart-2"></i><span>ড্যাশবোর্ড</span></a>
+                    </div>
+                   
+                    <div class="nav-lavel">প্রতিবেদন</div>
+                    <div class="nav-item">
+                        <a href="/pd/monthlyProgress"><i class="ik ik-package"></i><span>মাসিক প্রতিবেদন</span></a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="/pd/topSheet"><i class="ik ik-box"></i><span>মাসিক টপশীট</span></a>
+                    </div>
+                    <div class="nav-item has-sub">
+                        <a href="#"><i class="ik ik-gitlab"></i><span>বার্ষিক প্রতিবেদন</span></a>
+                        
+                    </div>
+    
+                    <div class="nav-lavel">হিসাব</div>
+                    
+                    <div class="nav-item">
+                        <a href="/pd/expense"><i class="ik ik-command"></i><span>খরচের বিবরণী</span></a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="/pd/rajossho"><i class="ik ik-command"></i><span>রাজস্ব</span></a>
+                    </div>
+                    <div class="nav-item has-sub">
+                            <a href="#"><i class="ik ik-package"></i><span>চারা কলম মূল্য তালিকা</span></a>
+                            <div class="submenu-content">
+                                <a href="/pd/charakolom" class="menu-item">চারা/কলম</a>
+                            </div>
+                            <div class="submenu-content">
+                                <a href="/pd/folMosholla" class="menu-item">ফল/মসলা ও শাক-সবজি</a>
+                            </div>
+                            <div class="submenu-content">
+                                <a href="/pd/winterVeg" class="menu-item">শীতকালীন সবজি ও অন্যান্য</a>
+                            </div>
+                            <div class="submenu-content">
+                                <a href="/pd/summerVeg" class="menu-item">গ্রীষ্মকালীন সবজি ও অন্যান্য</a>
+                            </div>
+                            <div class="submenu-content">
+                                <a href="/pd/otherFlower" class="menu-item">বিভিন্ন ফুল ও সুদৃশ্য গাছ</a>
+                            </div>
+                            <div class="submenu-content">
+                                <a href="/pd/seasonalFlower" class="menu-item">মৌসুমী ফুল ও চারা</a>
+                            </div>
+                    </div>
+                    <div class="nav-item">
+                        <a href="/pd/loan"><i class="ik ik-gitlab"></i><span>লোন বিতরণ রিপোর্টিং</span> </a>
+                        
+                    </div>
+    
+    
+                    <div class="nav-lavel">সেন্টার ডাটাবেজ</div>
+                    
+                    <div class="nav-item has-sub">
+                        <a href="#"><i class="ik ik-package"></i><span>কর্মকতা/কর্মচারীদের তথ্য</span></a>
+                        <div class="submenu-content">
+                            <a href="/pd/chak2" class="menu-item">কর্মকতা/কর্মচারীদের পদের সংখ্যা</a>
+                        </div>
+                        <div class="submenu-content">
+                            <a href="/pd/chak1" class="menu-item">কর্মকতা/কর্মচারীদের তথ্য</a>
+                        </div>
+                    </div>
+    
+                        <div class="nav-item has-sub">
+                            <a href="#"><i class="ik ik-package"></i><span>শ্রমিকদের তথ্য</span></a>
+                            <div class="submenu-content">
+                                <a href="/pd/regularWorker" class="menu-item">নিয়মিত শ্রমিকদের তথ্য</a>
+                            </div>
+                            <div class="submenu-content">
+                                <a href="/pd/irregularWorker" class="menu-item">অনিয়মিত শ্রমিকদের তথ্য</a>
+                            </div>
+                        </div>
+                        <div class="nav-item ">
+                            <a href="/pd/center"><i class="ik ik-gitlab"></i><span>সেন্টার ইনফরমেশন</span> </a>
+                        </div>
+                    
+                   
+                    <div class="nav-lavel">এপিএ</div>
+                    <div class="nav-item">
+                        <a href="/pd/apa"><i class="ik ik-box"></i><span>এপিএ রিপোর্টিং</span></a>
+    
+                    </div>
+                    <div class="nav-lavel">বিশেষ নারিকেল ও রিভলভিং ফান্ড</div>
+                    <div class="nav-item">
+                        <a href="/pd/specialCoconut"><i class="ik ik-box"></i><span>বিশেষ নারিকেল</span></a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="/pd/revolvingFund"><i class="ik ik-box"></i><span>রিভলভিং ফান্ড</span></a>
+                    </div>
+    
+                    
+    
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+    
+<% }else { %>
+    <div class="sidebar-content">
+        <div class="nav-container">
+            <nav id="main-menu-navigation" class="navigation-main">
+                <div class="nav-lavel">Navigation</div>
+                <div class="nav-item active">
+                    <a href="/center/dashboard"><i class="ik ik-bar-chart-2"></i><span>ড্যাশবোর্ড</span></a>
+                </div>
+               
+                <div class="nav-lavel">প্রতিবেদন</div>
+                <div class="nav-item">
+                    <a href="/center/monthlyProgress"><i class="ik ik-package"></i><span>মাসিক প্রতিবেদন</span></a>
+                </div>
+                <div class="nav-item">
+                    <a href="/center/topSheet"><i class="ik ik-box"></i><span>মাসিক টপশীট</span></a>
+                </div>
+                <div class="nav-item has-sub">
+                    <a href="#"><i class="ik ik-gitlab"></i><span>বার্ষিক প্রতিবেদন</span></a>
+                    
+                </div>
+
+                <div class="nav-lavel">হিসাব</div>
+                
+                <div class="nav-item">
+                    <a href="/center/expense"><i class="ik ik-command"></i><span>খরচের বিবরণী</span></a>
+                </div>
+                <div class="nav-item">
+                    <a href="/center/rajossho"><i class="ik ik-command"></i><span>রাজস্ব</span></a>
+                </div>
+                <div class="nav-item">
+                    <a href="/center/loan"><i class="ik ik-gitlab"></i><span>লোন বিতরণ রিপোর্টিং</span> </a>
+                    
+                </div>
+
+
+                <div class="nav-lavel">সেন্টার ডাটাবেজ</div>
+                
+                <div class="nav-item has-sub">
+                    <a href="#"><i class="ik ik-package"></i><span>কর্মকতা/কর্মচারীদের তথ্য</span></a>
+                    <div class="submenu-content">
+                        <a href="/center/chak2" class="menu-item">কর্মকতা/কর্মচারীদের পদের সংখ্যা</a>
+                    </div>
+                    <div class="submenu-content">
+                        <a href="/center/chak1" class="menu-item">কর্মকতা/কর্মচারীদের তথ্য</a>
+                    </div>
+                </div>
+
+                    <div class="nav-item has-sub">
+                        <a href="#"><i class="ik ik-package"></i><span>শ্রমিকদের তথ্য</span></a>
+                        <div class="submenu-content">
+                            <a href="/center/regularWorker" class="menu-item">নিয়মিত শ্রমিকদের তথ্য</a>
+                        </div>
+                        <div class="submenu-content">
+                            <a href="/center/irregularWorker" class="menu-item">অনিয়মিত শ্রমিকদের তথ্য</a>
+                        </div>
+                    </div>
+                
+               
+                <div class="nav-lavel">এপিএ</div>
+                <div class="nav-item">
+                    <a href="/center/apa"><i class="ik ik-box"></i><span>এপিএ রিপোর্টিং</span></a>
+
+                </div>
+                <div class="nav-lavel">বিশেষ নারিকেল ও রিভলভিং ফান্ড</div>
+                <div class="nav-item">
+                    <a href="/center/specialCoconut"><i class="ik ik-box"></i><span>বিশেষ নারিকেল</span></a>
+                </div>
+                <div class="nav-item">
+                    <a href="/center/revolvingFund"><i class="ik ik-box"></i><span>রিভলভিং ফান্ড</span></a>
+                </div>
+
+                
+
+                
+            </nav>
+        </div>
+    </div>
+</div>
+<% }   %>

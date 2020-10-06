@@ -1,0 +1,78 @@
+<%if (records.length >0){ %>
+    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+    <thead>
+    <tr>
+        <th>কৌশলগত উদ্দেশ্য</th>
+        <th>কৌশলগত উদ্দেশ্যের মান</th>
+        <th>কার্যক্রম</th>
+        <th>কর্মসম্পাদন সূচক</th>
+        <th>একক</th>
+        <th>কর্মসম্পাদন সূচক এর মান</th>
+        <th>প্রকৃত অর্জন(২০১৭-১৮)</th>
+        <th>প্রকৃত অর্জন(২০১৮-১৯)</th>
+        <th>লক্ষ্যমাত্রা/নির্ণায়ক ২০১৯-২০ (অসাধারণ ১০০%)</th>
+        <th>লক্ষ্যমাত্রা/নির্ণায়ক ২০১৯-২০ (অতি উত্তম ৯০%)</th>
+        <th>লক্ষ্যমাত্রা/নির্ণায়ক ২০১৯-২০ (উত্তম ৮০%)</th>
+        <th>লক্ষ্যমাত্রা/নির্ণায়ক ২০১৯-২০ (চলতি মান ৭০%)</th>
+        <th>লক্ষ্যমাত্রা/নির্ণায়ক ২০১৯-২০ (চলতি মানের নিম্নে ৬০%)</th>
+        <th>প্রথম ত্রৈমাসিক অর্জন</th>
+        <th>দ্বিতীয় ত্রৈমাসিক অর্জন</th>
+        <th>পরিবর্তন/মুছুন</th>
+    </tr>
+    </thead>
+    <tbody>
+        <% records.forEach(function(row){ %>
+            <tr>
+                <td><%= row.uddessho %></td>
+                <td><%= row.maan %></td>
+                <td><%= row.work %></td>
+                <td><%= row.shuchok %></td>
+                <td><%= row.ekok %></td>
+                <td><%= row.shuchokMaan %></td>
+                <td><%= row.achievement1 %></td>
+                <td><%= row.achievement2 %></td>
+                <td><%= row.best %></td>
+                <td><%= row.otiUttam %></td>
+                <td><%= row.uttam %></td>
+                <td><%= row.cholti %></td>
+                <td><%= row.below %></td>
+                <td><%= row.firstThree %></td>
+                <td><%= row.secondThree %></td>
+                <td><a class="btn btn-primary btn-xs" href="/edit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger btn-xs" href="/delete/<%= row.id %>"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>
+<% }else{ %>
+    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th>কৌশলগত উদ্দেশ্য</th>
+            <th>কৌশলগত উদ্দেশ্যের মান</th>
+            <th>কার্যক্রম</th>
+            <th>কর্মসম্পাদন সূচক</th>
+            <th>একক</th>
+            <th>কর্মসম্পাদন সূচক এর মান</th>
+            <th>প্রকৃত অর্জন(২০১৭-১৮)</th>
+            <th>প্রকৃত অর্জন(২০১৮-১৯)</th>
+            <th>লক্ষ্যমাত্রা/নির্ণায়ক ২০১৯-২০ (অসাধারণ ১০০%)</th>
+            <th>লক্ষ্যমাত্রা/নির্ণায়ক ২০১৯-২০ (অতি উত্তম ৯০%)</th>
+            <th>লক্ষ্যমাত্রা/নির্ণায়ক ২০১৯-২০ (উত্তম ৮০%)</th>
+            <th>লক্ষ্যমাত্রা/নির্ণায়ক ২০১৯-২০ (চলতি মান ৭০%)</th>
+            <th>লক্ষ্যমাত্রা/নির্ণায়ক ২০১৯-২০ (চলতি মানের নিম্নে ৬০%)</th>
+            <th>প্রথম ত্রৈমাসিক অর্জন</th>
+            <th>দ্বিতীয় ত্রৈমাসিক অর্জন</th>
+            <th>পরিবর্তন/মুছুন</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% records.forEach(function(row){ %>
+            <tr>
+                <td colspan="10">No data Found</td>
+            </tr>
+        <% }) %>
+        </tbody>
+    </table>
+<% } %>

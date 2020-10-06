@@ -1,0 +1,90 @@
+<%if (records.length >0){ %>
+    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+    <thead>
+    <tr>
+        <th>ক্যাটাগরি নাম</th>
+        <th>সাব-ক্যাটাগরি নাম</th>
+        <th>বিবরণ</th>
+        <th>জাত</th>
+        <th>উৎপাদন (লক্ষ্যমাত্রা)</th>
+        <th>উৎপাদন (চলতি মাস)</th>
+        <th>উৎপাদন (পূর্বমাস পর্যন্ত)</th>
+        <th>মোট উৎপাদন (চলতি+পূর্ব মাস)</th>
+        <th>ডিএই চালানে প্রাপ্তি</th>
+        <th>পূর্ব বছরের জের</th>
+        <th>সর্বমোট (মোট+ডিএই চালানে প্রাপ্তি+পূর্ব বছরের জের)</th>
+        <th>বিতরণ (চলতি মাস)</th>
+        <th>বিতরণ (পূর্বমাস পর্যন্ত)</th>
+        <th>বিতরণ মোট (চলতি+পূর্ব মাস)</th>
+        <th>ডিএই চালানে প্রদান</th>
+        <th>মৃত/বিনষ্ট রাইটআপ</th>
+        <th>সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ)</th>
+        <th>নীট মজুদ</th>
+        <th>মন্তব্য</th>
+        <th>পরিবর্তন/মুছুন</th>
+    </tr>
+    </thead>
+    <tbody>
+        <% records.forEach(function(row){ %>
+            <tr>
+                <td><%= row.category %></td>
+                <td><%= row.subCategory %></td>
+                <td><%= row.biboron %></td>
+                <td><%= row.breed %></td>
+                <td><%= row.productionTarget %></td>
+                <td><%= row.productionCurrent %></td>
+                <td><%= row.productionLast %></td>
+                <td><%= row.productionTotal %></td>
+                <td><%= row.daePrapti %></td>
+                <td><%= row.lastYear %></td>
+                <td><%= row.grandTotalProduction %></td>
+                <td><%= row.bitotonCurrentMonth %></td>
+                <td><%= row.bitotonLastMonth %></td>
+                <td><%= row.bitoronTotal %></td>
+                <td><%= row.daeProdan %></td>
+                <td><%= row.deadWriteup %></td>
+                <td><%= row.grandTotalBitoron %></td>
+                <td><%= row.mojud %></td>
+                <td><%= row.comment %></td>
+                <td><a class="btn btn-primary btn-xs" href="/edit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger btn-xs" href="/delete/<%= row.id %>"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>
+<% }else{ %>
+    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th>ক্যাটাগরি নাম</th>
+            <th>সাব-ক্যাটাগরি নাম</th>
+            <th>বিবরণ</th>
+            <th>জাত</th>
+            <th>উৎপাদন (লক্ষ্যমাত্রা)</th>
+            <th>উৎপাদন (চলতি মাস)</th>
+            <th>উৎপাদন (পূর্বমাস পর্যন্ত)</th>
+            <th>মোট উৎপাদন (চলতি+পূর্ব মাস)</th>
+            <th>ডিএই চালানে প্রাপ্তি</th>
+            <th>পূর্ব বছরের জের</th>
+            <th>সর্বমোট (মোট+ডিএই চালানে প্রাপ্তি+পূর্ব বছরের জের)</th>
+            <th>বিতরণ (চলতি মাস)</th>
+            <th>বিতরণ (পূর্বমাস পর্যন্ত)</th>
+            <th>বিতরণ মোট (চলতি+পূর্ব মাস)</th>
+            <th>ডিএই চালানে প্রদান</th>
+            <th>মৃত/বিনষ্ট রাইটআপ</th>
+            <th>সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ)</th>
+            <th>নীট মজুদ</th>
+            <th>মন্তব্য</th>
+            <th>পরিবর্তন/মুছুন</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% records.forEach(function(row){ %>
+            <tr>
+                <td colspan="10">No data Found</td>
+            </tr>
+        <% }) %>
+        </tbody>
+    </table>
+<% } %>

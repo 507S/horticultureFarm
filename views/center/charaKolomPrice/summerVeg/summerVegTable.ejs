@@ -1,0 +1,57 @@
+<%if (records.length >0){ %>
+    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+    <thead>
+    <tr>
+        <th>আইটেমের নাম (জাতওয়ারী)</th>
+        <th>প্রতি ১০ গ্রাম বীজের মূল্য(টাকায়) (২০১৮-১৯ সালে)</th>
+        <th>প্রতি ১০০ টি চারার (উচ্চ ফলনশীল) মূল্য(টাকায়) (২০১৮-১৯ সালে)</th>
+        <th>প্রতি ১০০ টি চারার (হাইব্রিড) মূল্য(টাকায়) (২০১৮-১৯ সালে)</th>
+        <th>প্রতি ১০ গ্রাম বীজের মূল্য(টাকায়) (২০১৯-২০ সালে)</th>
+        <th>প্রতি ১০০ টি চারার (উচ্চ ফলনশীল) মূল্য(টাকায়) (২০১৯-২০ সালে)</th>
+        <th>প্রতি ১০০ টি চারার (হাইব্রিড) মূল্য(টাকায়) (২০১৯-২০ সালে)</th>
+        <th>পরিবর্তন/মুছুন</th>
+    </tr>
+    </thead>
+    <tbody>
+        <% records.forEach(function(row){ %>
+            <tr>
+                <td><%= row.item %></td>
+                <td><%= row.doshatharo %></td>
+                <td><%= row.ekshoucchoatharo %></td>
+                <td><%= row.ekshohybridatharo %></td>
+                <td><%= row.doshbijunish %></td>
+                <td><%= row.ekshoucchounish %></td>
+                <td><%= row.ekshohybridunish %></td>
+                
+                
+               
+                <td><a class="btn btn-primary btn-xs" href="/edit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger btn-xs" href="/delete/<%= row.id %>"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>
+<% }else{ %>
+    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th>আইটেমের নাম (জাতওয়ারী)</th>
+            <th>প্রতি ১০ গ্রাম বীজের মূল্য(টাকায়) (২০১৮-১৯ সালে)</th>
+            <th>প্রতি ১০০ টি চারার (উচ্চ ফলনশীল) মূল্য(টাকায়) (২০১৮-১৯ সালে)</th>
+            <th>প্রতি ১০০ টি চারার (হাইব্রিড) মূল্য(টাকায়) (২০১৮-১৯ সালে)</th>
+            <th>প্রতি ১০ গ্রাম বীজের মূল্য(টাকায়) (২০১৯-২০ সালে)</th>
+            <th>প্রতি ১০০ টি চারার (উচ্চ ফলনশীল) মূল্য(টাকায়) (২০১৯-২০ সালে)</th>
+            <th>প্রতি ১০০ টি চারার (হাইব্রিড) মূল্য(টাকায়) (২০১৯-২০ সালে)</th>
+            <th>পরিবর্তন/মুছুন</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% records.forEach(function(row){ %>
+            <tr>
+                <td colspan="10">No data Found</td>
+            </tr>
+        <% }) %>
+        </tbody>
+    </table>
+<% } %>
