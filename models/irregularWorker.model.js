@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-  const irregularWorker = sequelize.define("irregularWorker", {
+  const irregularWorker = sequelize.define("irregularworker", {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,

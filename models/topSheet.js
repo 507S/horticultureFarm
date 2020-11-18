@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const topSheet = sequelize.define("topSheet", {
+    const topSheet = sequelize.define("topsheet", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,

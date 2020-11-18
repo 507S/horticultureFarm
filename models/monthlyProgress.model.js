@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const monthlyProgress = sequelize.define("monthlyProgress", {
+    const monthlyProgress = sequelize.define("monthlyprogress", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,

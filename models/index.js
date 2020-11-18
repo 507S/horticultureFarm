@@ -40,5 +40,6 @@ db.chak2 = require("./chak2.model.js")(sequelize, Sequelize);
 db.rajossho = require("./rajossho.model.js")(sequelize, Sequelize);
 db.expense = require("./expense.model.js")(sequelize, Sequelize);
 db.monthlyProgress = require("./monthlyProgress.model.js")(sequelize, Sequelize);
+db.cropcategory = require("./cropcategory")(sequelize, Sequelize);
 
 module.exports = db;

@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const otherFlower = sequelize.define("otherFlower", {
+    const otherFlower = sequelize.define("otherflower", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,

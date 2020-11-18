@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-  const specialCoconut = sequelize.define("specialCoconut", {
+  const specialCoconut = sequelize.define("specialcoconut", {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,

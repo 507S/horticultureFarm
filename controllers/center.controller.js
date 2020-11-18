@@ -19,6 +19,7 @@ const chak2 = db.chak2;
 const rajossho = db.rajossho;
 const expense = db.expense;
 const monthlyProgress = db.monthlyProgress;
+const cropCategory = db.cropcategory;
 
 const jwt= require('jsonwebtoken');
 const bcrypt= require('bcryptjs'); 
@@ -1520,7 +1521,45 @@ module.exports.monthlyProgressYear=async(req,res)=>{
 };
 
 module.exports.monthlyProgressForm=async(req,res)=>{
-    res.render('center/monthlyProgress/monthlyProgressForm', { title: 'মাসিক প্রতিবেদন',msg:'' ,success:'',user_id: req.session.user_id});
+    const categoryList = await cropCategory.findAll();
+    res.render('center/monthlyProgress/monthlyProgressForm', { title: 'মাসিক প্রতিবেদন',msg:'' ,success:'',user_id: req.session.user_id,categoryList: categoryList});
+};
+
+module.exports.fetchSubCategory = async(req,res) => {
+    console.log("parent id",req.body.category)
+    await cropCategory.findAll({
+        where: {parent_id: req.body.category}
+    })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+};
+
+module.exports.fetchBiboron = async (req,res) => {
+    await cropCategory.findAll({
+        where: {parent_id: req.body.subCategory}
+    })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+};
+
+module.exports.fetchBreed = async (req,res) => {
+    await cropCategory.findAll({
+        where: {parent_id: req.body.biboron}
+    })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            console.log(err)
+        })
 };
 
 module.exports.monthlyProgressFormPost=async(req,res)=>{
@@ -1545,7 +1584,7 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
     var comment= req.body.comment;
     var year =req.body.year;
     var user_id =req.body.user_id;
-console.log('productionTotal=',productionTotal);
+    console.log('productionTotal=',productionTotal);
     await monthlyProgress.create({
         category: category,
         subCategory:subCategory,
@@ -1569,12 +1608,12 @@ console.log('productionTotal=',productionTotal);
         year:year,
         center_id:user_id
 
-        }).then(data => {
-            console.log('productionTotal=',productionTotal);
-            res.redirect('/center/monthlyProgress');
-        }).catch(err => {
-            res.render('errorpage',err);
-        });
+    }).then(data => {
+        console.log('productionTotal=',productionTotal);
+        res.redirect('/center/monthlyProgress');
+    }).catch(err => {
+        res.render('errorpage',err);
+    });
   
 };
 
