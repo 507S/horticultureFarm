@@ -23,44 +23,33 @@ module.exports = (sequelize, Sequelize) => {
       productionCurrent: {
         type: Sequelize.STRING
       },
-      productionLast: {
-        type: Sequelize.STRING
-      },
-      productionTotal: {
-        type: Sequelize.STRING
-      },
+
+
       daePrapti: {
         type: Sequelize.STRING
       },
-      lastYear: {
+
+
+      bitoronCurrentMonth: {
         type: Sequelize.STRING
       },
-      grandTotalProduction: {
-        type: Sequelize.STRING
-      },
-      bitotonCurrentMonth: {
-        type: Sequelize.STRING
-      },
-      bitotonLastMonth: {
-        type: Sequelize.STRING
-      },
-      bitoronTotal: {
-        type: Sequelize.STRING
-      },
+
+
       daeProdan: {
         type: Sequelize.STRING
       },
       deadWriteup: {
         type: Sequelize.STRING
       },
-      grandTotalBitoron: {
-        type: Sequelize.STRING
-      },
+
       mojud: {
         type: Sequelize.STRING
       },
       comment: {
         type: Sequelize.STRING
+      },
+      time: {
+        type: Sequelize.JSON
       },
       year: {
         type: Sequelize.STRING

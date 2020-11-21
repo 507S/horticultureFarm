@@ -2,10 +2,10 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+// var logger = require('morgan');
 var session = require('express-session');
 var localStorage=require('local-storage');
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8000;
 var dotenv= require('dotenv');
 
 var indexRouter = require('./routes/index');
@@ -20,7 +20,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: Date.now() + (30 * 86400 * 1000)  }}))
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -29,8 +29,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
   res.locals.type = req.session.type;
-  console.log("app.js",req.session.type,res.locals.type)
   res.locals.user_id = req.session.user_id;
+  res.locals.moment = require('moment');
   next();
 });
 

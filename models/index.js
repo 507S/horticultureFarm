@@ -42,4 +42,12 @@ db.expense = require("./expense.model.js")(sequelize, Sequelize);
 db.monthlyProgress = require("./monthlyProgress.model.js")(sequelize, Sequelize);
 db.cropcategory = require("./cropcategory")(sequelize, Sequelize);
 
+db.production = require("./production.model")(sequelize, Sequelize);
+db.daeprapti = require("./daeprapti.model")(sequelize, Sequelize);
+db.bitoron = require("./bitoron.model")(sequelize, Sequelize);
+db.daeprodan = require("./daeprodan.model")(sequelize, Sequelize);
+db.mojud = require("./mojud.model")(sequelize, Sequelize);
+db.mrito = require("./mrito.model")(sequelize, Sequelize);
+db.comment = require("./comment.model")(sequelize, Sequelize);
+
 module.exports = db;

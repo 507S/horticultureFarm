@@ -26,27 +26,50 @@
     </thead>
     <tbody>
         <% records.forEach(function(row){ %>
+
+            <%
+                var currentProductionSum = 0;
+                var previousMonthProduction = 0;
+                var totalProductionSum = 0;
+                const currentProd = JSON.parse(row.productionCurrent)
+                currentProd.forEach(function(prodCurrent){
+                    if ( prodCurrent.time === moment().format("MMM-YYYY").toLowerCase() ) {
+                        currentProductionSum += parseInt(prodCurrent.amount)
+                        totalProductionSum += parseInt(prodCurrent.amount)
+                    }
+                    else if ( prodCurrent.time !== moment().format("MMM-YYYY").toLowerCase() ){
+                        previousMonthProduction += parseInt(prodCurrent.amount)
+                        totalProductionSum += parseInt(prodCurrent.amount)
+                    }
+                    else{
+
+                    }
+                })
+            %>
+
             <tr>
                 <td><%= row.category %></td>
                 <td><%= row.subCategory %></td>
                 <td><%= row.biboron %></td>
                 <td><%= row.breed %></td>
-                <td><%= row.productionTarget %></td>
-                <td><%= row.productionCurrent %></td>
-                <td><%= row.productionLast %></td>
-                <td><%= row.productionTotal %></td>
+                <td><%= new Number(row.productionTarget).toLocaleString("bn-BD") %></td>
+                <td>
+                    <%= new Number(currentProductionSum).toLocaleString("bn-BD") %>
+                </td>
+                <td> <%= new Number(previousMonthProduction).toLocaleString("bn-BD") %> </td>
+                <td> <%= new Number(totalProductionSum).toLocaleString("bn-BD") %> </td>
                 <td><%= row.daePrapti %></td>
                 <td><%= row.lastYear %></td>
                 <td><%= row.grandTotalProduction %></td>
-                <td><%= row.bitotonCurrentMonth %></td>
-                <td><%= row.bitotonLastMonth %></td>
+                <td><%= row.bitoronCurrentMonth %></td>
+                <td><%= row.bitoronLastMonth %></td>
                 <td><%= row.bitoronTotal %></td>
                 <td><%= row.daeProdan %></td>
                 <td><%= row.deadWriteup %></td>
                 <td><%= row.grandTotalBitoron %></td>
                 <td><%= row.mojud %></td>
                 <td><%= row.comment %></td>
-                <td><a class="btn btn-primary btn-xs" href="/edit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                <td><a class="btn btn-primary btn-xs" href="/center/monthlyProgressEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
                     <a class="btn btn-danger btn-xs" href="/delete/<%= row.id %>"><i class="fa fa-trash"></i></a>
                 </td>
             </tr>

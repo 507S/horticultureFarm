@@ -1,25 +1,25 @@
 <%- include('../../includes/header')-%>
-        <div class="wrapper">
-          <%- include('../../includes/topbar')-%>
-            <div class="page-wrap">
-              <%- include('../../includes/sidebar')-%>
-              <div class="main-content">
-                <div class="container-fluid">
-                    <h4 class="text-right"><b>Month & Year : </b><span> <%= moment().locale("bn").format("ll")   %></span></h4>
-                    <div class="row clearfix">
+<div class="wrapper">
+    <%- include('../../includes/topbar')-%>
+    <div class="page-wrap">
+        <%- include('../../includes/sidebar')-%>
+        <div class="main-content">
+            <div class="container-fluid">
+                <h4 class="text-right"><b>Month & Year : </b><span> <%= moment().format("MMM-YYYY") %></span></h4>
+                <div class="row clearfix">
 
                     <div id="signupbox" style="margin-top:50px" class="mainbox col-md-12 col-md-offset-12 col-sm-12 col-sm-offset-12">
                         <div class="panel panel-info">
                             <div class="panel-heading">
                                 <div class="panel-title text-center"><h2> মাসিক প্রতিবেদন ফর্ম </h2></div>
                                 <p><%
-                                if(success !=''){ %>
-                                    <%= success %>
-                                <% } %>
+                                    if(success !=''){ %>
+                                        <%= success %>
+                                    <% } %>
                                 </p>
-                                </div>  
+                            </div>
                             <div class="panel-body" >
-                                <form action="/center/monthlyProgressForms" id="FieldTrialForm" class="form-horizontal" method="post"  role="form">
+                                <form action="/center/monthlyProgressUpdate/<%= monthProgress.id %>" id="FieldTrialForm" class="form-horizontal" method="post"  role="form">
                                     <div id="signupalert" style="display:none" class="alert alert-danger">
                                         <p>Error:</p>
                                         <span></span>
@@ -36,25 +36,25 @@
                                                     <% } %>
                                                 <% }) %>
                                             </select>
-<!--                                            <input type="text" class="form-control" name="category" placeholder="ক্যাটাগরি নাম">-->
+                                            <!--                                            <input type="text" class="form-control" name="category" placeholder="ক্যাটাগরি নাম">-->
                                         </div>
                                         <div class="col">
                                             <label for="subCategory" class="col control-label">সাব-ক্যাটাগরি নাম</label>
-<!--                                            <input type="text" class="form-control" name="subCategory" placeholder="সাব-ক্যাটাগরি নাম">-->
+                                            <!--                                            <input type="text" class="form-control" name="subCategory" placeholder="সাব-ক্যাটাগরি নাম">-->
                                             <select name="subCategory" id="subCategory" class="form-control">
                                                 <option value="" selected="true" disabled="true">Choose সাব-ক্যাটাগরি</option>
                                             </select>
                                         </div>
                                         <div class="col">
                                             <label for="biboron" class="col control-label">বিবরণ</label>
-<!--                                            <input type="text" class="form-control" name="biboron" placeholder="বিবরণ">-->
+                                            <!--                                            <input type="text" class="form-control" name="biboron" placeholder="বিবরণ">-->
                                             <select name="biboron" id="biboron" class="form-control">
                                                 <option value="">Choose Biboron</option>
                                             </select>
                                         </div>
                                         <div class="col">
                                             <label for="breed" class="col control-label">জাত</label>
-<!--                                            <input type="text" class="form-control" name="breed" placeholder="জাত">-->
+                                            <!--                                            <input type="text" class="form-control" name="breed" placeholder="জাত">-->
                                             <select name="breed" id="breed" class="form-control">
                                                 <option value="">Choose Breed</option>
                                             </select>
@@ -64,7 +64,7 @@
                                     <div class="form-row mt-3">
                                         <div class="col">
                                             <label for="productionTarget" class="col-md-3 control-label">উৎপাদন (লক্ষ্যমাত্রা)</label>
-                                            <input type="text" class="form-control" name="productionTarget" placeholder="উৎপাদন (লক্ষ্যমাত্রা)">
+                                            <input type="text" class="form-control" name="productionTarget" placeholder="উৎপাদন (লক্ষ্যমাত্রা)" value="<%= monthProgress.productionTarget %>" >
                                         </div>
                                     </div>
 
@@ -74,38 +74,69 @@
                                             <input type="text" class="form-control" name="productionCurrent" placeholder="উৎপাদন (চলতি মাস)">
                                         </div>
                                         <div class="col">
-                                            <label for="daePrapti" class="col control-label">ডিএই চালানে প্রাপ্তি (চলতি মাস)</label>
+                                            <label for="productionLast" class="col control-label">উৎপাদন (পূর্বমাস পর্যন্ত)</label>
+                                            <input type="text" class="form-control" name="productionLast" placeholder="উৎপাদন (পূর্বমাস পর্যন্ত)">
+                                        </div>
+                                        <div class="col">
+                                            <label for="productionTotal" class="col control-label">মোট উৎপাদন (চলতি+পূর্ব মাস)</label>
+                                            <input type="text" class="form-control" name="productionTotal" placeholder="মোট উৎপাদন (চলতি+পূর্ব মাস)">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mt-3">
+                                        <div class="col">
+                                            <label for="daePrapti" class="col control-label">ডিএই চালানে প্রাপ্তি</label>
                                             <input type="text" class="form-control" name="daePrapti" placeholder="ডিএই চালানে প্রাপ্তি">
                                         </div>
+                                        <div class="col">
+                                            <label for="lastYear" class="col control-label">পূর্ব বছরের জের</label>
+                                            <input type="text" class="form-control" name="lastYear" placeholder="পূর্ব বছরের জের">
+                                        </div>
+                                        <div class="col">
+                                            <label for="grandTotalProduction" class="col control-label">সর্বমোট (মোট+ডিএই চালানে প্রাপ্তি+পূর্ব বছরের জের)</label>
+                                            <input type="text" class="form-control" name="grandTotalProduction" placeholder="সর্বমোট (মোট+ডিএই চালানে প্রাপ্তি+পূর্ব বছরের জের)">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mt-3">
                                         <div class="col">
                                             <label for="bitotonCurrentMonth" class="col control-label">বিতরণ (চলতি মাস)</label>
                                             <input type="text" class="form-control" name="bitotonCurrentMonth" placeholder="বিতরণ (চলতি মাস)">
                                         </div>
                                         <div class="col">
-                                            <label for="daeProdan" class="col control-label">ডিএই চালানে প্রদান (চলতি মাস)</label>
-                                            <input type="text" class="form-control" name="daeProdan" placeholder="ডিএই চালানে প্রদান">
+                                            <label for="bitotonLastMonth" class="col control-label">বিতরণ (পূর্বমাস পর্যন্ত)</label>
+                                            <input type="text" class="form-control" name="bitotonLastMonth" placeholder="বিতরণ (পূর্বমাস পর্যন্ত)">
+                                        </div>
+                                        <div class="col">
+                                            <label for="bitoronTotal" class="col control-label">বিতরণ মোট (চলতি+পূর্ব মাস)</label>
+                                            <input type="text" class="form-control" name="bitoronTotal" placeholder="বিতরণ মোট (চলতি+পূর্ব মাস)">
                                         </div>
                                     </div>
 
                                     <div class="form-row mt-3">
-
                                         <div class="col">
-                                            <label for="deadWriteup" class="col control-label">মৃত/বিনষ্ট রাইটআপ (চলতি মাস)</label>
+                                            <label for="daeProdan" class="col control-label">ডিএই চালানে প্রদান</label>
+                                            <input type="text" class="form-control" name="daeProdan" placeholder="ডিএই চালানে প্রদান">
+                                        </div>
+                                        <div class="col">
+                                            <label for="deadWriteup" class="col control-label">মৃত/বিনষ্ট রাইটআপ</label>
                                             <input type="text" class="form-control" name="deadWriteup" placeholder="মৃত/বিনষ্ট রাইটআপ">
                                         </div>
                                         <div class="col">
-                                            <label for="mojud" class="col-md-3 control-label">নীট মজুদ (চলতি মাস)</label>
+                                            <label for="grandTotalBitoron" class="col control-label">সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ)</label>
+                                            <input type="text" class="form-control" name="grandTotalBitoron" placeholder="সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ)">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mt-3">
+                                        <div class="col">
+                                            <label for="mojud" class="col-md-3 control-label">নীট মজুদ</label>
                                             <input type="text" class="form-control" name="mojud" placeholder="নীট মজুদ">
                                         </div>
                                         <div class="col">
                                             <label for="comment" class="col-md-3 control-label">মন্তব্য</label>
                                             <input type="text" class="form-control" name="comment" placeholder="মন্তব্য">
                                         </div>
-
-                                    </div>
-
-                                    <div class="form-row mt-3">
-
                                         <div class="col">
                                             <label for="year" class="col-md-3 control-label">বছর</label>
                                             <input type="text" class="form-control" name="year" placeholder="বছর">
@@ -113,16 +144,16 @@
                                     </div>
 
                                     <div class="form-group">
-<!--                                        <label for="year" class="col-md-3 control-label">userid</label>-->
+                                        <!--                                        <label for="year" class="col-md-3 control-label">userid</label>-->
                                         <div class="col-md-9">
                                             <input type="hidden" class="form-control" name="user_id" placeholder="id" value="<%= user_id %>" >
                                         </div>
                                     </div>
-                                    
+
                                     <div class="form-group">
-                                        <!-- Button -->                                        
+                                        <!-- Button -->
                                         <div class="col-md-offset-3 col-md-9">
-                                        <input type="submit" name="submit" value="submit" class="btn btn-primary">   
+                                            <input type="submit" name="submit" value="submit" class="btn btn-primary">
                                         </div>
                                     </div>
 
@@ -228,7 +259,7 @@
             }
         });
     });
-    
+
     $(document).ready(function(){
         // var q = parseFloat(<?php echo $row['price']; ?>);
         var q = json_encode(categoryList);

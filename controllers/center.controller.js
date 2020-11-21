@@ -1,4 +1,7 @@
 const db=require('../models');
+const Op = db.Sequelize.Op;
+const { fn, col, cast } = db.sequelize;
+
 const center = db.center;
 const centerInfo = db.centerInfo;
 const topSheet = db.topSheet;
@@ -20,6 +23,14 @@ const rajossho = db.rajossho;
 const expense = db.expense;
 const monthlyProgress = db.monthlyProgress;
 const cropCategory = db.cropcategory;
+
+const production = db.production;
+const daeprapti = db.daeprapti;
+const bitoron = db.bitoron;
+const daeprodan = db.daeprodan;
+const mrito = db.mrito;
+const mojud = db.mojud;
+const comment = db.comment;
 
 const jwt= require('jsonwebtoken');
 const bcrypt= require('bcryptjs'); 
@@ -1489,40 +1500,58 @@ module.exports.expenseFormPost=async(req,res)=>{
 
 //monthlyProgress controller
 module.exports.monthlyProgress=async(req,res)=>{
-    await monthlyProgress.findAll({
-        where: {center_id: req.session.user_id}
-    })
-    .then(data => {
-        console.log("inside");
-        res.render('center/monthlyProgress/monthlyProgress', { title: 'মাসিক প্রতিবেদন',success:'', records: data });
-    })
-    .catch(err => {
-        console.log("outside");
-        res.render('center/monthlyProgress/monthlyProgress', { title: 'মাসিক প্রতিবেদন',success:'', records: err });
-    })
-     
-    //  records:result
+    res.render('center/monthlyProgress/monthlyProgress', { title: 'মাসিক প্রতিবেদন',success:'' });
+    // await monthlyProgress.findAll({
+    //     where: {center_id: req.session.user_id}
+    // })
+    // .then(data => {
+    //     res.render('center/monthlyProgress/monthlyProgress', { title: 'মাসিক প্রতিবেদন',success:'', records: data });
+    // })
+    // .catch(err => {
+    //     res.render('center/monthlyProgress/monthlyProgress', { title: 'মাসিক প্রতিবেদন',success:'', records: err });
+    // })
 
 };
 
 module.exports.monthlyProgressYear=async(req,res)=>{
+    const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase()
     await monthlyProgress.findAll({
-        where: {year: req.body.year, center_id: req.session.user_id}
+        where: {
+            time: [
+                fn('JSON_CONTAINS', col('time'), cast('{"time": "nov-2020"}', 'CHAR CHARACTER SET utf8')),
+            ]
+            // year: req.body.year,
+            // center_id: req.session.user_id,
+            // [Op.and]: db.Sequelize.literal(JSON_CONTAINS(`time`, '{\"time\": nov-2020}')),
+            // "time" : currentMonth
+
+            // time: {
+            //     [Op.and]: [{time: {[Op.eq]: currentMonth}}]
+            // }
+
+
+        }
     })
     .then(data => {
+
         res.render('center/monthlyProgress/monthlyProgressTable', {records: data} ,function(err, html) {
             res.send(html);
         });
     })
     .catch(err => {
+        console.log(err)
         res.render('center/monthlyProgress/monthlyProgressYear', { title: 'মাসিক প্রতিবেদন',success:'', records: err });
     })
 
 };
 
 module.exports.monthlyProgressForm=async(req,res)=>{
-    const categoryList = await cropCategory.findAll();
-    res.render('center/monthlyProgress/monthlyProgressForm', { title: 'মাসিক প্রতিবেদন',msg:'' ,success:'',user_id: req.session.user_id,categoryList: categoryList});
+    try {
+        const categoryList = await cropCategory.findAll();
+        res.render('center/monthlyProgress/monthlyProgressForm', { title: 'মাসিক প্রতিবেদন',msg:'' ,success:'',user_id: req.session.user_id,categoryList: categoryList});
+    }catch (e) {
+        console.log(e)
+    }
 };
 
 module.exports.fetchSubCategory = async(req,res) => {
@@ -1573,7 +1602,123 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
     var productionTotal= req.body.productionTotal;
     var daePrapti= req.body.daePrapti;
     var lastYear= req.body.lastYear;
-    var grandTotalProduction= req.body.grandTotalProduction; 
+    var grandTotalProduction= req.body.grandTotalProduction;
+    var bitoronCurrentMonth= req.body.bitotonCurrentMonth;
+    var bitotonLastMonth= req.body.bitotonLastMonth;
+    var bitoronTotal= req.body.bitoronTotal;
+    var daeProdan= req.body.daeProdan;
+    var deadWriteup= req.body.deadWriteup;
+    var grandTotalBitoron= req.body.grandTotalBitoron;
+    var mojud= req.body.mojud;
+    var comment= req.body.comment;
+    var year =req.body.year;
+    var user_id =req.body.user_id;
+    console.log('productionTotal=',res.locals.moment('2014-09-28').format("MMM-YYYY").toLowerCase());
+    const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase()
+
+
+    var currentProduction = [];
+    var productionObj = {};
+    productionObj["time"] =  currentMonth;
+    productionObj["amount"] =  productionCurrent;
+    currentProduction.push(productionObj)
+
+    var currentDaePraptis = [];
+    var daePraptiObj = {};
+    daePraptiObj["time"] =  currentMonth;
+    daePraptiObj["amount"] =  daePrapti;
+    currentDaePraptis.push(daePraptiObj)
+
+    var currentBitoron = [];
+    var bitoronObj = {};
+    bitoronObj["time"] =  currentMonth;
+    bitoronObj["amount"] =  bitoronCurrentMonth;
+    currentBitoron.push(bitoronObj)
+
+    var currentDaeProdan = [];
+    var daeProdanObj = {};
+    daeProdanObj["time"] =  currentMonth;
+    daeProdanObj["amount"] =  daeProdan;
+    currentDaeProdan.push(daeProdanObj)
+
+    var currentDeadWriteup = [];
+    var deadWriteupObj = {};
+    deadWriteupObj["time"] =  currentMonth;
+    deadWriteupObj["amount"] =  deadWriteup;
+    currentDeadWriteup.push(deadWriteupObj)
+
+    var currentMojud = [];
+    var mojudObj = {};
+    mojudObj["time"] =  currentMonth;
+    mojudObj["amount"] =  mojud;
+    currentMojud.push(mojudObj)
+
+    var currentComment = [];
+    var commentObj = {};
+    commentObj["time"] =  currentMonth;
+    commentObj["amount"] =  comment;
+    currentComment.push(commentObj)
+
+    var time = [];
+    var timeObj = {};
+    timeObj["time"] =  currentMonth;
+    time.push(timeObj)
+
+    const categoryName = await cropCategory.findByPk(category)
+    const subCategoryName = await cropCategory.findByPk(subCategory)
+    const biboronName = await cropCategory.findByPk(biboron)
+    const breedName = await cropCategory.findByPk(breed)
+
+    await monthlyProgress.create({
+        category: categoryName.name,
+        subCategory: subCategoryName.name,
+        biboron: biboronName.name,
+        breed: breedName.name,
+        productionTarget: productionTarget,
+        productionCurrent: JSON.stringify(currentProduction),
+        daePrapti: JSON.stringify(currentDaePraptis),
+        bitoronCurrentMonth: JSON.stringify(currentBitoron),
+        daeProdan: JSON.stringify(currentDaeProdan),
+        deadWriteup: JSON.stringify(currentDeadWriteup),
+        mojud: JSON.stringify(currentMojud),
+        comment: JSON.stringify(currentComment),
+        time: time,
+        year: year,
+        center_id:user_id
+
+    }).then(data => {
+        console.log('productionTotal=',productionTotal);
+        res.redirect('/center/monthlyProgress');
+    }).catch(err => {
+        console.log("err",err);
+        res.render('errorpage',err);
+    });
+  
+};
+
+module.exports.monthlyProgressEdit = async(req,res) => {
+    try{
+        const monthProgress = await monthlyProgress.findByPk(req.params.id);
+        console.log("progresses",monthProgress)
+        const categoryList = await cropCategory.findAll();
+        res.render('center/monthlyProgress/monthlyProgressFormEdit', { title: 'মাসিক প্রতিবেদন',msg:'' ,success:'',user_id: req.session.user_id,categoryList: categoryList, monthProgress:monthProgress });
+    }catch (err) {
+        console.log(err)
+    }
+}
+
+module.exports.monthlyProgressUpdate = async(req,res) => {
+    var category= req.body.category;
+    var subCategory= req.body.subCategory;
+    var biboron= req.body.biboron;
+    var breed= req.body.breed;
+    var productionTarget= req.body.productionTarget;
+    var productionCurrent= req.body.productionCurrent;
+    var productionLast= req.body.productionLast;
+    var productionTotal= req.body.productionTotal;
+    var daePrapti= req.body.daePrapti;
+    var lastYear= req.body.lastYear;
+    var grandTotalProduction= req.body.grandTotalProduction;
     var bitotonCurrentMonth= req.body.bitotonCurrentMonth;
     var bitotonLastMonth= req.body.bitotonLastMonth;
     var bitoronTotal= req.body.bitoronTotal;
@@ -1584,37 +1729,80 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
     var comment= req.body.comment;
     var year =req.body.year;
     var user_id =req.body.user_id;
-    console.log('productionTotal=',productionTotal);
-    await monthlyProgress.create({
-        category: category,
-        subCategory:subCategory,
-        biboron:biboron,
-        breed:breed,
-        productionTarget: productionTarget,
-        productionCurrent:productionCurrent,
-        productionLast:productionLast,
-        productionTotal: productionTotal,
-        daePrapti:daePrapti,
-        lastYear:lastYear,
-        grandTotalProduction: grandTotalProduction,
-        bitotonCurrentMonth:bitotonCurrentMonth,
-        bitotonLastMonth: bitotonLastMonth,
-        bitoronTotal:bitoronTotal,
-        daeProdan:daeProdan,
-        deadWriteup: deadWriteup,
-        grandTotalBitoron:grandTotalBitoron,
-        mojud:mojud,
-        comment: comment,
-        year:year,
-        center_id:user_id
+    console.log('productionTotal=',res.locals.moment().format("MMM-YYYY").toLowerCase());
+    const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase()
 
-    }).then(data => {
-        console.log('productionTotal=',productionTotal);
-        res.redirect('/center/monthlyProgress');
-    }).catch(err => {
-        res.render('errorpage',err);
-    });
-  
-};
 
+    var currentProduction = [];
+    var productionObj = {};
+    productionObj[currentMonth] =  productionCurrent;
+    currentProduction.push(productionObj)
+
+    var currentDaePraptis = [];
+    var daePraptiObj = {};
+    daePraptiObj[currentMonth] =  daePrapti;
+    currentDaePraptis.push(daePraptiObj)
+
+    var currentBitoron = [];
+    var bitoronObj = {};
+    bitoronObj[currentMonth] =  bitotonCurrentMonth;
+    currentBitoron.push(daePraptiObj)
+
+    var currentDaeProdan = [];
+    var daeProdanObj = {};
+    daeProdanObj[currentMonth] =  daeProdan;
+    currentDaeProdan.push(daeProdanObj)
+
+    var currentDeadWriteup = [];
+    var deadWriteupObj = {};
+    deadWriteupObj[currentMonth] =  deadWriteup;
+    currentDeadWriteup.push(deadWriteupObj)
+
+    var currentMojud = [];
+    var mojudObj = {};
+    mojudObj[currentMonth] =  mojud;
+    currentMojud.push(mojudObj)
+
+    var currentComment = [];
+    var commentObj = {};
+    commentObj[currentMonth] =  comment;
+    currentComment.push(commentObj)
+
+
+    // await monthlyProgress.update(
+    //     {
+    //         category: category,
+    //         subCategory:subCategory,
+    //         biboron:biboron,
+    //         breed:breed,
+    //         productionTarget: productionTarget,
+    //         productionCurrent: JSON.stringify(currentProduction),
+    //         productionLast:productionLast,
+    //         productionTotal: productionTotal,
+    //         daePrapti: JSON.stringify(currentDaePraptis),
+    //         lastYear:lastYear,
+    //         grandTotalProduction: grandTotalProduction,
+    //         bitotonCurrentMonth: JSON.stringify(currentBitoron),
+    //         bitotonLastMonth: bitotonLastMonth,
+    //         bitoronTotal:bitoronTotal,
+    //         daeProdan: JSON.stringify(currentDaeProdan),
+    //         deadWriteup: JSON.stringify(currentDeadWriteup),
+    //         grandTotalBitoron:grandTotalBitoron,
+    //         mojud: JSON.stringify(currentMojud),
+    //         comment: JSON.stringify(currentComment),
+    //         year:year,
+    //         center_id:user_id
+    //
+    //     },
+    //     {
+    //         where: {id: req.params.id}
+    //     }
+    // )
+    // .then(data => {
+    //     console.log('productionTotal=',data);
+    //     res.redirect('/center/monthlyProgress');
+    // }).catch(err => {
+    //     console.log("err",err);
+    // });
+}
 //monthlyProgress controller end

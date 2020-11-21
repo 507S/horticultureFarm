@@ -1,4 +1,9 @@
 <%- include('../../includes/header')-%>
+<style>
+    .ui-datepicker-calendar {
+        display: none;
+    }
+</style>
         <div id="wrapper" class="wrapper" >
             <%- include('../../includes/topbar')-%>
             <div class="page-wrap">
@@ -10,8 +15,10 @@
                                 <h1 class="text-center"><%= title %></h1>
                             </div>
                             <div class="col-md-2">
-                                <label for="year">Choose a year:</label>
+                                <label for="startDate">Date :</label>
+                                <input name="startDate" id="startDate" class="date-picker" />
 
+                                <label for="year">Choose a year:</label>
                                 <select id="year" name="year">
                                     <option value="">Choose year</option>
                                     <option value="2017">2017</option>
@@ -58,7 +65,7 @@
 </script>
 
 <script type="text/javascript">
-   
+
     $("body").on("click", "#btnExport", function () {
         html2canvas($('#tblCustomers')[0], {
             onrendered: function (canvas) {
@@ -122,10 +129,21 @@
         });
     });
 
+    $('.date-picker').datepicker( {
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        dateFormat: 'M-yy',
+        onClose: function(dateText, inst) {
+            $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+        }
+    });
+
     $(document).ready(function() {
+
         $('#tblCustomers').DataTable();
     } );
 
-    
+
 
 </script>
