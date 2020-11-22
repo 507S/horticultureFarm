@@ -109,8 +109,8 @@ router.get('/monthlyProgress',monthlyProgress);
 router.post('/monthlyProgressYear',monthlyProgressYear);
 router.get('/monthlyProgressForm',monthlyProgressForm);
 
-router.get('/monthlyProgressEdit/:id',monthlyProgressEdit)
-router.post('/monthlyProgressUpdate/:id',monthlyProgressUpdate)
+router.get('/monthlyProgressEdit/:progressId',monthlyProgressEdit)
+router.post('/monthlyProgressUpdate/:progressId',monthlyProgressUpdate)
 
 router.post('/fetchSubCategory',fetchSubCategory);
 router.post('/fetchBiboron',fetchBiboron);

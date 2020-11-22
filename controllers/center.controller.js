@@ -1517,11 +1517,12 @@ module.exports.monthlyProgressYear=async(req,res)=>{
     const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase()
     await monthlyProgress.findAll({
         where: {
-            time: [
-                fn('JSON_CONTAINS', col('time'), cast('{"time": "nov-2020"}', 'CHAR CHARACTER SET utf8')),
-            ]
-            // year: req.body.year,
-            // center_id: req.session.user_id,
+            // time: [
+            //     fn('JSON_CONTAINS', col('time'), cast('{"time": "nov-2020"}', 'CHAR CHARACTER SET utf8')),
+            //     // fn('JSON_EXTRACT', col('time'), cast('{"time": "nov-2020"}', 'CHAR CHARACTER SET utf8')),
+            // ]
+            year: req.body.year,
+            center_id: req.session.user_id,
             // [Op.and]: db.Sequelize.literal(JSON_CONTAINS(`time`, '{\"time\": nov-2020}')),
             // "time" : currentMonth
 
@@ -1656,13 +1657,37 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
     var currentComment = [];
     var commentObj = {};
     commentObj["time"] =  currentMonth;
-    commentObj["amount"] =  comment;
+    commentObj["msg"] =  comment;
     currentComment.push(commentObj)
 
     var time = [];
     var timeObj = {};
     timeObj["time"] =  currentMonth;
     time.push(timeObj)
+
+    var startRange = "";
+    var endRange = "";
+    if ( res.locals.moment().format("M") < 7){
+        startRange = "jul"+"-"+res.locals.moment().subtract(1, "year").format('yyyy')
+        endRange = "jul"+"-"+res.locals.moment().format('yyyy')
+    }else{
+        startRange = "jul"+"-"+res.locals.moment().format('yyyy')
+        endRange = "jul"+"-"+res.locals.moment().add(1, "year").format('yyyy')
+    }
+
+    var totalProduction = [];
+    var totalProducObj = {};
+    totalProducObj["startTime"] =  `${startRange}`;
+    totalProducObj["endTime"] =  `${endRange}`;
+    totalProducObj["amount"] =  productionCurrent;
+    totalProduction.push(totalProducObj)
+
+    var totalBitoron = [];
+    var totalBitoronObj = {};
+    totalBitoronObj["startTime"] =  `${startRange}`;
+    totalBitoronObj["endTime"] =  `${endRange}`;
+    totalBitoronObj["amount"] =  bitoronCurrentMonth;
+    totalBitoron.push(totalBitoronObj)
 
     const categoryName = await cropCategory.findByPk(category)
     const subCategoryName = await cropCategory.findByPk(subCategory)
@@ -1676,8 +1701,11 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
         breed: breedName.name,
         productionTarget: productionTarget,
         productionCurrent: JSON.stringify(currentProduction),
+        productionTotal: JSON.stringify(totalProduction),
         daePrapti: JSON.stringify(currentDaePraptis),
         bitoronCurrentMonth: JSON.stringify(currentBitoron),
+        bitoronTotal: JSON.stringify(totalBitoron),
+
         daeProdan: JSON.stringify(currentDaeProdan),
         deadWriteup: JSON.stringify(currentDeadWriteup),
         mojud: JSON.stringify(currentMojud),
@@ -1698,8 +1726,9 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
 
 module.exports.monthlyProgressEdit = async(req,res) => {
     try{
-        const monthProgress = await monthlyProgress.findByPk(req.params.id);
-        console.log("progresses",monthProgress)
+        const monthProgress = await monthlyProgress.findByPk(req.params.progressId);
+        console.log("params",req.params.progressId);
+        console.log("target",monthProgress.productionTarget);
         const categoryList = await cropCategory.findAll();
         res.render('center/monthlyProgress/monthlyProgressFormEdit', { title: 'মাসিক প্রতিবেদন',msg:'' ,success:'',user_id: req.session.user_id,categoryList: categoryList, monthProgress:monthProgress });
     }catch (err) {
@@ -1804,5 +1833,6 @@ module.exports.monthlyProgressUpdate = async(req,res) => {
     // }).catch(err => {
     //     console.log("err",err);
     // });
+
 }
 //monthlyProgress controller end

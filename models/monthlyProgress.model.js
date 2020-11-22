@@ -23,14 +23,16 @@ module.exports = (sequelize, Sequelize) => {
       productionCurrent: {
         type: Sequelize.STRING
       },
-
-
+      productionTotal: {
+        type: Sequelize.STRING
+      },
       daePrapti: {
         type: Sequelize.STRING
       },
-
-
       bitoronCurrentMonth: {
+        type: Sequelize.STRING
+      },
+      bitoronTotal: {
         type: Sequelize.STRING
       },
 
