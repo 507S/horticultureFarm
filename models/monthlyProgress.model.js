@@ -50,7 +50,7 @@ module.exports = (sequelize, Sequelize) => {
       comment: {
         type: Sequelize.STRING
       },
-      time: {
+      timeFrame: {
         type: Sequelize.JSON
       },
       year: {

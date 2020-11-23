@@ -1,4 +1,9 @@
 <%- include('../../includes/header')-%>
+<style>
+    .ui-datepicker-calendar {
+        display: none;
+    }
+</style>
 <div class="wrapper">
     <%- include('../../includes/topbar')-%>
     <div class="page-wrap">
@@ -86,7 +91,7 @@
                                 </p>
                             </div>
                             <div class="panel-body" >
-                                <form action="/center/monthlyProgressForms" id="FieldTrialForm" class="form-horizontal" method="post"  role="form">
+                                <form action="/center/monthlyProgressUpdate/<%=monthProgress.id%>" id="FieldTrialForm" class="form-horizontal" method="post"  role="form">
                                     <div id="signupalert" style="display:none" class="alert alert-danger">
                                         <p>Error:</p>
                                         <span></span>
@@ -143,7 +148,7 @@
                                                     <input readonly class="form-control" value="<%= currentProductionSum %> + " >
                                                 </div>
                                                 <div class="col-9">
-                                                    <input type="text" class="form-control" name="productionCurrent" placeholder="উৎপাদন (চলতি মাস)">
+                                                    <input type="text" class="form-control" name="productionCurrent" placeholder="উৎপাদন (চলতি মাস)" value="0">
                                                 </div>
                                             </div>
                                         </div>
@@ -154,7 +159,7 @@
                                                     <input class="form-control" readonly type="text" value="<%= daePraptiSum %> + ">
                                                 </div>
                                                 <div class="col-9">
-                                                    <input type="text" class="form-control" name="daePrapti" placeholder="ডিএই চালানে প্রাপ্তি">
+                                                    <input type="text" class="form-control" name="daePrapti" placeholder="ডিএই চালানে প্রাপ্তি" value="0">
                                                 </div>
                                             </div>
                                         </div>
@@ -165,7 +170,7 @@
                                                     <input readonly class="form-control" type="text" value="<%= currentBitoronSum %> + ">
                                                 </div>
                                                 <div class="col-9">
-                                                    <input type="text" class="form-control" name="bitotonCurrentMonth" placeholder="বিতরণ (চলতি মাস)">
+                                                    <input type="text" class="form-control" name="bitotonCurrentMonth" placeholder="বিতরণ (চলতি মাস)" value="0">
                                                 </div>
                                             </div>
 
@@ -177,7 +182,7 @@
                                                     <input readonly class="form-control" type="text" value="<%= currentDaeProdanSum %> +">
                                                 </div>
                                                 <div class="col-9">
-                                                    <input type="text" class="form-control" name="daeProdan" placeholder="ডিএই চালানে প্রদান">
+                                                    <input type="text" class="form-control" name="daeProdan" placeholder="ডিএই চালানে প্রদান" value="0">
                                                 </div>
                                             </div>
                                         </div>
@@ -192,7 +197,7 @@
                                                     <input type="text" value="<%= currentMritoSum %> + " readonly class="form-control">
                                                 </div>
                                                 <div class="col-9">
-                                                    <input type="text" class="form-control" name="deadWriteup" placeholder="মৃত/বিনষ্ট রাইটআপ">
+                                                    <input type="text" class="form-control" name="deadWriteup" placeholder="মৃত/বিনষ্ট রাইটআপ" value="0">
                                                 </div>
                                             </div>
                                         </div>
@@ -203,23 +208,29 @@
                                                     <input type="text" value="<%= currentMojudSum %> + " readonly class="form-control">
                                                 </div>
                                                 <div class="col-9">
-                                                    <input type="text" class="form-control" name="mojud" placeholder="নীট মজুদ">
+                                                    <input type="text" class="form-control" name="mojud" placeholder="নীট মজুদ" value="0">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col">
                                             <label for="comment" class="col-md-3 control-label">মন্তব্য</label>
-                                            <input type="text" class="form-control" name="comment" placeholder="মন্তব্য" value="<%= montobboSum %>">
+                                            <input type="text" class="form-control" name="comment" placeholder="মন্তব্য" value="<%= montobboSum %>" >
                                         </div>
 
                                     </div>
 
                                     <div class="form-row mt-3">
-
                                         <div class="col">
-                                            <label for="year" class="col-md-3 control-label">বছর</label>
+                                            <label for="startDate" class="control-label">Date :</label>
+                                            <input name="editDate" class="date-picker form-control" id="startDate" value="<%= moment().format("MMM-yyyy").toLowerCase() %>" />
+                                        </div>
+                                        <div class="col">
+                                            <label for="startDate" class="control-label">বছর</label>
                                             <input type="text" class="form-control" name="year" placeholder="বছর">
                                         </div>
+
+
+
                                     </div>
 
                                     <div class="form-group">
@@ -247,6 +258,16 @@
 </div>
 <%- include('../../includes/footer')-%>
 <script type="text/javascript">
+    $('.date-picker').datepicker( {
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        dateFormat: 'M-yy',
+        onClose: function(dateText, inst) {
+            $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+        }
+    });
+
     $('#category').on("change",function () {
         var category = $('#category').val();
         // alert(category)

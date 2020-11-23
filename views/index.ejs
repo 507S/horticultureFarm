@@ -125,7 +125,7 @@
 
         <div class="row section-header has-bottom-sep" data-aos="fade-up">
             <div class="col-full">
-                <h5 class="subhead subhead--dark">হর্টিকালচার সেন্টার সমূহের</h3>
+                <h5 class="subhead subhead--dark">হর্টিকালচার সেন্টার সমূহের</h5>
                     <br>
                 <h1 class="display-1 display-1--light">চারা উৎপাদন-বিতরণ-সংরক্ষণ/মজুদ তালিকা</h1>
             </div>
@@ -142,15 +142,15 @@
         <div class="row about-stats stats block-1-4 block-m-1-2 block-mob-full" data-aos="fade-up">
                 
             <div class="col-block stats__col ">
-                <div class="stats__counts">৯০০০০</div>
+                <div class="stats__counts"><%= new Number(totalProduction).toLocaleString("bn-BD") %></div>
                 <h5>চারা উৎপাদন</h5>
             </div>
             <div class="col-block stats__col">
-                <div class="stats__counts">৫০০০০</div>
+                <div class="stats__counts"> <%= new Number(totalBitoron).toLocaleString("bn-BD") %> </div>
                 <h5>চারা বিতরণ</h5>
             </div>
             <div class="col-block stats__col">
-                <div class="stats__counts">৪০০০০</div>
+                <div class="stats__counts"><%= new Number(totalMojud).toLocaleString("bn-BD") %></div>
                 <h5>চারা সংরক্ষণ/মজুদ</h5>
             </div>
             <div class="col-block stats__col">
