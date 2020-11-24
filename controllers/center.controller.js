@@ -145,6 +145,7 @@ module.exports.centerloginpost=async(req,res)=>{
 
 module.exports.centerDashboard = async(req,res) => {
     try{
+        const centerinfo = await center.findAll();
         const monthly_progress = await monthlyProgress.findAll();
 
         var startRange = "";
@@ -181,7 +182,7 @@ module.exports.centerDashboard = async(req,res) => {
             })
         })
 
-        res.render('center/dashboard', { title: 'Horticulture Wing Central Management Software',msg:'Welcome' ,totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud });
+        res.render('center/dashboard', { title: 'Horticulture Wing Central Management Software', msg:'Welcome' ,totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud, center:centerinfo });
     }
     catch (e) {
         console.log(e)

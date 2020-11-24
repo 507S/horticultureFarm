@@ -20,6 +20,7 @@ const chak2 = db.chak2;
 const rajossho = db.rajossho;
 const expense = db.expense;
 const monthlyProgress = db.monthlyProgress;
+const cropCategory = db.cropcategory
 
 const jwt= require('jsonwebtoken');
 const bcrypt= require('bcryptjs'); 
@@ -128,9 +129,81 @@ module.exports.pdloginpost=async(req,res)=>{
 };
 
 module.exports.pdDashboard = async(req,res) => {
-    console.log("PDdashboard",res.locals.type,);
-    res.render('pd/dashboard', { title: 'Horticulture Wing Central Management Software',msg:'Welcome' });
+    try{
+
+        const crop = await cropCategory.findAll();
+
+
+        const centerinfo = await center.findAll();
+        const monthly_progress = await monthlyProgress.findAll();
+
+        var startRange = "";
+        var endRange = "";
+        if ( res.locals.moment().format("M") < 7){
+            startRange = "jul"+"-"+res.locals.moment().subtract(1, "year").format('yyyy')
+            endRange = "jul"+"-"+res.locals.moment().format('yyyy')
+        }else{
+            startRange = "jul"+"-"+res.locals.moment().format('yyyy')
+            endRange = "jul"+"-"+res.locals.moment().add(1, "year").format('yyyy')
+        }
+
+        var totalProduct = 0;
+        var totalBitoron = 0;
+        var totalMojud = 0;
+        monthly_progress.forEach((row) => {
+            const productTotalParse = JSON.parse(row.productionTotal);
+            const bitoronParse = JSON.parse(row.bitoronTotal);
+            const mojudParse = JSON.parse(row.mojud);
+            productTotalParse.forEach((prodTotal)=> {
+                if (prodTotal.startTime === startRange && prodTotal.endTime === endRange){
+                    totalProduct += parseInt(prodTotal.amount)
+                }
+            })
+            bitoronParse.forEach((bitorTotal) => {
+                if (bitorTotal.startTime === startRange && bitorTotal.endTime === endRange){
+                    totalBitoron += parseInt(bitorTotal.amount)
+                }
+            })
+            mojudParse.forEach((mojuToal) => {
+                if ( res.locals.moment( mojuToal.time ).isAfter(startRange) &&  res.locals.moment( mojuToal.time ).isBefore(endRange) ){
+                    totalMojud += parseInt(mojuToal.amount)
+                }
+            })
+        })
+
+        res.render('pd/dashboard', { title: 'Horticulture Wing Central Management Software', msg:'Welcome' ,totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud, center:centerinfo, crop: crop });
+    }
+    catch (e) {
+        console.log(e)
+    }
 };
+
+module.exports.addSubcategory = async(req,res) => {
+    const subcategory = await cropCategory.create({
+        name : req.body.sub_category,
+        parent_id : req.body.main_category,
+        type : 'subCategory'
+    })
+    res.send(subcategory)
+}
+
+module.exports.addBiboron = async(req,res) => {
+    const biboron = await cropCategory.create({
+        name : req.body.biboron,
+        parent_id : req.body.sub_category_list,
+        type : 'biboron'
+    })
+    res.send(biboron)
+}
+
+module.exports.addJaat = async(req,res) => {
+    const jaat = await cropCategory.create({
+        name : req.body.sub_category,
+        parent_id : req.body.main_category,
+        type : 'jat'
+    })
+    res.send(jaat)
+}
 
 //signUp controller
 module.exports.pdsignup=async(req,res)=>{
