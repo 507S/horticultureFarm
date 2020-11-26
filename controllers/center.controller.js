@@ -1653,7 +1653,7 @@ module.exports.generatePdfMonthlyProgress=async(req,res) => {
         }
     });
 
-    ejs.renderFile(path.join(__dirname, '../views/center/monthlyProgress/', "pdf.ejs"), {records:tableData, dirname:__dirname}, (err, data) => {
+    ejs.renderFile(path.join(__dirname, '../views/center/monthlyProgress/', "pdf.ejs"), {records:tableData, moment: res.locals, dirname:__dirname}, (err, data) => {
 
         if (err) {
             // console.log("error",err);
@@ -1665,7 +1665,7 @@ module.exports.generatePdfMonthlyProgress=async(req,res) => {
 
             var options = {
                 "height": "11.25in",
-                "width": "8.5in",
+                "width": "18.5in",
                 "header": {
                     "height": "20mm",
                 },
