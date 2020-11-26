@@ -3,7 +3,7 @@ const router = express.Router();
 // const { Router } = require("express");
 const app=express();
 
-const {monthlyProgressEdit,monthlyProgressUpdate,monthlyProgress,monthlyProgressYear,monthlyProgressForm,monthlyProgressFormPost,charaKolomFixed,allCenterInfo,centersignup,centersignuppost,rajossho,rajosshoYear,rajosshoForm,rajosshoFormPost,expense,expenseYear,expenseForm,expenseFormPost,chak1,chak1Year,chak1Form,chak1FormPost,chak2,chak2Year,chak2Form,chak2FormPost,revolvingFund,revolvingFundYear,revolvingFundForm,revolvingFundFormPost,specialCoconut,specialCoconutYear,specialCoconutForm,specialCoconutFormPost,loan,loanYear,loanForm,loanFormPost,apa,apaYear,apaForm,apaFormPost,allcenter,centerlogin,centerloginpost,centerDashboard,topSheet,topSheetYear,topSheetForm,topSheetFormPost,center,centerYear,centerForm,centerFormPost,charaKolom,charaKolomYear,charaKolomForm,charaKolomFormPost,folMosholla,folMoshollaYear,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegYear,winterVegForm,winterVegFormPost,summerVeg,summerVegYear,summerVegForm,summerVegFormPost,otherFlower,otherFlowerYear,otherFlowerForm,otherFlowerFormPost,seasonalFlower,seasonalFlowerYear,seasonalFlowerForm,seasonalFlowerFormPost,regularWorker,regularWorkerYear,regularWorkerForm,regularWorkerFormPost,irregularWorker,irregularWorkerYear,irregularWorkerForm,irregularWorkerFormPost,fetchSubCategory,fetchBiboron,fetchBreed} = require('../controllers/center.controller');
+const {generatePdfMonthlyProgress,monthlyProgressEdit,monthlyProgressUpdate,monthlyProgress,monthlyProgressYear,monthlyProgressForm,monthlyProgressFormPost,charaKolomFixed,allCenterInfo,centersignup,centersignuppost,rajossho,rajosshoYear,rajosshoForm,rajosshoFormPost,expense,expenseYear,expenseForm,expenseFormPost,chak1,chak1Year,chak1Form,chak1FormPost,chak2,chak2Year,chak2Form,chak2FormPost,revolvingFund,revolvingFundYear,revolvingFundForm,revolvingFundFormPost,specialCoconut,specialCoconutYear,specialCoconutForm,specialCoconutFormPost,loan,loanYear,loanForm,loanFormPost,apa,apaYear,apaForm,apaFormPost,allcenter,centerlogin,centerloginpost,centerDashboard,topSheet,topSheetYear,topSheetForm,topSheetFormPost,center,centerYear,centerForm,centerFormPost,charaKolom,charaKolomYear,charaKolomForm,charaKolomFormPost,folMosholla,folMoshollaYear,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegYear,winterVegForm,winterVegFormPost,summerVeg,summerVegYear,summerVegForm,summerVegFormPost,otherFlower,otherFlowerYear,otherFlowerForm,otherFlowerFormPost,seasonalFlower,seasonalFlowerYear,seasonalFlowerForm,seasonalFlowerFormPost,regularWorker,regularWorkerYear,regularWorkerForm,regularWorkerFormPost,irregularWorker,irregularWorkerYear,irregularWorkerForm,irregularWorkerFormPost,fetchSubCategory,fetchBiboron,fetchBreed} = require('../controllers/center.controller');
 
 router.get('/',allcenter);
 router.get('/allCenterInfo',allCenterInfo);
@@ -108,6 +108,7 @@ router.post('/expenseForms',expenseFormPost);
 router.get('/monthlyProgress',monthlyProgress);
 router.post('/monthlyProgressYear',monthlyProgressYear);
 router.get('/monthlyProgressForm',monthlyProgressForm);
+router.get('/generatePdfMonthlyProgress',generatePdfMonthlyProgress);
 
 router.get('/monthlyProgressEdit/:progressId',monthlyProgressEdit)
 router.post('/monthlyProgressUpdate/:progressId',monthlyProgressUpdate)

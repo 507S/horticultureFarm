@@ -2,6 +2,10 @@ const db=require('../models');
 const Op = db.Sequelize.Op;
 const { fn, col, cast } = db.sequelize;
 
+const path = require("path");
+
+let pdf = require("html-pdf");
+let ejs = require("ejs");
 const center = db.center;
 const centerInfo = db.centerInfo;
 const topSheet = db.topSheet;
@@ -1639,6 +1643,54 @@ module.exports.monthlyProgressYear=async(req,res)=>{
             res.render('center/monthlyProgress/monthlyProgressYear', { title: 'মাসিক প্রতিবেদন',success:'', records: err });
         })
 
+};
+
+module.exports.generatePdfMonthlyProgress=async(req,res) => {
+
+    const tableData = await monthlyProgress.findAll({
+        where:{
+            center_id: req.session.user_id,
+        }
+    });
+
+    ejs.renderFile(path.join(__dirname, '../views/center/monthlyProgress/', "pdf.ejs"), {records:tableData, dirname:__dirname}, (err, data) => {
+
+        if (err) {
+            // console.log("error",err);
+            res.send(err);
+        } else {
+            var assesPath = path.join(__dirname,'../public/');
+            // console.log(assesPath);
+            assesPath = assesPath.replace(new RegExp(/\\/g), '/');
+
+            var options = {
+                "height": "11.25in",
+                "width": "8.5in",
+                "header": {
+                    "height": "20mm",
+                },
+                "footer": {
+                    "height": "20mm",
+                },
+                "base": "file:///" + assesPath
+            };
+            // pdf.create(data, options).toBuffer(function (err, buffer) {
+            //     if (err) {
+            //         res.send(err);
+            //     } else {
+            //         res.type('pdf');
+            //         res.end(buffer,'binary')
+            //         // res.send("File created successfully");
+            //     }
+            // });
+
+            pdf.create(data, options).toStream(function (err, stream) {
+                if (err) return res.send(err);
+                res.type('pdf');
+                stream.pipe(res);
+            });
+        }
+    });
 };
 
 module.exports.monthlyProgressForm=async(req,res)=>{

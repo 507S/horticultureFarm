@@ -82,9 +82,39 @@
                 </div>
                 <div class="row">
                     <div class="container-fluid">
+                        <!--    main catg -->
                         <div class="card">
                             <div class="card-body">
+                                <form action="/pd/add/mainCategory" method="post">
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <label for="">Main Category</label>
+                                            <input type="text"  id="mainCatg" name="mainCatg" class="form-control">
+                                        </div>
+                                        <div class="col">
+                                            <label for=""></label>
+                                            <input type="submit" value="Add Main Category" class="form-control">
+                                        </div>
 
+                                        <div class="col">
+                                            <% crop.forEach((row) => {
+                                            if (row.type === 'mainCategory'){
+                                            %>
+                                                <p> <%= row.name %> </p>
+                                            <%
+                                            }
+                                            })
+                                            %>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!--  sub catg -->
+                        <div class="card">
+                            <div class="card-body">
+                                <form action="/pd/add/subcategory" method="post">
                                     <div class="form-row">
                                         <div class="col">
                                             <label for="">Main Category</label>
@@ -106,75 +136,106 @@
                                         </div>
                                         <div class="col">
                                             <label for=""></label>
-                                            <button class="btn btn-primary" id="add_sub_category">Add সাব-ক্যাটাগরি</button>
+                                            <input type="submit" value="Add সাব-ক্যাটাগরি" class="form-control">
+                                        </div>
+                                        <div class="col">
+                                            <% crop.forEach((row) => {
+                                            if (row.type === 'subCategory'){
+                                            %>
+                                                <p> <%= row.name %> </p>
+                                            <%
+                                            }
+                                            })
+                                            %>
                                         </div>
                                     </div>
-
+                                </form>
                             </div>
                         </div>
 
+                        <!--  biboron -->
                         <div class="card">
                             <div class="card-body">
-
-                                <div class="form-row">
-                                    <div class="col">
-                                        <label for="">Subcategory</label>
-                                        <select class="form-control" id="sub_category_list" name="subcategory">
-                                            <option selected> Select a Sub Category </option>
-                                            <% crop.forEach((row) => {
+                                <form action="/pd/add/biboron" method="post">
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <label for="">Subcategory</label>
+                                            <select class="form-control" id="sub_category_list" name="subcategory">
+                                                <option selected> Select a Sub Category </option>
+                                                <% crop.forEach((row) => {
                                                 if (row.type === 'subCategory'){
-                                            %>
-                                                        <option value="<%= row.id %>"> <%= row.name %> </option>
-                                            <%
-                                                    }
+                                                %>
+                                                    <option value="<%= row.id %>"> <%= row.name %> </option>
+                                                <%
+                                                }
                                                 })
+                                                %>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label for="">Biboron</label>
+                                            <input type="text" id="biboron" name="biboron" class="form-control">
+                                        </div>
+                                        <div class="col">
+                                            <label for=""></label>
+                                            <input type="submit" value="Add বিবরণ" class="form-control">
+                                        </div>
+                                        <div class="col">
+                                            <% crop.forEach((row) => {
+                                            if (row.type === 'biboron'){
                                             %>
-                                        </select>
+                                                <p> <%= row.name %> </p>
+                                            <%
+                                            }
+                                            })
+                                            %>
+                                        </div>
                                     </div>
-                                    <div class="col">
-                                        <label for="">Biboron</label>
-                                        <input type="text" id="biboron" name="biboron" class="form-control">
-                                    </div>
-                                    <div class="col">
-                                        <label for=""></label>
-                                        <button class="btn btn-primary" id="add_biboron">Add বিবরণ</button>
-                                    </div>
-                                </div>
-
+                                </form>
                             </div>
                         </div>
 
+                        <!--   jaat -->
                         <div class="card">
                             <div class="card-body">
-
-                                <div class="form-row">
-                                    <div class="col">
-                                        <label for="">Biboron</label>
-                                        <select class="form-control" id="biboron_list" name="biboron">
-                                            <option selected> Select a Biboron </option>
-                                            <% crop.forEach((row) => {
+                                <form action="/pd/add/jaat" method="post">
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <label for="">Biboron</label>
+                                            <select class="form-control" id="biboron_list" name="biboron">
+                                                <option selected> Select a Biboron </option>
+                                                <% crop.forEach((row) => {
                                                 if (row.type === 'biboron'){
-                                            %>
-                                                     <option value="<%= row.id %>"> <%= row.name %> </option>
-                                            <%
-                                                 }
+                                                %>
+                                                    <option value="<%= row.id %>"> <%= row.name %> </option>
+                                                <%
+                                                }
                                                 })
+                                                %>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label for="">Jaat</label>
+                                            <input type="text" id="jaat" name="jaat" class="form-control">
+                                        </div>
+                                        <div class="col">
+                                            <label for=""></label>
+                                            <input type="submit" class="form-control" value="Add জাত">
+                                        </div>
+                                        <div class="col">
+                                            <% crop.forEach((row) => {
+                                            if (row.type === 'jat'){
                                             %>
-                                        </select>
+                                                <p> <%= row.name %> </p>
+                                            <%
+                                            }
+                                            })
+                                            %>
+                                        </div>
                                     </div>
-                                    <div class="col">
-                                        <label for="">Jaat</label>
-                                        <input type="text" id="jaat" name="jaat" class="form-control">
-                                    </div>
-                                    <div class="col">
-                                        <label for=""></label>
-                                        <button class="btn btn-primary" id="add_jaat">Add জাত</button>
-                                    </div>
-                                </div>
-
+                                </form>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -206,79 +267,4 @@
             }
         });
     });
-
-    $('#add_sub_category').on("click",function (){
-        var main_category = $('#main_category').val()
-        var sub_category = $('#sub_category').val()
-        $.ajax({
-            type: "POST",
-            url: "/pd/add/subcategory",
-            data: {main_category: main_category, sub_category: sub_category},
-            datatype: "json",
-            beforeSend: function() {
-                // setting a timeout
-                $('#loading').show();
-                $('#output').hide();
-            },
-            success: function (data) {
-                // $('#totalProduction').html(new Number(data.totalProduction).toLocaleString("bn-BD"));
-                // $('#totalBitoron').html(new Number(data.totalBitoron).toLocaleString("bn-BD"));
-                // $('#totalMojud').html(new Number(data.totalMojud).toLocaleString("bn-BD"));
-            },
-            complete: function() {
-                $('#loading').hide();
-                $('#output').show();
-            }
-        });
-    })
-
-    $('#add_biboron').on("click",function (){
-        var sub_category_list = $('#sub_category_list').val()
-        var biboron = $('#biboron').val()
-        $.ajax({
-            type: "POST",
-            url: "/pd/add/biboron",
-            data: {sub_category_list: sub_category_list, biboron: biboron},
-            datatype: "json",
-            beforeSend: function() {
-                // setting a timeout
-                $('#loading').show();
-                $('#output').hide();
-            },
-            success: function (data) {
-                // $('#totalProduction').html(new Number(data.totalProduction).toLocaleString("bn-BD"));
-                // $('#totalBitoron').html(new Number(data.totalBitoron).toLocaleString("bn-BD"));
-                // $('#totalMojud').html(new Number(data.totalMojud).toLocaleString("bn-BD"));
-            },
-            complete: function() {
-                $('#loading').hide();
-                $('#output').show();
-            }
-        });
-    })
-
-    $('#add_jaat').on("click",function (){
-        var biboron_list = $('#biboron_list').val()
-        var jaat = $('#jaat').val()
-        $.ajax({
-            type: "POST",
-            url: "/pd/add/jaat",
-            data: {biboron_list: biboron_list, jaat: jaat},
-            datatype: "json",
-            beforeSend: function() {
-                // setting a timeout
-                $('#loading').show();
-                $('#output').hide();
-            },
-            success: function (data) {
-                // $('#totalProduction').html(new Number(data.totalProduction).toLocaleString("bn-BD"));
-                // $('#totalBitoron').html(new Number(data.totalBitoron).toLocaleString("bn-BD"));
-                // $('#totalMojud').html(new Number(data.totalMojud).toLocaleString("bn-BD"));
-            },
-            complete: function() {
-                $('#loading').hide();
-                $('#output').show();
-            }
-        });
-    })
 </script>
