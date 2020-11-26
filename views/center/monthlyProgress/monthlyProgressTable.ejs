@@ -11,7 +11,7 @@
         <th>উৎপাদন (পূর্বমাস পর্যন্ত)</th>
         <th>মোট উৎপাদন (চলতি+পূর্ব মাস)</th>
         <th>ডিএই চালানে প্রাপ্তি</th>
-        <th>পূর্ব বছরের জের</th>
+        <th>পূর্ব বছরের জের </th>
         <th>সর্বমোট (মোট+ডিএই চালানে প্রাপ্তি+পূর্ব বছরের জের)</th>
         <th>বিতরণ (চলতি মাস)</th>
         <th>বিতরণ (পূর্বমাস পর্যন্ত)</th>
@@ -31,12 +31,27 @@
                 const currentMonth = moment().format("MMM-YYYY").toLowerCase();
                 var startRange = "";
                 var endRange = "";
+
+                var prevEconomicStart = "";
+                var prevEconomicEnd = "";
+
                 if (moment().format("M") < 7){
                     startRange = "jul"+"-"+moment().subtract(1, "year").format('yyyy')
                     endRange = "jul"+"-"+moment().format('yyyy')
                 }else{
                     startRange = "jul"+"-"+moment().format('yyyy')
                     endRange = "jul"+"-"+moment().add(1, "year").format('yyyy')
+                }
+
+
+                // Previous Economic year
+
+                if (moment('nov-2020').format("M") < 7){
+                    prevEconomicStart = "jul"+"-"+moment().subtract(2, "year").format('yyyy')
+                    prevEconomicEnd = "jul"+"-"+moment().subtract(1, "year").format('yyyy')
+                }else{
+                    prevEconomicStart = "jul"+"-"+moment().subtract(1, "year").format('yyyy')
+                    prevEconomicEnd = "jul"+"-"+moment().format('yyyy')
                 }
 
                 // current production (  উৎপাদন  )*******
@@ -47,17 +62,34 @@
                     if ( prodCurrent.time === moment().format("MMM-YYYY").toLowerCase() ) {
                         currentProductionSum += parseInt(prodCurrent.amount)
                     }
-                    else if ( moment( prodCurrent.time ).isAfter(startRange) &&  moment( prodCurrent.time ).isBefore(endRange) ){
+                    else if ( moment( prodCurrent.time ).isSameOrAfter(startRange) &&  moment( prodCurrent.time ).isSameOrBefore(endRange) ){
                         previousMonthProduction += parseInt(prodCurrent.amount)
                     }
                 })
 
-                // মোট উৎপাদন (চলতি+পূর্ব মাস)
+                // মোট উৎপাদন (চলতি+পূর্ব মাস) *********
                 var totalProductionSum = 0;
                 const TotalProduction = JSON.parse(row.productionTotal)
                 TotalProduction.forEach(function(prodTotal){
                     if ( moment(currentMonth).isAfter(prodTotal.startTime) &&  moment(currentMonth).isBefore(prodTotal.endTime) ){
                         totalProductionSum += parseInt(prodTotal.amount)
+                    }
+                })
+
+                //ডিএই চালানে প্রাপ্তি (চলতি মাস) *********
+                var daePraptiSum = 0;
+                const currentDaePrapti = JSON.parse(row.daePrapti)
+                currentDaePrapti.forEach(function(daePraptiCurrent){
+                    if ( daePraptiCurrent.time === moment().format("MMM-YYYY").toLowerCase() ) {
+                        daePraptiSum += parseInt(daePraptiCurrent.amount)
+                    }
+                })
+
+                // পূর্ব বছরের জের *********
+                var prevYearJer = 0;
+                currentDaePrapti.forEach(function(daePraptiCurrent){
+                    if ( moment( daePraptiCurrent.time ).isAfter(prevEconomicStart) &&  moment( daePraptiCurrent.time ).isBefore(prevEconomicEnd) ) {
+                        prevYearJer += parseInt(daePraptiCurrent.amount)
                     }
                 })
 
@@ -83,7 +115,7 @@
                     }
                 })
 
-                // ডিএই চালানে প্রদান
+                // ডিএই চালানে প্রদান *******
                 var currentDaeProdanSum = 0;
                 const currDaeProdan = JSON.parse(row.daeProdan)
                 currDaeProdan.forEach(function(DaeProdanCurrent){
@@ -92,7 +124,7 @@
                     }
                 })
 
-                // মৃত/বিনষ্ট
+                // মৃত/বিনষ্ট ********
                 var currentMritoSum = 0;
                 const currMrito = JSON.parse(row.deadWriteup)
                 currMrito.forEach(function(MritoCurrent){
@@ -132,9 +164,9 @@
                 </td>
                 <td> <%= new Number(previousMonthProduction).toLocaleString("bn-BD") %> </td>
                 <td> <%= new Number(totalProductionSum).toLocaleString("bn-BD") %> </td>
-                <td><%= row.daePrapti %></td>
-                <td><%= row.lastYear %></td>
-                <td><%= row.grandTotalProduction %></td>
+                <td> <%= new Number(daePraptiSum).toLocaleString("bn-BD") %> </td>
+                <td> <%= new Number(prevYearJer).toLocaleString("bn-BD") %> </td>
+                <td> <%= new Number(totalProductionSum + daePraptiSum + prevYearJer).toLocaleString("bn-BD") %> </td>
                 <td><%= new Number(currentBitoronSum).toLocaleString("bn-BD") %></td>
                 <td><%= new Number(previousMonthBitoronSum).toLocaleString("bn-BD") %></td>
                 <td><%= new Number(totalBitoronSum).toLocaleString("bn-BD") %></td>

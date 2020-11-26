@@ -145,8 +145,11 @@ module.exports.centerloginpost=async(req,res)=>{
 
 module.exports.centerDashboard = async(req,res) => {
     try{
-        const centerinfo = await center.findAll();
-        const monthly_progress = await monthlyProgress.findAll();
+        const monthly_progress = await monthlyProgress.findAll({
+            where: {
+                center_id : req.session.user_id
+            }
+        });
 
         var startRange = "";
         var endRange = "";
@@ -182,7 +185,7 @@ module.exports.centerDashboard = async(req,res) => {
             })
         })
 
-        res.render('center/dashboard', { title: 'Horticulture Wing Central Management Software', msg:'Welcome' ,totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud, center:centerinfo });
+        res.render('center/dashboard', { title: 'Horticulture Wing Central Management Software', msg:'Welcome' ,totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud});
     }
     catch (e) {
         console.log(e)
@@ -230,7 +233,6 @@ module.exports.centersignuppost=async(req,res)=>{
 
 //topSheet controller
 module.exports.topSheet=async(req,res)=>{
-    console.log("Centerdashboard",res.locals.type);
     await topSheet.findAll({
         where: {center_id: req.session.user_id}
     })
@@ -248,17 +250,22 @@ module.exports.topSheet=async(req,res)=>{
 };
 
 module.exports.topSheetYear=async(req,res)=>{
-    await topSheet.findAll({
-        where: {year: req.body.year,center_id: req.session.user_id}
-    })
-    .then(data => {
-        res.render('center/topSheet/topSheetTable', {records: data} ,function(err, html) {
+    try{
+        const cropCatg = await cropCategory.findAll({
+            where: {
+                type: 'subCategory'
+            }
+        })
+        const topSheets = await monthlyProgress.findAll({
+            where: {year: req.body.year,center_id: req.session.user_id}
+        })
+        res.render('center/topSheet/topSheetTable', {records: topSheets , cropCatg:cropCatg} ,function(err, html) {
             res.send(html);
         });
-    })
-    .catch(err => {
-        res.render('center/topSheet/topSheetYear', { title: 'টপশীট',success:'', records: err });
-    })
+    }
+    catch (e){
+        console.log(e)
+    }
 
 };
 
@@ -1539,73 +1546,6 @@ module.exports.expenseFormPost=async(req,res)=>{
 
 //expense controller end
 
-//monthlyProgress controller
-module.exports.monthlyProgress=async(req,res)=>{
-    res.render('center/monthlyProgress/monthlyProgress', { title: 'মাসিক প্রতিবেদন',success:'' });
-    // await monthlyProgress.findAll({
-    //     where: {center_id: req.session.user_id}
-    // })
-    // .then(data => {
-    //     res.render('center/monthlyProgress/monthlyProgress', { title: 'মাসিক প্রতিবেদন',success:'', records: data });
-    // })
-    // .catch(err => {
-    //     res.render('center/monthlyProgress/monthlyProgress', { title: 'মাসিক প্রতিবেদন',success:'', records: err });
-    // })
-
-};
-
-module.exports.monthlyProgressYear=async(req,res)=>{
-    const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase()
-    await monthlyProgress.findAll({
-
-            // attributes: [
-            //     fn('JSON_CONTAINS', col('timeFrame'), cast('{"time": "nov-2020"}', 'CHAR CHARACTER SET utf8'))
-            //     // fn('JSON_EXTRACT', col('time'), cast('{"time": "nov-2020"}', 'CHAR CHARACTER SET utf8')),
-            // ],
-            // raw: true,
-
-            // where : {
-            //     timeFrame: {
-            //         time : 'nov-2020'
-            //     }
-            // }
-
-            where:{
-                year: req.body.year,
-                center_id: req.session.user_id,
-            }
-
-            // [Op.and]: db.Sequelize.literal(JSON_CONTAINS(`time`, '{\"time\": nov-2020}')),
-            // "time" : currentMonth
-
-            // time: {
-            //     [Op.and]: [{time: {[Op.eq]: currentMonth}}]
-            // }
-
-
-    })
-    .then(data => {
-        console.log(data)
-        res.render('center/monthlyProgress/monthlyProgressTable', {records: data} ,function(err, html) {
-            res.send(html);
-        });
-    })
-    .catch(err => {
-        console.log(err)
-        res.render('center/monthlyProgress/monthlyProgressYear', { title: 'মাসিক প্রতিবেদন',success:'', records: err });
-    })
-
-};
-
-module.exports.monthlyProgressForm=async(req,res)=>{
-    try {
-        const categoryList = await cropCategory.findAll();
-        res.render('center/monthlyProgress/monthlyProgressForm', { title: 'মাসিক প্রতিবেদন',msg:'' ,success:'',user_id: req.session.user_id,categoryList: categoryList});
-    }catch (e) {
-        console.log(e)
-    }
-};
-
 module.exports.fetchSubCategory = async(req,res) => {
     console.log("parent id",req.body.category)
     await cropCategory.findAll({
@@ -1641,6 +1581,73 @@ module.exports.fetchBreed = async (req,res) => {
         .catch(err => {
             console.log(err)
         })
+};
+
+//monthlyProgress controller
+module.exports.monthlyProgress=async(req,res)=>{
+    res.render('center/monthlyProgress/monthlyProgress', { title: 'মাসিক প্রতিবেদন',success:'' });
+    // await monthlyProgress.findAll({
+    //     where: {center_id: req.session.user_id}
+    // })
+    // .then(data => {
+    //     res.render('center/monthlyProgress/monthlyProgress', { title: 'মাসিক প্রতিবেদন',success:'', records: data });
+    // })
+    // .catch(err => {
+    //     res.render('center/monthlyProgress/monthlyProgress', { title: 'মাসিক প্রতিবেদন',success:'', records: err });
+    // })
+
+};
+
+module.exports.monthlyProgressYear=async(req,res)=>{
+    const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase()
+    await monthlyProgress.findAll({
+
+        // attributes: [
+        //     fn('JSON_CONTAINS', col('timeFrame'), cast('{"time": "nov-2020"}', 'CHAR CHARACTER SET utf8'))
+        //     // fn('JSON_EXTRACT', col('time'), cast('{"time": "nov-2020"}', 'CHAR CHARACTER SET utf8')),
+        // ],
+        // raw: true,
+
+        // where : {
+        //     timeFrame: {
+        //         time : 'nov-2020'
+        //     }
+        // }
+
+        where:{
+            year: req.body.year,
+            center_id: req.session.user_id,
+        }
+
+        // [Op.and]: db.Sequelize.literal(JSON_CONTAINS(`time`, '{\"time\": nov-2020}')),
+        // "time" : currentMonth
+
+        // time: {
+        //     [Op.and]: [{time: {[Op.eq]: currentMonth}}]
+        // }
+
+
+    })
+        .then(data => {
+            console.log(data)
+            res.render('center/monthlyProgress/monthlyProgressTable', {records: data} ,function(err, html) {
+                res.send(html);
+            });
+        })
+        .catch(err => {
+            console.log(err)
+            res.render('center/monthlyProgress/monthlyProgressYear', { title: 'মাসিক প্রতিবেদন',success:'', records: err });
+        })
+
+};
+
+module.exports.monthlyProgressForm=async(req,res)=>{
+    try {
+        const categoryList = await cropCategory.findAll();
+        res.render('center/monthlyProgress/monthlyProgressForm', { title: 'মাসিক প্রতিবেদন',msg:'' ,success:'',user_id: req.session.user_id,categoryList: categoryList});
+    }catch (e) {
+        console.log(e)
+    }
 };
 
 module.exports.monthlyProgressFormPost=async(req,res)=>{
@@ -1781,7 +1788,7 @@ module.exports.monthlyProgressEdit = async(req,res) => {
         console.log("params",req.params.progressId);
         console.log("target",monthProgress.productionTarget);
         const categoryList = await cropCategory.findAll();
-        res.render('center/monthlyProgress/monthlyProgressFormEdit', { title: 'মাসিক প্রতিবেদন',msg:'' ,success:'',user_id: req.session.user_id,categoryList: categoryList, monthProgress:monthProgress });
+        res.render('center/monthlyProgress/monthlyProgressFormEdit', { title: 'মাসিক প্রতিবেদন',msg:'' ,success:'', user_id: req.session.user_id, categoryList: categoryList, monthProgress:monthProgress });
     }catch (err) {
         console.log(err)
     }
@@ -1811,18 +1818,34 @@ module.exports.monthlyProgressUpdate = async(req,res) => {
     var user_id =req.body.user_id;
     var editDate = req.body.editDate.toLowerCase();
 
-    console.log('productionTotal=',editDate.toLowerCase());
+
     const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
 
     const progress = await monthlyProgress.findByPk(req.params.progressId)
     const timeFrameParse = JSON.parse(progress.timeFrame)
 
     var NewDateTime = true;
-    for (var i = 0; i<timeFrameParse.length; i++){
-        if( timeFrameParse.time === editDate ){
+
+    timeFrameParse.forEach(row => {
+        if( row.time === editDate ){
             NewDateTime = false
         }
-    }
+    })
+
+    /////////
+        var startRange = "";
+        var endRange = "";
+        if ( res.locals.moment().format("M") < 7 ){
+            startRange = "jul"+"-"+res.locals.moment().subtract(1, "year").format('yyyy')
+            endRange = "jul"+"-"+res.locals.moment().format('yyyy')
+        }else{
+            startRange = "jul"+"-"+res.locals.moment().format('yyyy')
+            endRange = "jul"+"-"+res.locals.moment().add(1, "year").format('yyyy')
+        }
+
+
+    ///////// moment(currentMonth).isAfter(bitorTotal.startTime) &&  moment(currentMonth).isBefore(bitorTotal.endTime)
+
 
     if (NewDateTime === true){
         var currentProduction = JSON.parse(progress.productionCurrent);
@@ -1873,6 +1896,68 @@ module.exports.monthlyProgressUpdate = async(req,res) => {
         time.push(timeObj)
     }
     else{
+        var currentProduction = JSON.parse(progress.productionCurrent);
+        currentProduction.forEach((prodCurrent,index) => {
+            if ( prodCurrent.time === currentMonth ) {
+                currentProduction[index].amount = parseInt(currentProduction[index].amount) + parseInt(productionCurrent)
+            }
+        })
+
+        var totalProduction = JSON.parse(progress.productionTotal);
+        totalProduction.forEach((prodTotal,index) => {
+            if ( res.locals.moment(editDate).isAfter(prodTotal.startTime) &&  res.locals.moment(editDate).isBefore(prodTotal.endTime) ) {
+                totalProduction[index].amount = parseInt(totalProduction[index].amount) + parseInt(productionCurrent)
+            }
+        })
+
+        var currentDaePraptis = JSON.parse(progress.daePrapti);
+        currentDaePraptis.forEach((daePraptiCurrent,index) => {
+            if ( daePraptiCurrent.time === currentMonth ) {
+                currentDaePraptis[index].amount = parseInt(currentDaePraptis[index].amount) + parseInt(daePrapti)
+            }
+        })
+
+        var currentBitoron = JSON.parse(progress.bitoronCurrentMonth);
+        currentBitoron.forEach((currentBitoronCurrent,index) => {
+            if ( currentBitoronCurrent.time === currentMonth ) {
+                currentBitoron[index].amount = parseInt(currentBitoron[index].amount) + parseInt(bitoronCurrentMonth)
+            }
+        })
+
+        var totalBitoron = JSON.parse(progress.bitoronTotal);
+        totalBitoron.forEach((bitoronTotal,index) => {
+            if ( res.locals.moment(editDate).isAfter(bitoronTotal.startTime) &&  res.locals.moment(editDate).isBefore(bitoronTotal.endTime) ) {
+                totalBitoron[index].amount = parseInt(totalBitoron[index].amount) + parseInt(bitoronCurrentMonth)
+            }
+        })
+
+        var currentDaeProdan = JSON.parse(progress.daeProdan);
+        currentDaeProdan.forEach((daeProdanCurrent,index) => {
+            if ( daeProdanCurrent.time === currentMonth ) {
+                currentDaeProdan[index].amount = parseInt(currentDaeProdan[index].amount) + parseInt(daeProdan)
+            }
+        })
+
+        var currentDeadWriteup = JSON.parse(progress.deadWriteup);
+        currentDeadWriteup.forEach((deadWriteupCurrent,index) => {
+            if ( deadWriteupCurrent.time === currentMonth ) {
+                currentDeadWriteup[index].amount = parseInt(currentDeadWriteup[index].amount) + parseInt(deadWriteup)
+            }
+        })
+
+        var currentMojud = JSON.parse(progress.mojud);
+        currentMojud.forEach((mojudCurrent,index) => {
+            if ( mojudCurrent.time === currentMonth ) {
+                currentMojud[index].amount = parseInt(currentMojud[index].amount) + parseInt(mojud)
+            }
+        })
+
+        var currentComment = JSON.parse(progress.comment);
+        currentComment.forEach((commentCurrent,index) => {
+            if ( commentCurrent.time === currentMonth ) {
+                currentComment[index].msg = comment
+            }
+        })
 
     }
 
@@ -1891,11 +1976,10 @@ module.exports.monthlyProgressUpdate = async(req,res) => {
             breed: breedName.name,
             productionTarget: productionTarget,
             productionCurrent: JSON.stringify(currentProduction),
-            // productionTotal: JSON.stringify(totalProduction),
+            productionTotal: JSON.stringify(totalProduction),
             daePrapti: JSON.stringify(currentDaePraptis),
             bitoronCurrentMonth: JSON.stringify(currentBitoron),
-            // bitoronTotal: JSON.stringify(totalBitoron),
-
+            bitoronTotal: JSON.stringify(totalBitoron),
             daeProdan: JSON.stringify(currentDaeProdan),
             deadWriteup: JSON.stringify(currentDeadWriteup),
             mojud: JSON.stringify(currentMojud),
