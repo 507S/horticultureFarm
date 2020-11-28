@@ -188,13 +188,22 @@ module.exports.pdDashboard = async(req,res) => {
     }
 };
 
+module.exports.addMainCategory = async(req,res) => {
+    const mainCategory = await cropCategory.create({
+        name : req.body.mainCatg,
+        parent_id : null,
+        type : 'mainCategory'
+    })
+    res.redirect('/pd/dashboard')
+}
+
 module.exports.addSubcategory = async(req,res) => {
     const subcategory = await cropCategory.create({
         name : req.body.sub_category,
         parent_id : req.body.main_category,
         type : 'subCategory'
     })
-    res.send(subcategory)
+    res.redirect('/pd/dashboard')
 }
 
 module.exports.addBiboron = async(req,res) => {
@@ -203,16 +212,16 @@ module.exports.addBiboron = async(req,res) => {
         parent_id : req.body.sub_category_list,
         type : 'biboron'
     })
-    res.send(biboron)
+    res.redirect('/pd/dashboard')
 }
 
 module.exports.addJaat = async(req,res) => {
     const jaat = await cropCategory.create({
-        name : req.body.sub_category,
-        parent_id : req.body.main_category,
+        name : req.body.jaat,
+        parent_id : req.body.biboron_list,
         type : 'jat'
     })
-    res.send(jaat)
+    res.redirect('/pd/dashboard')
 }
 
 //signUp controller

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News PDF</title>
+
+    <style>
+        .flex-container {
+            display: flex;
+
+            justify-content: center
+        }
+        .center {
+            text-align: center;
+        }
+        .inline-block-child {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+<div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6; box-shadow: 1px 1px 5px black;" class="center">
+    <div>
+        <% if (records.length >0){ %>
+            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+                <thead>
+                <tr>
+                    <th>ক্যাটাগরি নাম</th>
+                    <th>সাব-ক্যাটাগরি নাম</th>
+                    <th>বিবরণ</th>
+                    <th>জাত</th>
+                    <th>উৎপাদন (লক্ষ্যমাত্রা)</th>
+                    <th>উৎপাদন (চলতি মাস)</th>
+                    <th>উৎপাদন (পূর্বমাস পর্যন্ত)</th>
+                    <th>মোট উৎপাদন (চলতি+পূর্ব মাস)</th>
+                    <th>ডিএই চালানে প্রাপ্তি</th>
+                    <th>পূর্ব বছরের জের </th>
+                    <th>সর্বমোট (মোট+ডিএই চালানে প্রাপ্তি+পূর্ব বছরের জের)</th>
+                    <th>বিতরণ (চলতি মাস)</th>
+                    <th>বিতরণ (পূর্বমাস পর্যন্ত)</th>
+                    <th>বিতরণ মোট (চলতি+পূর্ব মাস)</th>
+                    <th>ডিএই চালানে প্রদান</th>
+                    <th>মৃত/বিনষ্ট রাইটআপ</th>
+                    <th>সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ)</th>
+                    <th>নীট মজুদ</th>
+                    <th>মন্তব্য</th>
+                    <th>পরিবর্তন/মুছুন</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% records.forEach(function(row){ %>
+
+                    <%
+                        const currentMonth = moment.moment().format("MMM-YYYY").toLowerCase();
+                        var startRange = "";
+                        var endRange = "";
+
+                        var prevEconomicStart = "";
+                        var prevEconomicEnd = "";
+
+                        if (moment.moment().format("M") < 7){
+                            startRange = "jul"+"-"+moment.moment().subtract(1, "year").format('yyyy')
+                            endRange = "jul"+"-"+moment.moment().format('yyyy')
+                        }else{
+                            startRange = "jul"+"-"+moment.moment().format('yyyy')
+                            endRange = "jul"+"-"+moment.moment().add(1, "year").format('yyyy')
+                        }
+
+
+                        // Previous Economic year
+
+                        if (moment.moment('nov-2020').format("M") < 7){
+                            prevEconomicStart = "jul"+"-"+moment.moment().subtract(2, "year").format('yyyy')
+                            prevEconomicEnd = "jul"+"-"+moment.moment().subtract(1, "year").format('yyyy')
+                        }else{
+                            prevEconomicStart = "jul"+"-"+moment.moment().subtract(1, "year").format('yyyy')
+                            prevEconomicEnd = "jul"+"-"+moment.moment().format('yyyy')
+                        }
+
+                        // current production (  উৎপাদন  )*******
+                        var currentProductionSum = 0;
+                        var previousMonthProduction = 0;
+                        const currentProd = JSON.parse(row.productionCurrent)
+                        currentProd.forEach(function(prodCurrent){
+                            if ( prodCurrent.time === moment.moment().format("MMM-YYYY").toLowerCase() ) {
+                                currentProductionSum += parseInt(prodCurrent.amount)
+                            }
+                            else if ( moment.moment( prodCurrent.time ).isSameOrAfter(startRange) &&  moment.moment( prodCurrent.time ).isSameOrBefore(endRange) ){
+                                previousMonthProduction += parseInt(prodCurrent.amount)
+                            }
+                        })
+
+                        // মোট উৎপাদন (চলতি+পূর্ব মাস) *********
+                        var totalProductionSum = 0;
+                        const TotalProduction = JSON.parse(row.productionTotal)
+                        TotalProduction.forEach(function(prodTotal){
+                            if ( moment.moment(currentMonth).isAfter(prodTotal.startTime) &&  moment.moment(currentMonth).isBefore(prodTotal.endTime) ){
+                                totalProductionSum += parseInt(prodTotal.amount)
+                            }
+                        })
+
+                        //ডিএই চালানে প্রাপ্তি (চলতি মাস) *********
+                        var daePraptiSum = 0;
+                        const currentDaePrapti = JSON.parse(row.daePrapti)
+                        currentDaePrapti.forEach(function(daePraptiCurrent){
+                            if ( daePraptiCurrent.time === moment.moment().format("MMM-YYYY").toLowerCase() ) {
+                                daePraptiSum += parseInt(daePraptiCurrent.amount)
+                            }
+                        })
+
+                        // পূর্ব বছরের জের *********
+                        var prevYearJer = 0;
+                        currentDaePrapti.forEach(function(daePraptiCurrent){
+                            if ( moment.moment( daePraptiCurrent.time ).isAfter(prevEconomicStart) &&  moment.moment( daePraptiCurrent.time ).isBefore(prevEconomicEnd) ) {
+                                prevYearJer += parseInt(daePraptiCurrent.amount)
+                            }
+                        })
+
+                        //  বিতরণ ********
+                        var currentBitoronSum = 0;
+                        var previousMonthBitoronSum = 0;
+                        const currBitoron = JSON.parse(row.bitoronCurrentMonth)
+                        currBitoron.forEach(function(BitoCurrent){
+                            if ( BitoCurrent.time === moment.moment().format("MMM-YYYY").toLowerCase() ) {
+                                currentBitoronSum += parseInt(BitoCurrent.amount)
+                            }
+                            else if ( moment.moment( BitoCurrent.time ).isAfter(startRange) &&  moment.moment( BitoCurrent.time ).isBefore(endRange) ){
+                                previousMonthBitoronSum += parseInt(BitoCurrent.amount)
+                            }
+                        })
+
+                        // মোট বিতরণ ******
+                        var totalBitoronSum = 0;
+                        const TotalBitoron = JSON.parse(row.bitoronTotal)
+                        TotalBitoron.forEach(function(bitorTotal){
+                            if ( moment.moment(currentMonth).isAfter(bitorTotal.startTime) &&  moment.moment(currentMonth).isBefore(bitorTotal.endTime) ){
+                                totalBitoronSum += parseInt(bitorTotal.amount)
+                            }
+                        })
+
+                        // ডিএই চালানে প্রদান *******
+                        var currentDaeProdanSum = 0;
+                        const currDaeProdan = JSON.parse(row.daeProdan)
+                        currDaeProdan.forEach(function(DaeProdanCurrent){
+                            if ( DaeProdanCurrent.time === moment.moment().format("MMM-YYYY").toLowerCase() ) {
+                                currentDaeProdanSum += parseInt(DaeProdanCurrent.amount)
+                            }
+                        })
+
+                        // মৃত/বিনষ্ট ********
+                        var currentMritoSum = 0;
+                        const currMrito = JSON.parse(row.deadWriteup)
+                        currMrito.forEach(function(MritoCurrent){
+                            if ( MritoCurrent.time === moment.moment().format("MMM-YYYY").toLowerCase() ) {
+                                currentMritoSum += parseInt(MritoCurrent.amount)
+                            }
+                        })
+
+                        // মজুদ ******
+                        var currentMojudSum = 0;
+                        const currMojud = JSON.parse(row.mojud)
+                        currMojud.forEach(function(MojudCurrent){
+                            if ( MojudCurrent.time === moment.moment().format("MMM-YYYY").toLowerCase() ) {
+                                currentMojudSum += parseInt(MojudCurrent.amount)
+                            }
+                        })
+
+                        // মন্তব্য *********
+                        var montobboSum = "";
+                        const currMontobbo = JSON.parse(row.comment)
+                        currMontobbo.forEach(function(MontobboCurrent){
+                            if ( MontobboCurrent.time === moment.moment().format("MMM-YYYY").toLowerCase() ) {
+                                montobboSum = MontobboCurrent.msg
+                            }
+                        })
+
+                    %>
+
+                    <tr>
+                        <td> <%= row.category %></td>
+                        <td><%= row.subCategory %></td>
+                        <td><%= row.biboron %></td>
+                        <td><%= row.breed %></td>
+                        <td><%= new Number(row.productionTarget).toLocaleString("bn-BD") %></td>
+                        <td>
+                            <%= new Number(currentProductionSum).toLocaleString("bn-BD") %>
+                        </td>
+                        <td> <%= new Number(previousMonthProduction).toLocaleString("bn-BD") %> </td>
+                        <td> <%= new Number(totalProductionSum).toLocaleString("bn-BD") %> </td>
+                        <td> <%= new Number(daePraptiSum).toLocaleString("bn-BD") %> </td>
+                        <td> <%= new Number(prevYearJer).toLocaleString("bn-BD") %> </td>
+                        <td> <%= new Number(totalProductionSum + daePraptiSum + prevYearJer).toLocaleString("bn-BD") %> </td>
+                        <td><%= new Number(currentBitoronSum).toLocaleString("bn-BD") %></td>
+                        <td><%= new Number(previousMonthBitoronSum).toLocaleString("bn-BD") %></td>
+                        <td><%= new Number(totalBitoronSum).toLocaleString("bn-BD") %></td>
+                        <td><%= new Number(currentDaeProdanSum).toLocaleString("bn-BD") %></td>
+                        <td><%= new Number(currentMritoSum).toLocaleString("bn-BD") %></td>
+                        <td><%= new Number(currentDaeProdanSum + currentMritoSum).toLocaleString("bn-BD") %></td>
+                        <td><%= new Number(currentMojudSum).toLocaleString("bn-BD") %></td>
+                        <td><%= montobboSum %></td>
+                        <td><a class="btn btn-primary btn-xs" href="/center/monthlyProgressEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                            <a class="btn btn-danger btn-xs" href="/delete/<%= row.id %>"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                <% }) %>
+                </tbody>
+            </table>
+        <% }
+        else{ %>
+            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+                <thead>
+                <tr>
+                    <th>ক্যাটাগরি নাম</th>
+                    <th>সাব-ক্যাটাগরি নাম</th>
+                    <th>বিবরণ</th>
+                    <th>জাত</th>
+                    <th>উৎপাদন (লক্ষ্যমাত্রা)</th>
+                    <th>উৎপাদন (চলতি মাস)</th>
+                    <th>উৎপাদন (পূর্বমাস পর্যন্ত)</th>
+                    <th>মোট উৎপাদন (চলতি+পূর্ব মাস)</th>
+                    <th>ডিএই চালানে প্রাপ্তি</th>
+                    <th>পূর্ব বছরের জের</th>
+                    <th>সর্বমোট (মোট+ডিএই চালানে প্রাপ্তি+পূর্ব বছরের জের)</th>
+                    <th>বিতরণ (চলতি মাস)</th>
+                    <th>বিতরণ (পূর্বমাস পর্যন্ত)</th>
+                    <th>বিতরণ মোট (চলতি+পূর্ব মাস)</th>
+                    <th>ডিএই চালানে প্রদান</th>
+                    <th>মৃত/বিনষ্ট রাইটআপ</th>
+                    <th>সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ)</th>
+                    <th>নীট মজুদ</th>
+                    <th>মন্তব্য</th>
+                    <th>পরিবর্তন/মুছুন</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% records.forEach(function(row){ %>
+                    <tr>
+                        <td colspan="10">No data Found</td>
+                    </tr>
+                <% }) %>
+                </tbody>
+            </table>
+        <% } %>
+    </div>
+</div>
+
+</body>
+</html>
