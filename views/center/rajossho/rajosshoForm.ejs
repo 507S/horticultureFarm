@@ -9,7 +9,7 @@
                     <div id="signupbox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                <div class="panel-title"><h2>মাসিক রাজস্ব অর্থ প্রাপ্তির হিসাব ফর্ম</h2></div>
+                                <div class="panel-title"><h2>মাসিক রাজস্ব অর্থ প্রাপ্তির ফর্ম</h2></div>
                                 <p><%
                                 if(success !=''){ %>
                                 <%= success %>
@@ -24,121 +24,126 @@
                                     </div>
 
                                         
-                                    <div class="form-group">
-                                        <label for="code" class="col-md-3 control-label">অর্থনৈতিক কোড নং</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="code" placeholder="অর্থনৈতিক কোড নং">
-                                        </div>
-                                    </div>
+                                    
                                     
                                     <div class="form-group">
                                         <label for="upokhat" class="col-md-3 control-label">উপ-খাতের নাম</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="upokhat" placeholder="উপ-খাতের নাম">
+                                            <select name="upokhat" id="upokhat" class="form-control">
+                                                <option value="">উপ-খাতের নাম</option>
+                                                <% rajosshoCodes.forEach(function(row){ %>
+                                                    <% if (row.upokhat != null) {%>
+                                                        <option value=<%= row.id %>><%= row.upokhat %></option>
+                                                    <% } %>
+                                                <% }) %>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="code" class="col-md-3 control-label">অর্থনৈতিক কোড নং</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="code" id="code" placeholder="অর্থনৈতিক কোড নং">
+                                            
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="july1" class="col-md-3 control-label">জুলাই/১৯</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="july1" placeholder="জুলাই/১৯">
+                                            <input type="number" class="form-control" name="july1" value="0" placeholder="জুলাই/১৯">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="august1" class="col-md-3 control-label">আগস্ট/১৯</label>
                                         <div class="col-md-9">
-                                        <input type="text" class="form-control" name="august1" placeholder="আগস্ট/১৯">
+                                        <input type="number" class="form-control" name="august1" value="0" placeholder="আগস্ট/১৯">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="sept1" class="col-md-3 control-label">সেপ্টে/১৯</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="sept1" placeholder="সেপ্টে/১৯">
+                                            <input type="number" class="form-control" name="sept1" value="0" placeholder="সেপ্টে/১৯">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="oct1" class="col-md-3 control-label">অক্টো/১৯</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="oct1" placeholder="অক্টো/১৯">
+                                            <input type="number" class="form-control" name="oct1" value="0" placeholder="অক্টো/১৯">
                                         </div>
                                     </div>
                                     
                                     <div class="form-group">
                                         <label for="nov1" class="col-md-3 control-label">নভে/১৯</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="nov1" placeholder="নভে/১৯">
+                                            <input type="number" class="form-control" name="nov1" value="0" placeholder="নভে/১৯">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="dec1" class="col-md-3 control-label">ডিসে/১৯</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="dec1" placeholder="ডিসে/১৯">
+                                            <input type="number" class="form-control" name="dec1" value="0" placeholder="ডিসে/১৯">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="jan2" class="col-md-3 control-label">জানু/২০</label>
                                         <div class="col-md-9">
-                                        <input type="text" class="form-control" name="jan2" placeholder="জানু/২০">
+                                        <input type="number" class="form-control" name="jan2" value="0" placeholder="জানু/২০">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="feb2" class="col-md-3 control-label">ফেব্রু/২০</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="feb2" placeholder="ফেব্রু/২০">
+                                            <input type="number" class="form-control" name="feb2" value="0" placeholder="ফেব্রু/২০">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="march2" class="col-md-3 control-label">মার্চ/২০</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="march2" placeholder="মার্চ/২০">
+                                            <input type="number" class="form-control" name="march2" value="0" placeholder="মার্চ/২০">
                                         </div>
                                     </div>
                                     
                                     <div class="form-group">
                                         <label for="apr2" class="col-md-3 control-label">এপ্রিল/২০</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="apr2" placeholder="এপ্রিল/২০">
+                                            <input type="number" class="form-control" name="apr2" value="0" placeholder="এপ্রিল/২০">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="may2" class="col-md-3 control-label">মে/২০</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="may2" placeholder="মে/২০">
+                                            <input type="number" class="form-control" name="may2" value="0" placeholder="মে/২০">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="june2" class="col-md-3 control-label">জুন/২০</label>
                                         <div class="col-md-9">
-                                        <input type="text" class="form-control" name="june2" placeholder="জুন/২০">
+                                        <input type="number" class="form-control" name="june2" value="0" placeholder="জুন/২০">
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="total" class="col-md-3 control-label">সর্বমোট</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="total" placeholder="সর্বমোট">
-                                        </div>
-                                    </div>
+                                   
                                    
                                     <div class="form-group">
                                         <label for="year" class="col-md-3 control-label">বছর</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="year" placeholder="বছর">
+                                            <input type="number" class="form-control" name="year" placeholder="বছর">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="year" class="col-md-3 control-label">userid</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="user_id" placeholder="id" value="<%= user_id %>" >
+                                            <input type="number" class="form-control" name="user_id" placeholder="id" value="<%= user_id %>" >
                                         </div>
                                     </div>
                                     
@@ -161,3 +166,28 @@
         </div>
     </div>
 <%- include('../../includes/footer')-%>
+
+<script>
+    $('#upokhat').on("change",function () {
+        var upokhat = $('#upokhat').val();
+        // alert(category)
+        $.ajax({
+            type: "POST",
+            url: "/center/fetchRajosshoCode",
+            data: {upokhat: upokhat},
+            datatype: "json",
+            beforeSend: function() {
+                // setting a timeout
+                $('#loading').show();
+                $('#output').hide();
+            },
+            success: function (code) {
+                $("#code").val(code);
+            },
+            complete: function() {
+                $('#loading').hide();
+                $('#output').show();
+            }
+        });
+    });    
+</script>

@@ -150,6 +150,8 @@ module.exports.centerDashboard = async(req,res) => {
                 center_id : req.session.user_id
             }
         });
+        const rajosshos = await rajossho.findAll();
+
 
         var startRange = "";
         var endRange = "";
@@ -164,6 +166,8 @@ module.exports.centerDashboard = async(req,res) => {
         var totalProduct = 0;
         var totalBitoron = 0;
         var totalMojud = 0;
+        var totalrajossho = 0;
+
         monthly_progress.forEach((row) => {
             const productTotalParse = JSON.parse(row.productionTotal);
             const bitoronParse = JSON.parse(row.bitoronTotal);
@@ -183,9 +187,12 @@ module.exports.centerDashboard = async(req,res) => {
                     totalMojud += parseInt(mojuToal.amount)
                 }
             })
-        })
+        });rajosshos.forEach((row) => {
+            totalrajossho += parseInt(row.total)
+            
+        });
 
-        res.render('center/dashboard', { title: 'Horticulture Wing Central Management Software', msg:'Welcome' ,totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud});
+        res.render('center/dashboard', { title: 'Horticulture Wing Central Management Software', msg:'Welcome' ,totalrajossho:totalrajossho,totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud});
     }
     catch (e) {
         console.log(e)
@@ -1404,25 +1411,84 @@ module.exports.rajosshoYear=async(req,res)=>{
 };
 
 module.exports.rajosshoForm=async(req,res)=>{
-    res.render('center/rajossho/rajosshoForm', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির হিসাব',msg:'' ,success:'',user_id: req.session.user_id});
+    try {
+        var rajosshoCodes = await rajosshoCode.findAll();
+        res.render('center/rajossho/rajosshoForm', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির হিসাব',msg:'' ,success:'',user_id: req.session.user_id,rajosshoCodes: rajosshoCodes});
+    }catch (e) {
+        console.log(e)
+    }
 };
 
 module.exports.rajosshoFormPost=async(req,res)=>{
     var code= req.body.code;
     var upokhat= req.body.upokhat;
-    var july1= req.body.july1;
-    var august1= req.body.august1;
-    var sept1= req.body.sept1;
-    var oct1= req.body.oct1;
-    var nov1= req.body.nov1;
-    var dec1= req.body.dec1;
-    var jan2= req.body.jan2;
-    var feb2= req.body.feb2;
-    var march2= req.body.march2;
-    var apr2= req.body.apr2;
-    var may2= req.body.may2;
-    var june2= req.body.june2;
-    var total= req.body.total;
+    var july1=req.body.july1;
+    var august1=req.body.august1;
+    var sept1=req.body.sept1;
+    var oct1=req.body.oct1;
+    var nov1=req.body.nov1;
+    var dec1=req.body.dec1;
+    var jan2=req.body.jan2;
+    var feb2=req.body.feb2;
+    var march2=req.body.march2;
+    var apr2=req.body.apr2;
+    var may2=req.body.may2;
+    var june2=req.body.june2;
+    var year=req.body.year;
+    var user_id=req.body.user_id;
+
+    if(july1==null){        
+        july1=0;
+    };
+    if(august1==null){
+        august1=0;
+    };
+    if(sept1==null){
+        sept1=0;
+    };
+    if(oct1==null){
+        oct1=0;
+    };
+    if(nov1==null){
+        nov1=0;
+    };
+    if(dec1==null){
+        dec1=0;
+    };
+    if(jan2==null){
+        jan2=0;
+    };
+    if(feb2==null){
+        feb2=0;
+    };
+    if(march2==null){
+        march2=0;
+    };
+    if(apr2==null){
+        apr2=0;
+    };
+    if(may2==null){
+        may2=0;
+    };
+    if(june2==null){
+        june2=0;
+    };
+    console.log("july1,august1,sept1,oct1,nov1,dec1,jan2,feb2,march2,apr2,may2,june2",july1,august1,sept1,oct1,nov1,dec1,jan2,feb2,march2,apr2,may2,june2);
+    var july1= parseInt(july1);
+    var august1= parseInt(august1);
+    var sept1= parseInt(sept1);
+    var oct1= parseInt(oct1);
+    var nov1= parseInt(nov1);
+    var dec1= parseInt(dec1);
+    var jan2= parseInt(jan2);
+    var feb2= parseInt(feb2);
+    var march2= parseInt(march2);
+    var apr2= parseInt(apr2);
+    var may2= parseInt(may2);
+    var june2= parseInt(june2);
+    var total= july1+august1+sept1+oct1+nov1+dec1+jan2+feb2+march2+apr2+may2+june2;
+    console.log("july1,august1,sept1,oct1,nov1,dec1,jan2,feb2,march2,apr2,may2,june2,total",july1,august1,sept1,oct1,nov1,dec1,jan2,feb2,march2,apr2,may2,june2,total);
+
     var year =req.body.year;
     var user_id =req.body.user_id;
 
@@ -1452,7 +1518,181 @@ module.exports.rajosshoFormPost=async(req,res)=>{
         });
   
 };
+module.exports.rajosshoAdd=async(req,res)=>{
+    await rajossho.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('center/rajossho/rajosshoAdd', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তি',msg:'' ,success:'',records: data});
+    })
+    .catch(err => {
+        console.log("outside");
+        res.render('center/rajossho/rajossho', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির',success:'', records: err });
+    })
+};
 
+module.exports.rajosshoAddPost=async(req,res)=>{
+      console.log("idddsss",req.params.id);
+        try{
+            var data=await rajossho.findByPk(req.params.id);      
+    const m =res.locals.moment();
+    var months=m.month()
+    var income= parseInt(req.body.income);
+    if(months===0){
+        jan2=income+data.jan2;
+        total=income+data.total;
+        var varib=await rajossho.update({
+            jan2: jan2 ,
+            total:total
+
+            },
+            {
+                where: {id: req.params.id}
+            })    
+    }
+    else if(months==1){
+        feb2=income+data.feb2;
+        total=income+data.total;
+        var varib=await rajossho.update({
+            feb2: feb2,
+            total:total   
+            },
+            {
+                where: {id: req.params.id}
+            }) 
+    }
+    else if(months==2){
+        march2=income+data.march2;
+        total=income+data.total;
+        var varib=await rajossho.update({
+            march2: march2,
+            total:total    
+            },
+            {
+                where: {id: req.params.id}
+            }) 
+    }
+    else if(months==3){
+        apr2=income+data.apr2;
+        total=income+data.total;
+        var varib=await rajossho.update({
+            apr2: apr2,
+            total:total   
+            },
+            {
+                where: {id: req.params.id}
+            }) 
+    }
+    else if(months==4){
+        may2=income+data.may2;
+        total=income+data.total;
+        var varib=await rajossho.update({
+            may2: may2,
+            total:total  
+            },
+            {
+                where: {id: req.params.id}
+            }) 
+    }
+    else if(months==5){
+        june2=income+data.june2;
+        total=income+data.total;
+        var varib= await rajossho.update({
+            june2: june2,
+            total:total   
+            },
+            {
+                where: {id: req.params.id}
+            }) 
+    }
+    else if(months==6){
+        july1=income+data.july1;
+        total=income+data.total;
+        var varib=await rajossho.update({
+            july1: july1,
+            total:total   
+            },
+            {
+                where: {id: req.params.id}
+            }) 
+    }
+    else if(months==7){
+        august1=income+data.august1;
+        total=income+data.total;
+        baki=data.baki-income;
+        var varib=await rajossho.update({
+            august1: august1,
+            total:total   
+            },
+            {
+                where: {id: req.params.id}
+            }) 
+    }
+    else if(months==8){
+        sept1=income+data.sept1;
+        total=income+data.total;
+        var varib=await rajossho.update({
+            sept1: sept1,
+            total:total  
+            },
+            {
+                where: {id: req.params.id}
+            }) 
+    }
+    else if(months==9){
+        oct1=income+data.oct1;
+        total=income+data.total;
+        var varib=await rajossho.update({
+            oct1: oct1,
+            total:total
+            },
+            {
+                where: {id: req.params.id}
+            }) 
+    }
+    else if(months==10){
+        console.log("data.nov1",data.nov1);
+        nov1=income+data.nov1;
+        total=income+data.total;
+        console.log("dekhi to vai",nov1);
+        var varib=await rajossho.update({
+            nov1: nov1,
+            total:total 
+            },
+            {
+                where: {id: req.params.id}
+            }) 
+    }
+    else if(months==11){
+        dec1=income+data.dec1;
+        total=income+data.total;
+        var varib=await rajossho.update({
+            dec1: dec1,
+            total:total  
+            },
+            {
+                where: {id: req.params.id}
+            }) 
+    }   
+            res.redirect('/center/rajossho');
+        }
+        catch(err){
+           res.send(err); 
+        }
+};
+module.exports.fetchRajosshoCode = async(req,res) => {
+    console.log("upokhat",req.body.upokhat)
+    await rajosshoCode.findOne({
+        where: {id: req.body.upokhat}
+    })
+        .then(data => {
+            console.log("data",data.code);
+            var code=data.code;
+            res.send(code);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+};
 //rajossho controller end
 
 //expense controller
@@ -1461,6 +1701,7 @@ module.exports.expense=async(req,res)=>{
         where: {center_id: req.session.user_id}
     })
     .then(data => {
+        
         console.log("inside");
         res.render('center/expense/expense', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী',success:'', records: data });
     })
@@ -1489,30 +1730,86 @@ module.exports.expenseYear=async(req,res)=>{
 };
 
 module.exports.expenseForm=async(req,res)=>{
-    res.render('center/expense/expenseForm', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী',msg:'' ,success:'',user_id: req.session.user_id});
+    try {
+        var expenseCodes = await expenseCode.findAll();
+        res.render('center/expense/expenseForm', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী',msg:'',success:'',user_id: req.session.user_id,expenseCodes: expenseCodes});
+    }catch (e) {
+        console.log(e)
+    }
 };
 
 module.exports.expenseFormPost=async(req,res)=>{
     var code= req.body.code;
     var khat= req.body.khat;
-    var boraddo= req.body.boraddo;
-    var july1= req.body.july1;
-    var august1= req.body.august1;
-    var sept1= req.body.sept1;
-    var oct1= req.body.oct1;
-    var nov1= req.body.nov1;
-    var dec1= req.body.dec1;
-    var jan2= req.body.jan2;
-    var feb2= req.body.feb2;
-    var march2= req.body.march2;
-    var apr2= req.body.apr2;
-    var may2= req.body.may2;
-    var june2= req.body.june2;
-    var total= req.body.total;
-    var baki= req.body.baki;
-    var comment= req.body.comment;
-    var year =req.body.year;
-    var user_id =req.body.user_id;
+    var boraddo=req.body.boraddo;
+    var july1=req.body.july1;
+    var august1=req.body.august1;
+    var sept1=req.body.sept1;
+    var oct1=req.body.oct1;
+    var nov1=req.body.nov1;
+    var dec1=req.body.dec1;
+    var jan2=req.body.jan2;
+    var feb2=req.body.feb2;
+    var march2=req.body.march2;
+    var apr2=req.body.apr2;
+    var may2=req.body.may2;
+    var june2=req.body.june2;
+    var comment=req.body.comment;
+    var year=req.body.year;
+    var user_id=req.body.user_id;
+
+    if(july1==null){        
+        july1=0;
+    };
+    if(august1==null){
+        august1=0;
+    };
+    if(sept1==null){
+        sept1=0;
+    };
+    if(oct1==null){
+        oct1=0;
+    };
+    if(nov1==null){
+        nov1=0;
+    };
+    if(dec1==null){
+        dec1=0;
+    };
+    if(jan2==null){
+        jan2=0;
+    };
+    if(feb2==null){
+        feb2=0;
+    };
+    if(march2==null){
+        march2=0;
+    };
+    if(apr2==null){
+        apr2=0;
+    };
+    if(may2==null){
+        may2=0;
+    };
+    if(june2==null){
+        june2=0;
+    };
+    console.log("july1,august1,sept1,oct1,nov1,dec1,jan2,feb2,march2,apr2,may2,june2",july1,august1,sept1,oct1,nov1,dec1,jan2,feb2,march2,apr2,may2,june2);
+    var july1= parseInt(july1);
+    var august1= parseInt(august1);
+    var sept1= parseInt(sept1);
+    var oct1= parseInt(oct1);
+    var nov1= parseInt(nov1);
+    var dec1= parseInt(dec1);
+    var jan2= parseInt(jan2);
+    var feb2= parseInt(feb2);
+    var march2= parseInt(march2);
+    var apr2= parseInt(apr2);
+    var may2= parseInt(may2);
+    var june2= parseInt(june2);
+    var total= july1+august1+sept1+oct1+nov1+dec1+jan2+feb2+march2+apr2+may2+june2;
+    var baki=boraddo-total;
+    console.log("july1,august1,sept1,oct1,nov1,dec1,jan2,feb2,march2,apr2,may2,june2,total",july1,august1,sept1,oct1,nov1,dec1,jan2,feb2,march2,apr2,may2,june2,total);
 
     await expense.create({
         code: code,
@@ -1543,7 +1840,203 @@ module.exports.expenseFormPost=async(req,res)=>{
         });
   
 };
+module.exports.expenseAdd=async(req,res)=>{
+    await expense.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('center/expense/expenseAdd', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী',msg:'' ,success:'',records: data});
+    })
+    .catch(err => {
+        console.log("outside");
+        res.render('center/expense/expense', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী',success:'', records: err });
+    })
+};
 
+module.exports.expenseAddPost=async(req,res)=>{
+      console.log("idddsss",req.params.id);
+        try{
+            var data=await expense.findByPk(req.params.id);      
+    const m =res.locals.moment();
+    var months=m.month()
+    var khoroch= parseInt(req.body.khoroch);
+    if(months===0){
+        jan2=khoroch+data.jan2;baki;
+        total=khoroch+data.total;
+        baki=data.baki-khoroch;
+        var varib=await expense.update({
+            jan2: jan2 ,
+            total:total,
+            baki:baki
+
+            },
+            {
+                where: {id: req.params.id}
+            })    
+    }
+    else if(months==1){
+        feb2=khoroch+data.feb2;
+        total=khoroch+data.total;
+        baki=data.baki-khoroch;
+        var varib=await expense.update({
+            feb2: feb2,
+            total:total,
+            baki:baki    
+            },
+            {
+                where: {id: req.params.id}
+            }) 
+    }
+    else if(months==2){
+        march2=khoroch+data.march2;
+        total=khoroch+data.total;
+        baki=data.baki-khoroch;
+        var varib=await expense.update({
+            march2: march2,
+            total:total,
+            baki:baki     
+            },
+            {
+                where: {id: req.params.id}
+            }) 
+    }
+    else if(months==3){
+        apr2=khoroch+data.apr2;
+        total=khoroch+data.total;
+        baki=data.baki-khoroch;
+        var varib=await expense.update({
+            apr2: apr2,
+            total:total,
+            baki:baki     
+            },
+            {
+                where: {id: req.params.id}
+            }) 
+    }
+    else if(months==4){
+        may2=khoroch+data.may2;
+        total=khoroch+data.total;
+        baki=data.baki-khoroch;
+        var varib=await expense.update({
+            may2: may2,
+            total:total,
+            baki:baki     
+            },
+            {
+                where: {id: req.params.id}
+            }) 
+    }
+    else if(months==5){
+        june2=khoroch+data.june2;
+        total=khoroch+data.total;
+        baki=data.baki-khoroch;
+        var varib= await expense.update({
+            june2: june2,
+            total:total,
+            baki:baki     
+            },
+            {
+                where: {id: req.params.id}
+            }) 
+    }
+    else if(months==6){
+        july1=khoroch+data.july1;
+        total=khoroch+data.total;
+        baki=data.baki-khoroch;
+        var varib=await expense.update({
+            july1: july1,
+            total:total,
+            baki:baki     
+            },
+            {
+                where: {id: req.params.id}
+            }) 
+    }
+    else if(months==7){
+        august1=khoroch+data.august1;
+        total=khoroch+data.total;
+        baki=data.baki-khoroch;
+        var varib=await expense.update({
+            august1: august1,
+            total:total,
+            baki:baki     
+            },
+            {
+                where: {id: req.params.id}
+            }) 
+    }
+    else if(months==8){
+        sept1=khoroch+data.sept1;
+        total=khoroch+data.total;
+        baki=data.baki-khoroch;
+        var varib=await expense.update({
+            sept1: sept1,
+            total:total,
+            baki:baki     
+            },
+            {
+                where: {id: req.params.id}
+            }) 
+    }
+    else if(months==9){
+        oct1=khoroch+data.oct1;
+        total=khoroch+data.total;
+        baki=data.baki-khoroch;
+        var varib=await expense.update({
+            oct1: oct1,
+            total:total,
+            baki:baki     
+            },
+            {
+                where: {id: req.params.id}
+            }) 
+    }
+    else if(months==10){
+        console.log("data.nov1",data.nov1);
+        nov1=khoroch+data.nov1;
+        total=khoroch+data.total;
+        baki=data.baki-khoroch;
+        console.log("dekhi to vai",nov1);
+        var varib=await expense.update({
+            nov1: nov1,
+            total:total,
+            baki:baki     
+            },
+            {
+                where: {id: req.params.id}
+            }) 
+    }
+    else if(months==11){
+        dec1=khoroch+data.dec1;
+        total=khoroch+data.total;
+        baki=data.baki-khoroch;
+        var varib=await expense.update({
+            dec1: dec1,
+            total:total,
+            baki:baki     
+            },
+            {
+                where: {id: req.params.id}
+            }) 
+    }   
+            res.redirect('/center/expense');
+        }
+        catch(err){
+           res.send(err); 
+        }
+};
+module.exports.fetchExpenseCode = async(req,res) => {
+    await expenseCode.findOne({
+        where: {id: req.body.khat}
+    })
+        .then(data => {
+            console.log("data",data.code);
+            var code=data.code;
+            res.send(code);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+};
 //expense controller end
 
 module.exports.fetchSubCategory = async(req,res) => {

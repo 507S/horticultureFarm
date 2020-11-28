@@ -12,12 +12,15 @@ const winterVeg = db.winterVeg;
 const regularWorker = db.regularWorker;
 const irregularWorker = db.irregularWorker;
 const apa = db.apa;
+const apaCode = db.apaCode;
 const loan = db.loan;
 const specialCoconut = db.specialCoconut;
 const revolvingFund = db.revolvingFund;
 const chak1 = db.chak1;
 const chak2 = db.chak2;
 const rajossho = db.rajossho;
+const rajosshoCode = db.rajosshoCode;
+const expenseCode = db.expenseCode;
 const expense = db.expense;
 const monthlyProgress = db.monthlyProgress;
 const cropCategory = db.cropcategory
@@ -136,6 +139,7 @@ module.exports.pdDashboard = async(req,res) => {
 
         const centerinfo = await center.findAll();
         const monthly_progress = await monthlyProgress.findAll();
+        const rajosshos = await rajossho.findAll();
 
         var startRange = "";
         var endRange = "";
@@ -150,6 +154,8 @@ module.exports.pdDashboard = async(req,res) => {
         var totalProduct = 0;
         var totalBitoron = 0;
         var totalMojud = 0;
+        var totalrajossho = 0;
+
         monthly_progress.forEach((row) => {
             const productTotalParse = JSON.parse(row.productionTotal);
             const bitoronParse = JSON.parse(row.bitoronTotal);
@@ -169,9 +175,13 @@ module.exports.pdDashboard = async(req,res) => {
                     totalMojud += parseInt(mojuToal.amount)
                 }
             })
-        })
+        });
+        rajosshos.forEach((row) => {
+            totalrajossho += parseInt(row.total)
+            
+        });
 
-        res.render('pd/dashboard', { title: 'Horticulture Wing Central Management Software', msg:'Welcome' ,totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud, center:centerinfo, crop: crop });
+        res.render('pd/dashboard', { title: 'Horticulture Wing Central Management Software', msg:'Welcome' ,totalrajossho:totalrajossho, totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud, center:centerinfo, crop: crop });
     }
     catch (e) {
         console.log(e)
@@ -1639,3 +1649,49 @@ console.log('productionTotal=',productionTotal);
 };
 
 //monthlyProgress controller end
+
+//newRajosshoCode
+module.exports.newRajosshoCode=async(req,res)=>{
+    var code= req.body.newRajosshoCode;
+    var upokhat= req.body.newUpokhat;
+    await rajosshoCode.create({
+        code: code,
+        upokhat:upokhat
+        }).then(data => {
+            res.redirect('/pd/dashboard');
+        }).catch(err => {
+            res.render('errorpage',err);
+        });
+  
+};
+//newRajosshoCode ends
+
+//newKhorochCode
+module.exports.newKhorochCode=async(req,res)=>{
+    var code= req.body.newKhorochCode;
+    var khat= req.body.newkhat;
+    await expenseCode.create({
+        code: code,
+        khat:khat
+        }).then(data => {
+            res.redirect('/pd/dashboard');
+        }).catch(err => {
+            res.render('errorpage',err);
+        });
+  
+};
+//newKhorochCode ends
+
+//apaCode
+module.exports.apaCode=async(req,res)=>{
+    var newApaUddessho= req.body.newApaUddessho;
+    await apaCode.create({
+        newApaUddessho: newApaUddessho,
+        }).then(data => {
+            res.redirect('/pd/dashboard');
+        }).catch(err => {
+            res.render('errorpage',err);
+        });
+  
+};
+//apaCode ends
