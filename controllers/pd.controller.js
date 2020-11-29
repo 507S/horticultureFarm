@@ -279,17 +279,22 @@ module.exports.topSheet=async(req,res)=>{
 };
 
 module.exports.topSheetFilter=async(req,res)=>{
-    await topSheet.findAll({
-        where: {year: req.body.year,center_id : req.body.center}
-    })
-    .then(data => {
-        res.render('pd/topSheet/topSheetTable', {records: data} ,function(err, html) {
+    try{
+        const cropCatg = await cropCategory.findAll({
+            where: {
+                type: 'subCategory'
+            }
+        })
+        const topSheets = await monthlyProgress.findAll({
+            where: {center_id: req.body.center}
+        })
+        res.render('pd/topSheet/topSheetTable', {records: topSheets , cropCatg:cropCatg} ,function(err, html) {
             res.send(html);
         });
-    })
-    .catch(err => {
-        console.log(err);
-    })
+    }
+    catch (e) {
+        console.log(e);
+    }
 
 };
 
@@ -1585,7 +1590,7 @@ module.exports.monthlyProgress=async(req,res)=>{
 
 module.exports.monthlyProgressFilter=async(req,res)=>{
     await monthlyProgress.findAll({
-        where: {year: req.body.year, center_id : req.body.center}
+        where: {center_id : req.body.center}
     })
     .then(data => {
         res.render('pd/monthlyProgress/monthlyProgressTable', {records: data} ,function(err, html) {
