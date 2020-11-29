@@ -4,22 +4,22 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 // var logger = require('morgan');
 var session = require('express-session');
-var localStorage=require('local-storage');
+var localStorage = require('local-storage');
 const port = process.env.PORT || 8000;
-var dotenv= require('dotenv');
+var dotenv = require('dotenv');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var centerRouter = require('./routes/center');
 var pdRouter = require('./routes/pd');
 
-dotenv.config({path:'./.env'});
+dotenv.config({ path: './.env' });
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.use(session({ secret: 'keyboard cat', cookie: { maxAge: Date.now() + (30 * 86400 * 1000)  }}))
+app.use(session({ secret: 'keyboard cat', saveUninitialized: true, resave: true, cookie: { maxAge: Date.now() + (30 * 86400 * 1000) } }))
 // app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -27,7 +27,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.locals.type = req.session.type;
   res.locals.user_id = req.session.user_id;
   res.locals.moment = require('moment');
@@ -60,13 +60,13 @@ app.use('/pd', pdRouter);
 
 
 const db = require("./models");
-db.sequelize.sync();
+db.sequelize.sync().catch(error => console.log(error.message));
 
 db.sequelize.sync({ force: false }).then(() => {
   console.log("Drop and re-sync db.");
-});
+}).catch(error => console.log(error.message));
 
-app.listen(port,function () {
+app.listen(port, function () {
   console.log(`server running on port ${port}`)
 })
 
