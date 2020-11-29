@@ -1,12 +1,12 @@
 const dotenv = require('dotenv');
 dotenv.config()
-const { DBUSER, DBPASSWORD } = process.env;
+const { DBUSER, DBPASSWORD, DB } = process.env;
 //console.log(DBUSER, DBPASSWORD)
 module.exports = {
   HOST: "localhost",
   USER: DBUSER,
   PASSWORD: DBPASSWORD,
-  DB: "horticultures",
+  DB: DB,
   dialect: "mysql",
   pool: {
     max: 5,
