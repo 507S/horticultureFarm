@@ -2112,7 +2112,6 @@ module.exports.monthlyProgressYear=async(req,res)=>{
         // }
 
         where:{
-            year: req.body.year,
             center_id: req.session.user_id,
         }
 
@@ -2215,7 +2214,6 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
     var grandTotalBitoron= req.body.grandTotalBitoron;
     var mojud= req.body.mojud;
     var comment= req.body.comment;
-    var year =req.body.year;
     var user_id =req.body.user_id;
     console.log('productionTotal=',res.locals.moment('2014-09-28').format("MMM-YYYY").toLowerCase());
     const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase()
@@ -2313,8 +2311,7 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
         deadWriteup: JSON.stringify(currentDeadWriteup),
         mojud: JSON.stringify(currentMojud),
         comment: JSON.stringify(currentComment),
-        timeFrame: time,
-        year: year,
+        timeFrame: JSON.stringify(time),
         center_id:user_id
 
     }).then(data => {
@@ -2359,7 +2356,6 @@ module.exports.monthlyProgressUpdate = async(req,res) => {
     var grandTotalBitoron= req.body.grandTotalBitoron;
     var mojud= req.body.mojud;
     var comment= req.body.comment;
-    var year =req.body.year;
     var user_id =req.body.user_id;
     var editDate = req.body.editDate.toLowerCase();
 
@@ -2530,7 +2526,6 @@ module.exports.monthlyProgressUpdate = async(req,res) => {
             mojud: JSON.stringify(currentMojud),
             comment: JSON.stringify(currentComment),
             timeFrame: time,
-            year: year,
             center_id:user_id
 
         },

@@ -51,10 +51,7 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING
       },
       timeFrame: {
-        type: Sequelize.JSON
-      },
-      year: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT('long')
       },
       center_id: {
         type: Sequelize.INTEGER
