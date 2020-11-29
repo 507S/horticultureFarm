@@ -1,4 +1,7 @@
-const { DBUSER, DBPASSWORD } = process.env;
+const dotenv = require('dotenv');
+dotenv.config()
+//const { DBUSER, DBPASSWORD } = process.env;
+console.log(DBUSER, DBPASSWORD)
 module.exports = {
   HOST: "localhost",
   USER: DBUSER,
