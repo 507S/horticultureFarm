@@ -100,7 +100,7 @@
                                             <% crop.forEach((row) => {
                                             if (row.type === 'mainCategory'){
                                             %>
-                                                <p> <%= row.name %> </p>
+                                                <span style="margin-right: 2px"> <%= row.name %> </span> |
                                             <%
                                             }
                                             })
@@ -118,7 +118,7 @@
                                     <div class="form-row">
                                         <div class="col">
                                             <label for="">Main Category</label>
-                                            <select class="form-control" id="main_category" name="category">
+                                            <select class="form-control" id="main_category" name="main_category">
                                                 <option selected> Select a Category </option>
                                                 <% crop.forEach((row) => {
                                                 if (row.type === 'mainCategory'){
@@ -142,7 +142,7 @@
                                             <% crop.forEach((row) => {
                                             if (row.type === 'subCategory'){
                                             %>
-                                                <p> <%= row.name %> </p>
+                                                <span style="margin-right: 2px"> <%= row.name %> </span> |
                                             <%
                                             }
                                             })
@@ -160,7 +160,7 @@
                                     <div class="form-row">
                                         <div class="col">
                                             <label for="">Subcategory</label>
-                                            <select class="form-control" id="sub_category_list" name="subcategory">
+                                            <select class="form-control" id="sub_category_list" name="sub_category_list">
                                                 <option selected> Select a Sub Category </option>
                                                 <% crop.forEach((row) => {
                                                 if (row.type === 'subCategory'){
@@ -184,7 +184,7 @@
                                             <% crop.forEach((row) => {
                                             if (row.type === 'biboron'){
                                             %>
-                                                <p> <%= row.name %> </p>
+                                                <span  style="margin-right: 2px"> <%= row.name %> </span> |
                                             <%
                                             }
                                             })
@@ -202,7 +202,7 @@
                                     <div class="form-row">
                                         <div class="col">
                                             <label for="">Biboron</label>
-                                            <select class="form-control" id="biboron_list" name="biboron">
+                                            <select class="form-control" id="biboron_list" name="biboron_list">
                                                 <option selected> Select a Biboron </option>
                                                 <% crop.forEach((row) => {
                                                 if (row.type === 'biboron'){
@@ -226,7 +226,7 @@
                                             <% crop.forEach((row) => {
                                             if (row.type === 'jat'){
                                             %>
-                                                <p> <%= row.name %> </p>
+                                                <span  style="margin-right: 2px"> <%= row.name %> </span> |
                                             <%
                                             }
                                             })

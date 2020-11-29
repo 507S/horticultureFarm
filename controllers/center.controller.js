@@ -268,7 +268,7 @@ module.exports.topSheetYear=async(req,res)=>{
             }
         })
         const topSheets = await monthlyProgress.findAll({
-            where: {year: req.body.year,center_id: req.session.user_id}
+            where: {center_id: req.session.user_id}
         })
         res.render('center/topSheet/topSheetTable', {records: topSheets , cropCatg:cropCatg} ,function(err, html) {
             res.send(html);
