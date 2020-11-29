@@ -5,7 +5,6 @@ var cookieParser = require('cookie-parser');
 // var logger = require('morgan');
 var session = require('express-session');
 var localStorage = require('local-storage');
-const port = process.env.PORT || 8000;
 var dotenv = require('dotenv');
 
 var indexRouter = require('./routes/index');
@@ -13,7 +12,7 @@ var usersRouter = require('./routes/users');
 var centerRouter = require('./routes/center');
 var pdRouter = require('./routes/pd');
 
-dotenv.config({ path: './.env' });
+dotenv.config();
 var app = express();
 
 // view engine setup
@@ -66,6 +65,7 @@ db.sequelize.sync({ force: false }).then(() => {
   console.log("Drop and re-sync db.");
 }).catch(error => console.log(error.message));
 
+const port = process.env.PORT || 8000;
 app.listen(port, function () {
   console.log(`server running on port ${port}`)
 })
