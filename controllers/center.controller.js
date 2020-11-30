@@ -18,6 +18,7 @@ const winterVeg = db.winterVeg;
 const regularWorker = db.regularWorker;
 const irregularWorker = db.irregularWorker;
 const apa = db.apa;
+const apaCode = db.apaCode;
 const loan = db.loan;
 const specialCoconut = db.specialCoconut;
 const revolvingFund = db.revolvingFund;
@@ -27,7 +28,8 @@ const rajossho = db.rajossho;
 const expense = db.expense;
 const monthlyProgress = db.monthlyProgress;
 const cropCategory = db.cropcategory;
-
+const rajosshoCode= db.rajosshoCode;
+const expenseCode= db.expenseCode;
 const production = db.production;
 const daeprapti = db.daeprapti;
 const bitoron = db.bitoron;
@@ -935,7 +937,12 @@ module.exports.apaYear=async(req,res)=>{
 };
 
 module.exports.apaForm=async(req,res)=>{
-    res.render('center/apa/apaForm', { title: 'এপিএ',msg:'' ,success:'',user_id: req.session.user_id});
+    try {
+        const apaCodes = await apaCode.findAll();
+        res.render('center/apa/apaForm', { title: 'এপিএ',msg:'' ,success:'',user_id: req.session.user_id,apaCodes: apaCodes});
+    }catch (e) {
+        console.log(e)
+    }
 };
 
 module.exports.apaFormPost=async(req,res)=>{
@@ -957,13 +964,20 @@ module.exports.apaFormPost=async(req,res)=>{
     var year =req.body.year;
     var user_id =req.body.user_id;
 
+    const uddesshoName = await apaCode.findByPk(uddessho)
+    const maanName = await apaCode.findByPk(maan)
+    const workName = await apaCode.findByPk(work)
+    const shuchokName = await apaCode.findByPk(shuchok)
+    const ekokName = await apaCode.findByPk(ekok)
+    const shuchokMaanName = await apaCode.findByPk(shuchokMaan)
+
     await apa.create({
-        uddessho: uddessho,
-        maan:maan,
-        work:work,
-        shuchok: shuchok,
-        ekok:ekok,
-        shuchokMaan:shuchokMaan,
+        uddessho: uddesshoName.name,
+        maan:maanName.name,
+        work:workName.name,
+        shuchok: shuchokName.name,
+        ekok:ekokName.name,
+        shuchokMaan:shuchokMaanName.name,
         achievement1: achievement1,
         achievement2:achievement2,
         best:best,
@@ -982,6 +996,65 @@ module.exports.apaFormPost=async(req,res)=>{
             res.render('errorpage',err);
         });
   
+};
+module.exports.fetchMaan = async(req,res) => {
+    console.log("parent id",req.body.uddessho)
+    await apaCode.findAll({
+        where: {parent_id: req.body.uddessho}
+    })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+};
+
+module.exports.fetchWork = async (req,res) => {
+    await apaCode.findAll({
+        where: {parent_id: req.body.maan}
+    })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+};
+
+module.exports.fetchShuchok = async (req,res) => {
+    await apaCode.findAll({
+        where: {parent_id: req.body.work}
+    })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+};
+module.exports.fetchEkok = async (req,res) => {
+    await apaCode.findAll({
+        where: {parent_id: req.body.shuchok}
+    })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+};
+
+module.exports.fetchShuchokMaan = async (req,res) => {
+    await apaCode.findAll({
+        where: {parent_id: req.body.shuchok}
+    })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            console.log(err)
+        })
 };
 
 //apa controller end
@@ -1054,6 +1127,7 @@ module.exports.loanFormPost=async(req,res)=>{
         });
   
 };
+
 
 //apa controller end
 

@@ -135,12 +135,10 @@ module.exports.pdDashboard = async(req,res) => {
     try{
 
         const crop = await cropCategory.findAll();
-
-
         const centerinfo = await center.findAll();
         const monthly_progress = await monthlyProgress.findAll();
         const rajosshos = await rajossho.findAll();
-
+        const apaCodes = await apaCode.findAll();
         var startRange = "";
         var endRange = "";
         if ( res.locals.moment().format("M") < 7){
@@ -181,7 +179,7 @@ module.exports.pdDashboard = async(req,res) => {
             
         });
 
-        res.render('pd/dashboard', { title: 'Horticulture Wing Central Management Software', msg:'Welcome' ,totalrajossho:totalrajossho, totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud, center:centerinfo, crop: crop });
+        res.render('pd/dashboard', { title: 'Horticulture Wing Central Management Software', msg:'Welcome' ,totalrajossho:totalrajossho, totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud, center:centerinfo, crop: crop,apaCodes:apaCodes });
     }
     catch (e) {
         console.log(e)
@@ -223,6 +221,60 @@ module.exports.addJaat = async(req,res) => {
     })
     res.redirect('/pd/dashboard')
 }
+
+module.exports.apaUddessho = async(req,res) => {
+    const apaUddessho = await apaCode.create({
+        name : req.body.apaUddessho,
+        parent_id : null,
+        type : 'apaUddessho'
+    })
+    res.redirect('/pd/dashboard')
+}
+
+module.exports.apaMaan = async(req,res) => {
+    const apaMaan = await apaCode.create({
+        name : req.body.apaMaan,
+        parent_id : req.body.apaUddessho,
+        type : 'apaMaan'
+    })
+    res.redirect('/pd/dashboard')
+}
+
+module.exports.karjokrom = async(req,res) => {
+    const karjokrom = await apaCode.create({
+        name : req.body.karjokrom,
+        parent_id : req.body.apaMaan,
+        type : 'karjokrom'
+    })
+    res.redirect('/pd/dashboard')
+}
+
+module.exports.suchok = async(req,res) => {
+    const suchok = await apaCode.create({
+        name : req.body.suchok,
+        parent_id : req.body.karjokrom,
+        type : 'suchok'
+    })
+    res.redirect('/pd/dashboard')
+}
+
+module.exports.ekok = async(req,res) => {
+    const ekok = await apaCode.create({
+        name : req.body.ekok,
+        parent_id : req.body.suchok,
+        type : 'ekok'
+    })
+    res.redirect('/pd/dashboard')
+}
+module.exports.suchokMaan = async(req,res) => {
+    const suchokMaan = await apaCode.create({
+        name : req.body.suchokMaan,
+        parent_id : req.body.suchok,
+        type : 'suchokMaan'
+    })
+    res.redirect('/pd/dashboard')
+}
+
 
 //signUp controller
 module.exports.pdsignup=async(req,res)=>{

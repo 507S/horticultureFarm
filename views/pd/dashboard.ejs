@@ -7,14 +7,7 @@
         <div class="main-content">
             <div class="container-fluid">
                 <div class="row clearfix">
-                    <div class="col">
-                        <select id="center" class="form-control">
-                            <option value="all">সব  সেন্টার</option>
-                            <% center.forEach((row) => { %>
-                                <option value="<%= row.id %>"> <%= row.uname %> </option>
-                            <%  }) %>
-                        </select>
-                    </div>
+                    
                     <div class="col ">
                         <div class="widget">
                             <div class="widget-body">
@@ -79,21 +72,43 @@
 
                         </div>
                     </div>
+                    <div class="col">
+                        <select id="center" class="form-control">
+                            <option value="all">সব  সেন্টার</option>
+                            <% center.forEach((row) => { %>
+                                <option value="<%= row.id %>"> <%= row.uname %> </option>
+                            <%  }) %>
+                        </select>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="container-fluid">
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-row">
+                                        <label for="newRajosshoCode" class="col-md-1 control-label"> নতুন সেন্টার যোগ করুন :</label>
+                                        
+                                        <div class="col-md-3">
+                                            <a href="/center/signup" class="btn btn-primary">যোগ করুন</a>  
+                                        </div>
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+
                         <!--    main catg -->
                         <div class="card">
                             <div class="card-body">
                                 <form action="/pd/add/mainCategory" method="post">
                                     <div class="form-row">
                                         <div class="col">
-                                            <label for="">Main Category</label>
+                                            <label for="">ক্যাটাগরি</label>
                                             <input type="text"  id="mainCatg" name="mainCatg" class="form-control">
                                         </div>
                                         <div class="col">
                                             <label for=""></label>
-                                            <input type="submit" value="Add Main Category" class="form-control">
+                                            <input type="submit" value="যোগ করুন ক্যাটাগরি" class="btn btn-primary" >
                                         </div>
 
                                         <div class="col">
@@ -117,9 +132,9 @@
                                 <form action="/pd/add/subcategory" method="post">
                                     <div class="form-row">
                                         <div class="col">
-                                            <label for="">Main Category</label>
+                                            <label for="">ক্যাটাগরি</label>
                                             <select class="form-control" id="main_category" name="main_category">
-                                                <option selected> Select a Category </option>
+                                                <option selected> ক্যাটাগরি বাছুনঃ </option>
                                                 <% crop.forEach((row) => {
                                                 if (row.type === 'mainCategory'){
                                                 %>
@@ -131,12 +146,12 @@
                                             </select>
                                         </div>
                                         <div class="col">
-                                            <label for="">Sub Category</label>
+                                            <label for="">সাব-ক্যাটাগরি</label>
                                             <input type="text"  id="sub_category" name="sub_category" class="form-control">
                                         </div>
                                         <div class="col">
                                             <label for=""></label>
-                                            <input type="submit" value="Add সাব-ক্যাটাগরি" class="form-control">
+                                            <input type="submit" value=" সাব-ক্যাটাগরি যোগ করুন" class="btn btn-primary">
                                         </div>
                                         <div class="col">
                                             <% crop.forEach((row) => {
@@ -159,9 +174,9 @@
                                 <form action="/pd/add/biboron" method="post">
                                     <div class="form-row">
                                         <div class="col">
-                                            <label for="">Subcategory</label>
+                                            <label for="">সাব-ক্যাটাগরি</label>
                                             <select class="form-control" id="sub_category_list" name="sub_category_list">
-                                                <option selected> Select a Sub Category </option>
+                                                <option selected>সাব-ক্যাটাগরি বাছুনঃ</option>
                                                 <% crop.forEach((row) => {
                                                 if (row.type === 'subCategory'){
                                                 %>
@@ -173,12 +188,12 @@
                                             </select>
                                         </div>
                                         <div class="col">
-                                            <label for="">Biboron</label>
+                                            <label for="">বিবরণ</label>
                                             <input type="text" id="biboron" name="biboron" class="form-control">
                                         </div>
                                         <div class="col">
                                             <label for=""></label>
-                                            <input type="submit" value="Add বিবরণ" class="form-control">
+                                            <input type="submit" value="বিবরণ যোগ করুন" class="btn btn-primary">
                                         </div>
                                         <div class="col">
                                             <% crop.forEach((row) => {
@@ -201,9 +216,9 @@
                                 <form action="/pd/add/jaat" method="post">
                                     <div class="form-row">
                                         <div class="col">
-                                            <label for="">Biboron</label>
+                                            <label for="">বিবরণ</label>
                                             <select class="form-control" id="biboron_list" name="biboron_list">
-                                                <option selected> Select a Biboron </option>
+                                                <option selected> বিবরণ বাছুনঃ</option>
                                                 <% crop.forEach((row) => {
                                                 if (row.type === 'biboron'){
                                                 %>
@@ -215,12 +230,12 @@
                                             </select>
                                         </div>
                                         <div class="col">
-                                            <label for="">Jaat</label>
+                                            <label for="">জাত</label>
                                             <input type="text" id="jaat" name="jaat" class="form-control">
                                         </div>
                                         <div class="col">
                                             <label for=""></label>
-                                            <input type="submit" class="form-control" value="Add জাত">
+                                            <input type="submit" class="btn btn-primary" value="জাত যোগ করুন ">
                                         </div>
                                         <div class="col">
                                             <% crop.forEach((row) => {
@@ -279,175 +294,243 @@
 
                         <div class="card">
                             <div class="card-body">
-                                <form action="/pd/apaCode" id="newRajosshoCode" class="form-horizontal" method="post"  role="form">
-                                <div class="form-row">
-                                        <label for="newApaUddessho" class="col-md-1 control-label"> এপিএ'র নতুন কৌশলগত উদ্দেশ্য  :</label>
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control" name="newApaUddessho" placeholder="এপিএ'র নতুন কৌশলগত উদ্দেশ্য  :">
+                                <form action="/pd/apaUddessho" method="post">
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <label for="">এপিএ'র নতুন কৌশলগত উদ্দেশ্য  :</label>
+                                            <input type="text"  id="apaUddessho" name="apaUddessho" class="form-control">
                                         </div>
-                                        <div class="col-md-3">
-                                            <input type="submit" name="submit" value=" যোগ করুন" class="btn btn-primary">   
+                                        <div class="col">
+                                            <label for=""></label>
+                                            <input type="submit" value="কৌশলগত উদ্দেশ্য যোগ করুন" class="btn btn-primary">
                                         </div>
-                                </div>
-                            </form>
+
+                                        <div class="col">
+                                            <% apaCodes.forEach((row) => {
+                                            if (row.type === 'apaUddessho'){
+                                            %>
+                                                <span style="margin-right: 2px"> <%= row.name %> </span> |
+                                            <%
+                                            }
+                                            })
+                                            %>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
 
- 
+                        <!--  কৌশলগত উদ্দেশ্য এর মান -->
                         <div class="card">
                             <div class="card-body">
-
-                                <div class="form-row">
-                                    <div class="col">
-                                        <label for="">এপিএ'র কৌশলগত উদ্দেশ্য</label>
-                                        <select class="form-control" id="biboron_list" name="biboron">
-                                            <option selected> এপিএ'র কৌশলগত উদ্দেশ্য বাছুন </option>
-                                            <% crop.forEach((row) => {
-                                                if (row.type === 'biboron'){
-                                            %>
-                                                     <option value="<%= row.id %>"> <%= row.name %> </option>
-                                            <%
-                                                 }
+                                <form action="/pd/apaMaan" method="post">
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <label for="">এপিএ'র কৌশলগত উদ্দেশ্য</label>
+                                            <select class="form-control" id="apaUddessho" name="apaUddessho">
+                                                <option selected> এপিএ'র কৌশলগত উদ্দেশ্য বাছুন</option>
+                                                <% apaCodes.forEach((row) => {
+                                                if (row.type === 'apaUddessho'){
+                                                %>
+                                                    <option value="<%= row.id %>"> <%= row.name %> </option>
+                                                <%
+                                                }
                                                 })
+                                                %>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label for="">কৌশলগত উদ্দেশ্য এর মান</label>
+                                            <input type="text"  id="apaMaan" name="apaMaan" class="form-control">
+                                        </div>
+                                        <div class="col">
+                                            <label for=""></label>
+                                            <input type="submit" value="কৌশলগত উদ্দেশ্য এর মান যোগ করুন" class="btn btn-primary">
+                                        </div>
+                                        <div class="col">
+                                            <% apaCodes.forEach((row) => {
+                                            if (row.type === 'apaMaan'){
                                             %>
-                                        </select>
+                                                <span style="margin-right: 2px"> <%= row.name %> </span> |
+                                            <%
+                                            }
+                                            })
+                                            %>
+                                        </div>
                                     </div>
-                                    <div class="col">
-                                        <label for="">কৌশলগত উদ্দেশ্য এর মান</label>
-                                        <input type="text" id="jaat" name="jaat" class="form-control">
-                                    </div>
-                                    <div class="col">
-                                        <label for=""></label>
-                                        <button class="btn btn-primary" id="add_jaat">কৌশলগত উদ্দেশ্য এর মান যোগ করুন</button>
-                                    </div>
-                                </div>
-
+                                </form>
                             </div>
                         </div>
-
+                        
+                        <!--  কার্যক্রম -->
                         <div class="card">
                             <div class="card-body">
-
-                                <div class="form-row">
-                                    <div class="col">
-                                        <label for="">এপিএ'র কৌশলগত উদ্দেশ্য এর মান</label>
-                                        <select class="form-control" id="biboron_list" name="biboron">
-                                            <option selected> এপিএ'র কৌশলগত উদ্দেশ্য এর মান বাছুন </option>
-                                            <% crop.forEach((row) => {
-                                                if (row.type === 'biboron'){
-                                            %>
-                                                     <option value="<%= row.id %>"> <%= row.name %> </option>
-                                            <%
-                                                 }
+                                <form action="/pd/karjokrom" method="post">
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <label for="">এপিএ'র কৌশলগত উদ্দেশ্য এর মান</label>
+                                            <select class="form-control" id="apaMaan" name="apaMaan">
+                                                <option selected>এপিএ'র কৌশলগত উদ্দেশ্য এর মান বাছুন</option>
+                                                <% apaCodes.forEach((row) => {
+                                                if (row.type === 'apaMaan'){
+                                                %>
+                                                    <option value="<%= row.id %>"> <%= row.name %> </option>
+                                                <%
+                                                }
                                                 })
+                                                %>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label for="">কার্যক্রম</label>
+                                            <input type="text"  id="karjokrom" name="karjokrom" class="form-control">
+                                        </div>
+                                        <div class="col">
+                                            <label for=""></label>
+                                            <input type="submit" value="কার্যক্রম যোগ করুন" class="btn btn-primary">
+                                        </div>
+                                        <div class="col">
+                                            <% apaCodes.forEach((row) => {
+                                            if (row.type === 'karjokrom'){
                                             %>
-                                        </select>
+                                                <span style="margin-right: 2px"> <%= row.name %> </span> |
+                                            <%
+                                            }
+                                            })
+                                            %>
+                                        </div>
                                     </div>
-                                    <div class="col">
-                                        <label for="">কার্যক্রম</label>
-                                        <input type="text" id="jaat" name="jaat" class="form-control">
-                                    </div>
-                                    <div class="col">
-                                        <label for=""></label>
-                                        <button class="btn btn-primary" id="add_jaat">কার্যক্রম যোগ করুন</button>
-                                    </div>
-                                </div>
-
+                                </form>
                             </div>
                         </div>
-
+                        
+                        
+                        <!--  কর্মসম্পাদন সূচক -->
                         <div class="card">
                             <div class="card-body">
-
-                                <div class="form-row">
-                                    <div class="col">
-                                        <label for="">কার্যক্রম</label>
-                                        <select class="form-control" id="biboron_list" name="biboron">
-                                            <option selected> কার্যক্রম বাছুন </option>
-                                            <% crop.forEach((row) => {
-                                                if (row.type === 'biboron'){
-                                            %>
-                                                     <option value="<%= row.id %>"> <%= row.name %> </option>
-                                            <%
-                                                 }
+                                <form action="/pd/suchok" method="post">
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <label for="">কার্যক্রম</label>
+                                            <select class="form-control" id="karjokrom" name="karjokrom">
+                                                <option selected>কার্যক্রম বাছুন</option>
+                                                <% apaCodes.forEach((row) => {
+                                                if (row.type === 'karjokrom'){
+                                                %>
+                                                    <option value="<%= row.id %>"> <%= row.name %> </option>
+                                                <%
+                                                }
                                                 })
+                                                %>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label for="">কর্মসম্পাদন</label>
+                                            <input type="text"  id="suchok" name="suchok" class="form-control">
+                                        </div>
+                                        <div class="col">
+                                            <label for=""></label>
+                                            <input type="submit" value="কার্যক্রম যোগ করুন" class="btn btn-primary">
+                                        </div>
+                                        <div class="col">
+                                            <% apaCodes.forEach((row) => {
+                                            if (row.type === 'suchok'){
                                             %>
-                                        </select>
+                                                <span style="margin-right: 2px"> <%= row.name %> </span> |
+                                            <%
+                                            }
+                                            })
+                                            %>
+                                        </div>
                                     </div>
-                                    <div class="col">
-                                        <label for="">কর্মসম্পাদন সূচক এর মান</label>
-                                        <input type="text" id="jaat" name="jaat" class="form-control">
-                                    </div>
-                                    <div class="col">
-                                        <label for=""></label>
-                                        <button class="btn btn-primary" id="add_jaat">কর্মসম্পাদন সূচক এর মান যোগ করুন</button>
-                                    </div>
-                                </div>
-
+                                </form>
                             </div>
                         </div>
-
+                        
+                        <!--  একক -->
                         <div class="card">
                             <div class="card-body">
-
-                                <div class="form-row">
-                                    <div class="col">
-                                        <label for="">কর্মসম্পাদন সূচক</label>
-                                        <select class="form-control" id="biboron_list" name="biboron">
-                                            <option selected> কর্মসম্পাদন সূচক বাছুন </option>
-                                            <% crop.forEach((row) => {
-                                                if (row.type === 'biboron'){
-                                            %>
-                                                     <option value="<%= row.id %>"> <%= row.name %> </option>
-                                            <%
-                                                 }
+                                <form action="/pd/ekok" method="post">
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <label for="">কর্মসম্পাদন সূচক</label>
+                                            <select class="form-control" id="suchok" name="suchok">
+                                                <option selected>কর্মসম্পাদন সূচক বাছুন</option>
+                                                <% apaCodes.forEach((row) => {
+                                                if (row.type === 'suchok'){
+                                                %>
+                                                    <option value="<%= row.id %>"> <%= row.name %> </option>
+                                                <%
+                                                }
                                                 })
+                                                %>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label for="">একক</label>
+                                            <input type="text"  id="ekok" name="ekok" class="form-control">
+                                        </div>
+                                        <div class="col">
+                                            <label for=""></label>
+                                            <input type="submit" value="কার্যক্রম যোগ করুন" class="btn btn-primary">
+                                        </div>
+                                        <div class="col">
+                                            <% apaCodes.forEach((row) => {
+                                            if (row.type === 'ekok'){
                                             %>
-                                        </select>
+                                                <span style="margin-right: 2px"> <%= row.name %> </span> |
+                                            <%
+                                            }
+                                            })
+                                            %>
+                                        </div>
                                     </div>
-                                    <div class="col">
-                                        <label for="">একক</label>
-                                        <input type="text" id="jaat" name="jaat" class="form-control">
-                                    </div>
-                                    <div class="col">
-                                        <label for=""></label>
-                                        <button class="btn btn-primary" id="add_jaat">একক এর মান যোগ করুন</button>
-                                    </div>
-                                </div>
-
+                                </form>
                             </div>
                         </div>
 
+                        <!--  কর্মসম্পাদন সূচক এর মান-->
                         <div class="card">
                             <div class="card-body">
-
-                                <div class="form-row">
-                                    <div class="col">
-                                        <label for="">একক</label>
-                                        <select class="form-control" id="biboron_list" name="biboron">
-                                            <option selected> একক বাছুন </option>
-                                            <% crop.forEach((row) => {
-                                                if (row.type === 'biboron'){
-                                            %>
-                                                     <option value="<%= row.id %>"> <%= row.name %> </option>
-                                            <%
-                                                 }
+                                <form action="/pd/suchokMaan" method="post">
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <label for="">কর্মসম্পাদন সূচক</label>
+                                            <select class="form-control" id="suchok" name="suchok">
+                                                <option selected>কর্মসম্পাদন সূচক বাছুন</option>
+                                                <% apaCodes.forEach((row) => {
+                                                if (row.type === 'suchok'){
+                                                %>
+                                                    <option value="<%= row.id %>"> <%= row.name %> </option>
+                                                <%
+                                                }
                                                 })
+                                                %>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label for="">কর্মসম্পাদন সূচক এর মান</label>
+                                            <input type="text"  id="suchokMaan" name="suchokMaan" class="form-control">
+                                        </div>
+                                        <div class="col">
+                                            <label for=""></label>
+                                            <input type="submit" value="কর্মসম্পাদন সূচক এর মান যোগ করুন" class="btn btn-primary">
+                                        </div>
+                                        <div class="col">
+                                            <% apaCodes.forEach((row) => {
+                                            if (row.type === 'suchokMaan'){
                                             %>
-                                        </select>
+                                                <span style="margin-right: 2px"> <%= row.name %> </span> |
+                                            <%
+                                            }
+                                            })
+                                            %>
+                                        </div>
                                     </div>
-                                    <div class="col">
-                                        <label for="">কর্মসম্পাদন সূচক এর মান </label>
-                                        <input type="text" id="jaat" name="jaat" class="form-control">
-                                    </div>
-                                    <div class="col">
-                                        <label for=""></label>
-                                        <button class="btn btn-primary" id="add_jaat">কর্মসম্পাদন সূচক এর মান যোগ করুন</button>
-                                    </div>
-                                </div>
-
+                                </form>
                             </div>
                         </div>
+                       
 
                     </div>
                 </div>
