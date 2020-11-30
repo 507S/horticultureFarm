@@ -139,6 +139,9 @@ module.exports.pdDashboard = async(req,res) => {
         const monthly_progress = await monthlyProgress.findAll();
         const rajosshos = await rajossho.findAll();
         const apaCodes = await apaCode.findAll();
+        const expenseCodes = await expenseCode.findAll();
+        const rajosshoCodes = await rajosshoCode.findAll();
+
         var startRange = "";
         var endRange = "";
         if ( res.locals.moment().format("M") < 7){
@@ -179,7 +182,7 @@ module.exports.pdDashboard = async(req,res) => {
             
         });
 
-        res.render('pd/dashboard', { title: 'Horticulture Wing Central Management Software', msg:'Welcome' ,totalrajossho:totalrajossho, totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud, center:centerinfo, crop: crop,apaCodes:apaCodes });
+        res.render('pd/dashboard', { title: 'Horticulture Wing Central Management Software', msg:'Welcome' ,rajosshoCodes:rajosshoCodes,expenseCodes:expenseCodes,totalrajossho:totalrajossho, totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud, center:centerinfo, crop: crop,apaCodes:apaCodes });
     }
     catch (e) {
         console.log(e)
