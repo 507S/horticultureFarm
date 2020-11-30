@@ -240,12 +240,9 @@
                                     <div class="form-row mt-3">
                                         <div class="col">
                                             <label for="startDate" class="control-label">Date :</label>
-                                            <input name="editDate" class="date-picker form-control" id="startDate" value="<%= moment().format("MMM-yyyy").toLowerCase() %>" />
+                                            <input type="hidden" name="editDate" readonly class="date-picker form-control" id="startDate" value="<%= moment().format("MMM-yyyy").toLowerCase() %>" />
                                         </div>
-                                        <div class="col">
-                                            <label for="startDate" class="control-label">বছর</label>
-                                            <input type="text" class="form-control" name="year" placeholder="বছর">
-                                        </div>
+
 
 
 

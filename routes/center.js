@@ -3,7 +3,9 @@ const router = express.Router();
 // const { Router } = require("express");
 const app=express();
 
-const {generatePdfMonthlyProgress,monthlyProgressEdit,expenseAdd,expenseAddPost,fetchExpenseCode, rajosshoAdd,rajosshoAddPost,fetchRajosshoCode,monthlyProgressUpdate,monthlyProgress,monthlyProgressYear,monthlyProgressForm,monthlyProgressFormPost,charaKolomFixed,allCenterInfo,centersignup,centersignuppost,rajossho,rajosshoYear,rajosshoForm,rajosshoFormPost,expense,expenseYear,expenseForm,expenseFormPost,chak1,chak1Year,chak1Form,chak1FormPost,chak2,chak2Year,chak2Form,chak2FormPost,revolvingFund,revolvingFundYear,revolvingFundForm,revolvingFundFormPost,specialCoconut,specialCoconutYear,specialCoconutForm,specialCoconutFormPost,loan,loanYear,loanForm,loanFormPost,apa,apaYear,apaForm,apaFormPost,allcenter,centerlogin,centerloginpost,centerDashboard,topSheet,topSheetYear,topSheetForm,topSheetFormPost,center,centerYear,centerForm,centerFormPost,charaKolom,charaKolomYear,charaKolomForm,charaKolomFormPost,folMosholla,folMoshollaYear,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegYear,winterVegForm,winterVegFormPost,summerVeg,summerVegYear,summerVegForm,summerVegFormPost,otherFlower,otherFlowerYear,otherFlowerForm,otherFlowerFormPost,seasonalFlower,seasonalFlowerYear,seasonalFlowerForm,seasonalFlowerFormPost,regularWorker,regularWorkerYear,regularWorkerForm,regularWorkerFormPost,irregularWorker,irregularWorkerYear,irregularWorkerForm,irregularWorkerFormPost,fetchSubCategory,fetchBiboron,fetchBreed} = require('../controllers/center.controller');
+
+const {fetchMaan,fetchWork,fetchShuchok,fetchEkok,fetchShuchokMaan,expenseAddPost,expenseAdd,fetchExpenseCode,rajosshoAdd,rajosshoAddPost,fetchRajosshoCode,generatePdfMonthlyProgress,monthlyProgressEdit,monthlyProgressUpdate,monthlyProgress,monthlyProgressYear,monthlyProgressForm,monthlyProgressFormPost,charaKolomFixed,allCenterInfo,centersignup,centersignuppost,rajossho,rajosshoYear,rajosshoForm,rajosshoFormPost,expense,expenseYear,expenseForm,expenseFormPost,chak1,chak1Year,chak1Form,chak1FormPost,chak2,chak2Year,chak2Form,chak2FormPost,revolvingFund,revolvingFundYear,revolvingFundForm,revolvingFundFormPost,specialCoconut,specialCoconutYear,specialCoconutForm,specialCoconutFormPost,loan,loanYear,loanForm,loanFormPost,apa,apaYear,apaForm,apaFormPost,allcenter,centerlogin,centerloginpost,centerDashboard,topSheet,topSheetYear,topSheetForm,topSheetFormPost,center,centerYear,centerForm,centerFormPost,charaKolom,charaKolomYear,charaKolomForm,charaKolomFormPost,folMosholla,folMoshollaYear,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegYear,winterVegForm,winterVegFormPost,summerVeg,summerVegYear,summerVegForm,summerVegFormPost,otherFlower,otherFlowerYear,otherFlowerForm,otherFlowerFormPost,seasonalFlower,seasonalFlowerYear,seasonalFlowerForm,seasonalFlowerFormPost,regularWorker,regularWorkerYear,regularWorkerForm,regularWorkerFormPost,irregularWorker,irregularWorkerYear,irregularWorkerForm,irregularWorkerFormPost,fetchSubCategory,fetchBiboron,fetchBreed} = require('../controllers/center.controller');
+
 
 router.get('/',allcenter);
 router.get('/allCenterInfo',allCenterInfo);
@@ -69,6 +71,11 @@ router.get('/apa',apa);
 router.post('/apaYear',apaYear);
 router.get('/apaForm',apaForm);
 router.post('/apaForms',apaFormPost);
+router.post('/fetchMaan',fetchMaan);
+router.post('/fetchWork',fetchWork);
+router.post('/fetchShuchok',fetchShuchok);
+router.post('/fetchEkok',fetchEkok);
+router.post('/fetchShuchokMaan',fetchShuchokMaan);
 
 router.get('/loan',loan);
 router.post('/loanYear',loanYear);

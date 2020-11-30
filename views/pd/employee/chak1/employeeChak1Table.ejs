@@ -12,7 +12,6 @@
         <th>বর্তমান কর্মস্থলে যোগদানের তারিখ</th>
         <th>পূর্ববর্তী কর্মস্থল ও যোগদানের তারিখ</th>
         <th>মন্তব্য</th>
-        <th>পরিবর্তন/মুছুন</th>
     </tr>
     </thead>
     <tbody>
@@ -28,9 +27,6 @@
                 <td><%= row.presentDate %></td>
                 <td><%= row.pastWorkstation %></td>
                 <td><%= row.comment %></td>
-                <td><a class="btn btn-primary btn-xs" href="/edit/<%= row.id %>"><i class="fa fa-edit"></i></a>
-                    <a class="btn btn-danger btn-xs" href="/delete/<%= row.id %>"><i class="fa fa-trash"></i></a>
-                </td>
             </tr>
         <% }) %>
     </tbody>
@@ -49,7 +45,6 @@
             <th>বর্তমান কর্মস্থলে যোগদানের তারিখ</th>
             <th>পূর্ববর্তী কর্মস্থল ও যোগদানের তারিখ</th>
             <th>মন্তব্য</th>
-            <th>পরিবর্তন/মুছুন</th>
         </tr>
         </thead>
         <tbody>

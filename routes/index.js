@@ -5,6 +5,7 @@ const db=require('../models');
 const Op = db.Sequelize.Op;
 const { fn, col, cast } = db.sequelize;
 const monthlyProgress = db.monthlyProgress;
+const rajossho = db.rajossho;
 const center  = db.center;
 
 /* GET home page. */
@@ -64,6 +65,16 @@ router.post('/centerData', async (req,res) => {
             }
         });
     }
+    var total_rajossho = [];
+    if (req.body.center === "all"){
+      total_rajossho = await rajossho.findAll();
+    }else{
+      total_rajossho = await rajossho.findAll({
+            where:{
+                center_id : req.body.center
+            }
+        });
+    }
 
 
     var startRange = "";
@@ -79,6 +90,7 @@ router.post('/centerData', async (req,res) => {
     var totalProduct = 0;
     var totalBitoron = 0;
     var totalMojud = 0;
+    var totalrajossho = 0;
     monthly_progress.forEach((row) => {
         const productTotalParse = JSON.parse(row.productionTotal);
         const bitoronParse = JSON.parse(row.bitoronTotal);
@@ -98,9 +110,13 @@ router.post('/centerData', async (req,res) => {
                 totalMojud += parseInt(mojuToal.amount)
             }
         })
-    })
+    });
+    total_rajossho.forEach((row) => {
+      totalrajossho += parseInt(row.total)
+      
+  });
     // res.send({title: 'Horticulture' ,totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud, center: centerinfo });
-    res.json({title: 'Horticulture',totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud })
+    res.json({title: 'Horticulture',totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud,totalrajossho:totalrajossho })
 })
 
 module.exports = router;

@@ -23,48 +23,58 @@
                                         <span></span>
                                     </div>
 
-                                        
-                                    <div class="form-group">
-                                        <label for="uddessho" class="col-md-3 control-label">কৌশলগত উদ্দেশ্য</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="uddessho" placeholder="কৌশলগত উদ্দেশ্য">
+                                     
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <label for="uddessho" class="col control-label">কৌশলগত উদ্দেশ্য</label>
+                                            <select name="uddessho" id="uddessho" class="form-control">
+                                                <option value="">কৌশলগত উদ্দেশ্য বাছুনঃ</option>
+                                                <% apaCodes.forEach(function(row){ %>
+                                                    <% if (row.parent_id === null) {%>
+                                                        <option value=<%= row.id %>><%= row.name %></option>
+                                                    <% } %>
+                                                <% }) %>
+                                            </select>
+<!--                                            <input type="text" class="form-control" name="uddessho" placeholder="কৌশলগত উদ্দেশ্য">-->
+                                        </div>
+                                        <div class="col">
+                                            <label for="maan" class="col control-label">কৌশলগত উদ্দেশ্যের মান</label>
+<!--                                            <input type="text" class="form-control" name="maan" placeholder="কৌশলগত উদ্দেশ্যের মান">-->
+                                            <select name="maan" id="maan" class="form-control">
+                                                <option value="" selected="true" disabled="true">কৌশলগত উদ্দেশ্যের মান</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label for="work" class="col control-label">কার্যক্রম</label>
+<!--                                            <input type="text" class="form-control" name="work" placeholder="কার্যক্রম">-->
+                                            <select name="work" id="work" class="form-control">
+                                                <option value="">কার্যক্রম বাছুন</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label for="shuchok" class="col control-label">কর্মসম্পাদন সূচক</label>
+<!--                                            <input type="text" class="form-control" name="shuchok" placeholder="কর্মসম্পাদন সূচক বাছুনঃ">-->
+                                            <select name="shuchok" id="shuchok" class="form-control">
+                                                <option value="">কর্মসম্পাদন সূচক বাছুনঃ</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label for="ekok" class="col control-label">একক</label>
+<!--                                            <input type="text" class="form-control" name="ekok" placeholder="একক বাছুনঃ">-->
+                                            <select name="ekok" id="ekok" class="form-control">
+                                                <option value="">একক বাছুন</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label for="shuchokMaan" class="col control-label">কর্মসম্পাদন সূচক এর মান</label>
+<!--                                            <input type="text" class="form-control" name="shuchokMaan" placeholder="কর্মসম্পাদন সূচক এর মান বাছুনঃ">-->
+                                            <select name="shuchokMaan" id="shuchokMaan" class="form-control">
+                                                <option value="">কর্মসম্পাদন সূচক এর মান বাছুনঃ</option>
+                                            </select>
                                         </div>
                                     </div>
+
                                     
-                                    <div class="form-group">
-                                        <label for="maan" class="col-md-3 control-label">কৌশলগত উদ্দেশ্যের মান</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="maan" placeholder="কৌশলগত উদ্দেশ্যের মান">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="work" class="col-md-3 control-label">কার্যক্রম</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="work" placeholder="কার্যক্রম">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="shuchok" class="col-md-3 control-label">কর্মসম্পাদন সূচক</label>
-                                        <div class="col-md-9">
-                                        <input type="text" class="form-control" name="shuchok" placeholder="কর্মসম্পাদন সূচক">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="ekok" class="col-md-3 control-label">একক</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="ekok" placeholder="একক">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="shuchokMaan" class="col-md-3 control-label">কর্মসম্পাদন সূচক এর মান</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="shuchokMaan" placeholder="কর্মসম্পাদন সূচক এর মান">
-                                        </div>
-                                    </div>
                                     
                                     <div class="form-group">
                                         <label for="achievement1" class="col-md-3 control-label">প্রকৃত অর্জন(২০১৭-১৮)</label>
@@ -161,3 +171,178 @@
         </div>
     </div>
 <%- include('../../includes/footer')-%>
+<script type="text/javascript">
+    $('#uddessho').on("change",function () {
+        var uddessho = $('#uddessho').val();
+        // alert(category)
+        $.ajax({
+            type: "POST",
+            url: "/center/fetchMaan",
+            data: {uddessho: uddessho},
+            datatype: "json",
+            beforeSend: function() {
+                // setting a timeout
+                $('#maan').empty();
+            },
+            success: function (data) {
+                $('#maan').empty();
+                if(data){
+                    $('#maan').append('<option value="0">কৌশলগত উদ্দেশ্যের মান বাছুনঃ</option>');
+                    $.each(data, function(key, value){
+                        $('#maan').append('<option value="'+value.id+'">' + value.name + '</option>');
+                    });
+                }else {
+                    $('#maan').empty();
+                }
+            },
+            complete: function() {
+                $('#loading').hide();
+                $('#output').show();
+            }
+        });
+    });
+
+    $('#maan').on("change click load",function () {
+        var maan = $('#maan').val();
+        $.ajax({
+            type: "POST",
+            url: "/center/fetchWork",
+            data: {maan: maan},
+            datatype: "json",
+            beforeSend: function() {
+                // setting a timeout
+                $('#work').empty();
+                $('#breed').empty();
+            },
+            success: function (data) {
+                $('#work').empty();
+                if(data){
+                    $('#work').append('<option value="0"> কার্যক্রম বাছুন</option>');
+                    $.each(data, function(key, value){
+                        $('#work').append('<option value="'+value.id+'">' + value.name + '</option>');
+                    });
+                }else {
+                    $('#work').empty();
+                }
+            },
+            complete: function() {
+                $('#loading').hide();
+                $('#output').show();
+            }
+        });
+    });
+
+    $('#work').on("change click",function () {
+        var work = $('#work').val();
+        $.ajax({
+            type: "POST",
+            url: "/center/fetchShuchok",
+            data: {work: work},
+            datatype: "json",
+            beforeSend: function() {
+                // setting a timeout
+                $('#loading').show();
+                $('#output').hide();
+            },
+            success: function (data) {
+                $('#shuchok').empty();
+                if(data){
+                    $('#shuchok').append('<option value="0"> কর্মসম্পাদন সূচক বাছুনঃ </option>');
+                    $.each(data, function(key, value){
+                        $('#shuchok').append('<option value="'+value.id+'">' + value.name + '</option>');
+                    });
+                }else {
+                    $('#shuchok').empty();
+                }
+            },
+            complete: function() {
+                $('#loading').hide();
+                $('#output').show();
+            }
+        });
+    });
+    
+   
+    $('#shuchok').on("change click",function () {
+        var shuchok = $('#shuchok').val();
+        $.ajax({
+            type: "POST",
+            url: "/center/fetchEkok",
+            data: {shuchok: shuchok},
+            datatype: "json",
+            beforeSend: function() {
+                // setting a timeout
+                $('#loading').show();
+                $('#output').hide();
+            },
+            success: function (data) {
+                $('#ekok').empty();
+                $('#shuchokMaan').empty();
+                
+                if(data){
+                    $('#ekok').append('<option value="0"> একক বাছুনঃ </option>');
+                    $.each(data, function(key, value){
+                        if(value.type === 'ekok'){
+                            $('#ekok').append('<option value="'+value.id+'">' + value.name + '</option>');
+                        }
+                    });
+                    $('#shuchokMaan').append('<option value="0"> কর্মসম্পাদন সূচক এর মান বাছুনঃ </option>');
+                    $.each(data, function(key, value){
+                        if(value.type === 'suchokMaan'){
+                            $('#shuchokMaan').append('<option value="'+value.id+'">' + value.name + '</option>');
+                        }
+                    });
+                }else {
+                    $('#ekok').empty();
+                }
+            },
+            complete: function() {
+                $('#loading').hide();
+                $('#output').show();
+            }
+        });
+    });
+    
+
+    $(document).ready(function(){
+        // var q = parseFloat(<?php echo $row['price']; ?>);
+        var q = json_encode(apaCodes);
+        alert(q)
+        $("p").click(function(){
+            $(this).hide();
+        });
+
+        $('#uddessho').on("change",function () {
+            var uddessho = $('#uddessho').val();
+            alert(uddessho)
+            $.ajax({
+                type: "GET",
+                url: "/center/fetchMaan",
+                data: {uddessho: uddessho},
+                datatype: "json",
+                beforeSend: function() {
+                    // setting a timeout
+                    $('#loading').show();
+                    $('#output').hide();
+                },
+                success: function (data) {
+                    $('#maan').empty();
+                    if(data){
+                        $.each(data, function(key, value){
+                            $('#maan').append('<option value="'+value.id+'">' + value.name + '</option>');
+                        });
+                    }else {
+                        $('#maan').empty();
+                    }
+                },
+                complete: function() {
+                    $('#loading').hide();
+                    $('#output').show();
+                }
+            });
+        });
+
+
+    });
+
+</script>

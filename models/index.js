@@ -4,7 +4,7 @@ const Sequelize = require("sequelize");
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
-  operatorsAliases: false,
+  operatorsAliases: '0',
 
   pool: {
     max: dbConfig.pool.max,
@@ -32,6 +32,7 @@ db.winterVeg = require("./winterVeg.model.js")(sequelize, Sequelize);
 db.regularWorker = require("./regularWorker.model.js")(sequelize, Sequelize);
 db.irregularWorker = require("./irregularWorker.model.js")(sequelize, Sequelize);
 db.apa = require("./apa.model.js")(sequelize, Sequelize);
+db.apaCode = require("./apaCode.model.js")(sequelize, Sequelize);
 db.loan = require("./loan.model.js")(sequelize, Sequelize);
 db.specialCoconut = require("./specialCoconut.model.js")(sequelize, Sequelize);
 db.revolvingFund = require("./revolvingFund.model.js")(sequelize, Sequelize);
