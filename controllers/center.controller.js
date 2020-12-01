@@ -1941,10 +1941,12 @@ module.exports.expenseAddPost=async(req,res)=>{
     const m =res.locals.moment();
     var months=m.month()
     var khoroch= parseInt(req.body.khoroch);
+    var currentTotal=parseInt(data.total);
+    var currentbaki=parseInt(data.baki);
     if(months===0){
-        jan2=khoroch+data.jan2;baki;
-        total=khoroch+data.total;
-        baki=data.baki-khoroch;
+        jan2=khoroch+parseInt(data.jan2);
+        total=khoroch+currentTotal;
+        baki=currentbaki-khoroch;
         var varib=await expense.update({
             jan2: jan2 ,
             total:total,
@@ -1956,9 +1958,9 @@ module.exports.expenseAddPost=async(req,res)=>{
             })    
     }
     else if(months==1){
-        feb2=khoroch+data.feb2;
-        total=khoroch+data.total;
-        baki=data.baki-khoroch;
+        feb2=khoroch+parseInt(data.feb2);
+        total=khoroch+currentTotal;
+        baki=currentbaki-khoroch;
         var varib=await expense.update({
             feb2: feb2,
             total:total,
@@ -1969,7 +1971,7 @@ module.exports.expenseAddPost=async(req,res)=>{
             }) 
     }
     else if(months==2){
-        march2=khoroch+data.march2;
+        march2=khoroch+parseInt(data.march2);
         total=khoroch+data.total;
         baki=data.baki-khoroch;
         var varib=await expense.update({
@@ -1982,9 +1984,9 @@ module.exports.expenseAddPost=async(req,res)=>{
             }) 
     }
     else if(months==3){
-        apr2=khoroch+data.apr2;
-        total=khoroch+data.total;
-        baki=data.baki-khoroch;
+        apr2=khoroch+parseInt(data.apr2);
+        total=khoroch+currentTotal;
+        baki=currentbaki-khoroch;
         var varib=await expense.update({
             apr2: apr2,
             total:total,
@@ -1995,9 +1997,9 @@ module.exports.expenseAddPost=async(req,res)=>{
             }) 
     }
     else if(months==4){
-        may2=khoroch+data.may2;
-        total=khoroch+data.total;
-        baki=data.baki-khoroch;
+        may2=khoroch+parseInt(data.may2);
+        total=khoroch+currentTotal;
+        baki=currentbaki-khoroch;
         var varib=await expense.update({
             may2: may2,
             total:total,
@@ -2008,9 +2010,9 @@ module.exports.expenseAddPost=async(req,res)=>{
             }) 
     }
     else if(months==5){
-        june2=khoroch+data.june2;
-        total=khoroch+data.total;
-        baki=data.baki-khoroch;
+        june2=khoroch+parseInt(data.june2);
+        total=khoroch+currentTotal;
+        baki=currentbaki-khoroch;
         var varib= await expense.update({
             june2: june2,
             total:total,
@@ -2021,9 +2023,9 @@ module.exports.expenseAddPost=async(req,res)=>{
             }) 
     }
     else if(months==6){
-        july1=khoroch+data.july1;
-        total=khoroch+data.total;
-        baki=data.baki-khoroch;
+        july1=khoroch+parseInt(data.july1);
+        total=khoroch+currentTotal;
+        baki=currentbaki-khoroch;
         var varib=await expense.update({
             july1: july1,
             total:total,
@@ -2034,9 +2036,9 @@ module.exports.expenseAddPost=async(req,res)=>{
             }) 
     }
     else if(months==7){
-        august1=khoroch+data.august1;
-        total=khoroch+data.total;
-        baki=data.baki-khoroch;
+        august1=khoroch+parseInt(data.august1);
+        total=khoroch+currentTotal;
+        baki=currentbaki-khoroch;
         var varib=await expense.update({
             august1: august1,
             total:total,
@@ -2047,9 +2049,9 @@ module.exports.expenseAddPost=async(req,res)=>{
             }) 
     }
     else if(months==8){
-        sept1=khoroch+data.sept1;
-        total=khoroch+data.total;
-        baki=data.baki-khoroch;
+        sept1=khoroch+parseInt(data.sept1);
+        total=khoroch+currentTotal;
+        baki=currentbaki-khoroch;
         var varib=await expense.update({
             sept1: sept1,
             total:total,
@@ -2060,9 +2062,9 @@ module.exports.expenseAddPost=async(req,res)=>{
             }) 
     }
     else if(months==9){
-        oct1=khoroch+data.oct1;
-        total=khoroch+data.total;
-        baki=data.baki-khoroch;
+        oct1=khoroch+parseInt(data.oct1);
+        total=khoroch+currentTotal;
+        baki=currentbaki-khoroch;
         var varib=await expense.update({
             oct1: oct1,
             total:total,
@@ -2074,9 +2076,9 @@ module.exports.expenseAddPost=async(req,res)=>{
     }
     else if(months==10){
         console.log("data.nov1",data.nov1);
-        nov1=khoroch+data.nov1;
-        total=khoroch+data.total;
-        baki=data.baki-khoroch;
+        nov1=khoroch+parseInt(data.nov1);
+        total=khoroch+currentTotal;
+        baki=currentbaki-khoroch;
         console.log("dekhi to vai",nov1);
         var varib=await expense.update({
             nov1: nov1,
@@ -2088,9 +2090,9 @@ module.exports.expenseAddPost=async(req,res)=>{
             }) 
     }
     else if(months==11){
-        dec1=khoroch+data.dec1;
-        total=khoroch+data.total;
-        baki=data.baki-khoroch;
+        dec1=khoroch+parseInt(data.dec1);
+        total=khoroch+currentTotal;
+        baki=currentbaki-khoroch;
         var varib=await expense.update({
             dec1: dec1,
             total:total,
