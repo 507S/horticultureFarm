@@ -386,9 +386,7 @@ module.exports.topSheetFormPost=async(req,res)=>{
 
 //center controller
 module.exports.center=async(req,res)=>{
-    await centerInfo.findAll({
-        where: {center_id: req.session.user_id}
-    })
+    await centerInfo.findAll({})
     .then(data => {
         console.log("inside");
         res.render('pd/centerinfo/center', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: data });
