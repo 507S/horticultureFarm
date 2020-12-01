@@ -1515,6 +1515,8 @@ module.exports.rajosshoFormPost=async(req,res)=>{
     var year=req.body.year;
     var user_id=req.body.user_id;
 
+    const upokhatName = await rajosshoCode.findByPk(upokhat)
+
     if(july1==null){        
         july1=0;
     };
@@ -1572,7 +1574,7 @@ module.exports.rajosshoFormPost=async(req,res)=>{
 
     await rajossho.create({
         code: code,
-        upokhat:upokhat,
+        upokhat:upokhatName.upokhat,
         july1:july1,
         august1: august1,
         sept1:sept1,
@@ -1615,9 +1617,10 @@ module.exports.rajosshoAddPost=async(req,res)=>{
     const m =res.locals.moment();
     var months=m.month()
     var income= parseInt(req.body.income);
+    var currentTotal=parseInt(data.total);
     if(months===0){
-        jan2=income+data.jan2;
-        total=income+data.total;
+        jan2=income+parseInt(data.jan2);
+        total=income+currentTotal;
         var varib=await rajossho.update({
             jan2: jan2 ,
             total:total
@@ -1628,8 +1631,8 @@ module.exports.rajosshoAddPost=async(req,res)=>{
             })    
     }
     else if(months==1){
-        feb2=income+data.feb2;
-        total=income+data.total;
+        feb2=income+parseInt(data.feb2);
+        total=income+currentTotal;
         var varib=await rajossho.update({
             feb2: feb2,
             total:total   
@@ -1639,8 +1642,8 @@ module.exports.rajosshoAddPost=async(req,res)=>{
             }) 
     }
     else if(months==2){
-        march2=income+data.march2;
-        total=income+data.total;
+        march2=income+parseInt(data.march2);
+        total=income+currentTotal;
         var varib=await rajossho.update({
             march2: march2,
             total:total    
@@ -1650,8 +1653,8 @@ module.exports.rajosshoAddPost=async(req,res)=>{
             }) 
     }
     else if(months==3){
-        apr2=income+data.apr2;
-        total=income+data.total;
+        apr2=income+parseInt(data.apr2);
+        total=income+currentTotal;
         var varib=await rajossho.update({
             apr2: apr2,
             total:total   
@@ -1661,8 +1664,8 @@ module.exports.rajosshoAddPost=async(req,res)=>{
             }) 
     }
     else if(months==4){
-        may2=income+data.may2;
-        total=income+data.total;
+        may2=income+parseInt(data.may2);
+        total=income+currentTotal;
         var varib=await rajossho.update({
             may2: may2,
             total:total  
@@ -1672,8 +1675,8 @@ module.exports.rajosshoAddPost=async(req,res)=>{
             }) 
     }
     else if(months==5){
-        june2=income+data.june2;
-        total=income+data.total;
+        june2=income+parseInt(data.june2);
+        total=income+currentTotal;
         var varib= await rajossho.update({
             june2: june2,
             total:total   
@@ -1683,8 +1686,8 @@ module.exports.rajosshoAddPost=async(req,res)=>{
             }) 
     }
     else if(months==6){
-        july1=income+data.july1;
-        total=income+data.total;
+        july1=income+parseInt(data.july1);
+        total=income+currentTotal;
         var varib=await rajossho.update({
             july1: july1,
             total:total   
@@ -1694,8 +1697,8 @@ module.exports.rajosshoAddPost=async(req,res)=>{
             }) 
     }
     else if(months==7){
-        august1=income+data.august1;
-        total=income+data.total;
+        august1=income+parseInt(data.august1);
+        total=income+currentTotal;
         baki=data.baki-income;
         var varib=await rajossho.update({
             august1: august1,
@@ -1706,8 +1709,8 @@ module.exports.rajosshoAddPost=async(req,res)=>{
             }) 
     }
     else if(months==8){
-        sept1=income+data.sept1;
-        total=income+data.total;
+        sept1=income+parseInt(data.sept1);
+        total=income+currentTotal;
         var varib=await rajossho.update({
             sept1: sept1,
             total:total  
@@ -1717,8 +1720,8 @@ module.exports.rajosshoAddPost=async(req,res)=>{
             }) 
     }
     else if(months==9){
-        oct1=income+data.oct1;
-        total=income+data.total;
+        oct1=income+parseInt(data.oct1);
+        total=income+currentTotal;
         var varib=await rajossho.update({
             oct1: oct1,
             total:total
@@ -1729,8 +1732,8 @@ module.exports.rajosshoAddPost=async(req,res)=>{
     }
     else if(months==10){
         console.log("data.nov1",data.nov1);
-        nov1=income+data.nov1;
-        total=income+data.total;
+        nov1=income+parseInt(data.nov1);
+        total=income+currentTotal;
         console.log("dekhi to vai",nov1);
         var varib=await rajossho.update({
             nov1: nov1,
@@ -1741,8 +1744,8 @@ module.exports.rajosshoAddPost=async(req,res)=>{
             }) 
     }
     else if(months==11){
-        dec1=income+data.dec1;
-        total=income+data.total;
+        dec1=income+parseInt(data.dec1);
+        total=income+currentTotal;
         var varib=await rajossho.update({
             dec1: dec1,
             total:total  
@@ -1835,6 +1838,7 @@ module.exports.expenseFormPost=async(req,res)=>{
     var comment=req.body.comment;
     var year=req.body.year;
     var user_id=req.body.user_id;
+    const khatName = await expenseCode.findByPk(khat);
 
     if(july1==null){        
         july1=0;
@@ -1891,7 +1895,7 @@ module.exports.expenseFormPost=async(req,res)=>{
 
     await expense.create({
         code: code,
-        khat:khat,
+        khat:khatName.khat,
         boraddo:boraddo,
         july1:july1,
         august1: august1,
