@@ -21,34 +21,34 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING
       },
       productionCurrent: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT('long')
       },
       productionTotal: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT('long')
       },
       daePrapti: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT('long')
       },
       bitoronCurrentMonth: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT('long')
       },
       bitoronTotal: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT('long')
       },
 
 
       daeProdan: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT('long')
       },
       deadWriteup: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT('long')
       },
 
       mojud: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT('long')
       },
       comment: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT('long')
       },
       timeFrame: {
         type: Sequelize.TEXT('long')
