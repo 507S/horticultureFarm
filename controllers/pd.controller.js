@@ -386,13 +386,13 @@ module.exports.topSheetFormPost=async(req,res)=>{
 
 //center controller
 module.exports.center=async(req,res)=>{
-    await centerInfo.findAll({})
+    await centerInfo.findAll()
     .then(data => {
         console.log("inside");
         res.render('pd/centerinfo/center', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: data });
     })
     .catch(err => {
-        console.log("outside");
+        console.log(err);
         res.render('pd/centerinfo/center', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: err });
     })
      
