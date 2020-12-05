@@ -7,7 +7,6 @@ const path = require("path");
 let pdf = require("html-pdf");
 let ejs = require("ejs");
 const center = db.center;
-const centerInfo = db.centerInfo;
 const topSheet = db.topSheet;
 const charaKolom = db.charaKolom;
 const folMosholla = db.folMosholla;
@@ -51,17 +50,7 @@ module.exports.centertable=async(req,res)=>{
 module.exports.allcenter=async(req,res)=>{
     res.json({ message: "hello center" });
 };
-module.exports.allCenterInfo=async(req,res)=>{
-    await centerInfo.findAll()
-    .then(data => {
-        console.log(data);
-        res.render('allCenterInfo', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: data });
-    })
-    .catch(err => {
-        console.log("outside");
-        res.render('allCenterInfo', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: err });
-    })
-};
+
 module.exports.charaKolomFixed=async(req,res)=>{
     
     try {
@@ -324,7 +313,7 @@ module.exports.topSheetFormPost=async(req,res)=>{
 
 //center controller
 module.exports.center=async(req,res)=>{
-    await centerInfo.findAll({
+    await center.findAll({
         where: {center_id: req.session.user_id}
     })
     .then(data => {
@@ -341,7 +330,7 @@ module.exports.center=async(req,res)=>{
 };
 
 module.exports.centerYear=async(req,res)=>{
-    await centerInfo.findAll({
+    await center.findAll({
         where: {year: req.body.year, center_id: req.session.user_id}
     })
     .then(data => {
@@ -355,35 +344,35 @@ module.exports.centerYear=async(req,res)=>{
 
 };
 
-module.exports.centerForm=async(req,res)=>{
-    res.render('center/centerinfo/centerForm', { title: 'সেন্টারের যোগাযোগ তথ্য',msg:'' ,success:'',user_id: req.session.user_id});
-};
+// module.exports.centerForm=async(req,res)=>{
+//     res.render('center/centerinfo/centerForm', { title: 'সেন্টারের যোগাযোগ তথ্য',msg:'' ,success:'',user_id: req.session.user_id});
+// };
 
-module.exports.centerFormPost=async(req,res)=>{
-    var center= req.body.center;
-    var kormokorta= req.body.kormokorta;
-    var podobi= req.body.podobi;
-    var mobile= req.body.mobile;
-    var email= req.body.email;
-    var year =req.body.year;
-    var user_id =req.body.user_id;
+// module.exports.centerFormPost=async(req,res)=>{
+//     var center= req.body.center;
+//     var kormokorta= req.body.kormokorta;
+//     var podobi= req.body.podobi;
+//     var mobile= req.body.mobile;
+//     var email= req.body.email;
+//     var year =req.body.year;
+//     var user_id =req.body.user_id;
 
-    await centerInfo.create({
-        center: center,
-        kormokorta:kormokorta,
-        podobi:podobi,
-        mobile:mobile,
-        email:email,
-        year:year,
-        center_id:user_id
+//     await centerInfo.create({
+//         center: center,
+//         kormokorta:kormokorta,
+//         podobi:podobi,
+//         mobile:mobile,
+//         email:email,
+//         year:year,
+//         center_id:user_id
 
-        }).then(data => {
-            res.redirect('/center/center');
-        }).catch(err => {
-            res.render('errorpage',err);
-        });
+//         }).then(data => {
+//             res.redirect('/center/center');
+//         }).catch(err => {
+//             res.render('errorpage',err);
+//         });
   
-};
+// };
 //center controller end
 
 //charaKolom controller
