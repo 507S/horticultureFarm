@@ -5,7 +5,7 @@ const app=express();
 
 const {apaUddessho,apaMaan,karjokrom,suchok,ekok,suchokMaan,newKhorochCode,newRajosshoCode,addMainCategory,centerDelete,centerEdit,centerEditPost,
     addSubcategory,addBiboron,addJaat,monthlyProgress,monthlyProgressFilter,monthlyProgressForm,monthlyProgressFormPost,expenseEdit,expenseEditPost,expenseDelete,
-    charaKolomFixed,allCenterInfo,pdsignup,pdsignuppost,rajossho,rajosshoFilter,rajosshoForm,rajosshoFormPost,newRajosshoCodeTable,
+    charaKolomFixed,pdsignup,pdsignuppost,rajossho,rajosshoFilter,rajosshoForm,rajosshoFormPost,newRajosshoCodeTable,
     newRajosshoCodeTableEdit,newRajosshoCodeTableDelete,newRajosshoCodeTableEditPost,expense,expenseFilter,newKhorochTable,newKhorochTableEdit,newKhorochTableEditPost,newKhorochTableDelete,
     expenseForm,expenseFormPost,chak1,chak1Filter,chak1Form,chak1FormPost,chak2,chak2Filter,chak2Form,chak2FormPost,revolvingFund,
     revolvingFundFilter,revolvingFundForm,revolvingFundFormPost,specialCoconut,specialCoconutFilter,specialCoconutForm,rajosshoEdit,rajosshoEditPost,rajosshoDelete,
@@ -23,7 +23,6 @@ router.post('/add/subcategory',addSubcategory);
 router.post('/add/biboron',addBiboron);
 router.post('/add/jaat',addJaat);
 
-router.get('/allCenterInfo',allCenterInfo);
 router.get('/charaKolomFixed',charaKolomFixed);
 router.get('/login',pdlogin);
 router.post('/logins',pdloginpost);

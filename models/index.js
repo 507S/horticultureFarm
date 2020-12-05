@@ -22,7 +22,6 @@ db.sequelize = sequelize;
 db.pd = require("./pd.model.js")(sequelize, Sequelize);
 db.center = require("./center.model.js")(sequelize, Sequelize);
 db.topSheet = require("./topSheet.js")(sequelize, Sequelize);
-db.centerInfo = require("./centerInfo.js")(sequelize, Sequelize);
 db.charaKolom = require("./charaKolom.model.js")(sequelize, Sequelize);
 db.folMosholla = require("./folMosholla.model.js")(sequelize, Sequelize);
 db.otherFlower = require("./otherFlower.model.js")(sequelize, Sequelize);

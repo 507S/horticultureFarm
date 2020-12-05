@@ -7,7 +7,6 @@ const path = require("path");
 let pdf = require("html-pdf");
 let ejs = require("ejs");
 const center = db.center;
-const centerInfo = db.centerInfo;
 const topSheet = db.topSheet;
 const charaKolom = db.charaKolom;
 const folMosholla = db.folMosholla;
@@ -51,17 +50,7 @@ module.exports.centertable=async(req,res)=>{
 module.exports.allcenter=async(req,res)=>{
     res.json({ message: "hello center" });
 };
-module.exports.allCenterInfo=async(req,res)=>{
-    await centerInfo.findAll()
-    .then(data => {
-        console.log(data);
-        res.render('allCenterInfo', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: data });
-    })
-    .catch(err => {
-        console.log("outside");
-        res.render('allCenterInfo', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: err });
-    })
-};
+
 module.exports.charaKolomFixed=async(req,res)=>{
     
     try {
