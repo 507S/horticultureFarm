@@ -208,13 +208,12 @@ module.exports.centerDashboard = async(req,res) => {
 //signUp controller
 module.exports.centersignup=async(req,res)=>{
     res.render('center/signup', { title: 'Horticulture Wing Central Management Software',msg:'' });
-    res.send("log");
 };
 module.exports.centersignuppost=async(req,res)=>{
     try {
-        const{uname,password,confirmPassword}=req.body;
+        const {centers,kormokorta,podobi,mobile,uname,email,password,confirmPassword}=req.body;
 
-        const data = await center.findAll({ where: {uname: uname} })
+        const data = await center.findAll()
         if(data.length > 0){
             res.render('center/signup',{title: 'Horticulture Wing Central Management Software',msg:'ERROR: The center is already enrolled!'})
         }
@@ -222,12 +221,22 @@ module.exports.centersignuppost=async(req,res)=>{
             return res.render('center/signup',{title: 'Horticulture Wing Central Management Software',msg:'ERROR: Passwords do not match!'})
         }
         else{
+            // var centers= center;
+            // var kormokortas=kormokorta;
+            // var podobis= podobi;
+            // var mobiles= mobile;
+            // var emails=email;
             const hashedPassword = await bcrypt.hash(password, 10);
             console.log(hashedPassword);
             try{
                 const createCenter = await center.create({
                     uname: uname,
                     password:hashedPassword,
+                    center: centers,
+                    kormokorta:kormokorta,
+                    podobi:podobi,
+                    mobile:mobile,
+                    email:email,
                     pd_id:1
                     })
                 res.render('center/signup',{title: 'Horticulture Wing Central Management Software',msg:'Center Registered Successfully!'})
@@ -801,7 +810,7 @@ module.exports.regularWorker=async(req,res)=>{
 
 module.exports.regularWorkerYear=async(req,res)=>{
     await regularWorker.findAll({
-        where: {year: req.body.year,center_id: req.session.user_id}
+        where: {year: req.body.year,month: req.body.month}
     })
     .then(data => {
         res.render('center/worker/regularWorker/regularWorkerTable', {records: data} ,function(err, html) {
@@ -822,6 +831,7 @@ module.exports.regularWorkerFormPost=async(req,res)=>{
     var name= req.body.name;
     var date= req.body.date;
     var nid= req.body.nid;
+    var month= req.body.month;
     var year =req.body.year;
     var user_id =req.body.user_id;
 
@@ -829,6 +839,7 @@ module.exports.regularWorkerFormPost=async(req,res)=>{
         name: name,
         date:date,
         nid:nid,
+        month:month,
         year:year,
         center_id:user_id
 
@@ -861,7 +872,8 @@ module.exports.irregularWorker=async(req,res)=>{
 
 module.exports.irregularWorkerYear=async(req,res)=>{
     await irregularWorker.findAll({
-        where: {year: req.body.year, center_id: req.session.user_id}
+        where: {year: req.body.year,month: req.body.month}
+        // , center_id: req.session.user_id
     })
     .then(data => {
         res.render('center/worker/irregularWorker/irregularWorkerTable', {records: data} ,function(err, html) {
@@ -882,6 +894,7 @@ module.exports.irregularWorkerFormPost=async(req,res)=>{
     var name= req.body.name;
     var date= req.body.date;
     var nid= req.body.nid;
+    var month= req.body.month;
     var year =req.body.year;
     var user_id =req.body.user_id;
 
@@ -889,6 +902,7 @@ module.exports.irregularWorkerFormPost=async(req,res)=>{
         name: name,
         date:date,
         nid:nid,
+        month:month,
         year:year,
         center_id:user_id
 
@@ -1333,7 +1347,7 @@ module.exports.chak1=async(req,res)=>{
 
 module.exports.chak1Year=async(req,res)=>{
     await chak1.findAll({
-        where: {year: req.body.year, center_id: req.session.user_id}
+        where: {year: req.body.year,month: req.body.month}
     })
     .then(data => {
         res.render('center/employee/chak1/employeeChak1Table', {records: data} ,function(err, html) {
@@ -1361,6 +1375,7 @@ module.exports.chak1FormPost=async(req,res)=>{
     var presentDate= req.body.presentDate;
     var pastWorkstation= req.body.pastWorkstation;
     var comment= req.body.comment;
+    var month= req.body.month;
     var year =req.body.year;
     var user_id =req.body.user_id;
 
@@ -1375,6 +1390,7 @@ module.exports.chak1FormPost=async(req,res)=>{
         presentDate:presentDate,
         pastWorkstation:pastWorkstation,
         comment: comment,
+        month:month,
         year:year,
         center_id:user_id
 
@@ -1408,7 +1424,7 @@ module.exports.chak2=async(req,res)=>{
 
 module.exports.chak2Year=async(req,res)=>{
     await chak2.findAll({
-        where: {year: req.body.year, center_id: req.session.user_id}
+        where: {year: req.body.year,month: req.body.month}
     })
     .then(data => {
         res.render('center/employee/chak2/employeeChak2Table', {records: data} ,function(err, html) {
@@ -1432,6 +1448,7 @@ module.exports.chak2FormPost=async(req,res)=>{
     var working= req.body.working;
     var shunno= req.body.shunno;
     var comment= req.body.comment;
+    var month= req.body.month;
     var year =req.body.year;
     var user_id =req.body.user_id;
 
@@ -1442,6 +1459,7 @@ module.exports.chak2FormPost=async(req,res)=>{
         working: working,
         shunno:shunno,
         comment:comment,
+        month:month,
         year:year,
         center_id:user_id
 
@@ -1877,6 +1895,7 @@ module.exports.expenseFormPost=async(req,res)=>{
         june2=0;
     };
     console.log("july1,august1,sept1,oct1,nov1,dec1,jan2,feb2,march2,apr2,may2,june2",july1,august1,sept1,oct1,nov1,dec1,jan2,feb2,march2,apr2,may2,june2);
+    var boraddo= parseInt(boraddo);
     var july1= parseInt(july1);
     var august1= parseInt(august1);
     var sept1= parseInt(sept1);

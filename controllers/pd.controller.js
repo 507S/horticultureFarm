@@ -386,7 +386,7 @@ module.exports.topSheetFormPost=async(req,res)=>{
 
 //center controller
 module.exports.center=async(req,res)=>{
-    await centerInfo.findAll()
+    await center.findAll()
     .then(data => {
         console.log("inside");
         res.render('pd/centerinfo/center', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: data });
@@ -401,9 +401,7 @@ module.exports.center=async(req,res)=>{
 };
 
 module.exports.centerYear=async(req,res)=>{
-    await centerInfo.findAll({
-        where: {year: req.body.year, center_id: req.session.user_id}
-    })
+    await center.findAll()
     .then(data => {
         res.render('pd/centerinfo/centerTable', {records: data} ,function(err, html) {
             res.send(html);
@@ -414,39 +412,89 @@ module.exports.centerYear=async(req,res)=>{
     })
 
 };
-
-module.exports.centerForm=async(req,res)=>{
-    res.render('pd/centerinfo/centerForm', { title: 'সেন্টারের যোগাযোগ তথ্য',msg:'' ,success:'',user_id: req.session.user_id});
+module.exports.centerEdit=async(req,res)=>{
+    await center.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('pd/centerInfo/centerEdit', { title: 'সেন্টারের যোগাযোগ তথ্য ফর্ম',msg:'' ,success:'',records: data});
+    })
+    .catch(err => {
+        console.log("outside");
+        res.render('pd/centerInfo/centerEdit', { title: 'সেন্টারের যোগাযোগ তথ্য ফর্ম',success:'', records: err });
+    })
 };
-
-module.exports.centerFormPost=async(req,res)=>{
-    var center= req.body.center;
+module.exports.centerEditPost=async(req,res)=>{
+    var centers = req.body.center;
     var kormokorta= req.body.kormokorta;
-    var podobi= req.body.podobi;
+    var podobi = req.body.podobi;
     var mobile= req.body.mobile;
-    var email= req.body.email;
-    var year =req.body.year;
-    var user_id =req.body.user_id;
+    var email = req.body.email;
 
-    await centerInfo.create({
-        center: center,
+    await center.update({ 
+        center:centers,
         kormokorta:kormokorta,
         podobi:podobi,
         mobile:mobile,
         email:email,
-        year:year,
-        center_id:user_id
-
-        }).then(data => {
-            res.redirect('/pd/center');
-        }).catch(err => {
-            res.render('errorpage',err);
-        });
-  
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        res.redirect('/pd/center');
+    }).catch(err => {
+        res.render('errorpage',err);
+    });
 };
-//center controller end
+module.exports.centerDelete=async(req,res)=>{
+    var centerDelete = await center.findByPk(req.params.id);
+    try {
+        centerDelete.destroy();
+        res.redirect("/pd/center");
+    }
+    catch{
+        res.render('errorpage',err);
+    }
+    
+};
+
+// module.exports.centerForm=async(req,res)=>{
+
+
+//     res.render('pd/centerinfo/centerForm', { title: 'সেন্টারের যোগাযোগ তথ্য',msg:'' ,success:'',user_id: req.session.user_id});
+// };
+
+// module.exports.centerFormPost=async(req,res)=>{
+//     var center= req.body.center;
+//     var kormokorta= req.body.kormokorta;
+//     var podobi= req.body.podobi;
+//     var mobile= req.body.mobile;
+//     var email= req.body.email;
+//     var year =req.body.year;
+//     var user_id =req.body.user_id;
+
+//     await centerInfo.create({
+//         center: center,
+//         kormokorta:kormokorta,
+//         podobi:podobi,
+//         mobile:mobile,
+//         email:email,
+//         year:year,
+//         center_id:user_id
+
+//         }).then(data => {
+//             res.redirect('/pd/center');
+//         }).catch(err => {
+//             res.render('errorpage',err);
+//         });
+  
+// };
+
+
 
 //charaKolom controller
+
+//center controller end
+
 module.exports.charaKolom=async(req,res)=>{
     await charaKolom.findAll({
         where: {center_id: req.session.user_id}
@@ -868,7 +916,7 @@ module.exports.regularWorker=async(req,res)=>{
 
 module.exports.regularWorkerFilter=async(req,res)=>{
     await regularWorker.findAll({
-        where: {year: req.body.year,center_id : req.body.center}
+        where: {year: req.body.year,center_id : req.body.center,month:req.body.month}
     })
     .then(data => {
         res.render('pd/worker/regularWorker/regularWorkerTable', {records: data} ,function(err, html) {
@@ -927,7 +975,7 @@ module.exports.irregularWorker=async(req,res)=>{
 
 module.exports.irregularWorkerFilter=async(req,res)=>{
     await irregularWorker.findAll({
-        where: {year: req.body.year, center_id : req.body.center}
+        where: {year: req.body.year,center_id : req.body.center,month:req.body.month}
     })
     .then(data => {
         res.render('pd/worker/irregularWorker/irregularWorkerTable', {records: data} ,function(err, html) {
@@ -1332,7 +1380,7 @@ module.exports.chak1=async(req,res)=>{
 
 module.exports.chak1Filter=async(req,res)=>{
     await chak1.findAll({
-        where: {year: req.body.year, center_id: req.session.user_id}
+        where: {year: req.body.year,center_id : req.body.center,month:req.body.month}
     })
     .then(data => {
         res.render('pd/employee/chak1/employeeChak1Table', {records: data} ,function(err, html) {
@@ -1405,7 +1453,7 @@ module.exports.chak2=async(req,res)=>{
 
 module.exports.chak2Filter=async(req,res)=>{
     await chak2.findAll({
-        where: {year: req.body.year, center_id: req.body.center}
+        where: {year: req.body.year,center_id : req.body.center,month:req.body.month}
     })
     .then(data => {
         res.render('pd/employee/chak2/employeeChak2Table', {records: data} ,function(err, html) {
@@ -1532,7 +1580,170 @@ module.exports.rajosshoFormPost=async(req,res)=>{
         });
   
 };
+module.exports.rajosshoEdit=async(req,res)=>{
+    await rajossho.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('pd/rajossho/rajosshoEdit', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির হিসাব ফর্ম',msg:'' ,success:'',records: data});
+    })
+    .catch(err => {
+        console.log("outside");
+        res.render('pd/rajossho/rajosshoEdit', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির হিসাব ফর্ম',success:'', records: err });
+    })
+};
+module.exports.rajosshoEditPost=async(req,res)=>{
+    var july1=req.body.july1;
+    var august1=req.body.august1;
+    var sept1=req.body.sept1;
+    var oct1=req.body.oct1;
+    var nov1=req.body.nov1;
+    var dec1=req.body.dec1;
+    var jan2=req.body.jan2;
+    var feb2=req.body.feb2;
+    var march2=req.body.march2;
+    var apr2=req.body.apr2;
+    var may2=req.body.may2;
+    var june2=req.body.june2;
+    var comment=req.body.comment;
+    var year=req.body.year;
+    var user_id=req.body.user_id;
+    if(july1==null){        
+        july1=0;
+    };
+    if(august1==null){
+        august1=0;
+    };
+    if(sept1==null){
+        sept1=0;
+    };
+    if(oct1==null){
+        oct1=0;
+    };
+    if(nov1==null){
+        nov1=0;
+    };
+    if(dec1==null){
+        dec1=0;
+    };
+    if(jan2==null){
+        jan2=0;
+    };
+    if(feb2==null){
+        feb2=0;
+    };
+    if(march2==null){
+        march2=0;
+    };
+    if(apr2==null){
+        apr2=0;
+    };
+    if(may2==null){
+        may2=0;
+    };
+    if(june2==null){
+        june2=0;
+    };
+    var boraddo= parseInt(boraddo);
+    var july1= parseInt(july1);
+    var august1= parseInt(august1);
+    var sept1= parseInt(sept1);
+    var oct1= parseInt(oct1);
+    var nov1= parseInt(nov1);
+    var dec1= parseInt(dec1);
+    var jan2= parseInt(jan2);
+    var feb2= parseInt(feb2);
+    var march2= parseInt(march2);
+    var apr2= parseInt(apr2);
+    var may2= parseInt(may2);
+    var june2= parseInt(june2);
+    var total= july1+august1+sept1+oct1+nov1+dec1+jan2+feb2+march2+apr2+may2+june2;
+    await rajossho.update({ 
+        july1:july1,
+        august1: august1,
+        sept1:sept1,
+        oct1:oct1,
+        nov1: nov1,
+        dec1:dec1,
+        jan2:jan2,
+        feb2: feb2,
+        march2:march2,
+        apr2: apr2,
+        may2:may2,
+        june2:june2,
+        total: total,
+        comment: comment,
+        year:year,
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        res.redirect('/pd/rajossho');
+    }).catch(err => {
+        res.render('errorpage',err);
+    });
+};
+module.exports.rajosshoDelete=async(req,res)=>{
+    var rajosshoDelete = await rajossho.findByPk(req.params.id);
+    try {
+        rajosshoDelete.destroy();
+        res.redirect("/pd/rajossho");
+    }
+    catch{
+        res.render('errorpage',err);
+    }
+    
+};
+module.exports.newRajosshoCodeTable=async(req,res)=>{
+    await rajosshoCode.findAll()
+    .then(data => {
+        console.log("inside");
+        res.render('pd/rajossho/newRajosshoCodeTable', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির কোডসমূহ',success:'', records: data });
+    })
+    .catch(err => {
+        console.log("outside");
+        res.render('pd/rajossho/newRajosshoCodeTable', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির কোডসমূহ',success:'', records: err });
+    })
+     
+    //  records:result
 
+};
+module.exports.newRajosshoCodeTableEdit=async(req,res)=>{
+    await rajosshoCode.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('pd/rajossho/newRajosshoCodeTableEdit', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির কোডসমূহ',msg:'' ,success:'',records: data});
+    })
+    .catch(err => {
+        console.log("outside");
+        res.render('pd/rajossho/newRajosshoCodeTableEdit', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির কোডসমূহ',success:'', records: err });
+    })
+};
+module.exports.newRajosshoCodeTableEditPost=async(req,res)=>{
+    var code = req.body.code;
+    var upokhat= req.body.upokhat;
+    await rajosshoCode.update({ 
+        code:code,
+        upokhat:upokhat
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        res.redirect('/pd/newRajosshoCodeTable');
+    }).catch(err => {
+        res.render('errorpage',err);
+    });
+};
+module.exports.newRajosshoCodeTableDelete=async(req,res)=>{
+    var rajosshoCodeDelete = await rajosshoCode.findByPk(req.params.id);
+    try {
+        rajosshoCodeDelete.destroy();
+        res.redirect("/pd/newRajosshoCodeTable");
+    }
+    catch{
+        res.render('errorpage',err);
+    }
+    
+};
 //rajossho controller end
 
 //expense controller
@@ -1620,6 +1831,174 @@ module.exports.expenseFormPost=async(req,res)=>{
             res.render('errorpage',err);
         });
   
+};
+module.exports.expenseEdit=async(req,res)=>{
+    await expense.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('pd/expense/expenseEdit', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী ফর্ম',msg:'' ,success:'',records: data});
+    })
+    .catch(err => {
+        console.log("outside");
+        res.render('pd/expense/expenseEdit', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণীর কোডসমূহ ফর্ম',success:'', records: err });
+    })
+};
+module.exports.expenseEditPost=async(req,res)=>{
+    var boraddo=req.body.boraddo;
+    var july1=req.body.july1;
+    var august1=req.body.august1;
+    var sept1=req.body.sept1;
+    var oct1=req.body.oct1;
+    var nov1=req.body.nov1;
+    var dec1=req.body.dec1;
+    var jan2=req.body.jan2;
+    var feb2=req.body.feb2;
+    var march2=req.body.march2;
+    var apr2=req.body.apr2;
+    var may2=req.body.may2;
+    var june2=req.body.june2;
+    var comment=req.body.comment;
+    var year=req.body.year;
+    var user_id=req.body.user_id;
+    if(july1==null){        
+        july1=0;
+    };
+    if(august1==null){
+        august1=0;
+    };
+    if(sept1==null){
+        sept1=0;
+    };
+    if(oct1==null){
+        oct1=0;
+    };
+    if(nov1==null){
+        nov1=0;
+    };
+    if(dec1==null){
+        dec1=0;
+    };
+    if(jan2==null){
+        jan2=0;
+    };
+    if(feb2==null){
+        feb2=0;
+    };
+    if(march2==null){
+        march2=0;
+    };
+    if(apr2==null){
+        apr2=0;
+    };
+    if(may2==null){
+        may2=0;
+    };
+    if(june2==null){
+        june2=0;
+    };
+    var boraddo= parseInt(boraddo);
+    var july1= parseInt(july1);
+    var august1= parseInt(august1);
+    var sept1= parseInt(sept1);
+    var oct1= parseInt(oct1);
+    var nov1= parseInt(nov1);
+    var dec1= parseInt(dec1);
+    var jan2= parseInt(jan2);
+    var feb2= parseInt(feb2);
+    var march2= parseInt(march2);
+    var apr2= parseInt(apr2);
+    var may2= parseInt(may2);
+    var june2= parseInt(june2);
+    var total= july1+august1+sept1+oct1+nov1+dec1+jan2+feb2+march2+apr2+may2+june2;
+    var baki=boraddo-total;
+    await expense.update({ 
+        boraddo:boraddo,
+        july1:july1,
+        august1: august1,
+        sept1:sept1,
+        oct1:oct1,
+        nov1: nov1,
+        dec1:dec1,
+        jan2:jan2,
+        feb2: feb2,
+        march2:march2,
+        apr2: apr2,
+        may2:may2,
+        june2:june2,
+        total: total,
+        baki:baki,
+        comment: comment,
+        year:year,
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        res.redirect('/pd/expense');
+    }).catch(err => {
+        res.render('errorpage',err);
+    });
+};
+module.exports.expenseDelete=async(req,res)=>{
+    var expenseDelete = await expense.findByPk(req.params.id);
+    try {
+        expenseDelete.destroy();
+        res.redirect("/pd/expense");
+    }
+    catch{
+        res.render('errorpage',err);
+    }
+    
+};
+module.exports.newKhorochTable=async(req,res)=>{
+    await expenseCode.findAll()
+    .then(data => {
+        console.log("inside");
+        res.render('pd/expense/newKhorochCodeTable', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণীর কোডসমূহ',success:'', records: data });
+    })
+    .catch(err => {
+        console.log("outside");
+        res.render('pd/expense/newKhorochCodeTable', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণীর কোডসমূহ',success:'', records: err });
+    })
+     
+    //  records:result
+
+};
+module.exports.newKhorochTableEdit=async(req,res)=>{
+    await expenseCode.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('pd/expense/newKhorochCodeTableEdit', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণীর কোডসমূহ',msg:'' ,success:'',records: data});
+    })
+    .catch(err => {
+        console.log("outside");
+        res.render('pd/expense/newKhorochCodeTableEdit', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণীর কোডসমূহ',success:'', records: err });
+    })
+};
+module.exports.newKhorochTableEditPost=async(req,res)=>{
+    var code = req.body.code;
+    var khat= req.body.khat;
+    await expenseCode.update({ 
+        code:code,
+        khat:khat
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        res.redirect('/pd/newKhorochTable');
+    }).catch(err => {
+        res.render('errorpage',err);
+    });
+};
+module.exports.newKhorochTableDelete=async(req,res)=>{
+    var expenseCodeDelete = await expenseCode.findByPk(req.params.id);
+    try {
+        expenseCodeDelete.destroy();
+        res.redirect("/pd/newKhorochTable");
+    }
+    catch{
+        res.render('errorpage',err);
+    }
+    
 };
 
 //expense controller end
