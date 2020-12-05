@@ -1,0 +1,174 @@
+<%- include('../../includes/header')-%>
+        <div id="wrapper" class="wrapper">
+          <%- include('../../includes/topbar')-%>
+            <div class="page-wrap">
+              <%- include('../../includes/sidebar')-%>
+              <div class="main-content">
+                <div class="container-fluid">
+                    <div class="row clearfix">
+                        <div class="col-md-10">
+                            <h1 class="text-center"><%= title %></h1>
+                        </div>
+                        <!-- <div class="col-md-2">
+                            <label for="year">Choose a year:</label>
+
+                            <select id="year" name="year">
+                                <option value="">Choose year</option>
+                                <option value="2017">২০১৭-১৮</option>
+                                <option value="2018">২০১৮-১৯</option>
+                                <option value="2019">২০১৯-২০</option>
+                                <option value="2020" selected>২০২০-২১</option>
+                                <option value="2021">২০২১-২২</option>
+                                <option value="2022">২০২২-২৩</option>
+                                <option value="2023">২০২৩-২৪</option>
+                            </select>
+                        </div> -->
+                    </div>
+                    <!-- <div class="row mb-2">
+                        <div class="col-md-12">
+                            <a href="/pd/centerForm" class="btn btn-success btn-group-sm ">সেন্টারের যোগাযোগ তথ্য</a>
+                        </div>
+
+                    </div> -->
+
+                     <div class="table-responsive" id="output">
+                        <%if (records.length >0){ %>
+                            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+                            <thead>
+                            <tr>
+                                <th>ক্রমিক নং</th>
+                                <th>উপখাত</th>
+                                <th>রাজস্বের কোড</th>
+                               <th>পরিবর্তন/মুছুন</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <% records.forEach(function(row,index){ %>
+                                    <tr>
+                                        <td><%= index+1 %></td>
+                                        <td><%= row.upokhat %></td>
+                                        <td><%= row.code %></td>
+                                        <td><a class="btn btn-primary btn-xs" href="/pd/newRajosshoCodeTableEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                                            <a class="btn btn-danger btn-xs" href="/pd/newRajosshoCodeTableDelete/<%= row.id %>"><i class="fa fa-trash"></i></a>
+                                        </td>                                                                           
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                        <% }else{ %>
+                            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+                                <thead>
+                                <tr>
+                                    <th>উপখাত</th>
+                                    <th>রাজস্বের কোড</th>
+                                
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% records.forEach(function(row){ %>
+                                    <tr>
+                                        <td colspan="10">No data Found</td>
+                                    </tr>
+                                <% }) %>
+                                </tbody>
+                            </table>
+                        <% } %>
+
+                    </div>
+
+                     <input type="button" id="btnExport" value="Download PDF" />
+
+                   <div id="output"></div>
+                 
+<!--                    <div id="loading" class="loading"><img src="{{ asset('assets/img/icon/loading.gif') }}" alt=""></div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../../includes/footer')-%>
+
+    <!-- <script>
+        
+        $(document).ready(function(){
+            
+          $('.dropdown a.test').on("click", function(e){
+            $(this).next('ul').toggle();
+            e.stopPropagation();
+            e.preventDefault();
+          });
+        });
+    </script>
+    
+    <script type="text/javascript">
+       
+        $("body").on("click", "#btnExport", function () {
+            html2canvas($('#tblCustomers')[0], {
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        content: [{
+                            image: data,
+                            width: 650
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).download("farmer-details.pdf");
+                }
+            });
+        });
+    
+        $("#wrapper").load( "no url rn",function() {
+            
+            var year = new Date().getFullYear();
+            $.ajax({
+                type: "POST",
+                url: "/center/centerYear",
+                data: {year: year},
+                datatype: "json",
+                beforeSend: function() {
+                    // setting a timeout
+                    $('#loading').show();
+                    $('#output').hide();
+    
+                },
+                success: function (data) {
+                    $('#output').html(data);
+                    $('#tblCustomers').DataTable();
+                },
+                complete: function() {
+                    $('#loading').hide();
+                    $('#output').show();
+                }
+            });
+        });
+    
+        $('#year').on("change",function () {
+            var year = $('#year').val();
+            $.ajax({
+                type: "POST",
+                url: "/center/centerYear",
+                data: {year: year},
+                datatype: "json",
+                beforeSend: function() {
+                    // setting a timeout
+                    $('#loading').show();
+                    $('#output').hide();
+                },
+                success: function (data) {
+                    $('#output').html(data);
+                    $('#tblCustomers').DataTable();
+                },
+                complete: function() {
+                    $('#loading').hide();
+                    $('#output').show();
+                }
+            });
+        });
+    
+        $(document).ready(function() {
+            $('#tblCustomers').DataTable();
+        } );
+    
+        
+    
+    </script> -->

@@ -3,7 +3,18 @@ const router = express.Router();
 // const { Router } = require("express");
 const app=express();
 
-const {apaUddessho,apaMaan,karjokrom,suchok,ekok,suchokMaan,newKhorochCode,newRajosshoCode,addMainCategory,addSubcategory,addBiboron,addJaat,monthlyProgress,monthlyProgressFilter,monthlyProgressForm,monthlyProgressFormPost,charaKolomFixed,allCenterInfo,pdsignup,pdsignuppost,rajossho,rajosshoFilter,rajosshoForm,rajosshoFormPost,expense,expenseFilter,expenseForm,expenseFormPost,chak1,chak1Filter,chak1Form,chak1FormPost,chak2,chak2Filter,chak2Form,chak2FormPost,revolvingFund,revolvingFundFilter,revolvingFundForm,revolvingFundFormPost,specialCoconut,specialCoconutFilter,specialCoconutForm,specialCoconutFormPost,loan,loanFilter,loanForm,loanFormPost,apa,apaFilter,apaYear,apaForm,apaFormPost,allcenter,pdlogin,pdloginpost,pdDashboard,topSheet,topSheetFilter,topSheetForm,topSheetFormPost,center,centerYear,centerForm,centerFormPost,charaKolom,charaKolomYear,charaKolomForm,charaKolomFormPost,folMosholla,folMoshollaYear,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegYear,winterVegForm,winterVegFormPost,summerVeg,summerVegYear,summerVegForm,summerVegFormPost,otherFlower,otherFlowerYear,otherFlowerForm,otherFlowerFormPost,seasonalFlower,seasonalFlowerYear,seasonalFlowerForm,seasonalFlowerFormPost,regularWorker,regularWorkerFilter,regularWorkerForm,regularWorkerFormPost,irregularWorker,irregularWorkerFilter,irregularWorkerForm,irregularWorkerFormPost} = require('../controllers/pd.controller');
+const {apaUddessho,apaMaan,karjokrom,suchok,ekok,suchokMaan,newKhorochCode,newRajosshoCode,addMainCategory,centerDelete,centerEdit,centerEditPost,
+    addSubcategory,addBiboron,addJaat,monthlyProgress,monthlyProgressFilter,monthlyProgressForm,monthlyProgressFormPost,expenseEdit,expenseEditPost,expenseDelete,
+    charaKolomFixed,allCenterInfo,pdsignup,pdsignuppost,rajossho,rajosshoFilter,rajosshoForm,rajosshoFormPost,newRajosshoCodeTable,
+    newRajosshoCodeTableEdit,newRajosshoCodeTableDelete,newRajosshoCodeTableEditPost,expense,expenseFilter,newKhorochTable,newKhorochTableEdit,newKhorochTableEditPost,newKhorochTableDelete,
+    expenseForm,expenseFormPost,chak1,chak1Filter,chak1Form,chak1FormPost,chak2,chak2Filter,chak2Form,chak2FormPost,revolvingFund,
+    revolvingFundFilter,revolvingFundForm,revolvingFundFormPost,specialCoconut,specialCoconutFilter,specialCoconutForm,rajosshoEdit,rajosshoEditPost,rajosshoDelete,
+    specialCoconutFormPost,loan,loanFilter,loanForm,loanFormPost,apa,apaFilter,apaYear,apaForm,apaFormPost,allcenter,pdlogin,
+    pdloginpost,pdDashboard,topSheet,topSheetFilter,topSheetForm,topSheetFormPost,center,centerYear,charaKolom,charaKolomYear,
+    charaKolomForm,charaKolomFormPost,folMosholla,folMoshollaYear,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegYear,winterVegForm,
+    winterVegFormPost,summerVeg,summerVegYear,summerVegForm,summerVegFormPost,otherFlower,otherFlowerYear,otherFlowerForm,otherFlowerFormPost,
+    seasonalFlower,seasonalFlowerYear,seasonalFlowerForm,seasonalFlowerFormPost,regularWorker,regularWorkerFilter,regularWorkerForm,
+    regularWorkerFormPost,irregularWorker,irregularWorkerFilter,irregularWorkerForm,irregularWorkerFormPost} = require('../controllers/pd.controller');
 
 router.get('/',allcenter);
 
@@ -28,8 +39,11 @@ router.post('/topSheetForms',topSheetFormPost);
 
 router.get('/center',center);
 router.post('/centerYear',centerYear);
-router.get('/centerForm',centerForm);
-router.post('/centerForms',centerFormPost);
+router.get('/centerEdit/:id',centerEdit);
+router.post('/centerEditPost/:id',centerEditPost);
+router.get('/centerDelete/:id',centerDelete);
+// router.get('/centerForm',centerForm);
+// router.post('/centerForms',centerFormPost);
 
 router.get('/charaKolom',charaKolom);
 router.post('/charaKolomYear',charaKolomYear);
@@ -113,13 +127,28 @@ router.get('/rajossho',rajossho);
 router.post('/rajosshoFilter',rajosshoFilter);
 router.get('/rajosshoForm',rajosshoForm);
 router.post('/rajosshoForms',rajosshoFormPost);
+router.get('/rajosshoEdit/:id',rajosshoEdit);
+router.post('/rajosshoEditPost/:id',rajosshoEditPost);
+router.get('/rajosshoDelete/:id',rajosshoDelete);
+router.get('/newRajosshoCodeTable',newRajosshoCodeTable);
 router.post('/newRajosshoCode',newRajosshoCode);
+router.get('/newRajosshoCodeTableEdit/:id',newRajosshoCodeTableEdit);
+router.post('/newRajosshoCodeTableEditPost/:id',newRajosshoCodeTableEditPost);
+router.get('/newRajosshoCodeTableDelete/:id',newRajosshoCodeTableDelete);
+
 
 router.get('/expense',expense);
 router.post('/expenseFilter',expenseFilter);
 router.get('/expenseForm',expenseForm);
 router.post('/expenseForms',expenseFormPost);
+router.get('/expenseEdit/:id',expenseEdit);
+router.post('/expenseEditPost/:id',expenseEditPost);
+router.get('/expenseDelete/:id',expenseDelete);
 router.post('/newKhorochCode',newKhorochCode);
+router.get('/newKhorochTable',newKhorochTable);
+router.get('/newKhorochTableEdit/:id',newKhorochTableEdit);
+router.post('/newKhorochTableEditPost/:id',newKhorochTableEditPost);
+router.get('/newKhorochTableDelete/:id',newKhorochTableDelete);
 
 router.get('/monthlyProgress',monthlyProgress);
 router.post('/monthlyProgressFilter',monthlyProgressFilter);
