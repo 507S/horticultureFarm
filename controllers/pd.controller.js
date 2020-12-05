@@ -377,7 +377,7 @@ module.exports.topSheetFormPost=async(req,res)=>{
 module.exports.center=async(req,res)=>{
     await center.findAll()
     .then(data => {
-        console.log("inside");
+        console.log("inside",data);
         res.render('pd/centerinfo/center', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: data });
     })
     .catch(err => {
