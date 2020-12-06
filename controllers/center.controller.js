@@ -29,13 +29,6 @@ const monthlyProgress = db.monthlyProgress;
 const cropCategory = db.cropcategory;
 const rajosshoCode= db.rajosshoCode;
 const expenseCode= db.expenseCode;
-const production = db.production;
-const daeprapti = db.daeprapti;
-const bitoron = db.bitoron;
-const daeprodan = db.daeprodan;
-const mrito = db.mrito;
-const mojud = db.mojud;
-const comment = db.comment;
 
 const jwt= require('jsonwebtoken');
 const bcrypt= require('bcryptjs'); 
