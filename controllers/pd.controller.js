@@ -378,11 +378,11 @@ module.exports.center=async(req,res)=>{
     await center.findAll()
     .then(data => {
         console.log("inside",data);
-        res.render('pd/centerinfo/center', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: data });
+        res.render('pd/centerInfo/center', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: data });
     })
     .catch(err => {
         console.log(err);
-        res.render('pd/centerinfo/center', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: err });
+        res.render('pd/centerInfo/center', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: err });
     })
      
     //  records:result
@@ -392,12 +392,12 @@ module.exports.center=async(req,res)=>{
 module.exports.centerYear=async(req,res)=>{
     await center.findAll()
     .then(data => {
-        res.render('pd/centerinfo/centerTable', {records: data} ,function(err, html) {
+        res.render('pd/centerInfo/centerTable', {records: data} ,function(err, html) {
             res.send(html);
         });
     })
     .catch(err => {
-        res.render('pd/centerinfo/centerYear', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: err });
+        res.render('pd/centerInfo/centerYear', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: err });
     })
 
 };
