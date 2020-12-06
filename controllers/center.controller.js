@@ -29,13 +29,6 @@ const monthlyProgress = db.monthlyProgress;
 const cropCategory = db.cropcategory;
 const rajosshoCode= db.rajosshoCode;
 const expenseCode= db.expenseCode;
-const production = db.production;
-const daeprapti = db.daeprapti;
-const bitoron = db.bitoron;
-const daeprodan = db.daeprodan;
-const mrito = db.mrito;
-const mojud = db.mojud;
-const comment = db.comment;
 
 const jwt= require('jsonwebtoken');
 const bcrypt= require('bcryptjs'); 
@@ -202,8 +195,10 @@ module.exports.centersignuppost=async(req,res)=>{
     try {
         const {centers,kormokorta,podobi,mobile,uname,email,password,confirmPassword}=req.body;
 
-        const data = await center.findAll()
-        if(data.length > 0){
+        const data = await center.findAll({
+            where: {uname : uname}
+        })
+        if(data.length>0){
             res.render('center/signup',{title: 'Horticulture Wing Central Management Software',msg:'ERROR: The center is already enrolled!'})
         }
         else if(password !== confirmPassword){
