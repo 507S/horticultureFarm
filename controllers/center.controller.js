@@ -145,7 +145,11 @@ module.exports.centerDashboard = async(req,res) => {
                 center_id : req.session.user_id
             }
         });
-        const rajosshos = await rajossho.findAll();
+        const rajosshos = await rajossho.findAll({
+            where: {
+            center_id : req.session.user_id
+            }
+        });
 
 
         var startRange = "";
@@ -1318,13 +1322,13 @@ module.exports.revolvingFundFormPost=async(req,res)=>{
 
 //revolvingFund controller end
 
-//specialCoconut controller
+//chak1 controller
 module.exports.chak1=async(req,res)=>{
     await chak1.findAll({
         where: {center_id: req.session.user_id}
     })
     .then(data => {
-        console.log("inside");
+        console.log("inside",data);
         res.render('center/employee/chak1/employeeChak1', { title: 'ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য',success:'', records: data });
     })
     .catch(err => {
@@ -1341,6 +1345,7 @@ module.exports.chak1Year=async(req,res)=>{
         where: {year: req.body.year,month: req.body.month}
     })
     .then(data => {
+        console.log("inside2",data);
         res.render('center/employee/chak1/employeeChak1Table', {records: data} ,function(err, html) {
             res.send(html);
         });
