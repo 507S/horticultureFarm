@@ -38,44 +38,32 @@
                                     </div>
                                     
                                     <div class="form-group">
-                                        <label for="target" class="col-md-3 control-label">পলিব্যাগ (২০১৮-১৯ এ বিক্রয়মূল্য)</label>
+                                        <label for="polyacholti" class="col-md-3 control-label">পলিব্যাগ (চলতি অর্থবছরে বিক্রয়মূল্য)</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="polyatharo" placeholder="পলিব্যাগ (২০১৮-১৯ এ বিক্রয়মূল্য)">
+                                            <input type="text" class="form-control" name="polycholti" placeholder="পলিব্যাগ (চলতি অর্থবছরে বিক্রয়মূল্য)">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="lproduction" class="col-md-3 control-label">বেডে (২০১৮-১৯ এ বিক্রয়মূল্য)</label>
+                                        <label for="bedcholti" class="col-md-3 control-label">বেডে (চলতি অর্থবছরে বিক্রয়মূল্য)</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="bedatharo" placeholder="বেডে (২০১৮-১৯ এ বিক্রয়মূল্য)">
+                                            <input type="text" class="form-control" name="bedcholti" placeholder="বেডে (চলতি অর্থবছরে বিক্রয়মূল্য)">
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="target" class="col-md-3 control-label">পলিব্যাগ (২০১৯-২০ এ বিক্রয়মূল্য)</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="polyunish" placeholder="পলিব্যাগ (২০১৯-২০ এ বিক্রয়মূল্য)">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="lproduction" class="col-md-3 control-label">বেডে (২০১৯-২০ এ বিক্রয়মূল্য)</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="bedunish" placeholder="বেডে (২০১৯-২০ এ বিক্রয়মূল্য)">
-                                        </div>
-                                    </div>
+                                    
                                    
                                     <div class="form-group">
-                                        <label for="year" class="col-md-3 control-label">বছর</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="year" placeholder="বছর">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="year" class="col-md-3 control-label">userid</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="user_id" placeholder="id" value="<%= user_id %>">
+                                            <label for="year">বছর :</label>
+                                        <select id="year" name="year" required>
+                                            <option value="2017">২০১৭-১৮</option>
+                                            <option value="2018">২০১৮-১৯</option>
+                                            <option value="2019">২০১৯-২০</option>
+                                            <option value="2020">২০২০-২১</option>
+                                            <option value="2021">২০২১-২২</option>
+                                            <option value="2022">২০২২-২৩</option>
+                                        </select>
                                         </div>
                                     </div>
                                     

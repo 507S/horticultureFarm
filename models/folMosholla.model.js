@@ -11,21 +11,12 @@ module.exports = (sequelize, Sequelize) => {
       amount: {
         type: Sequelize.STRING
       },
-      shotero: {
-        type: Sequelize.STRING
-      },
-      atharo: {
-        type: Sequelize.STRING
-      },
-      unish: {
+      cholti: {
         type: Sequelize.STRING
       },
       
       year: {
         type: Sequelize.STRING
-      },
-      center_id: {
-        type: Sequelize.INTEGER
       }
     });
   

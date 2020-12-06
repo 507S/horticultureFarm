@@ -11,24 +11,15 @@ module.exports = (sequelize, Sequelize) => {
       poriman: {
         type: Sequelize.STRING
       },
-      polyatharo: {
+      polycholti: {
         type: Sequelize.STRING
       },
-      bedatharo: {
-        type: Sequelize.STRING
-      },
-      polyunish: {
-        type: Sequelize.STRING
-      },
-      bedunish: {
+      bedcholti: {
         type: Sequelize.STRING
       },
       
       year: {
         type: Sequelize.STRING
-      },
-      center_id: {
-        type: Sequelize.INTEGER
       }
     });
   

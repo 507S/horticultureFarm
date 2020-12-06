@@ -21,7 +21,7 @@
         <th>সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ)</th>
         <th>নীট মজুদ</th>
         <th>মন্তব্য</th>
-        <th>পরিবর্তন/মুছুন</th>
+        <th>পরিবর্তন</th>
     </tr>
     </thead>
     <tbody>
@@ -176,7 +176,6 @@
                 <td><%= new Number(currentMojudSum).toLocaleString("bn-BD") %></td>
                 <td><%= montobboSum %></td>
                 <td><a class="btn btn-primary btn-xs" href="/center/monthlyProgressEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
-                    <a class="btn btn-danger btn-xs" href="/delete/<%= row.id %>"><i class="fa fa-trash"></i></a>
                 </td>
             </tr>
         <% }) %>
@@ -205,7 +204,6 @@
             <th>সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ)</th>
             <th>নীট মজুদ</th>
             <th>মন্তব্য</th>
-            <th>পরিবর্তন/মুছুন</th>
         </tr>
         </thead>
         <tbody>

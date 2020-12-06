@@ -2,29 +2,27 @@
     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
     <thead>
     <tr>
+        <th>ক্রমিক নং</th>
         <th>আইটেমের নাম (জাতওয়ারী)</th>
         <th>পরিমাণ</th>
-        <th>পলিব্যাগ (২০১৮-১৯ এ বিক্রয়মূল্য)</th>
-        <th>বেডে (২০১৮-১৯ এ বিক্রয়মূল্য)</th>
-        <th>পলিব্যাগ (২০১৯-২০ এ বিক্রয়মূল্য)</th>
-        <th>বেডে (২০১৯-২০ এ বিক্রয়মূল্য)</th>
+        <th>পলিব্যাগ (চলতি অর্থবছরে বিক্রয়মূল্য)</th>
+        <th>বেডে (চলতি অর্থবছরে বিক্রয়মূল্য)</th>
         <th>পরিবর্তন/মুছুন</th>
     </tr>
     </thead>
     <tbody>
-        <% records.forEach(function(row){ %>
+        <% records.forEach(function(row,index){ %>
             <tr>
+                <td><%= index+1 %></td>
                 <td><%= row.item %></td>
                 <td><%= row.poriman %></td>
-                <td><%= row.polyatharo %></td>
-                <td><%= row.bedatharo %></td>
-                <td><%= row.polyunish %></td>
-                <td><%= row.bedunish %></td>
+                <td><%= row.polycholti %></td>
+                <td><%= row.bedcholti %></td>
                 
                 
                
-                <td><a class="btn btn-primary btn-xs" href="/edit/<%= row.id %>"><i class="fa fa-edit"></i></a>
-                    <a class="btn btn-danger btn-xs" href="/delete/<%= row.id %>"><i class="fa fa-trash"></i></a>
+                <td><a class="btn btn-primary btn-xs" href="/pd/seasonalFlowerEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger btn-xs" href="/pd/seasonalFlowerDelete/<%= row.id %>"><i class="fa fa-trash"></i></a>
                 </td>
             </tr>
         <% }) %>
@@ -34,12 +32,11 @@
     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
         <thead>
         <tr>
-            <th>আইটেমের নাম (জাতওয়ারী)</th>
-            <th>পলিব্যাগ (২০১৮-১৯ এ বিক্রয়মূল্য)</th>
-            <th>বেডে (২০১৮-১৯ এ বিক্রয়মূল্য)</th>
-            <th>পলিব্যাগ (২০১৯-২০ এ বিক্রয়মূল্য)</th>
-            <th>বেডে (২০১৯-২০ এ বিক্রয়মূল্য)</th>
-            <th>পরিবর্তন/মুছুন</th>
+            
+        <th>আইটেমের নাম (জাতওয়ারী)</th>
+        <th>পরিমাণ</th>
+        <th>পলিব্যাগ (চলতি অর্থবছরে বিক্রয়মূল্য)</th>
+        <th>বেডে (চলতি অর্থবছরে বিক্রয়মূল্য)</th>
         </tr>
         </thead>
         <tbody>

@@ -482,12 +482,10 @@ module.exports.centerDelete=async(req,res)=>{
 
 //charaKolom controller
 
-//center controller end
+//charaKolom controller 
 
 module.exports.charaKolom=async(req,res)=>{
-    await charaKolom.findAll({
-        where: {center_id: req.session.user_id}
-    })
+    await charaKolom.findAll()
     .then(data => {
         console.log("inside");
         res.render('pd/charaKolomPrice/charaKolom/charaKolom', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য',success:'', records: data });
@@ -503,7 +501,7 @@ module.exports.charaKolom=async(req,res)=>{
 
 module.exports.charaKolomYear=async(req,res)=>{
     await charaKolom.findAll({
-        where: {year: req.body.year, center_id: req.session.user_id}
+        where: {year: req.body.year}
     })
     .then(data => {
         res.render('pd/charaKolomPrice/charaKolom/charaKolomTable', {records: data} ,function(err, html) {
@@ -522,21 +520,15 @@ module.exports.charaKolomForm=async(req,res)=>{
 
 module.exports.charaKolomFormPost=async(req,res)=>{
     var cname= req.body.cname;
-    var shotero= req.body.shotero;
-    var atharo= req.body.atharo;
-    var unish= req.body.unish;
+    var cholti= req.body.cholti;
     var parbotto= req.body.parbotto;
     var year =req.body.year;
-    var user_id =req.body.user_id;
 
     await charaKolom.create({
         cname: cname,
-        shotero:shotero,
-        atharo:atharo,
-        unish:unish,
+        cholti:cholti,
         parbotto:parbotto,
         year:year,
-        center_id:user_id
 
         }).then(data => {
             res.redirect('/pd/charaKolom');
@@ -545,13 +537,50 @@ module.exports.charaKolomFormPost=async(req,res)=>{
         });
   
 };
+module.exports.charaKolomEdit=async(req,res)=>{
+    await charaKolom.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('pd/charaKolomPrice/charaKolom/charaKolomEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: data });
+    })
+    .catch(err => {
+        console.log("outside");
+        res.render('pd/charaKolomPrice/charaKolom/charaKolomEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: err });
+    })
+};
+module.exports.charaKolomEditPost=async(req,res)=>{
+    var cname= req.body.cname;
+    var cholti= req.body.cholti;
+    var parbotto= req.body.parbotto;
+    await charaKolom.update({ 
+        cname: cname,
+        cholti:cholti,
+        parbotto:parbotto,
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        res.redirect('/pd/charaKolom');
+    }).catch(err => {
+        res.render('errorpage',err);
+    });
+};
+module.exports.charaKolomDelete=async(req,res)=>{
+    var charaKolomDelete = await charaKolom.findByPk(req.params.id);
+    try {
+        charaKolomDelete.destroy();
+        res.redirect("/pd/charaKolom");
+    }
+    catch{
+        res.render('errorpage',err);
+    }
+    
+};
 //charaKolom controller end
 
 //folMosholla controller
 module.exports.folMosholla=async(req,res)=>{
-    await folMosholla.findAll({
-        where: {center_id: req.session.user_id}
-    })
+    await folMosholla.findAll()
     .then(data => {
         console.log("inside");
         res.render('pd/charaKolomPrice/folMosholla/folMosholla', { title: 'হরটিকালচার সেন্টারের ফল/মসলা ও শাক-সবজি বিক্রয় মূল্য',success:'', records: data });
@@ -567,7 +596,7 @@ module.exports.folMosholla=async(req,res)=>{
 
 module.exports.folMoshollaYear=async(req,res)=>{
     await folMosholla.findAll({
-        where: {year: req.body.year, center_id: req.session.user_id}
+        where: {year: req.body.year}
     })
     .then(data => {
         res.render('pd/charaKolomPrice/folMosholla/folMoshollaTable', {records: data} ,function(err, html) {
@@ -587,20 +616,14 @@ module.exports.folMoshollaForm=async(req,res)=>{
 module.exports.folMoshollaFormPost=async(req,res)=>{
     var item= req.body.item;
     var amount= req.body.amount;
-    var shotero= req.body.shotero;
-    var atharo= req.body.atharo;
-    var unish= req.body.unish;
+    var cholti= req.body.cholti;
     var year =req.body.year;
-    var user_id =req.body.user_id;
 
     await folMosholla.create({
         item: item,
         amount:amount,
-        shotero:shotero,
-        atharo:atharo,
-        unish:unish,
+        cholti:cholti,
         year:year,
-        center_id:user_id
 
         }).then(data => {
             res.redirect('/pd/folMosholla');
@@ -609,13 +632,51 @@ module.exports.folMoshollaFormPost=async(req,res)=>{
         });
   
 };
+module.exports.folMoshollaEdit=async(req,res)=>{
+    await folMosholla.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('pd/charaKolomPrice/folMosholla/folMoshollaEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: data });
+    })
+    .catch(err => {
+        console.log("outside");
+        res.render('pd/charaKolomPrice/folMosholla/folMoshollaEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: err });
+    })
+};
+module.exports.folMoshollaEditPost=async(req,res)=>{
+    var item= req.body.item;
+    var amount= req.body.amount;
+    var cholti= req.body.cholti;
+    await folMosholla.update({ 
+        item: item,
+        amount:amount,
+        cholti:cholti,
+
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        res.redirect('/pd/folMosholla');
+    }).catch(err => {
+        res.render('errorpage',err);
+    });
+};
+module.exports.folMoshollaDelete=async(req,res)=>{
+    var folMoshollaDelete = await folMosholla.findByPk(req.params.id);
+    try {
+        folMoshollaDelete.destroy();
+        res.redirect("/pd/folMosholla");
+    }
+    catch{
+        res.render('errorpage',err);
+    }
+    
+};
 //folMosholla controller end
 
 //otherFlower controller
 module.exports.otherFlower=async(req,res)=>{
-    await otherFlower.findAll({
-        where: {center_id: req.session.user_id}
-    })
+    await otherFlower.findAll()
     .then(data => {
         console.log("inside");
         res.render('pd/charaKolomPrice/otherFlower/otherFlower', { title: 'বিভিন্ন ফুল ও সুদৃশ্য গাছের চারা/কলমের বিক্রয় মূল্য',success:'', records: data });
@@ -631,7 +692,7 @@ module.exports.otherFlower=async(req,res)=>{
 
 module.exports.otherFlowerYear=async(req,res)=>{
     await otherFlower.findAll({
-        where: {year: req.body.year, center_id: req.session.user_id}
+        where: {year: req.body.year}
     })
     .then(data => {
         res.render('pd/charaKolomPrice/otherFlower/otherFlowerTable', {records: data} ,function(err, html) {
@@ -650,27 +711,17 @@ module.exports.otherFlowerForm=async(req,res)=>{
 
 module.exports.otherFlowerFormPost=async(req,res)=>{
     var item= req.body.item;
-    var polyshotero= req.body.polyshotero;
-    var tobshotero= req.body.tobshotero;
-    var polyatharo= req.body.polyatharo;
-    var tobatharo= req.body.tobatharo;
-    var polyunish= req.body.polyunish;
-    var tobunish= req.body.tobunish;
+    var polycholti= req.body.polycholti;
+    var tobcholti= req.body.tobcholti;
     var year =req.body.year;
-    var user_id =req.body.user_id;
 
     
 
     await otherFlower.create({
         item: item,
-        polyshotero:polyshotero,
-        tobshotero:tobshotero,
-        polyatharo:polyatharo,
-        tobatharo:tobatharo,
-        polyunish:polyunish,
-        tobunish:tobunish,
+        polycholti:polycholti,
+        tobcholti:tobcholti,
         year:year,
-        center_id:user_id
 
         }).then(data => {
             console.log(data)
@@ -681,13 +732,50 @@ module.exports.otherFlowerFormPost=async(req,res)=>{
         });
   
 };
+module.exports.otherFlowerEdit=async(req,res)=>{
+    await otherFlower.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('pd/charaKolomPrice/otherFlower/otherFlowerEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: data });
+    })
+    .catch(err => {
+        console.log("outside");
+        res.render('pd/charaKolomPrice/otherFlower/otherFlowerEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: err });
+    })
+};
+module.exports.otherFlowerEditPost=async(req,res)=>{
+    var item= req.body.item;
+    var polycholti= req.body.polycholti;
+    var tobcholti= req.body.tobcholti;
+    await otherFlower.update({ 
+        item: item,
+        polycholti:polycholti,
+        tobcholti:tobcholti,
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        res.redirect('/pd/otherFlower');
+    }).catch(err => {
+        res.render('errorpage',err);
+    });
+};
+module.exports.otherFlowerDelete=async(req,res)=>{
+    var otherFlowerDelete = await otherFlower.findByPk(req.params.id);
+    try {
+        otherFlowerDelete.destroy();
+        res.redirect("/pd/otherFlower");
+    }
+    catch{
+        res.render('errorpage',err);
+    }
+    
+};
 //otherFlower controller end
 
 //seasonalFlower controller
 module.exports.seasonalFlower=async(req,res)=>{
-    await seasonalFlower.findAll({
-        where: {center_id: req.session.user_id}
-    })
+    await seasonalFlower.findAll()
     .then(data => {
         console.log("inside");
         res.render('pd/charaKolomPrice/seasonalFlower/seasonalFlower', { title: 'মৌসুমী ফুল ও চারার বিক্রয় মূল্য',success:'', records: data });
@@ -703,7 +791,7 @@ module.exports.seasonalFlower=async(req,res)=>{
 
 module.exports.seasonalFlowerYear=async(req,res)=>{
     await seasonalFlower.findAll({
-        where: {year: req.body.year, center_id: req.session.user_id}
+        where: {year: req.body.year}
     })
     .then(data => {
         res.render('pd/charaKolomPrice/seasonalFlower/seasonalFlowerTable', {records: data} ,function(err, html) {
@@ -723,22 +811,16 @@ module.exports.seasonalFlowerForm=async(req,res)=>{
 module.exports.seasonalFlowerFormPost=async(req,res)=>{
     var item= req.body.item;
     var poriman= req.body.poriman;
-    var polyatharo= req.body.polyatharo;
-    var bedatharo= req.body.bedatharo;
-    var polyunish= req.body.polyunish;
-    var bedunish= req.body.bedunish;
+    var polycholti= req.body.polycholti;
+    var bedcholti= req.body.bedcholti;
     var year =req.body.year;
-    var user_id =req.body.user_id;
 
     await seasonalFlower.create({
         item: item,
         poriman:poriman,
-        polyatharo:polyatharo,
-        bedatharo:bedatharo,
-        polyunish:polyunish,
-        bedunish:bedunish,
+        polycholti:polycholti,
+        bedcholti:bedcholti,
         year:year,
-        center_id:user_id
 
         }).then(data => {
             res.redirect('/pd/seasonalFlower');
@@ -747,13 +829,52 @@ module.exports.seasonalFlowerFormPost=async(req,res)=>{
         });
   
 };
+module.exports.seasonalFlowerEdit=async(req,res)=>{
+    await seasonalFlower.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('pd/charaKolomPrice/seasonalFlower/seasonalFlowerEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: data });
+    })
+    .catch(err => {
+        console.log("outside");
+        res.render('pd/charaKolomPrice/seasonalFlower/seasonalFlowerEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: err });
+    })
+};
+module.exports.seasonalFlowerEditPost=async(req,res)=>{
+    var item= req.body.item;
+    var poriman= req.body.poriman;
+    var polycholti= req.body.polycholti;
+    var bedcholti= req.body.bedcholti;
+    await seasonalFlower.update({ 
+        item: item,
+        poriman:poriman,
+        polycholti:polycholti,
+        bedcholti:bedcholti,
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        res.redirect('/pd/seasonalFlower');
+    }).catch(err => {
+        res.render('errorpage',err);
+    });
+};
+module.exports.seasonalFlowerDelete=async(req,res)=>{
+    var seasonalFlowerDelete = await seasonalFlower.findByPk(req.params.id);
+    try {
+        seasonalFlowerDelete.destroy();
+        res.redirect("/pd/seasonalFlower");
+    }
+    catch{
+        res.render('errorpage',err);
+    }
+    
+};
 //seasonalFlower controller end
 
 //summerVeg controller
 module.exports.summerVeg=async(req,res)=>{
-    await center.findAll({
-        where: {center_id: req.session.user_id}
-    })
+    await summerVeg.findAll()
     .then(data => {
         console.log("inside");
         res.render('pd/charaKolomPrice/summerVeg/summerVeg', { title: 'গ্রীষ্মকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য',success:'', records: data });
@@ -769,9 +890,11 @@ module.exports.summerVeg=async(req,res)=>{
 
 module.exports.summerVegYear=async(req,res)=>{
     await summerVeg.findAll({
-        where: {year: req.body.year, center_id: req.session.user_id}
+        where: {year: req.body.year}
     })
     .then(data => {
+        console.log("inside",data);
+
         res.render('pd/charaKolomPrice/summerVeg/summerVegTable', {records: data} ,function(err, html) {
             res.send(html);
         });
@@ -788,25 +911,17 @@ module.exports.summerVegForm=async(req,res)=>{
 
 module.exports.summerVegFormPost=async(req,res)=>{
     var item= req.body.item;
-    var doshatharo= req.body.doshatharo;
-    var ekshoucchoatharo= req.body.ekshoucchoatharo;
-    var ekshohybridatharo= req.body.ekshohybridatharo;
-    var doshbijunish= req.body.doshbijunish;
-    var ekshoucchounish= req.body.ekshoucchounish;
-    var ekshohybridunish= req.body.ekshohybridunish;
+    var doshcholti= req.body.doshcholti;
+    var ekshoucchocholti= req.body.ekshoucchocholti;
+    var ekshohybridcholti= req.body.ekshohybridcholti;
     var year =req.body.year;
-    var user_id =req.body.user_id;
 
     await summerVeg.create({
         item:item,
-        doshatharo:doshatharo,
-        ekshoucchoatharo:ekshoucchoatharo,
-        ekshohybridatharo:ekshohybridatharo,
-        doshbijunish:doshbijunish,
-        ekshoucchounish:ekshoucchounish,
-        ekshohybridunish:ekshohybridunish,
+        doshcholti:doshcholti,
+        ekshoucchocholti:ekshoucchocholti,
+        ekshohybridcholti:ekshohybridcholti,
         year:year,
-        center_id:user_id
 
         }).then(data => {
             res.redirect('/pd/summerVeg');
@@ -815,14 +930,54 @@ module.exports.summerVegFormPost=async(req,res)=>{
         });
   
 };
+module.exports.summerVegEdit=async(req,res)=>{
+    await summerVeg.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('pd/charaKolomPrice/summerVeg/summerVegEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: data });
+    })
+    .catch(err => {
+        console.log("outside");
+        res.render('pd/charaKolomPrice/summerVeg/summerVegEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: err });
+    })
+};
+module.exports.summerVegEditPost=async(req,res)=>{
+    var item= req.body.item;
+    var doshcholti= req.body.doshcholti;
+    var ekshoucchocholti= req.body.ekshoucchocholti;
+    var ekshohybridcholti= req.body.ekshohybridcholti;
+    await summerVeg.update({ 
+        item:item,
+        doshcholti:doshcholti,
+        ekshoucchocholti:ekshoucchocholti,
+        ekshohybridcholti:ekshohybridcholti,
+
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        res.redirect('/pd/summerVeg');
+    }).catch(err => {
+        res.render('errorpage',err);
+    });
+};
+module.exports.summerVegDelete=async(req,res)=>{
+    var summerVegDelete = await summerVeg.findByPk(req.params.id);
+    try {
+        summerVegDelete.destroy();
+        res.redirect("/pd/summerVeg");
+    }
+    catch{
+        res.render('errorpage',err);
+    }
+    
+};
 //summerVeg controller end
 
 //winterVeg controller
 module.exports.winterVeg=async(req,res)=>{
 
-    await center.findAll({
-        where: {center_id: req.session.user_id}
-    })
+    await winterVeg.findAll()
     .then(data => {
         console.log("inside");
         res.render('pd/charaKolomPrice/winterVeg/winterVeg', { title: 'শীতকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য',success:'', records: data });
@@ -838,9 +993,10 @@ module.exports.winterVeg=async(req,res)=>{
 
 module.exports.winterVegYear=async(req,res)=>{
     await winterVeg.findAll({
-        where: {year: req.body.year, center_id: req.session.user_id}
+        where: {year: req.body.year}
     })
     .then(data => {
+        console.log("inside",data);
         res.render('pd/charaKolomPrice/winterVeg/winterVegTable', {records: data} ,function(err, html) {
             res.send(html);
         });
@@ -857,25 +1013,17 @@ module.exports.winterVegForm=async(req,res)=>{
 
 module.exports.winterVegFormPost=async(req,res)=>{
     var item= req.body.item;
-    var doshatharo= req.body.doshatharo;
-    var ekshoucchoatharo= req.body.ekshoucchoatharo;
-    var ekshohybridatharo= req.body.ekshohybridatharo;
-    var doshbijunish= req.body.doshbijunish;
-    var ekshoucchounish= req.body.ekshoucchounish;
-    var ekshohybridunish= req.body.ekshohybridunish;
+    var doshcholti= req.body.doshcholti;
+    var ekshoucchocholti= req.body.ekshoucchocholti;
+    var ekshohybridcholti= req.body.ekshohybridcholti;
     var year =req.body.year;
-    var user_id =req.body.user_id;
 
     await winterVeg.create({
         item: item,
-        doshatharo:doshatharo,
-        ekshoucchoatharo:ekshoucchoatharo,
-        ekshohybridatharo:ekshohybridatharo,
-        doshbijunish:doshbijunish,
-        ekshoucchounish:ekshoucchounish,
-        ekshohybridunish:ekshohybridunish,
+        doshcholti:doshcholti,
+        ekshoucchocholti:ekshoucchocholti,
+        ekshohybridcholti:ekshohybridcholti,
         year:year,
-        center_id:user_id
 
         }).then(data => {
             res.redirect('/pd/winterVeg');
@@ -883,6 +1031,48 @@ module.exports.winterVegFormPost=async(req,res)=>{
             res.render('errorpage',err);
         });
   
+};
+module.exports.winterVegEdit=async(req,res)=>{
+    await winterVeg.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('pd/charaKolomPrice/winterVeg/winterVegEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: data });
+    })
+    .catch(err => {
+        console.log("outside");
+        res.render('pd/charaKolomPrice/winterVeg/winterVegEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: err });
+    })
+};
+module.exports.winterVegEditPost=async(req,res)=>{
+    var item= req.body.item;
+    var doshcholti= req.body.doshcholti;
+    var ekshoucchocholti= req.body.ekshoucchocholti;
+    var ekshohybridcholti= req.body.ekshohybridcholti;
+    await winterVeg.update({ 
+        item:item,
+        doshcholti:doshcholti,
+        ekshoucchocholti:ekshoucchocholti,
+        ekshohybridcholti:ekshohybridcholti,
+
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        res.redirect('/pd/winterVeg');
+    }).catch(err => {
+        res.render('errorpage',err);
+    });
+};
+module.exports.winterVegDelete=async(req,res)=>{
+    var winterVegDelete = await winterVeg.findByPk(req.params.id);
+    try {
+        winterVegDelete.destroy();
+        res.redirect("/pd/winterVeg");
+    }
+    catch{
+        res.render('errorpage',err);
+    }
+    
 };
 //winterVeg controller end
 
@@ -1594,7 +1784,6 @@ module.exports.rajosshoEditPost=async(req,res)=>{
     var may2=req.body.may2;
     var june2=req.body.june2;
     var comment=req.body.comment;
-    var year=req.body.year;
     var user_id=req.body.user_id;
     if(july1==null){        
         july1=0;
@@ -1661,7 +1850,6 @@ module.exports.rajosshoEditPost=async(req,res)=>{
         june2:june2,
         total: total,
         comment: comment,
-        year:year,
     },
     {
         where: {id: req.params.id}
@@ -1847,7 +2035,6 @@ module.exports.expenseEditPost=async(req,res)=>{
     var may2=req.body.may2;
     var june2=req.body.june2;
     var comment=req.body.comment;
-    var year=req.body.year;
     var user_id=req.body.user_id;
     if(july1==null){        
         july1=0;
@@ -1917,7 +2104,6 @@ module.exports.expenseEditPost=async(req,res)=>{
         total: total,
         baki:baki,
         comment: comment,
-        year:year,
     },
     {
         where: {id: req.params.id}
@@ -2130,3 +2316,56 @@ module.exports.apaCode=async(req,res)=>{
   
 };
 //apaCode ends
+
+//cropCategoryList
+module.exports.newcropCategoryList=async(req,res)=>{
+    var mainCategory=await cropCategory.findAll({
+        where: {type : "mainCategory"}
+    });
+    var subCategory=await cropCategory.findAll({
+        where: {type : "subCategory"}
+    });
+    var biboron=await cropCategory.findAll({
+        where: {type : "biboron"}
+    });
+    var jaat=await cropCategory.findAll({
+        where: {type : "jaat"}
+    });
+    try{
+        console.log("inside");
+        res.render('pd/cropCategoryList/cropCategoryList', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির কোডসমূহ',success:'', mainCategorys: mainCategory,subCategorys:subCategory,biborons:biboron,jaats:jaat});
+    }
+    catch{
+        console.log("outside");
+        res.render('pd/cropCategoryList/cropCategoryList', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির কোডসমূহ',success:'', mainCategorys: err });
+    }
+     
+    //  records:result
+
+};
+module.exports.newcropCategoryListEdit=async(req,res)=>{
+    await cropCategory.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('pd/cropCategoryList/cropCategoryListEdit', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির কোডসমূহ',msg:'' ,success:'',records: data});
+    })
+    .catch(err => {
+        console.log("outside");
+        res.render('pd/cropCategoryList/cropCategoryListEdit', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির কোডসমূহ',success:'', records: err });
+    })
+};
+module.exports.newcropCategoryListPost=async(req,res)=>{
+    var code = req.body.code;
+    var upokhat= req.body.upokhat;
+    await cropCategory.update({ 
+        code:code,
+        upokhat:upokhat
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        res.redirect('/pd/cropCategoryListEdit');
+    }).catch(err => {
+        res.render('errorpage',err);
+    });
+};
