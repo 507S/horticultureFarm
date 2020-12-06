@@ -14,6 +14,9 @@ module.exports = (sequelize, Sequelize) => {
       nid: {
         type: Sequelize.STRING
       },
+      month: {
+        type: Sequelize.STRING
+      },
       year: {
         type: Sequelize.STRING
       },

@@ -35,6 +35,9 @@ module.exports = (sequelize, Sequelize) => {
     comment: {
       type: Sequelize.STRING
     },
+    month: {
+      type: Sequelize.STRING
+    },
     year: {
       type: Sequelize.STRING
     },

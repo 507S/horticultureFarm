@@ -7,6 +7,8 @@
         <th>পদবী</th>
         <th>মোবাইল নং</th>
         <th>ই-মেইল</th>
+        <th>পরিবর্তন/মুছুন</th>
+
     </tr>
     </thead>
     <tbody>
@@ -17,7 +19,9 @@
                 <td><%= row.podobi %></td>
                 <td><%= row.mobile %></td>
                 <td><%= row.email %></td>
-                
+                <td><a class="btn btn-primary btn-xs" href="/pd/centerEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger btn-xs" href="/pd/centerDelete/<%= row.id %>"><i class="fa fa-trash"></i></a>
+                </td> 
                 
                
             </tr>

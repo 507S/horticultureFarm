@@ -1,0 +1,163 @@
+<%- include('../../includes/header')-%>
+        <div class="wrapper">
+          <%- include('../../includes/topbar')-%>
+            <div class="page-wrap">
+              <%- include('../../includes/sidebar')-%>
+              <div class="main-content">
+                <div class="container-fluid">
+                    <div class="row clearfix">
+                    <div id="signupbox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <div class="panel-title"><h2>খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণীর কোডসমূহ এর ফর্ম</h2></div>
+                                <p><%
+                                if(success !=''){ %>
+                                <%= success %>
+                                    <% } %>
+                                </p>
+                                </div>  
+                            <div class="panel-body" >
+                                <form action="/pd/expenseEditPost/<%=records.id%>" id="FieldTrialForm" class="form-horizontal" method="post"  role="form">
+                                    <div id="signupalert" style="display:none" class="alert alert-danger">
+                                        <p>Error:</p>
+                                        <span></span>
+                                    </div>
+                                   
+
+                                    <div class="form-group">
+                                        <label for="boraddo" class="col-md-3 control-label">চলতি অর্থ বছরের প্রাপ্ত বরাদ্দ</label>
+                                        <div class="col-md-9">
+                                            <input type="number" class="form-control" name="boraddo" placeholder="চলতি অর্থ বছরের প্রাপ্ত বরাদ্দ" value="<%= records.boraddo %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="july1" class="col-md-3 control-label">জুলাই</label>
+                                        <div class="col-md-9">
+                                            <input type="number" class="form-control" name="july1"  placeholder="জুলাই" value="<%= records.july1 %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="august1" class="col-md-3 control-label">আগস্ট</label>
+                                        <div class="col-md-9">
+                                        <input type="number" class="form-control" name="august1"  placeholder="আগস্ট" value="<%= records.august1 %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="sept1" class="col-md-3 control-label">সেপ্টে</label>
+                                        <div class="col-md-9">
+                                            <input type="number" class="form-control" name="sept1"  placeholder="সেপ্টে" value="<%= records.sept1 %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="oct1" class="col-md-3 control-label">অক্টো</label>
+                                        <div class="col-md-9">
+                                            <input type="number" class="form-control" name="oct1"  placeholder="অক্টো" value="<%= records.oct1 %>">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="nov1" class="col-md-3 control-label">নভে</label>
+                                        <div class="col-md-9">
+                                            <input type="number" class="form-control" name="nov1"  placeholder="নভে" value="<%= records.nov1 %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="dec1" class="col-md-3 control-label">ডিসে</label>
+                                        <div class="col-md-9">
+                                            <input type="number" class="form-control" name="dec1"  placeholder="ডিসে" value="<%= records.dec1 %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="jan2" class="col-md-3 control-label">জানু</label>
+                                        <div class="col-md-9">
+                                        <input type="number" class="form-control" name="jan2"  placeholder="জানু" value="<%= records.jan2 %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="feb2" class="col-md-3 control-label">ফেব্রু</label>
+                                        <div class="col-md-9">
+                                            <input type="number" class="form-control" name="feb2"  placeholder="ফেব্রু" value="<%= records.feb2 %>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="march2" class="col-md-3 control-label">মার্চ</label>
+                                        <div class="col-md-9">
+                                            <input type="number" class="form-control" name="march2"  placeholder="মার্চ" value="<%= records.march2 %>">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="apr2" class="col-md-3 control-label">এপ্রিল</label>
+                                        <div class="col-md-9">
+                                            <input type="number" class="form-control" name="apr2"  placeholder="এপ্রিল" value="<%= records.apr2 %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="may2" class="col-md-3 control-label">মে</label>
+                                        <div class="col-md-9">
+                                            <input type="number" class="form-control" name="may2" placeholder="মে" value="<%= records.may2 %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="june2" class="col-md-3 control-label">জুন</label>
+                                        <div class="col-md-9">
+                                        <input type="number" class="form-control" name="june2" placeholder="জুন" value="<%= records.june2 %>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="comment" class="col-md-3 control-label">মন্তব্য অতিরিক্ত খরচ বেতন</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="comment" placeholder="মন্তব্য অতিরিক্ত খরচ বেতন" value="<%= records.comment %>">
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="form-group">
+                                        <div class="col-md-9">
+                                            <label for="year">বছর :</label>
+                                        <select id="year" name="year" required>
+                                            <option value="2017">২০১৭-১৮</option>
+                                            <option value="2018">২০১৮-১৯</option>
+                                            <option value="2019">২০১৯-২০</option>
+                                            <option value="2020">২০২০-২১</option>
+                                            <option value="2021">২০২১-২২</option>
+                                            <option value="2022">২০২২-২৩</option>
+                                        </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-9">
+                                            <input type="hidden" class="form-control" name="user_id" placeholder="user_id" value="<%= records.center_id %>" >
+                                        </div>
+                                    </div>
+
+                                    
+                                    
+                                    <div class="form-group">
+                                        <!-- Button -->                                        
+                                        <div class="col-md-offset-3 col-md-9">
+                                        <input type="submit" name="submit" value="submit" class="btn btn-primary">   
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                        
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<%- include('../../includes/footer')-%>

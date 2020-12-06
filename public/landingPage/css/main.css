@@ -1457,7 +1457,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 
 .header-logo a {
     display: block;
-    margin: 9px 0 0 0;
+    /* margin: 9px 0 0 0; */
     padding: 0;
     outline: 0;
     border: none;
