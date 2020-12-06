@@ -8,13 +8,7 @@ module.exports = (sequelize, Sequelize) => {
       cname: {
         type: Sequelize.STRING
       },
-      shotero: {
-        type: Sequelize.STRING
-      },
-      atharo: {
-        type: Sequelize.STRING
-      },
-      unish: {
+      cholti: {
         type: Sequelize.STRING
       },
       parbotto: {
@@ -23,9 +17,6 @@ module.exports = (sequelize, Sequelize) => {
       
       year: {
         type: Sequelize.STRING
-      },
-      center_id: {
-        type: Sequelize.INTEGER
       }
     });
   

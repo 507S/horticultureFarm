@@ -17,7 +17,7 @@
                                 </p>
                                 </div>  
                             <div class="panel-body" >
-                                <form action="/center/seasonalFlowerForms" id="FieldTrialForm" class="form-horizontal" method="post"  role="form">
+                                <form action="/pd/seasonalFlowerEditPost/<%=records.id%>" id="FieldTrialForm" class="form-horizontal" method="post"  role="form">
                                     <div id="signupalert" style="display:none" class="alert alert-danger">
                                         <p>Error:</p>
                                         <span></span>
@@ -27,57 +27,31 @@
                                     <div class="form-group">
                                         <label for="item" class="col-md-3 control-label">আইটেমের নাম (জাতওয়ারী)</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="item" placeholder="আইটেমের নাম (জাতওয়ারী)">
+                                            <input type="text" class="form-control" name="item" placeholder="আইটেমের নাম (জাতওয়ারী)" value="<%= records.item %>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="poriman" class="col-md-3 control-label">পরিমাণ</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="poriman" placeholder="পরিমাণ">
+                                            <input type="text" class="form-control" name="poriman" placeholder="পরিমাণ" value="<%= records.poriman %>">
                                         </div>
                                     </div>
                                     
                                     <div class="form-group">
-                                        <label for="target" class="col-md-3 control-label">পলিব্যাগ (২০১৮-১৯ এ বিক্রয়মূল্য)</label>
+                                        <label for="polyacholti" class="col-md-3 control-label">পলিব্যাগ (চলতি অর্থবছরে বিক্রয়মূল্য)</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="polyatharo" placeholder="পলিব্যাগ (২০১৮-১৯ এ বিক্রয়মূল্য)">
+                                            <input type="text" class="form-control" name="polycholti" placeholder="পলিব্যাগ (চলতি অর্থবছরে বিক্রয়মূল্য)" value="<%= records.polycholti %>">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="lproduction" class="col-md-3 control-label">বেডে (২০১৮-১৯ এ বিক্রয়মূল্য)</label>
+                                        <label for="bedcholti" class="col-md-3 control-label">বেডে (চলতি অর্থবছরে বিক্রয়মূল্য)</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="bedatharo" placeholder="বেডে (২০১৮-১৯ এ বিক্রয়মূল্য)">
+                                            <input type="text" class="form-control" name="bedcholti" placeholder="বেডে (চলতি অর্থবছরে বিক্রয়মূল্য)" value="<%= records.bedcholti %>">
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="target" class="col-md-3 control-label">পলিব্যাগ (২০১৯-২০ এ বিক্রয়মূল্য)</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="polyunish" placeholder="পলিব্যাগ (২০১৯-২০ এ বিক্রয়মূল্য)">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="lproduction" class="col-md-3 control-label">বেডে (২০১৯-২০ এ বিক্রয়মূল্য)</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="bedunish" placeholder="বেডে (২০১৯-২০ এ বিক্রয়মূল্য)">
-                                        </div>
-                                    </div>
-                                   
-                                    <div class="form-group">
-                                        <label for="year" class="col-md-3 control-label">বছর</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="year" placeholder="বছর">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="year" class="col-md-3 control-label">userid</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="user_id" placeholder="id" value="<%= user_id %>">
-                                        </div>
-                                    </div>
+                                    
                                     
                                     <div class="form-group">
                                         <!-- Button -->                                        

@@ -17,7 +17,7 @@
                                 </p>
                                 </div>  
                             <div class="panel-body" >
-                                <form action="/pd/otherFlowerForms" id="FieldTrialForm" class="form-horizontal" method="post"  role="form">
+                                <form action="/pd/otherFlowerEditPost/<%=records.id%>" id="FieldTrialForm" class="form-horizontal" method="post"  role="form">
                                     <div id="signupalert" style="display:none" class="alert alert-danger">
                                         <p>Error:</p>
                                         <span></span>
@@ -27,39 +27,27 @@
                                     <div class="form-group">
                                         <label for="item" class="col-md-3 control-label">আইটেমের নাম (জাতওয়ারী)</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="item" placeholder="আইটেমের নাম (জাতওয়ারী)">
+                                            <input type="text" class="form-control" name="item" placeholder="আইটেমের নাম (জাতওয়ারী)" value="<%= records.item %>">
                                         </div>
                                     </div>
                                     
                                     <div class="form-group">
                                         <label for="polycholti" class="col-md-3 control-label">পলিব্যাগ (চলতি অর্থবছরে বিক্রয়মূল্য)</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="polycholti" placeholder="পলিব্যাগ (চলতি অর্থবছরে বিক্রয়মূল্য)">
+                                            <input type="text" class="form-control" name="polycholti" placeholder="পলিব্যাগ (চলতি অর্থবছরে বিক্রয়মূল্য)" value="<%= records.polycholti %>">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="tobcholti" class="col-md-3 control-label">টবে (চলতি অর্থবছরে বিক্রয়মূল্য)</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="tobcholti" placeholder="টবে (চলতি অর্থবছরে বিক্রয়মূল্য)">
+                                            <input type="text" class="form-control" name="tobcholti" placeholder="টবে (চলতি অর্থবছরে বিক্রয়মূল্য)" value="<%= records.tobcholti %>">
                                         </div>
                                     </div>
 
                                     
                                    
-                                    <div class="form-group">
-                                        <div class="col-md-9">
-                                            <label for="year">বছর :</label>
-                                        <select id="year" name="year" required>
-                                            <option value="2017">২০১৭-১৮</option>
-                                            <option value="2018">২০১৮-১৯</option>
-                                            <option value="2019">২০১৯-২০</option>
-                                            <option value="2020">২০২০-২১</option>
-                                            <option value="2021">২০২১-২২</option>
-                                            <option value="2022">২০২২-২৩</option>
-                                        </select>
-                                        </div>
-                                    </div>
+   
 
                                     
                                     <div class="form-group">

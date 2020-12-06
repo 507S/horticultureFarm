@@ -8,30 +8,16 @@ module.exports = (sequelize, Sequelize) => {
       item: {
         type: Sequelize.STRING
       },
-      polyshotero: {
+      polycholti: {
         type: Sequelize.STRING
       },
-      tobshotero: {
-        type: Sequelize.STRING
-      },
-      polyatharo: {
-        type: Sequelize.STRING
-      },
-      tobatharo: {
-        type: Sequelize.STRING
-      },
-      polyunish: {
-        type: Sequelize.STRING
-      },
-      tobunish: {
+      
+      tobcholti: {
         type: Sequelize.STRING
       },
       
       year: {
         type: Sequelize.STRING
-      },
-      center_id: {
-        type: Sequelize.INTEGER
       }
     });
   

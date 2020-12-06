@@ -10,7 +10,10 @@ const {apaUddessho,apaMaan,karjokrom,suchok,ekok,suchokMaan,newKhorochCode,newRa
     expenseForm,expenseFormPost,chak1,chak1Filter,chak1Form,chak1FormPost,chak2,chak2Filter,chak2Form,chak2FormPost,revolvingFund,
     revolvingFundFilter,revolvingFundForm,revolvingFundFormPost,specialCoconut,specialCoconutFilter,specialCoconutForm,rajosshoEdit,rajosshoEditPost,rajosshoDelete,
     specialCoconutFormPost,loan,loanFilter,loanForm,loanFormPost,apa,apaFilter,apaYear,apaForm,apaFormPost,allcenter,pdlogin,
-    pdloginpost,pdDashboard,topSheet,topSheetFilter,topSheetForm,topSheetFormPost,center,centerYear,charaKolom,charaKolomYear,
+    pdloginpost,pdDashboard,topSheet,topSheetFilter,topSheetForm,topSheetFormPost,center,centerYear,
+    charaKolomEdit,charaKolomEditPost,charaKolomDelete,winterVegEdit,winterVegEditPost,winterVegDelete,summerVegEdit,summerVegEditPost,summerVegDelete,
+    otherFlowerEdit,otherFlowerEditPost,otherFlowerDelete,seasonalFlowerEdit,seasonalFlowerEditPost,seasonalFlowerDelete,
+    charaKolom,charaKolomYear,folMoshollaEdit,folMoshollaEditPost,folMoshollaDelete,newcropCategoryList,newcropCategoryListPost,newcropCategoryListEdit,
     charaKolomForm,charaKolomFormPost,folMosholla,folMoshollaYear,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegYear,winterVegForm,
     winterVegFormPost,summerVeg,summerVegYear,summerVegForm,summerVegFormPost,otherFlower,otherFlowerYear,otherFlowerForm,otherFlowerFormPost,
     seasonalFlower,seasonalFlowerYear,seasonalFlowerForm,seasonalFlowerFormPost,regularWorker,regularWorkerFilter,regularWorkerForm,
@@ -48,31 +51,50 @@ router.get('/charaKolom',charaKolom);
 router.post('/charaKolomYear',charaKolomYear);
 router.get('/charaKolomForm',charaKolomForm);
 router.post('/charaKolomForms',charaKolomFormPost);
+router.get('/charaKolomEdit/:id',charaKolomEdit);
+router.post('/charaKolomEditPost/:id',charaKolomEditPost);
+router.get('/charaKolomDelete/:id',charaKolomDelete);
 
 router.get('/folMosholla',folMosholla);
 router.post('/folMoshollaYear',folMoshollaYear);
 router.get('/folMoshollaForm',folMoshollaForm);
 router.post('/folMoshollaForms',folMoshollaFormPost);
+router.get('/folMoshollaEdit/:id',folMoshollaEdit);
+router.post('/folMoshollaEditPost/:id',folMoshollaEditPost);
+router.get('/folMoshollaDelete/:id',folMoshollaDelete);
+
 
 router.get('/winterVeg',winterVeg);
 router.post('/winterVegYear',winterVegYear);
 router.get('/winterVegForm',winterVegForm);
 router.post('/winterVegForms',winterVegFormPost);
+router.get('/winterVegEdit/:id',winterVegEdit);
+router.post('/winterVegEditPost/:id',winterVegEditPost);
+router.get('/winterVegDelete/:id',winterVegDelete);
 
 router.get('/summerVeg',summerVeg);
 router.post('/summerVegYear',summerVegYear);
 router.get('/summerVegForm',summerVegForm);
 router.post('/summerVegForms',summerVegFormPost);
+router.get('/summerVegEdit/:id',summerVegEdit);
+router.post('/summerVegEditPost/:id',summerVegEditPost);
+router.get('/summerVegDelete/:id',summerVegDelete);
 
 router.get('/otherFlower',otherFlower);
 router.post('/otherFlowerYear',otherFlowerYear);
 router.get('/otherFlowerForm',otherFlowerForm);
 router.post('/otherFlowerForms',otherFlowerFormPost);
+router.get('/otherFlowerEdit/:id',otherFlowerEdit);
+router.post('/otherFlowerEditPost/:id',otherFlowerEditPost);
+router.get('/otherFlowerDelete/:id',otherFlowerDelete);
 
 router.get('/seasonalFlower',seasonalFlower);
 router.post('/seasonalFlowerYear',seasonalFlowerYear);
 router.get('/seasonalFlowerForm',seasonalFlowerForm);
 router.post('/seasonalFlowerForms',seasonalFlowerFormPost);
+router.get('/seasonalFlowerEdit/:id',seasonalFlowerEdit);
+router.post('/seasonalFlowerEditPost/:id',seasonalFlowerEditPost);
+router.get('/seasonalFlowerDelete/:id',seasonalFlowerDelete);
 
 router.get('/regularWorker',regularWorker);
 router.post('/regularWorkerFilter',regularWorkerFilter);
@@ -154,6 +176,8 @@ router.post('/monthlyProgressFilter',monthlyProgressFilter);
 router.get('/monthlyProgressForm',monthlyProgressForm);
 router.post('/monthlyProgressForms',monthlyProgressFormPost);
 
-
+router.get('/newcropCategoryList',newcropCategoryList);
+router.post('/newcropCategoryListPost/:id',newcropCategoryListPost);
+router.get('/newcropCategoryListEdit/:id',newcropCategoryListEdit);
 
 module.exports = router;

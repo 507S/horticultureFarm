@@ -83,7 +83,7 @@
             var year = new Date().getFullYear();
             $.ajax({
                 type: "POST",
-                url: "/center/otherFlowerYear",
+                url: "/pd/otherFlowerYear",
                 data: {year: year},
                 datatype: "json",
                 beforeSend: function() {
@@ -107,7 +107,7 @@
             var year = $('#year').val();
             $.ajax({
                 type: "POST",
-                url: "/center/otherFlowerYear",
+                url: "/pd/otherFlowerYear",
                 data: {year: year},
                 datatype: "json",
                 beforeSend: function() {

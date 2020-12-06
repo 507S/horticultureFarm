@@ -81,7 +81,7 @@
             var year = new Date().getFullYear();
             $.ajax({
                 type: "POST",
-                url: "/center/charaKolomYear",
+                url: "/pd/charaKolomYear",
                 data: {year: year},
                 datatype: "json",
                 beforeSend: function() {
@@ -105,7 +105,7 @@
             var year = $('#year').val();
             $.ajax({
                 type: "POST",
-                url: "/center/charaKolomYear",
+                url: "/pd/charaKolomYear",
                 data: {year: year},
                 datatype: "json",
                 beforeSend: function() {

@@ -8,30 +8,17 @@ module.exports = (sequelize, Sequelize) => {
       item: {
         type: Sequelize.STRING
       },
-      doshatharo: {
+      doshcholti: {
         type: Sequelize.STRING
       },
-      ekshoucchoatharo: {
+      ekshoucchocholti: {
         type: Sequelize.STRING
       },
-      ekshohybridatharo: {
+      ekshohybridcholti: {
         type: Sequelize.STRING
       },
-      doshbijunish: {
+       year: {
         type: Sequelize.STRING
-      },
-      ekshoucchounish: {
-        type: Sequelize.STRING
-      },
-      ekshohybridunish: {
-        type: Sequelize.STRING
-      },
-      
-      year: {
-        type: Sequelize.STRING
-      },
-      center_id: {
-        type: Sequelize.INTEGER
       }
     });
   
