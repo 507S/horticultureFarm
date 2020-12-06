@@ -195,8 +195,10 @@ module.exports.centersignuppost=async(req,res)=>{
     try {
         const {centers,kormokorta,podobi,mobile,uname,email,password,confirmPassword}=req.body;
 
-        const data = await center.findAll()
-        if(data.length > 0){
+        const data = await center.findAll({
+            where: {uname : uname}
+        })
+        if(data.length>0){
             res.render('center/signup',{title: 'Horticulture Wing Central Management Software',msg:'ERROR: The center is already enrolled!'})
         }
         else if(password !== confirmPassword){
