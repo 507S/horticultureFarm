@@ -261,17 +261,26 @@ module.exports.topSheet=async(req,res)=>{
 
 module.exports.topSheetYear=async(req,res)=>{
     try{
+        const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
+        const selectedDate = req.body.year.toLowerCase();
         const cropCatg = await cropCategory.findAll({
-            where: {
-                type: 'subCategory'
-            }
+            where: { type: 'subCategory' }
         })
         const topSheets = await monthlyProgress.findAll({
             where: {center_id: req.session.user_id}
         })
-        res.render('center/topSheet/topSheetTable', {records: topSheets , cropCatg:cropCatg} ,function(err, html) {
-            res.send(html);
-        });
+
+        if(selectedDate === currentMonth){
+            res.render('center/topSheet/topSheetTable', {records: topSheets , cropCatg:cropCatg} ,function(err, html) {
+                res.send(html);
+            });
+        }
+        else{
+            res.render('center/topSheet/topSheetCustomTable', {records: topSheets , cropCatg:cropCatg,selectedDate:selectedDate} ,function(err, html) {
+                res.send(html);
+            });
+        }
+
     }
     catch (e){
         console.log(e)
@@ -2184,44 +2193,36 @@ module.exports.monthlyProgress=async(req,res)=>{
 };
 
 module.exports.monthlyProgressYear=async(req,res)=>{
-    const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase()
-    await monthlyProgress.findAll({
+    try {
+        const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
+        const selectedDate = req.body.year.toLowerCase();
 
-        // attributes: [
-        //     fn('JSON_CONTAINS', col('timeFrame'), cast('{"time": "nov-2020"}', 'CHAR CHARACTER SET utf8'))
-        //     // fn('JSON_EXTRACT', col('time'), cast('{"time": "nov-2020"}', 'CHAR CHARACTER SET utf8')),
-        // ],
-        // raw: true,
+        var data = [];
+        const allMonthlyProgress = await monthlyProgress.findAll();
+        allMonthlyProgress.map((monthlyProg,key) => {
+            const timeList = JSON.parse(monthlyProg.timeFrame)
+            timeList.map((eachTime,index) => {
+                if (eachTime.time === selectedDate){
+                    data.push(monthlyProg);
+                }
+            })
+        })
 
-        // where : {
-        //     timeFrame: {
-        //         time : 'nov-2020'
-        //     }
-        // }
-
-        where:{
-            center_id: req.session.user_id,
-        }
-
-        // [Op.and]: db.Sequelize.literal(JSON_CONTAINS(`time`, '{\"time\": nov-2020}')),
-        // "time" : currentMonth
-
-        // time: {
-        //     [Op.and]: [{time: {[Op.eq]: currentMonth}}]
-        // }
-
-
-    })
-        .then(data => {
-            console.log(data)
+        if(selectedDate === currentMonth) {
             res.render('center/monthlyProgress/monthlyProgressTable', {records: data} ,function(err, html) {
                 res.send(html);
             });
-        })
-        .catch(err => {
-            console.log(err)
-            res.render('center/monthlyProgress/monthlyProgressYear', { title: 'মাসিক প্রতিবেদন',success:'', records: err });
-        })
+        }
+        else{
+            res.render('center/monthlyProgress/monthlyProgressCustomTable', {records: data,selectedDate:selectedDate} ,function(err, html) {
+                res.send(html);
+            });
+        }
+
+    }
+    catch (e) {
+        console.log(e)
+    }
 
 };
 

@@ -46,7 +46,7 @@
 
                 // Previous Economic year
 
-                if (moment('nov-2020').format("M") < 7){
+                if (moment().format("M") < 7){
                     prevEconomicStart = "jul"+"-"+moment().subtract(2, "year").format('yyyy')
                     prevEconomicEnd = "jul"+"-"+moment().subtract(1, "year").format('yyyy')
                 }else{

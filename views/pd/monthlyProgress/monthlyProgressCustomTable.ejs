@@ -1,30 +1,30 @@
 <%if (records.length >0){ %>
-    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-    <thead>
-    <tr>
-        <th>ক্যাটাগরি নাম</th>
-        <th>সাব-ক্যাটাগরি নাম</th>
-        <th>বিবরণ</th>
-        <th>জাত</th>
-        <th>উৎপাদন (লক্ষ্যমাত্রা)</th>
-        <th>উৎপাদন (চলতি মাস)</th>
-        <th>উৎপাদন (পূর্বমাস পর্যন্ত)</th>
-        <th>মোট উৎপাদন (চলতি+পূর্ব মাস)</th>
-        <th>ডিএই চালানে প্রাপ্তি</th>
-        <th>পূর্ব বছরের জের </th>
-        <th>সর্বমোট (মোট+ডিএই চালানে প্রাপ্তি+পূর্ব বছরের জের)</th>
-        <th>বিতরণ (চলতি মাস)</th>
-        <th>বিতরণ (পূর্বমাস পর্যন্ত)</th>
-        <th>বিতরণ মোট (চলতি+পূর্ব মাস)</th>
-        <th>ডিএই চালানে প্রদান</th>
-        <th>মৃত/বিনষ্ট রাইটআপ</th>
-        <th>সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ)</th>
-        <th>নীট মজুদ</th>
-        <th>মন্তব্য</th>
-        <th>পরিবর্তন</th>
-    </tr>
-    </thead>
-    <tbody>
+    <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th>ক্যাটাগরি নাম</th>
+            <th>সাব-ক্যাটাগরি নাম</th>
+            <th>বিবরণ</th>
+            <th>জাত</th>
+            <th>উৎপাদন (লক্ষ্যমাত্রা)</th>
+            <th>উৎপাদন (চলতি মাস)</th>
+            <th>উৎপাদন (পূর্বমাস পর্যন্ত)</th>
+            <th>মোট উৎপাদন (চলতি+পূর্ব মাস)</th>
+            <th>ডিএই চালানে প্রাপ্তি</th>
+            <th>পূর্ব বছরের জের </th>
+            <th>সর্বমোট (মোট+ডিএই চালানে প্রাপ্তি+পূর্ব বছরের জের)</th>
+            <th>বিতরণ (চলতি মাস)</th>
+            <th>বিতরণ (পূর্বমাস পর্যন্ত)</th>
+            <th>বিতরণ মোট (চলতি+পূর্ব মাস)</th>
+            <th>ডিএই চালানে প্রদান</th>
+            <th>মৃত/বিনষ্ট রাইটআপ</th>
+            <th>সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ)</th>
+            <th>নীট মজুদ</th>
+            <th>মন্তব্য</th>
+            <th>পরিবর্তন</th>
+        </tr>
+        </thead>
+        <tbody>
         <% records.forEach(function(row){ %>
 
             <%
@@ -46,7 +46,7 @@
 
                 // Previous Economic year
 
-                if (moment().format("M") < 7){
+                if (moment('nov-2020').format("M") < 7){
                     prevEconomicStart = "jul"+"-"+moment().subtract(2, "year").format('yyyy')
                     prevEconomicEnd = "jul"+"-"+moment().subtract(1, "year").format('yyyy')
                 }else{
@@ -159,7 +159,9 @@
                 <td><%= row.biboron %></td>
                 <td><%= row.breed %></td>
                 <td><%= new Number(row.productionTarget).toLocaleString("bn-BD") %></td>
-                <td><%= new Number(currentProductionSum).toLocaleString("bn-BD") %></td>
+                <td>
+                    <%= new Number(currentProductionSum).toLocaleString("bn-BD") %>
+                </td>
                 <td> <%= new Number(previousMonthProduction).toLocaleString("bn-BD") %> </td>
                 <td> <%= new Number(totalProductionSum).toLocaleString("bn-BD") %> </td>
                 <td> <%= new Number(daePraptiSum).toLocaleString("bn-BD") %> </td>
@@ -177,8 +179,8 @@
                 </td>
             </tr>
         <% }) %>
-    </tbody>
-</table>
+        </tbody>
+    </table>
 <% }else{ %>
     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
         <thead>
