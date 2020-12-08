@@ -1,34 +1,34 @@
 <%if (records.length >0){ %>
     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-    <thead>
-    <tr>
-        <th>ক্যাটাগরি নাম</th>
-        <th>সাব-ক্যাটাগরি নাম</th>
-        <th>বিবরণ</th>
-        <th>জাত</th>
-        <th>উৎপাদন (লক্ষ্যমাত্রা)</th>
-        <th>উৎপাদন (চলতি মাস)</th>
-        <th>উৎপাদন (পূর্বমাস পর্যন্ত)</th>
-        <th>মোট উৎপাদন (চলতি+পূর্ব মাস)</th>
-        <th>ডিএই চালানে প্রাপ্তি</th>
-        <th>পূর্ব বছরের জের </th>
-        <th>সর্বমোট (মোট+ডিএই চালানে প্রাপ্তি+পূর্ব বছরের জের)</th>
-        <th>বিতরণ (চলতি মাস)</th>
-        <th>বিতরণ (পূর্বমাস পর্যন্ত)</th>
-        <th>বিতরণ মোট (চলতি+পূর্ব মাস)</th>
-        <th>ডিএই চালানে প্রদান</th>
-        <th>মৃত/বিনষ্ট রাইটআপ</th>
-        <th>সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ)</th>
-        <th>নীট মজুদ</th>
-        <th>মন্তব্য</th>
-        <th>পরিবর্তন</th>
-    </tr>
-    </thead>
-    <tbody>
+        <thead>
+        <tr>
+            <th>ক্যাটাগরি নাম</th>
+            <th>সাব-ক্যাটাগরি নাম</th>
+            <th>বিবরণ</th>
+            <th>জাত</th>
+            <th>উৎপাদন (লক্ষ্যমাত্রা)</th>
+            <th>উৎপাদন (চলতি মাস)</th>
+            <th>উৎপাদন (পূর্বমাস পর্যন্ত)</th>
+            <th>মোট উৎপাদন (চলতি+পূর্ব মাস)</th>
+            <th>ডিএই চালানে প্রাপ্তি</th>
+            <th>পূর্ব বছরের জের </th>
+            <th>সর্বমোট (মোট+ডিএই চালানে প্রাপ্তি+পূর্ব বছরের জের)</th>
+            <th>বিতরণ (চলতি মাস)</th>
+            <th>বিতরণ (পূর্বমাস পর্যন্ত)</th>
+            <th>বিতরণ মোট (চলতি+পূর্ব মাস)</th>
+            <th>ডিএই চালানে প্রদান</th>
+            <th>মৃত/বিনষ্ট রাইটআপ</th>
+            <th>সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ)</th>
+            <th>নীট মজুদ</th>
+            <th>মন্তব্য</th>
+            <th>পরিবর্তন</th>
+        </tr>
+        </thead>
+        <tbody>
         <% records.forEach(function(row){ %>
 
             <%
-                const currentMonth = moment().format("MMM-YYYY").toLowerCase();
+                const currentMonth = selectedDate
                 var startRange = "";
                 var endRange = "";
 
@@ -59,10 +59,10 @@
                 var previousMonthProduction = 0;
                 const currentProd = JSON.parse(row.productionCurrent)
                 currentProd.forEach(function(prodCurrent){
-                    if ( prodCurrent.time === moment().format("MMM-YYYY").toLowerCase() ) {
+                    if ( prodCurrent.time === selectedDate ) {
                         currentProductionSum += parseInt(prodCurrent.amount)
                     }
-                    else if ( moment( prodCurrent.time ).isSameOrAfter(startRange) &&  moment( prodCurrent.time ).isSameOrBefore(endRange) ){
+                    else if ( moment( prodCurrent.time ).isBefore(selectedDate) && moment( prodCurrent.time ).isSameOrAfter(startRange) &&  moment( prodCurrent.time ).isSameOrBefore(endRange) ){
                         previousMonthProduction += parseInt(prodCurrent.amount)
                     }
                 })
@@ -89,7 +89,7 @@
                 var daePraptiSum = 0;
                 const currentDaePrapti = JSON.parse(row.daePrapti)
                 currentDaePrapti.forEach(function(daePraptiCurrent){
-                    if ( daePraptiCurrent.time === moment().format("MMM-YYYY").toLowerCase() ) {
+                    if ( daePraptiCurrent.time === selectedDate ) {
                         daePraptiSum += parseInt(daePraptiCurrent.amount)
                     }
                 })
@@ -107,10 +107,10 @@
                 var previousMonthBitoronSum = 0;
                 const currBitoron = JSON.parse(row.bitoronCurrentMonth)
                 currBitoron.forEach(function(BitoCurrent){
-                    if ( BitoCurrent.time === moment().format("MMM-YYYY").toLowerCase() ) {
+                    if ( BitoCurrent.time === selectedDate ) {
                         currentBitoronSum += parseInt(BitoCurrent.amount)
                     }
-                    else if ( moment( BitoCurrent.time ).isAfter(startRange) &&  moment( BitoCurrent.time ).isBefore(endRange) ){
+                    else if ( moment( BitoCurrent.time ).isBefore(selectedDate) && moment( BitoCurrent.time ).isAfter(startRange) &&  moment( BitoCurrent.time ).isBefore(endRange) ){
                         previousMonthBitoronSum += parseInt(BitoCurrent.amount)
                     }
                 })
@@ -128,7 +128,7 @@
                 var currentDaeProdanSum = 0;
                 const currDaeProdan = JSON.parse(row.daeProdan)
                 currDaeProdan.forEach(function(DaeProdanCurrent){
-                    if ( DaeProdanCurrent.time === moment().format("MMM-YYYY").toLowerCase() ) {
+                    if ( DaeProdanCurrent.time === selectedDate ) {
                         currentDaeProdanSum += parseInt(DaeProdanCurrent.amount)
                     }
                 })
@@ -137,25 +137,25 @@
                 var currentMritoSum = 0;
                 const currMrito = JSON.parse(row.deadWriteup)
                 currMrito.forEach(function(MritoCurrent){
-                    if ( MritoCurrent.time === moment().format("MMM-YYYY").toLowerCase() ) {
+                    if ( MritoCurrent.time === selectedDate ) {
                         currentMritoSum += parseInt(MritoCurrent.amount)
                     }
                 })
 
                 // মজুদ ******
-                // var currentMojudSum = 0;
-                // const currMojud = JSON.parse(row.mojud)
-                // currMojud.forEach(function(MojudCurrent){
-                //     if ( MojudCurrent.time === moment().format("MMM-YYYY").toLowerCase() ) {
-                //         currentMojudSum += parseInt(MojudCurrent.amount)
-                //     }
-                // })
+                var currentMojudSum = 0;
+                const currMojud = JSON.parse(row.mojud)
+                currMojud.forEach(function(MojudCurrent){
+                    if ( MojudCurrent.time === selectedDate ) {
+                        currentMojudSum += parseInt(MojudCurrent.amount)
+                    }
+                })
 
                 // মন্তব্য *********
                 var montobboSum = "";
                 const currMontobbo = JSON.parse(row.comment)
                 currMontobbo.forEach(function(MontobboCurrent){
-                    if ( MontobboCurrent.time === moment().format("MMM-YYYY").toLowerCase() ) {
+                    if ( MontobboCurrent.time === selectedDate ) {
                         montobboSum = MontobboCurrent.msg
                     }
                 })
@@ -170,24 +170,24 @@
                 <td><%= new Number(productionTargetSum).toLocaleString("bn-BD") %></td>
                 <td><%= new Number(currentProductionSum).toLocaleString("bn-BD") %></td>
                 <td> <%= new Number(previousMonthProduction).toLocaleString("bn-BD") %> </td>
-                <td> <%= new Number(totalProductionSum).toLocaleString("bn-BD") %> </td>
+                <td> <%= new Number(currentProductionSum + previousMonthProduction).toLocaleString("bn-BD") %> </td>
                 <td> <%= new Number(daePraptiSum).toLocaleString("bn-BD") %> </td>
                 <td> <%= new Number(prevYearJer).toLocaleString("bn-BD") %> </td>
-                <td> <%= new Number(totalProductionSum + daePraptiSum + prevYearJer).toLocaleString("bn-BD") %> </td>
+                <td> <%= new Number(currentProductionSum + previousMonthProduction + daePraptiSum + prevYearJer).toLocaleString("bn-BD") %> </td>
                 <td><%= new Number(currentBitoronSum).toLocaleString("bn-BD") %></td>
                 <td><%= new Number(previousMonthBitoronSum).toLocaleString("bn-BD") %></td>
-                <td><%= new Number(totalBitoronSum).toLocaleString("bn-BD") %></td>
+                <td><%= new Number(currentBitoronSum + previousMonthBitoronSum).toLocaleString("bn-BD") %></td>
                 <td><%= new Number(currentDaeProdanSum).toLocaleString("bn-BD") %></td>
                 <td><%= new Number(currentMritoSum).toLocaleString("bn-BD") %></td>
                 <td><%= new Number(currentDaeProdanSum + currentMritoSum).toLocaleString("bn-BD") %></td>
-                <td><%= new Number((totalProductionSum + daePraptiSum + prevYearJer) - (currentDaeProdanSum + currentMritoSum)).toLocaleString("bn-BD") %></td>
+                <td><%= new Number((currentProductionSum + previousMonthProduction + daePraptiSum + prevYearJer)-(currentDaeProdanSum + currentMritoSum)).toLocaleString("bn-BD") %></td>
                 <td><%= montobboSum %></td>
                 <td><a class="btn btn-primary btn-xs" href="/center/monthlyProgressEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
                 </td>
             </tr>
         <% }) %>
-    </tbody>
-</table>
+        </tbody>
+    </table>
 <% }else{ %>
     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
         <thead>

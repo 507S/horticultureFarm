@@ -173,17 +173,17 @@ module.exports.centerDashboard = async(req,res) => {
                     totalBitoron += parseInt(bitorTotal.amount)
                 }
             })
-            mojudParse.forEach((mojuToal) => {
-                if ( res.locals.moment( mojuToal.time ).isAfter(startRange) &&  res.locals.moment( mojuToal.time ).isBefore(endRange) ){
-                    totalMojud += parseInt(mojuToal.amount)
-                }
-            })
+            // mojudParse.forEach((mojuToal) => {
+            //     if ( res.locals.moment( mojuToal.time ).isAfter(startRange) &&  res.locals.moment( mojuToal.time ).isBefore(endRange) ){
+            //         totalMojud += parseInt(mojuToal.amount)
+            //     }
+            // })
         });rajosshos.forEach((row) => {
             totalrajossho += parseInt(row.total)
             
         });
 
-        res.render('center/dashboard', { title: 'Horticulture Wing Central Management Software', msg:'Welcome' ,totalrajossho:totalrajossho,totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud});
+        res.render('center/dashboard', { title: 'Horticulture Wing Central Management Software', msg:'Welcome' ,totalrajossho:totalrajossho,totalProduction: totalProduct, totalBitoron: totalBitoron});
     }
     catch (e) {
         console.log(e)
@@ -260,17 +260,26 @@ module.exports.topSheet=async(req,res)=>{
 
 module.exports.topSheetYear=async(req,res)=>{
     try{
+        const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
+        const selectedDate = req.body.year.toLowerCase();
         const cropCatg = await cropCategory.findAll({
-            where: {
-                type: 'subCategory'
-            }
+            where: { type: 'subCategory' }
         })
         const topSheets = await monthlyProgress.findAll({
             where: {center_id: req.session.user_id}
         })
-        res.render('center/topSheet/topSheetTable', {records: topSheets , cropCatg:cropCatg} ,function(err, html) {
-            res.send(html);
-        });
+
+        if(selectedDate === currentMonth){
+            res.render('center/topSheet/topSheetTable', {records: topSheets , cropCatg:cropCatg} ,function(err, html) {
+                res.send(html);
+            });
+        }
+        else{
+            res.render('center/topSheet/topSheetCustomTable', {records: topSheets , cropCatg:cropCatg,selectedDate:selectedDate} ,function(err, html) {
+                res.send(html);
+            });
+        }
+
     }
     catch (e){
         console.log(e)
@@ -2203,44 +2212,36 @@ module.exports.monthlyProgress=async(req,res)=>{
 };
 
 module.exports.monthlyProgressYear=async(req,res)=>{
-    const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase()
-    await monthlyProgress.findAll({
+    try {
+        const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
+        const selectedDate = req.body.year.toLowerCase();
 
-        // attributes: [
-        //     fn('JSON_CONTAINS', col('timeFrame'), cast('{"time": "nov-2020"}', 'CHAR CHARACTER SET utf8'))
-        //     // fn('JSON_EXTRACT', col('time'), cast('{"time": "nov-2020"}', 'CHAR CHARACTER SET utf8')),
-        // ],
-        // raw: true,
+        var data = [];
+        const allMonthlyProgress = await monthlyProgress.findAll({where:{center_id:req.session.user_id}});
+        allMonthlyProgress.map((monthlyProg,key) => {
+            const timeList = JSON.parse(monthlyProg.timeFrame)
+            timeList.map((eachTime,index) => {
+                if (eachTime.time === selectedDate){
+                    data.push(monthlyProg);
+                }
+            })
+        })
 
-        // where : {
-        //     timeFrame: {
-        //         time : 'nov-2020'
-        //     }
-        // }
-
-        where:{
-            center_id: req.session.user_id,
-        }
-
-        // [Op.and]: db.Sequelize.literal(JSON_CONTAINS(`time`, '{\"time\": nov-2020}')),
-        // "time" : currentMonth
-
-        // time: {
-        //     [Op.and]: [{time: {[Op.eq]: currentMonth}}]
-        // }
-
-
-    })
-        .then(data => {
-            console.log(data)
+        if(selectedDate === currentMonth) {
             res.render('center/monthlyProgress/monthlyProgressTable', {records: data} ,function(err, html) {
                 res.send(html);
             });
-        })
-        .catch(err => {
-            console.log(err)
-            res.render('center/monthlyProgress/monthlyProgressYear', { title: 'মাসিক প্রতিবেদন',success:'', records: err });
-        })
+        }
+        else{
+            res.render('center/monthlyProgress/monthlyProgressCustomTable', {records: data,selectedDate:selectedDate} ,function(err, html) {
+                res.send(html);
+            });
+        }
+
+    }
+    catch (e) {
+        console.log(e)
+    }
 
 };
 
@@ -2319,7 +2320,6 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
     var daeProdan= req.body.daeProdan;
     var deadWriteup= req.body.deadWriteup;
     var grandTotalBitoron= req.body.grandTotalBitoron;
-    var mojud= req.body.mojud;
     var comment= req.body.comment;
     var user_id =req.body.user_id;
     console.log('productionTotal=',res.locals.moment('2014-09-28').format("MMM-YYYY").toLowerCase());
@@ -2356,12 +2356,6 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
     deadWriteupObj["amount"] =  deadWriteup;
     currentDeadWriteup.push(deadWriteupObj)
 
-    var currentMojud = [];
-    var mojudObj = {};
-    mojudObj["time"] =  currentMonth;
-    mojudObj["amount"] =  mojud;
-    currentMojud.push(mojudObj)
-
     var currentComment = [];
     var commentObj = {};
     commentObj["time"] =  currentMonth;
@@ -2397,17 +2391,25 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
     totalBitoronObj["amount"] =  bitoronCurrentMonth;
     totalBitoron.push(totalBitoronObj)
 
+    var productionTargetList = [];
+    var productionTargetObj = {};
+    productionTargetObj["startTime"] =  `${startRange}`;
+    productionTargetObj["endTime"] =  `${endRange}`;
+    productionTargetObj["amount"] =  productionTarget;
+    productionTargetList.push(productionTargetObj)
+
     const categoryName = await cropCategory.findByPk(category)
     const subCategoryName = await cropCategory.findByPk(subCategory)
     const biboronName = await cropCategory.findByPk(biboron)
     const breedName = await cropCategory.findByPk(breed)
+    const centerInfo = await center.findByPk(user_id)
 
     await monthlyProgress.create({
         category: categoryName.name,
         subCategory: subCategoryName.name,
         biboron: biboronName.name,
         breed: breedName.name,
-        productionTarget: productionTarget,
+        productionTarget: JSON.stringify(productionTargetList),
         productionCurrent: JSON.stringify(currentProduction),
         productionTotal: JSON.stringify(totalProduction),
         daePrapti: JSON.stringify(currentDaePraptis),
@@ -2416,10 +2418,10 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
 
         daeProdan: JSON.stringify(currentDaeProdan),
         deadWriteup: JSON.stringify(currentDeadWriteup),
-        mojud: JSON.stringify(currentMojud),
         comment: JSON.stringify(currentComment),
         timeFrame: JSON.stringify(time),
-        center_id:user_id
+        center_id:user_id,
+        pd_id: centerInfo.pd_id
 
     }).then(data => {
         console.log('productionTotal=',productionTotal);

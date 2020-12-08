@@ -1,15 +1,15 @@
 <%if (records.length >0){ %>
     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-    <thead>
-    <tr>
-        <th>আইটেমের নাম</th>
-        <th>লক্ষ্যমাত্রা (সংখ্যা/প্যাকেট)</th>
-        <th>গত মাস পর্যন্ত উৎপাদন (সংখ্যা/প্যাকেট)</th>
-        <th>চলতি মাসে উতপাদন(সংখ্যা/প্যাকেট)</th>
-        <th>আলোচ্য মাস পর্যন্ত মোট উৎপাদন (সংখ্যা/প্যাকেট)</th>
-    </tr>
-    </thead>
-    <tbody>
+        <thead>
+        <tr>
+            <th>আইটেমের নাম</th>
+            <th>লক্ষ্যমাত্রা (সংখ্যা/প্যাকেট)</th>
+            <th>গত মাস পর্যন্ত উৎপাদন (সংখ্যা/প্যাকেট)</th>
+            <th>চলতি মাসে উতপাদন(সংখ্যা/প্যাকেট)</th>
+            <th>আলোচ্য মাস পর্যন্ত মোট উৎপাদন (সংখ্যা/প্যাকেট)</th>
+        </tr>
+        </thead>
+        <tbody>
         <% cropCatg.forEach(function(row,index){ %>
             <%
                 const currentMonth = moment().format("MMM-YYYY").toLowerCase();
@@ -48,15 +48,14 @@
                         //total purbo month porjonto production
                         const currentProd = JSON.parse(monthProg.productionCurrent)
                         currentProd.forEach(function(prodCurrent){
-                            if ( prodCurrent.time === moment().format("MMM-YYYY").toLowerCase() ) {
+                            if ( prodCurrent.time === selectedDate ) {
                                 currentProductionSum += parseInt(prodCurrent.amount)
                             }
-                            else if ( moment( prodCurrent.time ).isAfter(startRange) &&  moment( prodCurrent.time ).isBefore(endRange) ){
+                            else if ( moment( prodCurrent.time ).isBefore(selectedDate) && moment( prodCurrent.time ).isAfter(startRange) &&  moment( prodCurrent.time ).isBefore(endRange) ){
                                 previousMonthProduction += parseInt(prodCurrent.amount)
                             }
                         })
                     }
-
                 })
             %>
             <tr>
@@ -67,8 +66,8 @@
                 <td><%= new Number(currentProductionSum + previousMonthProduction).toLocaleString("bn-BD") %></td>
             </tr>
         <% }) %>
-    </tbody>
-</table>
+        </tbody>
+    </table>
 <% }else{ %>
     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
         <thead>
