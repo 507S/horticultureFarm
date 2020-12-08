@@ -162,7 +162,7 @@
                 <h5>চারা বিতরণ</h5>
             </div>
             <div class="col-block stats__col">
-                <div class="stats__counts" id="totalMojud"><%= new Number(totalMojud).toLocaleString("bn-BD") %></div>
+                <div class="stats__counts" id="totalMojud"><%= new Number(totalProduction - totalBitoron).toLocaleString("bn-BD") %></div>
                 <h5>চারা সংরক্ষণ/মজুদ</h5>
             </div>
             <div class="col-block stats__col">
@@ -464,7 +464,7 @@
                 success: function (data) {
                     $('#totalProduction').html(new Number(data.totalProduction).toLocaleString("bn-BD"));
                     $('#totalBitoron').html(new Number(data.totalBitoron).toLocaleString("bn-BD"));
-                    $('#totalMojud').html(new Number(data.totalMojud).toLocaleString("bn-BD"));
+                    $('#totalMojud').html(new Number(data.totalProduction - data.totalBitoron).toLocaleString("bn-BD"));
                 },
                 complete: function() {
                     $('#loading').hide();

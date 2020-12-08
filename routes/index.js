@@ -41,13 +41,13 @@ router.get('/', async function(req, res, next) {
               totalBitoron += parseInt(bitorTotal.amount)
             }
           })
-          mojudParse.forEach((mojuToal) => {
-            if ( res.locals.moment( mojuToal.time ).isAfter(startRange) &&  res.locals.moment( mojuToal.time ).isBefore(endRange) ){
-              totalMojud += parseInt(mojuToal.amount)
-            }
-          })
+          // mojudParse.forEach((mojuToal) => {
+          //   if ( res.locals.moment( mojuToal.time ).isAfter(startRange) &&  res.locals.moment( mojuToal.time ).isBefore(endRange) ){
+          //     totalMojud += parseInt(mojuToal.amount)
+          //   }
+          // })
         })
-        res.render('index', { title: 'Horticulture' ,totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud, center: centerinfo });
+        res.render('index', { title: 'Horticulture' ,totalProduction: totalProduct, totalBitoron: totalBitoron,  center: centerinfo });
   }
   catch (e) {
       console.log(e)
@@ -105,18 +105,18 @@ router.post('/centerData', async (req,res) => {
                 totalBitoron += parseInt(bitorTotal.amount)
             }
         })
-        mojudParse.forEach((mojuToal) => {
-            if ( res.locals.moment( mojuToal.time ).isAfter(startRange) &&  res.locals.moment( mojuToal.time ).isBefore(endRange) ){
-                totalMojud += parseInt(mojuToal.amount)
-            }
-        })
+        // mojudParse.forEach((mojuToal) => {
+        //     if ( res.locals.moment( mojuToal.time ).isAfter(startRange) &&  res.locals.moment( mojuToal.time ).isBefore(endRange) ){
+        //         totalMojud += parseInt(mojuToal.amount)
+        //     }
+        // })
     });
     total_rajossho.forEach((row) => {
       totalrajossho += parseInt(row.total)
       
   });
     // res.send({title: 'Horticulture' ,totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud, center: centerinfo });
-    res.json({title: 'Horticulture',totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud,totalrajossho:totalrajossho })
+    res.json({title: 'Horticulture',totalProduction: totalProduct, totalBitoron: totalBitoron,totalrajossho:totalrajossho })
 })
 
 module.exports = router;

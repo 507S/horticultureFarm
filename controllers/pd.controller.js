@@ -160,18 +160,18 @@ module.exports.pdDashboard = async(req,res) => {
                     totalBitoron += parseInt(bitorTotal.amount)
                 }
             })
-            mojudParse.forEach((mojuToal) => {
-                if ( res.locals.moment( mojuToal.time ).isAfter(startRange) &&  res.locals.moment( mojuToal.time ).isBefore(endRange) ){
-                    totalMojud += parseInt(mojuToal.amount)
-                }
-            })
+            // mojudParse.forEach((mojuToal) => {
+            //     if ( res.locals.moment( mojuToal.time ).isAfter(startRange) &&  res.locals.moment( mojuToal.time ).isBefore(endRange) ){
+            //         totalMojud += parseInt(mojuToal.amount)
+            //     }
+            // })
         });
         rajosshos.forEach((row) => {
             totalrajossho += parseInt(row.total)
             
         });
 
-        res.render('pd/dashboard', { title: 'Horticulture Wing Central Management Software', msg:'Welcome' ,rajosshoCodes:rajosshoCodess,expenseCodes:expenseCodess,totalrajossho:totalrajossho, totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud, center:centerinfo, crop: crop,apaCodes:apaCodes });
+        res.render('pd/dashboard', { title: 'Horticulture Wing Central Management Software', msg:'Welcome' ,rajosshoCodes:rajosshoCodess,expenseCodes:expenseCodess,totalrajossho:totalrajossho, totalProduction: totalProduct, totalBitoron: totalBitoron,  center:centerinfo, crop: crop,apaCodes:apaCodes });
     }
     catch (e) {
         console.log(e)
@@ -2196,18 +2196,27 @@ module.exports.monthlyProgress=async(req,res)=>{
 };
 
 module.exports.monthlyProgressFilter=async(req,res)=>{
-    await monthlyProgress.findAll({
-        where: {center_id : req.body.center}
-    })
-    .then(data => {
+    try{
+        const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
+        const selectedDate = req.body.year.toLowerCase();
+        const monthlyProgressList = await monthlyProgress.findAll({ where: {center_id : req.body.center} });
+        var data = [];
+        monthlyProgressList.map((monthlyProg) => {
+            const timeList = JSON.parse(monthlyProg.timeFrame)
+            timeList.map((eachTime) => {
+                if (eachTime.time === selectedDate){
+                    data.push(monthlyProg);
+                }
+            })
+        })
+
         res.render('pd/monthlyProgress/monthlyProgressTable', {records: data} ,function(err, html) {
             res.send(html);
         });
-    })
-    .catch(err => {
-        console.log(err);
-    })
-
+    }
+    catch (e) {
+        console.log(e);
+    }
 };
 
 module.exports.monthlyProgressForm=async(req,res)=>{

@@ -18,7 +18,7 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING
       },
       productionTarget: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT('long')
       },
       productionCurrent: {
         type: Sequelize.TEXT('long')
@@ -35,8 +35,6 @@ module.exports = (sequelize, Sequelize) => {
       bitoronTotal: {
         type: Sequelize.TEXT('long')
       },
-
-
       daeProdan: {
         type: Sequelize.TEXT('long')
       },

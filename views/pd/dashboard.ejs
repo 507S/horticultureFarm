@@ -46,7 +46,7 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="state">
                                         <h6>চারা সংরক্ষণ/মজুদ</h6>
-                                        <h4 id="totalMojud"><%= new Number(totalMojud).toLocaleString("bn-BD") %></h4>
+                                        <h4 id="totalMojud"><%= new Number(totalProduction - totalBitoron).toLocaleString("bn-BD") %></h4>
                                     </div>
                                     <div class="icon">
                                         <i class="ik ik-award"></i>
@@ -576,7 +576,7 @@
             success: function (data) {
                 $('#totalProduction').html(new Number(data.totalProduction).toLocaleString("bn-BD"));
                 $('#totalBitoron').html(new Number(data.totalBitoron).toLocaleString("bn-BD"));
-                $('#totalMojud').html(new Number(data.totalMojud).toLocaleString("bn-BD"));
+                $('#totalMojud').html(new Number(data.totalProduction - data.totalBitoron).toLocaleString("bn-BD"));
                 $('#totalrajossho').html(new Number(data.totalrajossho).toLocaleString("bn-BD"));
 
             },

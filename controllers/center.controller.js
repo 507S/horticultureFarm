@@ -174,17 +174,17 @@ module.exports.centerDashboard = async(req,res) => {
                     totalBitoron += parseInt(bitorTotal.amount)
                 }
             })
-            mojudParse.forEach((mojuToal) => {
-                if ( res.locals.moment( mojuToal.time ).isAfter(startRange) &&  res.locals.moment( mojuToal.time ).isBefore(endRange) ){
-                    totalMojud += parseInt(mojuToal.amount)
-                }
-            })
+            // mojudParse.forEach((mojuToal) => {
+            //     if ( res.locals.moment( mojuToal.time ).isAfter(startRange) &&  res.locals.moment( mojuToal.time ).isBefore(endRange) ){
+            //         totalMojud += parseInt(mojuToal.amount)
+            //     }
+            // })
         });rajosshos.forEach((row) => {
             totalrajossho += parseInt(row.total)
             
         });
 
-        res.render('center/dashboard', { title: 'Horticulture Wing Central Management Software', msg:'Welcome' ,totalrajossho:totalrajossho,totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud});
+        res.render('center/dashboard', { title: 'Horticulture Wing Central Management Software', msg:'Welcome' ,totalrajossho:totalrajossho,totalProduction: totalProduct, totalBitoron: totalBitoron});
     }
     catch (e) {
         console.log(e)
@@ -2198,7 +2198,7 @@ module.exports.monthlyProgressYear=async(req,res)=>{
         const selectedDate = req.body.year.toLowerCase();
 
         var data = [];
-        const allMonthlyProgress = await monthlyProgress.findAll();
+        const allMonthlyProgress = await monthlyProgress.findAll({where:{center_id:req.session.user_id}});
         allMonthlyProgress.map((monthlyProg,key) => {
             const timeList = JSON.parse(monthlyProg.timeFrame)
             timeList.map((eachTime,index) => {
@@ -2301,7 +2301,6 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
     var daeProdan= req.body.daeProdan;
     var deadWriteup= req.body.deadWriteup;
     var grandTotalBitoron= req.body.grandTotalBitoron;
-    var mojud= req.body.mojud;
     var comment= req.body.comment;
     var user_id =req.body.user_id;
     console.log('productionTotal=',res.locals.moment('2014-09-28').format("MMM-YYYY").toLowerCase());
@@ -2338,12 +2337,6 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
     deadWriteupObj["amount"] =  deadWriteup;
     currentDeadWriteup.push(deadWriteupObj)
 
-    var currentMojud = [];
-    var mojudObj = {};
-    mojudObj["time"] =  currentMonth;
-    mojudObj["amount"] =  mojud;
-    currentMojud.push(mojudObj)
-
     var currentComment = [];
     var commentObj = {};
     commentObj["time"] =  currentMonth;
@@ -2379,6 +2372,13 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
     totalBitoronObj["amount"] =  bitoronCurrentMonth;
     totalBitoron.push(totalBitoronObj)
 
+    var productionTargetList = [];
+    var productionTargetObj = {};
+    productionTargetObj["startTime"] =  `${startRange}`;
+    productionTargetObj["endTime"] =  `${endRange}`;
+    productionTargetObj["amount"] =  productionTarget;
+    productionTargetList.push(productionTargetObj)
+
     const categoryName = await cropCategory.findByPk(category)
     const subCategoryName = await cropCategory.findByPk(subCategory)
     const biboronName = await cropCategory.findByPk(biboron)
@@ -2389,7 +2389,7 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
         subCategory: subCategoryName.name,
         biboron: biboronName.name,
         breed: breedName.name,
-        productionTarget: productionTarget,
+        productionTarget: JSON.stringify(productionTargetList),
         productionCurrent: JSON.stringify(currentProduction),
         productionTotal: JSON.stringify(totalProduction),
         daePrapti: JSON.stringify(currentDaePraptis),
@@ -2398,7 +2398,6 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
 
         daeProdan: JSON.stringify(currentDaeProdan),
         deadWriteup: JSON.stringify(currentDeadWriteup),
-        mojud: JSON.stringify(currentMojud),
         comment: JSON.stringify(currentComment),
         timeFrame: JSON.stringify(time),
         center_id:user_id
