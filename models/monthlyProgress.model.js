@@ -53,6 +53,9 @@ module.exports = (sequelize, Sequelize) => {
       },
       center_id: {
         type: Sequelize.INTEGER
+      },
+      pd_id: {
+        type: Sequelize.INTEGER
       }
     });
   

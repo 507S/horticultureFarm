@@ -2383,6 +2383,7 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
     const subCategoryName = await cropCategory.findByPk(subCategory)
     const biboronName = await cropCategory.findByPk(biboron)
     const breedName = await cropCategory.findByPk(breed)
+    const centerInfo = await center.findByPk(user_id)
 
     await monthlyProgress.create({
         category: categoryName.name,
@@ -2400,7 +2401,8 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
         deadWriteup: JSON.stringify(currentDeadWriteup),
         comment: JSON.stringify(currentComment),
         timeFrame: JSON.stringify(time),
-        center_id:user_id
+        center_id:user_id,
+        pd_id: centerInfo.pd_id
 
     }).then(data => {
         console.log('productionTotal=',productionTotal);
