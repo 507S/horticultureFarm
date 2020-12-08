@@ -1,11 +1,23 @@
 module.exports = (sequelize, Sequelize) => {
-    const regularWorker = sequelize.define("regularworker", {
+    const workerInfo = sequelize.define("workerinfo", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement:true
       },
+      podobi: {
+        type: Sequelize.STRING
+      },
       name: {
+        type: Sequelize.STRING
+      },
+      fname: {
+        type: Sequelize.STRING
+      },
+      address: {
+        type: Sequelize.STRING
+      },
+      mobile: {
         type: Sequelize.STRING
       },
       date: {
@@ -14,8 +26,17 @@ module.exports = (sequelize, Sequelize) => {
       nid: {
         type: Sequelize.STRING
       },
+      bank: {
+        type: Sequelize.STRING
+      },
       month: {
         type: Sequelize.STRING
+      },
+      regularWorker: {
+        type: Sequelize.INTEGER
+      },
+      irregularWorker: {
+        type: Sequelize.INTEGER
       },
       year: {
         type: Sequelize.STRING
@@ -25,5 +46,5 @@ module.exports = (sequelize, Sequelize) => {
       }
     });
   
-    return regularWorker;
+    return workerInfo;
   };

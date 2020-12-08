@@ -8,8 +8,7 @@ const otherFlower = db.otherFlower;
 const seasonalFlower = db.seasonalFlower;
 const summerVeg = db.summerVeg;
 const winterVeg = db.winterVeg;
-const regularWorker = db.regularWorker;
-const irregularWorker = db.irregularWorker;
+const workerInfo = db.workerInfo;
 const apa = db.apa;
 const apaCode = db.apaCode;
 const loan = db.loan;
@@ -22,7 +21,8 @@ const rajosshoCode = db.rajosshoCode;
 const expenseCode = db.expenseCode;
 const expense = db.expense;
 const monthlyProgress = db.monthlyProgress;
-const cropCategory = db.cropcategory
+const cropCategory = db.cropcategory;
+const podobiList = db.podobiList;
 
 const jwt= require('jsonwebtoken');
 const bcrypt= require('bcryptjs'); 
@@ -130,6 +130,7 @@ module.exports.pdDashboard = async(req,res) => {
         const apaCodes = await apaCode.findAll();
         const expenseCodess = await expenseCode.findAll();
         const rajosshoCodess = await rajosshoCode.findAll();
+        const podobiListss = await podobiList.findAll();
 
         var startRange = "";
         var endRange = "";
@@ -171,7 +172,7 @@ module.exports.pdDashboard = async(req,res) => {
             
         });
 
-        res.render('pd/dashboard', { title: 'Horticulture Wing Central Management Software', msg:'Welcome' ,rajosshoCodes:rajosshoCodess,expenseCodes:expenseCodess,totalrajossho:totalrajossho, totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud, center:centerinfo, crop: crop,apaCodes:apaCodes });
+        res.render('pd/dashboard', { title: 'Horticulture Wing Central Management Software', msg:'Welcome' ,podobiLists:podobiListss,rajosshoCodes:rajosshoCodess,expenseCodes:expenseCodess,totalrajossho:totalrajossho, totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud, center:centerinfo, crop: crop,apaCodes:apaCodes });
     }
     catch (e) {
         console.log(e)
@@ -1076,29 +1077,29 @@ module.exports.winterVegDelete=async(req,res)=>{
 };
 //winterVeg controller end
 
-//regularWorker controller
+//workerInfo controller
 
-module.exports.regularWorker=async(req,res)=>{
+module.exports.workerInfo=async(req,res)=>{
     await center.findAll()
     .then(data => {
         console.log("inside");
-        res.render('pd/worker/regularWorker/regularWorker', { title: 'নিয়মিত শ্রমিকের তথ্য',success:'', centers: data });
+        res.render('pd/worker/workerInfo/workerInfo', { title: 'শ্রমিকদের তথ্য',success:'', centers: data });
     })
     .catch(err => {
         console.log("outside");
-        res.render('pd/worker/regularWorker/regularWorker', { title: 'নিয়মিত শ্রমিকের তথ্য',success:'', records: err });
+        res.render('pd/worker/workerInfo/workerInfo', { title: 'শ্রমিকদের তথ্য',success:'', records: err });
     })
      
     //  records:result
 
 };
 
-module.exports.regularWorkerFilter=async(req,res)=>{
-    await regularWorker.findAll({
+module.exports.workerInfoFilter=async(req,res)=>{
+    await workerInfo.findAll({
         where: {year: req.body.year,center_id : req.body.center,month:req.body.month}
     })
     .then(data => {
-        res.render('pd/worker/regularWorker/regularWorkerTable', {records: data} ,function(err, html) {
+        res.render('pd/worker/workerInfo/workerInfoTable', {records: data} ,function(err, html) {
             res.send(html);
         });
     })
@@ -1108,18 +1109,18 @@ module.exports.regularWorkerFilter=async(req,res)=>{
 
 };
 
-module.exports.regularWorkerForm=async(req,res)=>{
-    res.render('pd/worker/regularWorker/regularWorkerForm', { title: 'নিয়মিত শ্রমিকের তথ্য',msg:'' ,success:'',user_id: req.session.user_id});
+module.exports.workerInfoForm=async(req,res)=>{
+    res.render('pd/worker/workerInfo/workerInfoForm', { title: 'শ্রমিকদের তথ্য',msg:'' ,success:'',user_id: req.session.user_id});
 };
 
-module.exports.regularWorkerFormPost=async(req,res)=>{
+module.exports.workerInfoFormPost=async(req,res)=>{
     var name= req.body.name;
     var date= req.body.date;
     var nid= req.body.nid;
     var year =req.body.year;
     var user_id =req.body.user_id;
 
-    await regularWorker.create({
+    await workerInfo.create({
         name: name,
         date:date,
         nid:nid,
@@ -1127,39 +1128,103 @@ module.exports.regularWorkerFormPost=async(req,res)=>{
         center_id:user_id
 
         }).then(data => {
-            res.redirect('/pd/regularWorker');
+            res.redirect('/pd/workerInfo');
         }).catch(err => {
             res.render('errorpage',err);
         });
   
 };
-//regularWorker controller end
-
-//irregularWorker controller
-
-module.exports.irregularWorker=async(req,res)=>{
-    await center.findAll()
+module.exports.newPodobiTable=async(req,res)=>{
+    await podobiList.findAll()
     .then(data => {
         console.log("inside");
-        res.render('pd/worker/irregularWorker/irregularWorker', { title: 'অনিয়মিত শ্রমিকের তথ্য',success:'', centers: data });
+        res.render('pd/newPodobi/podobiList', { title: 'কর্মকর্তা কর্মচারীদের পদবী ও গ্রেডের তালিকা',success:'', records: data });
     })
     .catch(err => {
         console.log("outside");
-        res.render('pd/worker/irregularWorker/irregularWorker', { title: 'অনিয়মিত শ্রমিকের তথ্য',success:'', records: err });
+        res.render('pd/newPodobi/podobiList', { title: 'কর্মকর্তা কর্মচারীদের পদবী ও গ্রেডের তালিকা',success:'', records: err });
+    })
+     
+    //  records:result
+
+};
+module.exports.newPodobiEdit=async(req,res)=>{
+    await podobiList.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('pd/newPodobi/podobiListEdit', { title: 'কর্মকর্তা কর্মচারীদের পদবী ও গ্রেডের তালিকা',msg:'' ,success:'',records: data});
+    })
+    .catch(err => {
+        console.log("outside");
+        res.render('pd/newPodobi/podobiListEdit', { title: 'কর্মকর্তা কর্মচারীদের পদবী ও গ্রেডের তালিকা',success:'', records: err });
+    })
+};
+module.exports.newPodobiEditPost=async(req,res)=>{
+    var podobi = req.body.podobi;
+    var grade= req.body.grade;
+    await podobiList.update({ 
+        podobi:podobi,
+        grade:grade
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        res.redirect('/pd/newPodobiTable');
+    }).catch(err => {
+        res.render('errorpage',err);
+    });
+};
+module.exports.newPodobiDelete=async(req,res)=>{
+    var newPodobiDelete = await podobiList.findByPk(req.params.id);
+    try {
+        newPodobiDelete.destroy();
+        res.redirect("/pd/newPodobiTable");
+    }
+    catch{
+        res.render('errorpage',err);
+    }
+    
+};
+//workerInfo controller end
+
+//workerInfo controller
+
+module.exports.workerNum=async(req,res)=>{
+    await center.findAll()
+    .then(data => {
+        console.log("inside");
+        res.render('pd/worker/workerNum/workerNum', { title: 'শ্রমিকদের সংখ্যা',success:'', centers: data });
+    })
+    .catch(err => {
+        console.log("outside");
+        res.render('pd/worker/workerNum/workerNum', { title: 'শ্রমিকদের সংখ্যা',success:'', records: err });
     })
      
     //  records:result
 
 };
 
-module.exports.irregularWorkerFilter=async(req,res)=>{
-    await irregularWorker.findAll({
-        where: {year: req.body.year,center_id : req.body.center,month:req.body.month}
+module.exports.workerNumFilter=async(req,res)=>{
+    await workerInfo.findAll({
+        where: {center_id: req.body.center,year: req.body.year,month: req.body.month}
     })
     .then(data => {
-        res.render('pd/worker/irregularWorker/irregularWorkerTable', {records: data} ,function(err, html) {
-            res.send(html);
+        console.log("inside");
+        var reg=0;
+        var irreg=0;
+        data.forEach(function(row){
+            if(row.regularWorker !== 0){
+                reg+=1;
+            };
         });
+        data.forEach(function(row){
+            if(row.irregularWorker !== 0){
+                irreg+=1;
+            };
+        });
+        var total;
+        total = reg+irreg;
+        res.render('pd/worker/workerNum/workerNumTable', { title: 'শ্রমিকদের সংখ্যা',success:'', totals:total,regs: reg,irregs:irreg,records:data });
     })
     .catch(err => {
         console.log(err);
@@ -1167,33 +1232,7 @@ module.exports.irregularWorkerFilter=async(req,res)=>{
 
 };
 
-module.exports.irregularWorkerForm=async(req,res)=>{
-    res.render('pd/worker/irregularWorker/irregularWorkerForm', { title: 'অনিয়মিত শ্রমিকের তথ্য',msg:'' ,success:'',user_id: req.session.user_id});
-};
-
-module.exports.irregularWorkerFormPost=async(req,res)=>{
-    var name= req.body.name;
-    var date= req.body.date;
-    var nid= req.body.nid;
-    var year =req.body.year;
-    var user_id =req.body.user_id;
-
-    await irregularWorker.create({
-        name: name,
-        date:date,
-        nid:nid,
-        year:year,
-        center_id:user_id
-
-        }).then(data => {
-            res.redirect('/pd/irregularWorker');
-        }).catch(err => {
-            res.render('errorpage',err);
-        });
-  
-};
-
-//irregularWorker controller end
+//workerNum controller end
 
 //apa controller
 module.exports.apa=async(req,res)=>{
@@ -2302,7 +2341,21 @@ module.exports.newKhorochCode=async(req,res)=>{
   
 };
 //newKhorochCode ends
-
+//newPodobi
+module.exports.newPodobi=async(req,res)=>{
+    var podobi= req.body.podobi;
+    var grade= req.body.grade;
+    await podobiList.create({
+        podobi: podobi,
+        grade:grade
+        }).then(data => {
+            res.redirect('/pd/dashboard');
+        }).catch(err => {
+            res.render('errorpage',err);
+        });
+  
+};
+//newPodobi ends
 //apaCode
 module.exports.apaCode=async(req,res)=>{
     var newApaUddessho= req.body.newApaUddessho;

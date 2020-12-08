@@ -1,5 +1,5 @@
 <%if (records.length >0){ %>
-    <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
+    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
     <thead>
     <tr>
         <th>কৌশলগত উদ্দেশ্য</th>
@@ -8,8 +8,6 @@
         <th>কর্মসম্পাদন সূচক</th>
         <th>একক</th>
         <th>কর্মসম্পাদন সূচক এর মান</th>
-        <th>প্রকৃত অর্জন(২০১৮-১৯)</th>
-        <th>প্রকৃত অর্জন(বিগত অর্থবছর)</th>
         <th>লক্ষ্যমাত্রা/নির্ণায়ক (চলতি অর্থবছর) (অসাধারণ ১০০%)</th>
         <th>লক্ষ্যমাত্রা/নির্ণায়ক (চলতি অর্থবছর) (অতি উত্তম ৯০%)</th>
         <th>লক্ষ্যমাত্রা/নির্ণায়ক (চলতি অর্থবছর) (উত্তম ৮০%)</th>
@@ -17,6 +15,11 @@
         <th>লক্ষ্যমাত্রা/নির্ণায়ক (চলতি অর্থবছর) (চলতি মানের নিম্নে ৬০%)</th>
         <th>প্রথম ত্রৈমাসিক অর্জন</th>
         <th>দ্বিতীয় ত্রৈমাসিক অর্জন</th>
+        <th>তৃতীয় ত্রৈমাসিক অর্জন</th>
+        <th>চতুর্থ ত্রৈমাসিক অর্জন</th>
+        <th>মোট</th>
+        <th>শতকরা হার</th>
+
     </tr>
     </thead>
     <tbody>
@@ -28,16 +31,18 @@
                 <td><%= row.shuchok %></td>
                 <td><%= row.ekok %></td>
                 <td><%= row.shuchokMaan %></td>
-                <td><%= row.achievement1 %></td>
-                <td><%= row.achievement2 %></td>
-                <td><%= row.best %></td>
-                <td><%= row.otiUttam %></td>
-                <td><%= row.uttam %></td>
-                <td><%= row.cholti %></td>
-                <td><%= row.below %></td>
-                <td><%= row.firstThree %></td>
-                <td><%= row.secondThree %></td>
-               
+                <td><%= new Number(row.best).toLocaleString("bn-BD") %></td>
+                <td><%= new Number(row.otiUttam).toLocaleString("bn-BD") %></td>
+                <td><%= new Number(row.uttam).toLocaleString("bn-BD") %></td>
+                <td><%= new Number(row.cholti).toLocaleString("bn-BD") %></td>
+                <td><%= new Number(row.below).toLocaleString("bn-BD") %></td>
+                <td><%= new Number(row.firstThree).toLocaleString("bn-BD") %></td>
+                <td><%= new Number(row.secondThree).toLocaleString("bn-BD") %></td>
+                <td><%= new Number(row.thirdThree).toLocaleString("bn-BD") %></td>
+                <td><%= new Number(row.fourthThree).toLocaleString("bn-BD") %></td>
+                <td><%= new Number(row.total).toLocaleString("bn-BD") %></td>
+                <td><%= new Number(row.percentage).toLocaleString("bn-BD") %></td>
+
             </tr>
         <% }) %>
     </tbody>
@@ -47,20 +52,22 @@
         <thead>
         <tr>
             <th>কৌশলগত উদ্দেশ্য</th>
-            <th>কৌশলগত উদ্দেশ্যের মান</th>
-            <th>কার্যক্রম</th>
-            <th>কর্মসম্পাদন সূচক</th>
-            <th>একক</th>
-            <th>কর্মসম্পাদন সূচক এর মান</th>
-            <th>প্রকৃত অর্জন(২০১৮-১৯)</th>
-        <th>প্রকৃত অর্জন(বিগত অর্থবছর)</th>
-            <th>লক্ষ্যমাত্রা/নির্ণায়ক (চলতি অর্থবছর) (অসাধারণ ১০০%)</th>
-            <th>লক্ষ্যমাত্রা/নির্ণায়ক (চলতি অর্থবছর) (অতি উত্তম ৯০%)</th>
-            <th>লক্ষ্যমাত্রা/নির্ণায়ক (চলতি অর্থবছর) (উত্তম ৮০%)</th>
-            <th>লক্ষ্যমাত্রা/নির্ণায়ক (চলতি অর্থবছর) (চলতি মান ৭০%)</th>
-            <th>লক্ষ্যমাত্রা/নির্ণায়ক (চলতি অর্থবছর) (চলতি মানের নিম্নে ৬০%)</th>
-            <th>প্রথম ত্রৈমাসিক অর্জন</th>
-            <th>দ্বিতীয় ত্রৈমাসিক অর্জন</th>
+        <th>কৌশলগত উদ্দেশ্যের মান</th>
+        <th>কার্যক্রম</th>
+        <th>কর্মসম্পাদন সূচক</th>
+        <th>একক</th>
+        <th>কর্মসম্পাদন সূচক এর মান</th>
+        <th>লক্ষ্যমাত্রা/নির্ণায়ক (চলতি অর্থবছর) (অসাধারণ ১০০%)</th>
+        <th>লক্ষ্যমাত্রা/নির্ণায়ক (চলতি অর্থবছর) (অতি উত্তম ৯০%)</th>
+        <th>লক্ষ্যমাত্রা/নির্ণায়ক (চলতি অর্থবছর) (উত্তম ৮০%)</th>
+        <th>লক্ষ্যমাত্রা/নির্ণায়ক (চলতি অর্থবছর) (চলতি মান ৭০%)</th>
+        <th>লক্ষ্যমাত্রা/নির্ণায়ক (চলতি অর্থবছর) (চলতি মানের নিম্নে ৬০%)</th>
+        <th>প্রথম ত্রৈমাসিক অর্জন</th>
+        <th>দ্বিতীয় ত্রৈমাসিক অর্জন</th>
+        <th>তৃতীয় ত্রৈমাসিক অর্জন</th>
+        <th>চতুর্থ ত্রৈমাসিক অর্জন</th>
+        <th>মোট</th>
+        <th>শতকরা হার</th>
         </tr>
         </thead>
         <tbody>

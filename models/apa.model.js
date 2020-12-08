@@ -23,32 +23,38 @@ module.exports = (sequelize, Sequelize) => {
       shuchokMaan: {
         type: Sequelize.STRING
       },
-      achievement1: {
-        type: Sequelize.STRING
-      },
-      achievement2: {
-        type: Sequelize.STRING
-      },
       best: {
-        type: Sequelize.STRING
+        type: Sequelize.DOUBLE
       },
       otiUttam: {
-        type: Sequelize.STRING
+        type: Sequelize.DOUBLE
       },
       uttam: {
-        type: Sequelize.STRING
+        type: Sequelize.DOUBLE
       },
       cholti: {
-        type: Sequelize.STRING
+        type: Sequelize.DOUBLE
       },
       below: {
-        type: Sequelize.STRING
+        type: Sequelize.DOUBLE
       },
       firstThree: {
-        type: Sequelize.STRING
+        type: Sequelize.DOUBLE
       },
       secondThree: {
-        type: Sequelize.STRING
+        type: Sequelize.DOUBLE
+      },
+      thirdThree: {
+        type: Sequelize.DOUBLE
+      },
+      fourthThree: {
+        type: Sequelize.DOUBLE
+      },
+      total: {
+        type: Sequelize.DOUBLE
+      },
+      percentage: {
+        type: Sequelize.DOUBLE
       },
       year: {
         type: Sequelize.STRING

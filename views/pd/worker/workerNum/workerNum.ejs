@@ -122,7 +122,7 @@
         var month = $('#month').val();
         $.ajax({
             type: "POST",
-            url: "/pd/irregularworkerFilter",
+            url: "/pd/workerNumFilter",
             data: {year: year, center:center,month:month},
             datatype: "json",
             beforeSend: function() {
@@ -149,7 +149,7 @@
         var month = $('#month').val();
         $.ajax({
             type: "POST",
-            url: "/pd/irregularworkerFilter",
+            url: "/pd/workerNumFilter",
             data: {year: year, center:center,month: month},
             datatype: "json",
             beforeSend: function() {

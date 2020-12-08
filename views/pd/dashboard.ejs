@@ -315,6 +315,37 @@
 
                         <div class="card">
                             <div class="card-body">
+                                <form action="/pd/newPodobi" id="newPodobi" class="form-horizontal" method="post"  role="form">
+                                <div class="form-row">
+                                        <label for="podobi" class="col-md-1 control-label">পদবী :</label>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="podobi" placeholder="পদবী :">
+                                        </div>
+                                        <label for="grade" class="col-md-1 control-label"> গ্রেড :</label>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="grade" placeholder="গ্রেড :">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="submit" name="submit" value=" যোগ করুন" class="btn btn-primary">   
+                                        </div>
+                                </div>
+                            </form>
+                            <div class="col">
+                                            <% podobiLists.forEach((row) => {
+                                            
+                                            %>
+                                                <span style="margin-right: 2px"> <%= row.podobi %> </span> |
+                                            <%
+                                            
+                                            })
+                                            %>
+                                        </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
                                 <form action="/pd/apaUddessho" method="post">
                                     <div class="form-row">
                                         <div class="col">

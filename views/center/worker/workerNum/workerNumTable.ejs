@@ -2,31 +2,30 @@
     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
     <thead>
     <tr>
-        <th>শ্রমিকের নাম</th>
-        <th>সেন্টারে যোগদানের তারিখ</th>
-        <th>এনআইডি নং</th>
+        <th>নিয়মিত শ্রমিকের সংখ্যা</th>
+        <th>অনিয়মিত শ্রমিকের সংখ্যা</th>
+        <th>মোট</th>
     </tr>
     </thead>
     <tbody>
-        <% records.forEach(function(row){ %>
             <tr>
-                <td><%= row.name %></td>
-                <td><%= row.date %></td>
-                <td><%= row.nid %></td>
+                <td><%= regs %></td>
+                <td><%= irregs %></td>
+                <td><%= totals %></td>
                 
                 
                
             </tr>
-        <% }) %>
     </tbody>
 </table>
 <% }else{ %>
     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
         <thead>
         <tr>
-            <th>শ্রমিকের নাম</th>
-            <th>সেন্টারে যোগদানের তারিখ</th>
-            <th>এনআইডি নং</th>
+            <th>নিয়মিত শ্রমিকের সংখ্যা</th>
+            <th>অনিয়মিত শ্রমিকের সংখ্যা</th>
+            <th>মোট</th>
+
         </tr>
         </thead>
         <tbody>

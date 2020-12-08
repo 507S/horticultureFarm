@@ -10,14 +10,14 @@ const {apaUddessho,apaMaan,karjokrom,suchok,ekok,suchokMaan,newKhorochCode,newRa
     expenseForm,expenseFormPost,chak1,chak1Filter,chak1Form,chak1FormPost,chak2,chak2Filter,chak2Form,chak2FormPost,revolvingFund,
     revolvingFundFilter,revolvingFundForm,revolvingFundFormPost,specialCoconut,specialCoconutFilter,specialCoconutForm,rajosshoEdit,rajosshoEditPost,rajosshoDelete,
     specialCoconutFormPost,loan,loanFilter,loanForm,loanFormPost,apa,apaFilter,apaYear,apaForm,apaFormPost,allcenter,pdlogin,
-    pdloginpost,pdDashboard,topSheet,topSheetFilter,topSheetForm,topSheetFormPost,center,centerYear,
+    pdloginpost,pdDashboard,topSheet,topSheetFilter,topSheetForm,topSheetFormPost,center,centerYear,newPodobiTable,newPodobiEdit,newPodobiEditPost,newPodobiDelete,newPodobi,
     charaKolomEdit,charaKolomEditPost,charaKolomDelete,winterVegEdit,winterVegEditPost,winterVegDelete,summerVegEdit,summerVegEditPost,summerVegDelete,
     otherFlowerEdit,otherFlowerEditPost,otherFlowerDelete,seasonalFlowerEdit,seasonalFlowerEditPost,seasonalFlowerDelete,
     charaKolom,charaKolomYear,folMoshollaEdit,folMoshollaEditPost,folMoshollaDelete,newcropCategoryList,newcropCategoryListPost,newcropCategoryListEdit,
     charaKolomForm,charaKolomFormPost,folMosholla,folMoshollaYear,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegYear,winterVegForm,
     winterVegFormPost,summerVeg,summerVegYear,summerVegForm,summerVegFormPost,otherFlower,otherFlowerYear,otherFlowerForm,otherFlowerFormPost,
-    seasonalFlower,seasonalFlowerYear,seasonalFlowerForm,seasonalFlowerFormPost,regularWorker,regularWorkerFilter,regularWorkerForm,
-    regularWorkerFormPost,irregularWorker,irregularWorkerFilter,irregularWorkerForm,irregularWorkerFormPost} = require('../controllers/pd.controller');
+    seasonalFlower,seasonalFlowerYear,seasonalFlowerForm,seasonalFlowerFormPost,workerInfo,workerInfoFilter,workerInfoForm,
+    workerInfoFormPost,workerNum,workerNumFilter} = require('../controllers/pd.controller');
 
 router.get('/',allcenter);
 
@@ -96,15 +96,18 @@ router.get('/seasonalFlowerEdit/:id',seasonalFlowerEdit);
 router.post('/seasonalFlowerEditPost/:id',seasonalFlowerEditPost);
 router.get('/seasonalFlowerDelete/:id',seasonalFlowerDelete);
 
-router.get('/regularWorker',regularWorker);
-router.post('/regularWorkerFilter',regularWorkerFilter);
-router.get('/regularWorkerForm',regularWorkerForm);
-router.post('/regularWorkerForms',regularWorkerFormPost);
+router.get('/workerInfo',workerInfo);
+router.post('/workerInfoFilter',workerInfoFilter);
+router.get('/workerInfoForm',workerInfoForm);
+router.post('/workerInfoForms',workerInfoFormPost);
+router.post('/newPodobi',newPodobi);
+router.get('/newPodobiTable',newPodobiTable);
+router.get('/newPodobiEdit/:id',newPodobiEdit);
+router.post('/newPodobiEditPost/:id',newPodobiEditPost);
+router.get('/newPodobiDelete/:id',newPodobiDelete);
 
-router.get('/irregularWorker',irregularWorker);
-router.post('/irregularWorkerFilter',irregularWorkerFilter);
-router.get('/irregularWorkerForm',irregularWorkerForm);
-router.post('/irregularWorkerForms',irregularWorkerFormPost);
+router.get('/workerNum',workerNum);
+router.post('/workerNumFilter',workerNumFilter);
 
 router.get('/apa',apa);
 router.post('/apaFilter',apaFilter);
