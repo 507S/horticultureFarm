@@ -14,8 +14,7 @@ const otherFlower = db.otherFlower;
 const seasonalFlower = db.seasonalFlower;
 const summerVeg = db.summerVeg;
 const winterVeg = db.winterVeg;
-const regularWorker = db.regularWorker;
-const irregularWorker = db.irregularWorker;
+const workerInfo = db.workerInfo;
 const apa = db.apa;
 const apaCode = db.apaCode;
 const loan = db.loan;
@@ -29,6 +28,7 @@ const monthlyProgress = db.monthlyProgress;
 const cropCategory = db.cropcategory;
 const rajosshoCode= db.rajosshoCode;
 const expenseCode= db.expenseCode;
+const podobiList = db.podobiList;
 
 const jwt= require('jsonwebtoken');
 const bcrypt= require('bcryptjs'); 
@@ -64,7 +64,6 @@ module.exports.charaKolomFixed=async(req,res)=>{
 };
 module.exports.centerlogin=async(req,res)=>{
     res.render('center/login', { title: 'Horticulture Wing Central Management Software',msg:'' });
-    res.send("log");
 };
 
 module.exports.centerloginpost=async(req,res)=>{
@@ -174,17 +173,17 @@ module.exports.centerDashboard = async(req,res) => {
                     totalBitoron += parseInt(bitorTotal.amount)
                 }
             })
-            mojudParse.forEach((mojuToal) => {
-                if ( res.locals.moment( mojuToal.time ).isAfter(startRange) &&  res.locals.moment( mojuToal.time ).isBefore(endRange) ){
-                    totalMojud += parseInt(mojuToal.amount)
-                }
-            })
+            // mojudParse.forEach((mojuToal) => {
+            //     if ( res.locals.moment( mojuToal.time ).isAfter(startRange) &&  res.locals.moment( mojuToal.time ).isBefore(endRange) ){
+            //         totalMojud += parseInt(mojuToal.amount)
+            //     }
+            // })
         });rajosshos.forEach((row) => {
             totalrajossho += parseInt(row.total)
             
         });
 
-        res.render('center/dashboard', { title: 'Horticulture Wing Central Management Software', msg:'Welcome' ,totalrajossho:totalrajossho,totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud});
+        res.render('center/dashboard', { title: 'Horticulture Wing Central Management Software', msg:'Welcome' ,totalrajossho:totalrajossho,totalProduction: totalProduct, totalBitoron: totalBitoron});
     }
     catch (e) {
         console.log(e)
@@ -261,17 +260,26 @@ module.exports.topSheet=async(req,res)=>{
 
 module.exports.topSheetYear=async(req,res)=>{
     try{
+        const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
+        const selectedDate = req.body.year.toLowerCase();
         const cropCatg = await cropCategory.findAll({
-            where: {
-                type: 'subCategory'
-            }
+            where: { type: 'subCategory' }
         })
         const topSheets = await monthlyProgress.findAll({
             where: {center_id: req.session.user_id}
         })
-        res.render('center/topSheet/topSheetTable', {records: topSheets , cropCatg:cropCatg} ,function(err, html) {
-            res.send(html);
-        });
+
+        if(selectedDate === currentMonth){
+            res.render('center/topSheet/topSheetTable', {records: topSheets , cropCatg:cropCatg} ,function(err, html) {
+                res.send(html);
+            });
+        }
+        else{
+            res.render('center/topSheet/topSheetCustomTable', {records: topSheets , cropCatg:cropCatg,selectedDate:selectedDate} ,function(err, html) {
+                res.send(html);
+            });
+        }
+
     }
     catch (e){
         console.log(e)
@@ -777,136 +785,132 @@ module.exports.winterVegFormPost=async(req,res)=>{
 };
 //winterVeg controller end
 
-//regularWorker controller
-module.exports.regularWorker=async(req,res)=>{
+//workerInfo controller
+module.exports.workerInfo=async(req,res)=>{
     console.log("das",req.session.type)
-    await regularWorker.findAll({
+    await workerInfo.findAll({
         where: {center_id: req.session.user_id}
     })
     .then(data => {
         console.log("inside");
-        res.render('center/worker/regularWorker/regularWorker', { title: 'নিয়মিত শ্রমিকের তথ্য',success:'', records: data });
+        res.render('center/worker/workerInfo/workerInfo', { title: 'শ্রমিকদের তথ্য',success:'', records: data });
     })
     .catch(err => {
         console.log("outside");
-        res.render('center/worker/regularWorker/regularWorker', { title: 'নিয়মিত শ্রমিকের তথ্য',success:'', records: err });
+        res.render('center/worker/workerInfo/workerInfo', { title: 'শ্রমিকদের তথ্য',success:'', records: err });
     })
      
     //  records:result
 
 };
 
-module.exports.regularWorkerYear=async(req,res)=>{
-    await regularWorker.findAll({
+module.exports.workerInfoYear=async(req,res)=>{
+    await workerInfo.findAll({
         where: {year: req.body.year,month: req.body.month}
     })
     .then(data => {
-        res.render('center/worker/regularWorker/regularWorkerTable', {records: data} ,function(err, html) {
+        res.render('center/worker/workerInfo/workerInfoTable', {records: data} ,function(err, html) {
             res.send(html);
         });
     })
     .catch(err => {
-        res.render('center/worker/regularWorker/regularWorkerYear', { title: 'নিয়মিত শ্রমিকের তথ্য',success:'', records: err });
+        res.render('center/worker/workerInfo/workerInfoYear', { title: 'শ্রমিকদের তথ্য',success:'', records: err });
     })
 
 };
 
-module.exports.regularWorkerForm=async(req,res)=>{
-    res.render('center/worker/regularWorker/regularWorkerForm', { title: 'নিয়মিত শ্রমিকের তথ্য',msg:'' ,success:'',user_id: req.session.user_id});
+module.exports.workerInfoForm=async(req,res)=>{
+    res.render('center/worker/workerInfo/workerInfoForm', { title: 'শ্রমিকদের তথ্য',msg:'' ,success:'',user_id: req.session.user_id});
 };
 
-module.exports.regularWorkerFormPost=async(req,res)=>{
+module.exports.workerInfoFormPost=async(req,res)=>{
+    var podobi= req.body.podobi;
     var name= req.body.name;
+    var fname= req.body.fname;
+    var address= req.body.address;
+    var mobile= req.body.mobile;
     var date= req.body.date;
     var nid= req.body.nid;
+    var bank= req.body.bank;
     var month= req.body.month;
     var year =req.body.year;
     var user_id =req.body.user_id;
-
-    await regularWorker.create({
+    if(podobi==='নিয়মিত'){
+        var regularWorker= 1;
+        var irregularWorker= 0;
+    };
+    if(podobi==='অনিয়মিত'){
+        var regularWorker= 0;
+        var irregularWorker= 1;
+    };
+console.log("regularWorker,irregularWorker",regularWorker,irregularWorker);
+    await workerInfo.create({
+        podobi:podobi,
         name: name,
+        fname: fname,
+        address:address,
+        mobile:mobile,
         date:date,
         nid:nid,
+        bank:bank,
         month:month,
+        regularWorker:regularWorker,
+        irregularWorker:irregularWorker,
         year:year,
         center_id:user_id
 
         }).then(data => {
-            res.redirect('/center/regularWorker');
+            res.redirect('/center/workerInfo');
         }).catch(err => {
             res.render('errorpage',err);
         });
   
 };
-//regularWorker controller end
+//workerInfo controller end
 
-//irregularWorker controller
-module.exports.irregularWorker=async(req,res)=>{
-    await irregularWorker.findAll({
-        where: {center_id: req.session.user_id}
+//workerNum controller
+module.exports.workerNum=async(req,res)=>{
+res.render('center/worker/workerNum/workerNum', { title: 'শ্রমিকদের সংখ্যা',success:''});
+};
+module.exports.workerNumYear=async(req,res)=>{
+    await workerInfo.findAll({
+        where: {center_id: req.session.user_id,year: req.body.year,month: req.body.month}
     })
     .then(data => {
         console.log("inside");
-        res.render('center/worker/irregularWorker/irregularWorker', { title: 'অনিয়মিত শ্রমিকের তথ্য',success:'', records: data });
+        var reg=0;
+        var irreg=0;
+        data.forEach(function(row){
+            if(row.regularWorker !== 0){
+                reg+=1;
+            };
+        });
+        data.forEach(function(row){
+            if(row.irregularWorker !== 0){
+                irreg+=1;
+            };
+        });
+        var total;
+        total = reg+irreg;
+        res.render('center/worker/workerNum/workerNumTable', { title: 'শ্রমিকদের সংখ্যা',success:'', totals:total,regs: reg,irregs:irreg,records:data });
     })
     .catch(err => {
         console.log("outside");
-        res.render('center/worker/irregularWorker/irregularWorker', { title: 'অনিয়মিত শ্রমিকের তথ্য',success:'', records: err });
+        res.render('center/worker/workerNum/workerNumYear', { title: 'শ্রমিকদের সংখ্যা',success:'', records: err });
     })
      
     //  records:result
 
 };
 
-module.exports.irregularWorkerYear=async(req,res)=>{
-    await irregularWorker.findAll({
-        where: {year: req.body.year,month: req.body.month}
-        // , center_id: req.session.user_id
-    })
-    .then(data => {
-        res.render('center/worker/irregularWorker/irregularWorkerTable', {records: data} ,function(err, html) {
-            res.send(html);
-        });
-    })
-    .catch(err => {
-        res.render('center/worker/irregularWorker/irregularWorkerYear', { title: 'অনিয়মিত শ্রমিকের তথ্য',success:'', records: err });
-    })
 
-};
 
-module.exports.irregularWorkerForm=async(req,res)=>{
-    res.render('center/worker/irregularWorker/irregularWorkerForm', { title: 'অনিয়মিত শ্রমিকের তথ্য',msg:'' ,success:'',user_id: req.session.user_id});
-};
 
-module.exports.irregularWorkerFormPost=async(req,res)=>{
-    var name= req.body.name;
-    var date= req.body.date;
-    var nid= req.body.nid;
-    var month= req.body.month;
-    var year =req.body.year;
-    var user_id =req.body.user_id;
-
-    await irregularWorker.create({
-        name: name,
-        date:date,
-        nid:nid,
-        month:month,
-        year:year,
-        center_id:user_id
-
-        }).then(data => {
-            res.redirect('/center/irregularWorker');
-        }).catch(err => {
-            res.render('errorpage',err);
-        });
-  
-};
 
 //irregularWorker controller end
 
 //apa controller
 module.exports.apa=async(req,res)=>{
-    console.log("Centerdashboard",res.locals.type);
     await apa.findAll({
         where: {center_id: req.session.user_id}
     })
@@ -954,18 +958,22 @@ module.exports.apaFormPost=async(req,res)=>{
     var shuchok= req.body.shuchok;
     var ekok= req.body.ekok;
     var shuchokMaan= req.body.shuchokMaan;
-    var achievement1= req.body.achievement1;
-    var achievement2= req.body.achievement2;
-    var best= req.body.best;
+    var best= parseFloat(req.body.best);
     var otiUttam= req.body.otiUttam;
     var uttam= req.body.uttam;
     var cholti= req.body.cholti;
     var below= req.body.below;
-    var firstThree= req.body.firstThree;
-    var secondThree= req.body.secondThree;
+    var firstThree= parseFloat(req.body.firstThree);
+    var secondThree= parseFloat(req.body.secondThree);
+    var thirdThree= parseFloat(req.body.thirdThree);
+    var fourthThree= parseFloat(req.body.fourthThree);
     var year =req.body.year;
     var user_id =req.body.user_id;
-
+    var totals=firstThree+secondThree+thirdThree+fourthThree;
+    var total=totals.toFixed(2);
+    var percentages=(total/best)*100;
+    var percentage=percentages.toFixed(2);
+    console.log("best,firstThree,secondThree,thirdThree,fourthThree,total,percentage",best,firstThree,secondThree,thirdThree,fourthThree,total,percentage);
     const uddesshoName = await apaCode.findByPk(uddessho)
     const maanName = await apaCode.findByPk(maan)
     const workName = await apaCode.findByPk(work)
@@ -980,8 +988,6 @@ module.exports.apaFormPost=async(req,res)=>{
         shuchok: shuchokName.name,
         ekok:ekokName.name,
         shuchokMaan:shuchokMaanName.name,
-        achievement1: achievement1,
-        achievement2:achievement2,
         best:best,
         otiUttam: otiUttam,
         uttam:uttam,
@@ -989,7 +995,11 @@ module.exports.apaFormPost=async(req,res)=>{
         below: below,
         firstThree:firstThree,
         secondThree:secondThree,
+        thirdThree:thirdThree,
+        fourthThree:fourthThree,
         year:year,
+        total:total,
+        percentage:percentage,
         center_id:user_id
 
         }).then(data => {
@@ -1427,7 +1437,12 @@ module.exports.chak2Year=async(req,res)=>{
 };
 
 module.exports.chak2Form=async(req,res)=>{
-    res.render('center/employee/chak2/employeeChak2Form', { title: 'হরটিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা',msg:'' ,success:'',user_id: req.session.user_id});
+    try {
+        var podobiLists = await podobiList.findAll();
+        res.render('center/employee/chak2/employeeChak2Form', { title: 'হরটিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা',msg:'',success:'',user_id: req.session.user_id,podobiLists: podobiLists});
+    }catch (e) {
+        console.log(e)
+    }
 };
 
 module.exports.chak2FormPost=async(req,res)=>{
@@ -1459,7 +1474,20 @@ module.exports.chak2FormPost=async(req,res)=>{
         });
   
 };
-
+module.exports.fetchPodobiList = async(req,res) => {
+    console.log("upokhat",req.body.podobi)
+    await podobiList.findOne({
+        where: {id: req.body.podobi}
+    })
+        .then(data => {
+            console.log("data",data.grade);
+            var grade=data.grade;
+            res.send(grade);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+};
 //chak2 controller end
 
 //rajossho controller
@@ -2184,44 +2212,36 @@ module.exports.monthlyProgress=async(req,res)=>{
 };
 
 module.exports.monthlyProgressYear=async(req,res)=>{
-    const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase()
-    await monthlyProgress.findAll({
+    try {
+        const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
+        const selectedDate = req.body.year.toLowerCase();
 
-        // attributes: [
-        //     fn('JSON_CONTAINS', col('timeFrame'), cast('{"time": "nov-2020"}', 'CHAR CHARACTER SET utf8'))
-        //     // fn('JSON_EXTRACT', col('time'), cast('{"time": "nov-2020"}', 'CHAR CHARACTER SET utf8')),
-        // ],
-        // raw: true,
+        var data = [];
+        const allMonthlyProgress = await monthlyProgress.findAll({where:{center_id:req.session.user_id}});
+        allMonthlyProgress.map((monthlyProg,key) => {
+            const timeList = JSON.parse(monthlyProg.timeFrame)
+            timeList.map((eachTime,index) => {
+                if (eachTime.time === selectedDate){
+                    data.push(monthlyProg);
+                }
+            })
+        })
 
-        // where : {
-        //     timeFrame: {
-        //         time : 'nov-2020'
-        //     }
-        // }
-
-        where:{
-            center_id: req.session.user_id,
-        }
-
-        // [Op.and]: db.Sequelize.literal(JSON_CONTAINS(`time`, '{\"time\": nov-2020}')),
-        // "time" : currentMonth
-
-        // time: {
-        //     [Op.and]: [{time: {[Op.eq]: currentMonth}}]
-        // }
-
-
-    })
-        .then(data => {
-            console.log(data)
+        if(selectedDate === currentMonth) {
             res.render('center/monthlyProgress/monthlyProgressTable', {records: data} ,function(err, html) {
                 res.send(html);
             });
-        })
-        .catch(err => {
-            console.log(err)
-            res.render('center/monthlyProgress/monthlyProgressYear', { title: 'মাসিক প্রতিবেদন',success:'', records: err });
-        })
+        }
+        else{
+            res.render('center/monthlyProgress/monthlyProgressCustomTable', {records: data,selectedDate:selectedDate} ,function(err, html) {
+                res.send(html);
+            });
+        }
+
+    }
+    catch (e) {
+        console.log(e)
+    }
 
 };
 
@@ -2300,7 +2320,6 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
     var daeProdan= req.body.daeProdan;
     var deadWriteup= req.body.deadWriteup;
     var grandTotalBitoron= req.body.grandTotalBitoron;
-    var mojud= req.body.mojud;
     var comment= req.body.comment;
     var user_id =req.body.user_id;
     console.log('productionTotal=',res.locals.moment('2014-09-28').format("MMM-YYYY").toLowerCase());
@@ -2337,12 +2356,6 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
     deadWriteupObj["amount"] =  deadWriteup;
     currentDeadWriteup.push(deadWriteupObj)
 
-    var currentMojud = [];
-    var mojudObj = {};
-    mojudObj["time"] =  currentMonth;
-    mojudObj["amount"] =  mojud;
-    currentMojud.push(mojudObj)
-
     var currentComment = [];
     var commentObj = {};
     commentObj["time"] =  currentMonth;
@@ -2378,17 +2391,25 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
     totalBitoronObj["amount"] =  bitoronCurrentMonth;
     totalBitoron.push(totalBitoronObj)
 
+    var productionTargetList = [];
+    var productionTargetObj = {};
+    productionTargetObj["startTime"] =  `${startRange}`;
+    productionTargetObj["endTime"] =  `${endRange}`;
+    productionTargetObj["amount"] =  productionTarget;
+    productionTargetList.push(productionTargetObj)
+
     const categoryName = await cropCategory.findByPk(category)
     const subCategoryName = await cropCategory.findByPk(subCategory)
     const biboronName = await cropCategory.findByPk(biboron)
     const breedName = await cropCategory.findByPk(breed)
+    const centerInfo = await center.findByPk(user_id)
 
     await monthlyProgress.create({
         category: categoryName.name,
         subCategory: subCategoryName.name,
         biboron: biboronName.name,
         breed: breedName.name,
-        productionTarget: productionTarget,
+        productionTarget: JSON.stringify(productionTargetList),
         productionCurrent: JSON.stringify(currentProduction),
         productionTotal: JSON.stringify(totalProduction),
         daePrapti: JSON.stringify(currentDaePraptis),
@@ -2397,10 +2418,10 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
 
         daeProdan: JSON.stringify(currentDaeProdan),
         deadWriteup: JSON.stringify(currentDeadWriteup),
-        mojud: JSON.stringify(currentMojud),
         comment: JSON.stringify(currentComment),
         timeFrame: JSON.stringify(time),
-        center_id:user_id
+        center_id:user_id,
+        pd_id: centerInfo.pd_id
 
     }).then(data => {
         console.log('productionTotal=',productionTotal);

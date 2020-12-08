@@ -28,7 +28,7 @@ db.otherFlower = require("./otherFlower.model.js")(sequelize, Sequelize);
 db.seasonalFlower = require("./seasonalFlower.model.js")(sequelize, Sequelize);
 db.summerVeg = require("./summerVeg.model.js")(sequelize, Sequelize);
 db.winterVeg = require("./winterVeg.model.js")(sequelize, Sequelize);
-db.regularWorker = require("./regularWorker.model.js")(sequelize, Sequelize);
+db.workerInfo = require("./workerInfo.model.js")(sequelize, Sequelize);
 db.irregularWorker = require("./irregularWorker.model.js")(sequelize, Sequelize);
 db.apa = require("./apa.model.js")(sequelize, Sequelize);
 db.apaCode = require("./apaCode.model.js")(sequelize, Sequelize);
@@ -43,5 +43,6 @@ db.expenseCode = require("./expenseCode.model.js")(sequelize, Sequelize);
 db.expense = require("./expense.model.js")(sequelize, Sequelize);
 db.monthlyProgress = require("./monthlyProgress.model.js")(sequelize, Sequelize);
 db.cropcategory = require("./cropcategory")(sequelize, Sequelize);
+db.podobiList = require("./podobiList.model.js")(sequelize, Sequelize);
 
 module.exports = db;

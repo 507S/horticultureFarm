@@ -57,7 +57,7 @@
                         
                         <div class="row mb-2">
                             <div class="col-md-12">
-                                <a href="/center/regularWorkerForm" class="btn btn-success btn-group-sm ">নিয়মিত শ্রমিকের তথ্য ফর্ম</a>
+                                <a href="/center/workerInfoForm" class="btn btn-success btn-group-sm ">নিয়মিত শ্রমিকের তথ্য ফর্ম</a>
                             </div>
 
                         </div>
@@ -112,7 +112,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/center/regularWorkerYear",
+            url: "/center/workerInfoYear",
             data: {year: year,month: month},
             datatype: "json",
             beforeSend: function() {
@@ -137,7 +137,7 @@
         var month = $('#month').val();
         $.ajax({
             type: "POST",
-            url: "/center/regularWorkerYear",
+            url: "/center/workerInfoYear",
             data: {year: year,month:month},
             datatype: "json",
             beforeSend: function() {
