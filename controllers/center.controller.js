@@ -63,7 +63,7 @@ module.exports.charaKolomFixed=async(req,res)=>{
     
 };
 module.exports.centerlogin=async(req,res)=>{
-    res.render('center/login', { title: 'Horticulture Wing Central Management Software',msg:'' });
+    res.render('center/login', { title: 'Horticulture Wing Center Management Software',msg:'' });
 };
 
 module.exports.centerloginpost=async(req,res)=>{
@@ -88,11 +88,11 @@ module.exports.centerloginpost=async(req,res)=>{
                         res.redirect('/center/dashboard');
                     }
                     else{
-                        return res.status(200).render('center/login', { title: 'Horticulture Wing Central Management Software',msg:'Please provide a username and password' });
+                        return res.status(200).render('center/login', { title: 'Horticulture Wing Center Management Software',msg:'Please provide a username and password' });
                     }
                 });
             }else{
-                return res.status(200).render('center/login', { title: 'Horticulture Wing Central Management Software',msg:'Please provide a username and password' });
+                return res.status(200).render('center/login', { title: 'Horticulture Wing Center Management Software',msg:'Please provide a username and password' });
             }
         })
         .catch(err => {
@@ -113,7 +113,7 @@ module.exports.centerloginpost=async(req,res)=>{
         //             }
         //         });
         //     }else{
-        //         return res.status(200).render('center/login', { title: 'Horticulture Wing Central Management Software',msg:'Please provide a username and password' });
+        //         return res.status(200).render('center/login', { title: 'Horticulture Wing Center Management Software',msg:'Please provide a username and password' });
         //     }
         // })
         // .catch(err => {
@@ -183,7 +183,7 @@ module.exports.centerDashboard = async(req,res) => {
             
         });
 
-        res.render('center/dashboard', { title: 'Horticulture Wing Central Management Software', msg:'Welcome' ,totalrajossho:totalrajossho,totalProduction: totalProduct, totalBitoron: totalBitoron});
+        res.render('center/dashboard', { title: 'Horticulture Wing Center Management Software', msg:'Welcome' ,totalrajossho:totalrajossho,totalProduction: totalProduct, totalBitoron: totalBitoron});
     }
     catch (e) {
         console.log(e)
@@ -192,7 +192,7 @@ module.exports.centerDashboard = async(req,res) => {
 
 //signUp controller
 module.exports.centersignup=async(req,res)=>{
-    res.render('center/signup', { title: 'Horticulture Wing Central Management Software',msg:'' });
+    res.render('center/signup', { title: 'Horticulture Wing Center Management Software',msg:'' });
 };
 module.exports.centersignuppost=async(req,res)=>{
     try {
@@ -202,10 +202,10 @@ module.exports.centersignuppost=async(req,res)=>{
             where: {uname : uname}
         })
         if(data.length>0){
-            res.render('center/signup',{title: 'Horticulture Wing Central Management Software',msg:'ERROR: The center is already enrolled!'})
+            res.render('center/signup',{title: 'Horticulture Wing Center Management Software',msg:'ERROR: The center is already enrolled!'})
         }
         else if(password !== confirmPassword){
-            return res.render('center/signup',{title: 'Horticulture Wing Central Management Software',msg:'ERROR: Passwords do not match!'})
+            return res.render('center/signup',{title: 'Horticulture Wing Center Management Software',msg:'ERROR: Passwords do not match!'})
         }
         else{
             // var centers= center;
@@ -226,7 +226,7 @@ module.exports.centersignuppost=async(req,res)=>{
                     email:email,
                     pd_id:1
                     })
-                res.render('center/signup',{title: 'Horticulture Wing Central Management Software',msg:'Center Registered Successfully!'})
+                res.render('center/signup',{title: 'Horticulture Wing Center Management Software',msg:'Center Registered Successfully!'})
             }
             catch (err) {
                 console.log(err);

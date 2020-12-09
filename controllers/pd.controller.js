@@ -57,7 +57,7 @@ module.exports.charaKolomFixed=async(req,res)=>{
     
 };
 module.exports.pdlogin=async(req,res)=>{
-    res.render('pd/login', { title: 'Horticulture Wing Central Management Software',msg:'' });
+    res.render('pd/login', { title: 'Horticulture Wing Center Management Software',msg:'' });
     res.send("log");
 };
 
@@ -78,11 +78,11 @@ module.exports.pdloginpost=async(req,res)=>{
                         res.redirect('/pd/dashboard');
                     }
                     else{
-                        return res.status(200).render('pd/login', { title: 'Horticulture Wing Central Management Software',msg:'Please provide a username and password' });
+                        return res.status(200).render('pd/login', { title: 'Horticulture Wing Center Management Software',msg:'Please provide a username and password' });
                     }
                 });
             }else{
-                return res.status(200).render('pd/login', { title: 'Horticulture Wing Central Management Software',msg:'Please provide a username and password' });
+                return res.status(200).render('pd/login', { title: 'Horticulture Wing Center Management Software',msg:'Please provide a username and password' });
             }
         })
         .catch(err => {
@@ -103,7 +103,7 @@ module.exports.pdloginpost=async(req,res)=>{
         //             }
         //         });
         //     }else{
-        //         return res.status(200).render('center/login', { title: 'Horticulture Wing Central Management Software',msg:'Please provide a username and password' });
+        //         return res.status(200).render('center/login', { title: 'Horticulture Wing Center Management Software',msg:'Please provide a username and password' });
         //     }
         // })
         // .catch(err => {
@@ -173,7 +173,7 @@ module.exports.pdDashboard = async(req,res) => {
         });
 
 
-        res.render('pd/dashboard', { title: 'Horticulture Wing Central Management Software', msg:'Welcome' ,podobiLists:podobiListss,rajosshoCodes:rajosshoCodess,expenseCodes:expenseCodess,totalrajossho:totalrajossho, totalProduction: totalProduct, totalBitoron: totalBitoron,  center:centerinfo, crop: crop,apaCodes:apaCodes });
+        res.render('pd/dashboard', { title: 'Horticulture Wing Center Management Software', msg:'Welcome' ,podobiLists:podobiListss,rajosshoCodes:rajosshoCodess,expenseCodes:expenseCodess,totalrajossho:totalrajossho, totalProduction: totalProduct, totalBitoron: totalBitoron,  center:centerinfo, crop: crop,apaCodes:apaCodes });
 
     }
     catch (e) {
@@ -273,7 +273,7 @@ module.exports.suchokMaan = async(req,res) => {
 
 //signUp controller
 module.exports.pdsignup=async(req,res)=>{
-    res.render('pd/signup', { title: 'Horticulture Wing Central Management Software',msg:'' });
+    res.render('pd/signup', { title: 'Horticulture Wing Center Management Software',msg:'' });
     res.send("log");
 };
 module.exports.pdsignuppost=async(req,res)=>{
@@ -282,10 +282,10 @@ module.exports.pdsignuppost=async(req,res)=>{
 
         const data = await pd.findAll({ where: {uname: uname} })
         if(data.length > 0){
-            res.render('pd/signup',{title: 'Horticulture Wing Central Management Software',msg:'ERROR: The pd is already enrolled!'})
+            res.render('pd/signup',{title: 'Horticulture Wing Center Management Software',msg:'ERROR: The pd is already enrolled!'})
         }
         else if(password !== confirmPassword){
-            return res.render('pd/signup',{title: 'Horticulture Wing Central Management Software',msg:'ERROR: Passwords do not match!'})
+            return res.render('pd/signup',{title: 'Horticulture Wing Center Management Software',msg:'ERROR: Passwords do not match!'})
         }
         else{
             const hashedPassword = await bcrypt.hash(password, 10);
@@ -295,7 +295,7 @@ module.exports.pdsignuppost=async(req,res)=>{
                     uname: uname,
                     password:hashedPassword,
                     })
-                res.render('pd/signup',{title: 'Horticulture Wing Central Management Software',msg:'pd Registered Successfully!'})
+                res.render('pd/signup',{title: 'Horticulture Wing Center Management Software',msg:'pd Registered Successfully!'})
             }
             catch (err) {
                 console.log(err);
