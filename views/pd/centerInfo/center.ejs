@@ -19,6 +19,7 @@
                             <thead>
                             <tr>
                                 <th>সেন্টারের নাম</th>
+                                <th>সেন্টারের ইউজার নাম</th>
                                 <th>কর্মকর্তার নাম</th>
                                 <th>পদবী</th>
                                 <th>মোবাইল নং</th>
@@ -31,6 +32,7 @@
                                 <% records.forEach(function(row){ %>
                                     <tr>
                                         <td><%= row.center %></td>
+                                        <td><%= row.uname %></td>
                                         <td><%= row.kormokorta %></td>
                                         <td><%= row.podobi %></td>
                                         <td><%= row.mobile %></td>
@@ -49,6 +51,7 @@
                                 <thead>
                                 <tr>
                                     <th>সেন্টারের নাম</th>
+                                    <th>সেন্টারের ইউজার নাম</th>
                                     <th>কর্মকর্তার নাম</th>
                                     <th>পদবী</th>
                                     <th>মোবাইল নং</th>
