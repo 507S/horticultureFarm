@@ -196,7 +196,7 @@ module.exports.centersignup=async(req,res)=>{
 };
 module.exports.centersignuppost=async(req,res)=>{
     try {
-        const {centers,kormokorta,podobi,mobile,uname,email,password,confirmPassword}=req.body;
+        const {centers,uname,password,confirmPassword}=req.body;
 
         const data = await center.findAll({
             where: {uname : uname}
@@ -220,10 +220,6 @@ module.exports.centersignuppost=async(req,res)=>{
                     uname: uname,
                     password:hashedPassword,
                     center: centers,
-                    kormokorta:kormokorta,
-                    podobi:podobi,
-                    mobile:mobile,
-                    email:email,
                     pd_id:1
                     })
                 res.render('center/signup',{title: 'Horticulture Wing Center Management Software',msg:'Center Registered Successfully!'})
@@ -239,6 +235,66 @@ module.exports.centersignuppost=async(req,res)=>{
     } 
 };
 //signUp controller end
+
+//center controller
+module.exports.center=async(req,res)=>{
+    await center.findAll({
+        where: {id: req.session.user_id}
+    })
+    .then(data => {
+        console.log("inside",data);
+        res.render('center/centerInfo/center', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: data });
+    })
+    .catch(err => {
+        console.log(err);
+        res.render('center/centerInfo/center', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: err });
+    })
+     
+    //  records:result
+
+};
+module.exports.centerEdit=async(req,res)=>{
+    await center.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('center/centerInfo/centerEdit', { title: 'সেন্টারের যোগাযোগ তথ্য ফর্ম',msg:'' ,success:'',records: data});
+    })
+    .catch(err => {
+        console.log("outside");
+        res.render('center/centerInfo/centerEdit', { title: 'সেন্টারের যোগাযোগ তথ্য ফর্ম',success:'', records: err });
+    })
+};
+module.exports.centerEditPost=async(req,res)=>{
+    var kormokorta= req.body.kormokorta;
+    var podobi = req.body.podobi;
+    var mobile= req.body.mobile;
+    var email = req.body.email;
+
+    await center.update({ 
+        kormokorta:kormokorta,
+        podobi:podobi,
+        mobile:mobile,
+        email:email,
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        res.redirect('/center/center');
+    }).catch(err => {
+        res.render('errorpage',err);
+    });
+};
+module.exports.centerDelete=async(req,res)=>{
+    var centerDelete = await center.findByPk(req.params.id);
+    try {
+        centerDelete.destroy();
+        res.redirect("/center/center");
+    }
+    catch{
+        res.render('errorpage',err);
+    }
+    
+};
 
 //topSheet controller
 module.exports.topSheet=async(req,res)=>{
@@ -318,69 +374,6 @@ module.exports.topSheetFormPost=async(req,res)=>{
 };
 //topSheet controller end
 
-//center controller
-module.exports.center=async(req,res)=>{
-    await center.findAll({
-        where: {center_id: req.session.user_id}
-    })
-    .then(data => {
-        console.log("inside");
-        res.render('center/centerinfo/center', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: data });
-    })
-    .catch(err => {
-        console.log("outside");
-        res.render('center/centerinfo/center', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: err });
-    })
-     
-    //  records:result
-
-};
-
-module.exports.centerYear=async(req,res)=>{
-    await center.findAll({
-        where: {year: req.body.year, center_id: req.session.user_id}
-    })
-    .then(data => {
-        res.render('center/centerinfo/centerTable', {records: data} ,function(err, html) {
-            res.send(html);
-        });
-    })
-    .catch(err => {
-        res.render('center/centerinfo/centerYear', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: err });
-    })
-
-};
-
-// module.exports.centerForm=async(req,res)=>{
-//     res.render('center/centerinfo/centerForm', { title: 'সেন্টারের যোগাযোগ তথ্য',msg:'' ,success:'',user_id: req.session.user_id});
-// };
-
-// module.exports.centerFormPost=async(req,res)=>{
-//     var center= req.body.center;
-//     var kormokorta= req.body.kormokorta;
-//     var podobi= req.body.podobi;
-//     var mobile= req.body.mobile;
-//     var email= req.body.email;
-//     var year =req.body.year;
-//     var user_id =req.body.user_id;
-
-//     await centerInfo.create({
-//         center: center,
-//         kormokorta:kormokorta,
-//         podobi:podobi,
-//         mobile:mobile,
-//         email:email,
-//         year:year,
-//         center_id:user_id
-
-//         }).then(data => {
-//             res.redirect('/center/center');
-//         }).catch(err => {
-//             res.render('errorpage',err);
-//         });
-  
-// };
-//center controller end
 
 //charaKolom controller
 module.exports.charaKolom=async(req,res)=>{
