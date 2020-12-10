@@ -2242,6 +2242,8 @@ module.exports.monthlyProgressFilter=async(req,res)=>{
         const selectedDate = req.body.year.toLowerCase();
         var data = [];
         if (req.body.center === "all") {
+            const cropCatg = await cropCategory.findAll({where: {type: 'jat'} })
+            console.log("crop",cropCatg.length)
             const monthlyProgressList = await monthlyProgress.findAll({ where: {pd_id: req.session.user_id} });
             monthlyProgressList.map((monthlyProg) => {
                 const timeList = JSON.parse(monthlyProg.timeFrame)
@@ -2251,7 +2253,7 @@ module.exports.monthlyProgressFilter=async(req,res)=>{
                     }
                 })
             })
-            res.render('pd/monthlyProgress/monthlyProgressCustomTable', {records: data,selectedDate:selectedDate} ,function(err, html) {
+            res.render('pd/monthlyProgress/monthlyProgressCustomTable', {records: data,selectedDate:selectedDate,cropCatg:cropCatg} ,function(err, html) {
                 res.send(html);
             });
         }else{
