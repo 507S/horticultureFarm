@@ -143,13 +143,13 @@
                 })
 
                 // মজুদ ******
-                var currentMojudSum = 0;
-                const currMojud = JSON.parse(row.mojud)
-                currMojud.forEach(function(MojudCurrent){
-                    if ( MojudCurrent.time === selectedDate ) {
-                        currentMojudSum += parseInt(MojudCurrent.amount)
-                    }
-                })
+                // var currentMojudSum = 0;
+                // const currMojud = JSON.parse(row.mojud)
+                // currMojud.forEach(function(MojudCurrent){
+                //     if ( MojudCurrent.time === selectedDate ) {
+                //         currentMojudSum += parseInt(MojudCurrent.amount)
+                //     }
+                // })
 
                 // মন্তব্য *********
                 var montobboSum = "";
@@ -159,6 +159,28 @@
                         montobboSum = MontobboCurrent.msg
                     }
                 })
+
+                console.log("start",row.id)
+                console.log("view catg",row.category)
+                console.log("view catg",row.subCategory)
+                console.log("view catg",row.biboron)
+                console.log("view catg",row.breed)
+                console.log("view catg",productionTargetSum)
+                console.log("view catg",currentProductionSum)
+                console.log("view catg",previousMonthProduction)
+
+                console.log("view catg",daePraptiSum)
+                console.log("view catg",prevYearJer)
+
+                console.log("view catg",currentBitoronSum)
+                console.log("view catg",previousMonthBitoronSum)
+
+                console.log("view catg",currentDaeProdanSum)
+                console.log("view catg",currentMritoSum)
+
+
+                console.log("view catg",montobboSum)
+                console.log("Done")
 
             %>
 
@@ -182,8 +204,7 @@
                 <td><%= new Number(currentDaeProdanSum + currentMritoSum).toLocaleString("bn-BD") %></td>
                 <td><%= new Number((currentProductionSum + previousMonthProduction + daePraptiSum + prevYearJer)-(currentDaeProdanSum + currentMritoSum)).toLocaleString("bn-BD") %></td>
                 <td><%= montobboSum %></td>
-                <td><a class="btn btn-primary btn-xs" href="/center/monthlyProgressEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
-                </td>
+                <td><a class="btn btn-primary btn-xs" href="/center/monthlyProgressEdit/<%= row.id %>"><i class="fa fa-edit"></i></a></td>
             </tr>
         <% }) %>
         </tbody>

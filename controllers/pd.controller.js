@@ -2240,20 +2240,36 @@ module.exports.monthlyProgressFilter=async(req,res)=>{
     try{
         const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
         const selectedDate = req.body.year.toLowerCase();
-        const monthlyProgressList = await monthlyProgress.findAll({ where: {center_id : req.body.center} });
         var data = [];
-        monthlyProgressList.map((monthlyProg) => {
-            const timeList = JSON.parse(monthlyProg.timeFrame)
-            timeList.map((eachTime) => {
-                if (eachTime.time === selectedDate){
-                    data.push(monthlyProg);
-                }
+        if (req.body.center === "all") {
+            const monthlyProgressList = await monthlyProgress.findAll({ where: {pd_id: req.session.user_id} });
+            monthlyProgressList.map((monthlyProg) => {
+                const timeList = JSON.parse(monthlyProg.timeFrame)
+                timeList.map((eachTime) => {
+                    if (eachTime.time === selectedDate){
+                        data.push(monthlyProg);
+                    }
+                })
             })
-        })
+            res.render('pd/monthlyProgress/monthlyProgressCustomTable', {records: data,selectedDate:selectedDate} ,function(err, html) {
+                res.send(html);
+            });
+        }else{
+            const monthlyProgressList = await monthlyProgress.findAll({ where: {center_id : req.body.center, pd_id: req.session.user_id} });
+            monthlyProgressList.map((monthlyProg) => {
+                const timeList = JSON.parse(monthlyProg.timeFrame)
+                timeList.map((eachTime) => {
+                    if (eachTime.time === selectedDate){
+                        data.push(monthlyProg);
+                    }
+                })
+            })
 
-        res.render('pd/monthlyProgress/monthlyProgressTable', {records: data} ,function(err, html) {
-            res.send(html);
-        });
+            res.render('pd/monthlyProgress/monthlyProgressTable', {records: data} ,function(err, html) {
+                res.send(html);
+            });
+        }
+
     }
     catch (e) {
         console.log(e);

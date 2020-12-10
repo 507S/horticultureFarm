@@ -182,8 +182,7 @@
                 <td><%= new Number(currentDaeProdanSum + currentMritoSum).toLocaleString("bn-BD") %></td>
                 <td><%= new Number((totalProductionSum + daePraptiSum + prevYearJer) - (currentDaeProdanSum + currentMritoSum)).toLocaleString("bn-BD") %></td>
                 <td><%= montobboSum %></td>
-                <td><a class="btn btn-primary btn-xs" href="/center/monthlyProgressEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
-                </td>
+                <td><a class="btn btn-primary btn-xs" href="/center/monthlyProgressEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>                </td>
             </tr>
         <% }) %>
         </tbody>
