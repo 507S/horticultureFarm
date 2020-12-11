@@ -332,12 +332,20 @@ module.exports.topSheetFilter=async(req,res)=>{
                 type: 'subCategory'
             }
         })
-        const topSheets = await monthlyProgress.findAll({
-            where: {center_id: req.body.center}
-        })
-        res.render('pd/topSheet/topSheetTable', {records: topSheets , cropCatg:cropCatg} ,function(err, html) {
-            res.send(html);
-        });
+        if (req.body.center === "all"){
+            const topSheets = await monthlyProgress.findAll()
+            res.render('pd/topSheet/topSheetTable', {records: topSheets , cropCatg:cropCatg} ,function(err, html) {
+                res.send(html);
+            });
+        }else{
+            const topSheets = await monthlyProgress.findAll({
+                where: {center_id: req.body.center}
+            })
+            res.render('pd/topSheet/topSheetTable', {records: topSheets , cropCatg:cropCatg} ,function(err, html) {
+                res.send(html);
+            });
+        }
+
     }
     catch (e) {
         console.log(e);

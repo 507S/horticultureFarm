@@ -1,5 +1,5 @@
 <%if (records.length >0){ %>
-    <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
+    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
         <thead>
         <tr>
             <th>আইটেমের নাম</th>
@@ -12,10 +12,12 @@
         <tbody>
         <% cropCatg.forEach(function(row,index){ %>
             <%
+                const currentMonth = moment().format("MMM-YYYY").toLowerCase();
                 var totalProductionTarget = 0;
                 var currentProductionSum = 0;
                 var previousMonthProduction = 0;
                 var totalProduction = 0;
+                var productionTargetSum = 0;
 
                 var startRange = "";
                 var endRange = "";
@@ -30,6 +32,16 @@
 
                 records.forEach((monthProg) => {
                     if (monthProg.subCategory === row.name){
+
+                        // উৎপাদন (লক্ষ্যমাত্রা) *********
+
+                        const TargetProduction = JSON.parse(monthProg.productionTarget)
+                        TargetProduction.forEach(function(prodTarget){
+                            if ( moment(currentMonth).isAfter(prodTarget.startTime) &&  moment(currentMonth).isBefore(prodTarget.endTime) ){
+                                productionTargetSum += parseInt(prodTarget.amount)
+                            }
+                        })
+
                         // total lokkhomatra in this economic year
                         totalProductionTarget += parseInt(monthProg.productionTarget)
 
@@ -49,7 +61,7 @@
             %>
             <tr>
                 <td><%= row.name %></td>
-                <td><%= new Number(totalProductionTarget).toLocaleString("bn-BD") %></td>
+                <td><%= new Number(productionTargetSum).toLocaleString("bn-BD") %></td>
                 <td><%= new Number(previousMonthProduction).toLocaleString("bn-BD") %></td>
                 <td><%= new Number(currentProductionSum).toLocaleString("bn-BD") %></td>
                 <td><%= new Number(currentProductionSum + previousMonthProduction).toLocaleString("bn-BD") %></td>
