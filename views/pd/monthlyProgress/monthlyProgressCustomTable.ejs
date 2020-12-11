@@ -50,6 +50,8 @@
                     prevEconomicEnd = "jul"+"-"+moment().format('yyyy')
                 }
 
+
+
                 // ক্যাটাগরি *******
                 var category = ""
                 // সাব-ক্যাটাগরি *******
@@ -57,7 +59,46 @@
                 // বিবরণ *******
                 var biboron = ""
                 // জাত *******
-                var breed = ""
+                var breed = crop.name
+
+
+                category_id = 0
+                subCategory_id = 0
+                biboron_id = 0
+                allCropCatg.forEach(function(allCrop){
+                    if (allCrop.name === breed){
+                        biboron_id = allCrop.parent_id
+                    }
+                })
+                allCropCatg.forEach(function(allCrop){
+                    if (allCrop.id === biboron_id){
+                        biboron = allCrop.name
+                    }
+                })
+
+                allCropCatg.forEach(function(allCrop){
+                    if (allCrop.name === biboron){
+                        subCategory_id = allCrop.parent_id
+                    }
+                })
+                allCropCatg.forEach(function(allCrop){
+                    if (allCrop.id === subCategory_id){
+                        subCategory = allCrop.name
+                    }
+                })
+
+                allCropCatg.forEach(function(allCrop){
+                    if (allCrop.name === subCategory){
+                        category_id = allCrop.parent_id
+                    }
+                })
+                allCropCatg.forEach(function(allCrop){
+                    if (allCrop.id === category_id){
+                        category = allCrop.name
+                    }
+                })
+
+
                 // current production (  উৎপাদন  )*******
                 var currentProductionSum = 0;
                 var previousMonthProduction = 0;
