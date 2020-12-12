@@ -4,7 +4,7 @@ const router = express.Router();
 const app=express();
 
 const {apaUddessho,apaMaan,karjokrom,suchok,ekok,suchokMaan,newKhorochCode,newRajosshoCode,addMainCategory,centerDelete,centerEdit,centerEditPost,
-    addSubcategory,addBiboron,addJaat,monthlyProgress,monthlyProgressFilter,monthlyProgressForm,monthlyProgressFormPost,expenseEdit,expenseEditPost,expenseDelete,
+    addSubcategory,addBiboron,addJaat,monthlyProgress,monthlyProgressFilter,expenseEdit,expenseEditPost,expenseDelete,
     charaKolomFixed,pdsignup,pdsignuppost,rajossho,rajosshoFilter,rajosshoForm,rajosshoFormPost,newRajosshoCodeTable,
     newRajosshoCodeTableEdit,newRajosshoCodeTableDelete,newRajosshoCodeTableEditPost,expense,expenseFilter,newKhorochTable,newKhorochTableEdit,newKhorochTableEditPost,newKhorochTableDelete,
     expenseForm,expenseFormPost,chak1,chak1Filter,chak1Form,chak1FormPost,chak2,chak2Filter,chak2Form,chak2FormPost,revolvingFund,
@@ -17,7 +17,7 @@ const {apaUddessho,apaMaan,karjokrom,suchok,ekok,suchokMaan,newKhorochCode,newRa
     charaKolomForm,charaKolomFormPost,folMosholla,folMoshollaYear,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegYear,winterVegForm,
     winterVegFormPost,summerVeg,summerVegYear,summerVegForm,summerVegFormPost,otherFlower,otherFlowerYear,otherFlowerForm,otherFlowerFormPost,
     seasonalFlower,seasonalFlowerYear,seasonalFlowerForm,seasonalFlowerFormPost,workerInfo,workerInfoFilter,workerInfoForm,
-    workerInfoFormPost,workerNum,workerNumFilter} = require('../controllers/pd.controller');
+    workerInfoFormPost,workerNum,workerNumFilter,monthlyProgressEdit,monthlyProgressUpdate} = require('../controllers/pd.controller');
 
 router.get('/',allcenter);
 
@@ -176,8 +176,9 @@ router.get('/newKhorochTableDelete/:id',newKhorochTableDelete);
 
 router.get('/monthlyProgress',monthlyProgress);
 router.post('/monthlyProgressFilter',monthlyProgressFilter);
-router.get('/monthlyProgressForm',monthlyProgressForm);
-router.post('/monthlyProgressForms',monthlyProgressFormPost);
+
+router.get('/monthlyProgressEdit/:progressId/:editDate',monthlyProgressEdit)
+router.post('/monthlyProgressUpdate/:progressId',monthlyProgressUpdate)
 
 router.get('/newcropCategoryList',newcropCategoryList);
 router.post('/newcropCategoryListPost/:id',newcropCategoryListPost);

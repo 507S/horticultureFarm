@@ -2430,7 +2430,7 @@ module.exports.monthlyProgressEdit = async(req,res) => {
     try{
         const monthProgress = await monthlyProgress.findByPk(req.params.progressId);
         const categoryList = await cropCategory.findAll();
-        res.render('center/monthlyProgress/monthlyProgressFormEdit', { title: 'মাসিক প্রতিবেদন',msg:'' ,success:'', user_id: req.session.user_id, categoryList: categoryList, monthProgress:monthProgress,editDate: req.params.editDate });
+        res.render('center/monthlyProgress/monthlyProgressFormEdit', { title: 'মাসিক প্রতিবেদন',msg:'' ,success:'', categoryList: categoryList, monthProgress:monthProgress,editDate: req.params.editDate });
     }catch (err) {
         console.log(err)
     }
@@ -2448,7 +2448,6 @@ module.exports.monthlyProgressUpdate = async(req,res) => {
     var daeProdan= req.body.daeProdan;
     var deadWriteup= req.body.deadWriteup;
     var comment= req.body.comment;
-    var user_id =req.body.user_id;
     var editDate = req.body.editDate.toLowerCase();
 
 
@@ -2556,7 +2555,6 @@ module.exports.monthlyProgressUpdate = async(req,res) => {
             deadWriteup: JSON.stringify(currentDeadWriteup),
             comment: JSON.stringify(currentComment),
             // timeFrame: time,
-            center_id:user_id
 
         },
         {

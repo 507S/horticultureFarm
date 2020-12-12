@@ -33,21 +33,21 @@
                 var prevEconomicEnd = "";
 
                 if (moment().format("M") < 7){
-                    startRange = "jul"+"-"+moment().subtract(1, "year").format('yyyy')
-                    endRange = "jul"+"-"+moment().format('yyyy')
+                    startRange = "jul"+"-"+moment(selectedDate).subtract(1, "year").format('yyyy')
+                    endRange = "jul"+"-"+moment(selectedDate).format('yyyy')
                 }else{
-                    startRange = "jul"+"-"+moment().format('yyyy')
-                    endRange = "jul"+"-"+moment().add(1, "year").format('yyyy')
+                    startRange = "jul"+"-"+moment(selectedDate).format('yyyy')
+                    endRange = "jul"+"-"+moment(selectedDate).add(1, "year").format('yyyy')
                 }
 
                 // Previous Economic year
 
                 if (moment().format("M") < 7){
-                    prevEconomicStart = "jul"+"-"+moment().subtract(2, "year").format('yyyy')
-                    prevEconomicEnd = "jul"+"-"+moment().subtract(1, "year").format('yyyy')
+                    prevEconomicStart = "jul"+"-"+moment(selectedDate).subtract(2, "year").format('yyyy')
+                    prevEconomicEnd = "jul"+"-"+moment(selectedDate).subtract(1, "year").format('yyyy')
                 }else{
-                    prevEconomicStart = "jul"+"-"+moment().subtract(1, "year").format('yyyy')
-                    prevEconomicEnd = "jul"+"-"+moment().format('yyyy')
+                    prevEconomicStart = "jul"+"-"+moment(selectedDate).subtract(1, "year").format('yyyy')
+                    prevEconomicEnd = "jul"+"-"+moment(selectedDate).format('yyyy')
                 }
 
 
