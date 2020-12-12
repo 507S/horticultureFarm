@@ -327,6 +327,8 @@ module.exports.topSheet=async(req,res)=>{
 
 module.exports.topSheetFilter=async(req,res)=>{
     try{
+        const selectedDate = req.body.year.toLowerCase();
+        var data = []
         const cropCatg = await cropCategory.findAll({
             where: {
                 type: 'subCategory'
@@ -334,14 +336,31 @@ module.exports.topSheetFilter=async(req,res)=>{
         })
         if (req.body.center === "all"){
             const topSheets = await monthlyProgress.findAll()
-            res.render('pd/topSheet/topSheetTable', {records: topSheets , cropCatg:cropCatg} ,function(err, html) {
+            topSheets.map((monthlyProg) => {
+                const timeList = JSON.parse(monthlyProg.timeFrame)
+                timeList.map((eachTime) => {
+                    if (eachTime.time === selectedDate){
+                        data.push(monthlyProg);
+                    }
+                })
+            })
+
+            res.render('pd/topSheet/topSheetTable', {records: data , cropCatg:cropCatg} ,function(err, html) {
                 res.send(html);
             });
         }else{
             const topSheets = await monthlyProgress.findAll({
                 where: {center_id: req.body.center}
             })
-            res.render('pd/topSheet/topSheetTable', {records: topSheets , cropCatg:cropCatg} ,function(err, html) {
+            topSheets.map((monthlyProg) => {
+                const timeList = JSON.parse(monthlyProg.timeFrame)
+                timeList.map((eachTime) => {
+                    if (eachTime.time === selectedDate){
+                        data.push(monthlyProg);
+                    }
+                })
+            })
+            res.render('pd/topSheet/topSheetTable', {records: data , cropCatg:cropCatg} ,function(err, html) {
                 res.send(html);
             });
         }
