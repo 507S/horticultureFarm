@@ -143,13 +143,13 @@
                 })
 
                 // মজুদ ******
-                var currentMojudSum = 0;
-                const currMojud = JSON.parse(row.mojud)
-                currMojud.forEach(function(MojudCurrent){
-                    if ( MojudCurrent.time === selectedDate ) {
-                        currentMojudSum += parseInt(MojudCurrent.amount)
-                    }
-                })
+                // var currentMojudSum = 0;
+                // const currMojud = JSON.parse(row.mojud)
+                // currMojud.forEach(function(MojudCurrent){
+                //     if ( MojudCurrent.time === selectedDate ) {
+                //         currentMojudSum += parseInt(MojudCurrent.amount)
+                //     }
+                // })
 
                 // মন্তব্য *********
                 var montobboSum = "";
@@ -182,8 +182,7 @@
                 <td><%= new Number(currentDaeProdanSum + currentMritoSum).toLocaleString("bn-BD") %></td>
                 <td><%= new Number((currentProductionSum + previousMonthProduction + daePraptiSum + prevYearJer)-(currentDaeProdanSum + currentMritoSum)).toLocaleString("bn-BD") %></td>
                 <td><%= montobboSum %></td>
-                <td></td>
-<!--                <td><a class="btn btn-primary btn-xs" href="/center/monthlyProgressEdit/<%= row.id %>"><i class="fa fa-edit"></i></a></td>-->
+                <td><a class="btn btn-primary btn-xs" href="/center/monthlyProgressEdit/<%= row.id %>/<%= selectedDate %>"><i class="fa fa-edit"></i></a></td>
             </tr>
         <% }) %>
         </tbody>

@@ -327,17 +327,44 @@ module.exports.topSheet=async(req,res)=>{
 
 module.exports.topSheetFilter=async(req,res)=>{
     try{
+        const selectedDate = req.body.year.toLowerCase();
+        var data = []
         const cropCatg = await cropCategory.findAll({
             where: {
                 type: 'subCategory'
             }
         })
-        const topSheets = await monthlyProgress.findAll({
-            where: {center_id: req.body.center}
-        })
-        res.render('pd/topSheet/topSheetTable', {records: topSheets , cropCatg:cropCatg} ,function(err, html) {
-            res.send(html);
-        });
+        if (req.body.center === "all"){
+            const topSheets = await monthlyProgress.findAll()
+            topSheets.map((monthlyProg) => {
+                const timeList = JSON.parse(monthlyProg.timeFrame)
+                timeList.map((eachTime) => {
+                    if (eachTime.time === selectedDate){
+                        data.push(monthlyProg);
+                    }
+                })
+            })
+
+            res.render('pd/topSheet/topSheetTable', {records: data , cropCatg:cropCatg} ,function(err, html) {
+                res.send(html);
+            });
+        }else{
+            const topSheets = await monthlyProgress.findAll({
+                where: {center_id: req.body.center}
+            })
+            topSheets.map((monthlyProg) => {
+                const timeList = JSON.parse(monthlyProg.timeFrame)
+                timeList.map((eachTime) => {
+                    if (eachTime.time === selectedDate){
+                        data.push(monthlyProg);
+                    }
+                })
+            })
+            res.render('pd/topSheet/topSheetTable', {records: data , cropCatg:cropCatg} ,function(err, html) {
+                res.send(html);
+            });
+        }
+
     }
     catch (e) {
         console.log(e);
@@ -2240,84 +2267,194 @@ module.exports.monthlyProgressFilter=async(req,res)=>{
     try{
         const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
         const selectedDate = req.body.year.toLowerCase();
-        const monthlyProgressList = await monthlyProgress.findAll({ where: {center_id : req.body.center} });
         var data = [];
-        monthlyProgressList.map((monthlyProg) => {
-            const timeList = JSON.parse(monthlyProg.timeFrame)
-            timeList.map((eachTime) => {
-                if (eachTime.time === selectedDate){
-                    data.push(monthlyProg);
-                }
+        if (req.body.center === "all") {
+            const cropCatg = await cropCategory.findAll({where: {type: 'jat'} });
+            const allCropCatg = await cropCategory.findAll();
+            console.log("crop",cropCatg.length)
+            const monthlyProgressList = await monthlyProgress.findAll({ where: {pd_id: req.session.user_id} });
+            monthlyProgressList.map((monthlyProg) => {
+                const timeList = JSON.parse(monthlyProg.timeFrame)
+                timeList.map((eachTime) => {
+                    if (eachTime.time === selectedDate){
+                        data.push(monthlyProg);
+                    }
+                })
             })
-        })
+            res.render('pd/monthlyProgress/monthlyProgressCustomTable', {records: data,selectedDate:selectedDate,cropCatg:cropCatg,allCropCatg:allCropCatg} ,function(err, html) {
+                res.send(html);
+            });
+        }else{
+            const monthlyProgressList = await monthlyProgress.findAll({ where: {center_id : req.body.center, pd_id: req.session.user_id} });
+            monthlyProgressList.map((monthlyProg) => {
+                const timeList = JSON.parse(monthlyProg.timeFrame)
+                timeList.map((eachTime) => {
+                    if (eachTime.time === selectedDate){
+                        data.push(monthlyProg);
+                    }
+                })
+            })
 
-        res.render('pd/monthlyProgress/monthlyProgressTable', {records: data} ,function(err, html) {
-            res.send(html);
-        });
+            res.render('pd/monthlyProgress/monthlyProgressTable', {records: data,selectedDate:selectedDate} ,function(err, html) {
+                res.send(html);
+            });
+        }
+
     }
     catch (e) {
         console.log(e);
     }
 };
 
-module.exports.monthlyProgressForm=async(req,res)=>{
-    res.render('pd/monthlyProgress/monthlyProgressForm', { title: 'মাসিক প্রতিবেদন',msg:'' ,success:'',user_id: req.session.user_id});
-};
+module.exports.monthlyProgressEdit = async(req,res) => {
+    try{
+        const monthProgress = await monthlyProgress.findByPk(req.params.progressId);
+        const categoryList = await cropCategory.findAll();
+        res.render('pd/monthlyProgress/monthlyProgressFormEdit', { title: 'মাসিক প্রতিবেদন',msg:'' ,success:'',  categoryList: categoryList, monthProgress:monthProgress,editDate: req.params.editDate });
+    }catch (err) {
+        console.log(err)
+    }
+}
 
-module.exports.monthlyProgressFormPost=async(req,res)=>{
+module.exports.monthlyProgressUpdate = async(req,res) => {
     var category= req.body.category;
     var subCategory= req.body.subCategory;
     var biboron= req.body.biboron;
     var breed= req.body.breed;
     var productionTarget= req.body.productionTarget;
     var productionCurrent= req.body.productionCurrent;
-    var productionLast= req.body.productionLast;
-    var productionTotal= req.body.productionTotal;
     var daePrapti= req.body.daePrapti;
-    var lastYear= req.body.lastYear;
-    var grandTotalProduction= req.body.grandTotalProduction; 
-    var bitotonCurrentMonth= req.body.bitotonCurrentMonth;
-    var bitotonLastMonth= req.body.bitotonLastMonth;
-    var bitoronTotal= req.body.bitoronTotal;
+    var bitoronCurrentMonth= req.body.bitotonCurrentMonth;
     var daeProdan= req.body.daeProdan;
     var deadWriteup= req.body.deadWriteup;
-    var grandTotalBitoron= req.body.grandTotalBitoron;
-    var mojud= req.body.mojud;
     var comment= req.body.comment;
-    var year =req.body.year;
-    var user_id =req.body.user_id;
-console.log('productionTotal=',productionTotal);
-    await monthlyProgress.create({
-        category: category,
-        subCategory:subCategory,
-        biboron:biboron,
-        breed:breed,
-        productionTarget: productionTarget,
-        productionCurrent:productionCurrent,
-        productionLast:productionLast,
-        productionTotal: productionTotal,
-        daePrapti:daePrapti,
-        lastYear:lastYear,
-        grandTotalProduction: grandTotalProduction,
-        bitotonCurrentMonth:bitotonCurrentMonth,
-        bitotonLastMonth: bitotonLastMonth,
-        bitoronTotal:bitoronTotal,
-        daeProdan:daeProdan,
-        deadWriteup: deadWriteup,
-        grandTotalBitoron:grandTotalBitoron,
-        mojud:mojud,
-        comment: comment,
-        year:year,
-        center_id:user_id
+    var editDate = req.body.editDate.toLowerCase();
 
-        }).then(data => {
-            console.log('productionTotal=',productionTotal);
+
+    const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
+
+    const progress = await monthlyProgress.findByPk(req.params.progressId)
+
+    /////////
+    var startRange = "";
+    var endRange = "";
+    if ( res.locals.moment().format("M") < 7 ){
+        startRange = "jul"+"-"+res.locals.moment().subtract(1, "year").format('yyyy')
+        endRange = "jul"+"-"+res.locals.moment().format('yyyy')
+    }else{
+        startRange = "jul"+"-"+res.locals.moment().format('yyyy')
+        endRange = "jul"+"-"+res.locals.moment().add(1, "year").format('yyyy')
+    }
+
+
+    ///////// moment(currentMonth).isAfter(bitorTotal.startTime) &&  moment(currentMonth).isBefore(bitorTotal.endTime)
+    var productionTargetList = JSON.parse(progress.productionTarget);
+    productionTargetList.forEach((TargetTotal,index) => {
+        if ( res.locals.moment(editDate).isAfter(TargetTotal.startTime) &&  res.locals.moment(editDate).isBefore(TargetTotal.endTime) ) {
+            productionTargetList[index].amount = parseInt(productionTarget)
+        }
+    })
+
+    var currentProduction = JSON.parse(progress.productionCurrent);
+    currentProduction.forEach((prodCurrent,index) => {
+        if ( prodCurrent.time === editDate ) {
+            currentProduction[index].amount = parseInt(currentProduction[index].amount) + parseInt(productionCurrent)
+        }
+    })
+
+    var totalProduction = JSON.parse(progress.productionTotal);
+    totalProduction.forEach((prodTotal,index) => {
+        if ( res.locals.moment(editDate).isAfter(prodTotal.startTime) &&  res.locals.moment(editDate).isBefore(prodTotal.endTime) ) {
+            totalProduction[index].amount = parseInt(totalProduction[index].amount) + parseInt(productionCurrent)
+        }
+    })
+
+    var currentDaePraptis = JSON.parse(progress.daePrapti);
+    currentDaePraptis.forEach((daePraptiCurrent,index) => {
+        if ( daePraptiCurrent.time === editDate ) {
+            currentDaePraptis[index].amount = parseInt(currentDaePraptis[index].amount) + parseInt(daePrapti)
+        }
+    })
+
+    var currentBitoron = JSON.parse(progress.bitoronCurrentMonth);
+    currentBitoron.forEach((currentBitoronCurrent,index) => {
+        if ( currentBitoronCurrent.time === editDate ) {
+            currentBitoron[index].amount = parseInt(currentBitoron[index].amount) + parseInt(bitoronCurrentMonth)
+        }
+    })
+
+    var totalBitoron = JSON.parse(progress.bitoronTotal);
+    totalBitoron.forEach((bitoronTotal,index) => {
+        if ( res.locals.moment(editDate).isAfter(bitoronTotal.startTime) &&  res.locals.moment(editDate).isBefore(bitoronTotal.endTime) ) {
+            totalBitoron[index].amount = parseInt(totalBitoron[index].amount) + parseInt(bitoronCurrentMonth)
+        }
+    })
+
+    var currentDaeProdan = JSON.parse(progress.daeProdan);
+    currentDaeProdan.forEach((daeProdanCurrent,index) => {
+        if ( daeProdanCurrent.time === editDate ) {
+            currentDaeProdan[index].amount = parseInt(currentDaeProdan[index].amount) + parseInt(daeProdan)
+        }
+    })
+
+    var currentDeadWriteup = JSON.parse(progress.deadWriteup);
+    currentDeadWriteup.forEach((deadWriteupCurrent,index) => {
+        if ( deadWriteupCurrent.time === editDate ) {
+            currentDeadWriteup[index].amount = parseInt(currentDeadWriteup[index].amount) + parseInt(deadWriteup)
+        }
+    })
+
+    // var currentMojud = JSON.parse(progress.mojud);
+    // currentMojud.forEach((mojudCurrent,index) => {
+    //     if ( mojudCurrent.time === currentMonth ) {
+    //         currentMojud[index].amount = parseInt(currentMojud[index].amount) + parseInt(mojud)
+    //     }
+    // })
+
+    var currentComment = JSON.parse(progress.comment);
+    currentComment.forEach((commentCurrent,index) => {
+        if ( commentCurrent.time === editDate ) {
+            currentComment[index].msg = comment
+        }
+    })
+
+
+
+    const categoryName = await cropCategory.findByPk(category)
+    const subCategoryName = await cropCategory.findByPk(subCategory)
+    const biboronName = await cropCategory.findByPk(biboron)
+    const breedName = await cropCategory.findByPk(breed)
+
+    await monthlyProgress.update(
+        {
+            category: categoryName.name,
+            subCategory: subCategoryName.name,
+            biboron: biboronName.name,
+            breed: breedName.name,
+            productionTarget: JSON.stringify(productionTargetList),
+            productionCurrent: JSON.stringify(currentProduction),
+            productionTotal: JSON.stringify(totalProduction),
+            daePrapti: JSON.stringify(currentDaePraptis),
+            bitoronCurrentMonth: JSON.stringify(currentBitoron),
+            bitoronTotal: JSON.stringify(totalBitoron),
+            daeProdan: JSON.stringify(currentDaeProdan),
+            deadWriteup: JSON.stringify(currentDeadWriteup),
+            comment: JSON.stringify(currentComment),
+            // timeFrame: time,
+
+        },
+        {
+            where: {id: req.params.progressId}
+        }
+    )
+        .then(data => {
+            console.log('productionTotal=',data);
             res.redirect('/pd/monthlyProgress');
         }).catch(err => {
-            res.render('errorpage',err);
+            console.log("err",err);
         });
-  
-};
+
+}
 
 //monthlyProgress controller end
 

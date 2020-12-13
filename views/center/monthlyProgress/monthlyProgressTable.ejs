@@ -59,7 +59,7 @@
                 var previousMonthProduction = 0;
                 const currentProd = JSON.parse(row.productionCurrent)
                 currentProd.forEach(function(prodCurrent){
-                    if ( prodCurrent.time === moment().format("MMM-YYYY").toLowerCase() ) {
+                    if ( prodCurrent.time === currentMonth ) {
                         currentProductionSum += parseInt(prodCurrent.amount)
                     }
                     else if ( moment( prodCurrent.time ).isSameOrAfter(startRange) &&  moment( prodCurrent.time ).isSameOrBefore(endRange) ){
@@ -89,7 +89,7 @@
                 var daePraptiSum = 0;
                 const currentDaePrapti = JSON.parse(row.daePrapti)
                 currentDaePrapti.forEach(function(daePraptiCurrent){
-                    if ( daePraptiCurrent.time === moment().format("MMM-YYYY").toLowerCase() ) {
+                    if ( daePraptiCurrent.time === currentMonth ) {
                         daePraptiSum += parseInt(daePraptiCurrent.amount)
                     }
                 })
@@ -107,7 +107,7 @@
                 var previousMonthBitoronSum = 0;
                 const currBitoron = JSON.parse(row.bitoronCurrentMonth)
                 currBitoron.forEach(function(BitoCurrent){
-                    if ( BitoCurrent.time === moment().format("MMM-YYYY").toLowerCase() ) {
+                    if ( BitoCurrent.time === currentMonth ) {
                         currentBitoronSum += parseInt(BitoCurrent.amount)
                     }
                     else if ( moment( BitoCurrent.time ).isAfter(startRange) &&  moment( BitoCurrent.time ).isBefore(endRange) ){
@@ -128,7 +128,7 @@
                 var currentDaeProdanSum = 0;
                 const currDaeProdan = JSON.parse(row.daeProdan)
                 currDaeProdan.forEach(function(DaeProdanCurrent){
-                    if ( DaeProdanCurrent.time === moment().format("MMM-YYYY").toLowerCase() ) {
+                    if ( DaeProdanCurrent.time === currentMonth ) {
                         currentDaeProdanSum += parseInt(DaeProdanCurrent.amount)
                     }
                 })
@@ -137,7 +137,7 @@
                 var currentMritoSum = 0;
                 const currMrito = JSON.parse(row.deadWriteup)
                 currMrito.forEach(function(MritoCurrent){
-                    if ( MritoCurrent.time === moment().format("MMM-YYYY").toLowerCase() ) {
+                    if ( MritoCurrent.time === currentMonth ) {
                         currentMritoSum += parseInt(MritoCurrent.amount)
                     }
                 })
@@ -155,7 +155,7 @@
                 var montobboSum = "";
                 const currMontobbo = JSON.parse(row.comment)
                 currMontobbo.forEach(function(MontobboCurrent){
-                    if ( MontobboCurrent.time === moment().format("MMM-YYYY").toLowerCase() ) {
+                    if ( MontobboCurrent.time === currentMonth ) {
                         montobboSum = MontobboCurrent.msg
                     }
                 })
@@ -182,8 +182,7 @@
                 <td><%= new Number(currentDaeProdanSum + currentMritoSum).toLocaleString("bn-BD") %></td>
                 <td><%= new Number((totalProductionSum + daePraptiSum + prevYearJer) - (currentDaeProdanSum + currentMritoSum)).toLocaleString("bn-BD") %></td>
                 <td><%= montobboSum %></td>
-                <td></td>
-<!--                <td><a class="btn btn-primary btn-xs" href="/center/monthlyProgressEdit/<%= row.id %>"><i class="fa fa-edit"></i></a></td>-->
+                <td><a class="btn btn-primary btn-xs" href="/center/monthlyProgressEdit/<%= row.id %>/<%= currentMonth %>"><i class="fa fa-edit"></i></a></td>
             </tr>
         <% }) %>
     </tbody>

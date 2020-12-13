@@ -30,6 +30,7 @@
                                             <!--                                <label >Choose a Center:</label>-->
                                             <select id="center" name="center" class="form-control" required>
                                                 <option value="">Choose center</option>
+                                                <option value="all">সকল সেন্টার </option>
                                                 <% if (centers.length >0){ %>
                                                     <% centers.forEach(function (center) { %>
                                                         <option value="<%= center.id %>"><%= center.center %></option>

@@ -10,76 +10,76 @@
         <%- include('../../includes/sidebar')-%>
 
         <%
-            // উৎপাদন (লক্ষ্যমাত্রা) *********
-            var productionTargetSum = 0;
-            const TargetProduction = JSON.parse(monthProgress.productionTarget)
-            TargetProduction.forEach(function(prodTarget){
-                if ( moment(editDate).isAfter(prodTarget.startTime) &&  moment(editDate).isBefore(prodTarget.endTime) ){
-                    productionTargetSum += parseInt(prodTarget.amount)
-                }
-            })
+        // উৎপাদন (লক্ষ্যমাত্রা) *********
+        var productionTargetSum = 0;
+        const TargetProduction = JSON.parse(monthProgress.productionTarget)
+        TargetProduction.forEach(function(prodTarget){
+            if ( moment(editDate).isAfter(prodTarget.startTime) &&  moment(editDate).isBefore(prodTarget.endTime) ){
+                productionTargetSum += parseInt(prodTarget.amount)
+            }
+        })
 
-            //উৎপাদন (চলতি মাস)
-            var currentProductionSum = 0;
-            const currentProd = JSON.parse(monthProgress.productionCurrent)
-            currentProd.forEach(function(prodCurrent){
-                if ( prodCurrent.time === editDate ) {
-                    currentProductionSum += parseInt(prodCurrent.amount)
-                }
-            })
+        //উৎপাদন (চলতি মাস)
+        var currentProductionSum = 0;
+        const currentProd = JSON.parse(monthProgress.productionCurrent)
+        currentProd.forEach(function(prodCurrent){
+            if ( prodCurrent.time === editDate ) {
+                currentProductionSum += parseInt(prodCurrent.amount)
+            }
+        })
 
-            //ডিএই চালানে প্রাপ্তি (চলতি মাস)
-            var daePraptiSum = 0;
-            const currentDaePrapti = JSON.parse(monthProgress.daePrapti)
-            currentDaePrapti.forEach(function(daePraptiCurrent){
-                if ( daePraptiCurrent.time === editDate ) {
-                    daePraptiSum += parseInt(daePraptiCurrent.amount)
-                }
-            })
+        //ডিএই চালানে প্রাপ্তি (চলতি মাস)
+        var daePraptiSum = 0;
+        const currentDaePrapti = JSON.parse(monthProgress.daePrapti)
+        currentDaePrapti.forEach(function(daePraptiCurrent){
+            if ( daePraptiCurrent.time === editDate ) {
+                daePraptiSum += parseInt(daePraptiCurrent.amount)
+            }
+        })
 
-            // বিতরণ (চলতি মাস)
-            var currentBitoronSum = 0;
-            const currBitoron = JSON.parse(monthProgress.bitoronCurrentMonth)
-            currBitoron.forEach(function(BitoCurrent){
-                if ( BitoCurrent.time === editDate ) {
-                    currentBitoronSum += parseInt(BitoCurrent.amount)
-                }
-            })
+        // বিতরণ (চলতি মাস)
+        var currentBitoronSum = 0;
+        const currBitoron = JSON.parse(monthProgress.bitoronCurrentMonth)
+        currBitoron.forEach(function(BitoCurrent){
+            if ( BitoCurrent.time === editDate ) {
+                currentBitoronSum += parseInt(BitoCurrent.amount)
+            }
+        })
 
-            // ডিএই চালানে প্রদান (চলতি মাস)
-            var currentDaeProdanSum = 0;
-            const currDaeProdan = JSON.parse(monthProgress.daeProdan)
-            currDaeProdan.forEach(function(DaeProdanCurrent){
-                if ( DaeProdanCurrent.time === editDate ) {
-                    currentDaeProdanSum += parseInt(DaeProdanCurrent.amount)
-                }
-            })
+        // ডিএই চালানে প্রদান (চলতি মাস)
+        var currentDaeProdanSum = 0;
+        const currDaeProdan = JSON.parse(monthProgress.daeProdan)
+        currDaeProdan.forEach(function(DaeProdanCurrent){
+            if ( DaeProdanCurrent.time === editDate ) {
+                currentDaeProdanSum += parseInt(DaeProdanCurrent.amount)
+            }
+        })
 
-            // মৃত/বিনষ্ট রাইটআপ (চলতি মাস)
-            var currentMritoSum = 0;
-            const currMrito = JSON.parse(monthProgress.deadWriteup)
-            currMrito.forEach(function(MritoCurrent){
-                if ( MritoCurrent.time === editDate ) {
-                    currentMritoSum += parseInt(MritoCurrent.amount)
-                }
-            })
+        // মৃত/বিনষ্ট রাইটআপ (চলতি মাস)
+        var currentMritoSum = 0;
+        const currMrito = JSON.parse(monthProgress.deadWriteup)
+        currMrito.forEach(function(MritoCurrent){
+            if ( MritoCurrent.time === editDate ) {
+                currentMritoSum += parseInt(MritoCurrent.amount)
+            }
+        })
 
-            // মজুদ ******
-            // var currentMojudSum = 0;
-            // const currMojud = JSON.parse(monthProgress.mojud)
-            // currMojud.forEach(function(MojudCurrent){
-            //     if ( MojudCurrent.time === moment().format("MMM-YYYY").toLowerCase() ) {
-            //         currentMojudSum += parseInt(MojudCurrent.amount)
-            //     }
-            // })
+        // মজুদ ******
+        // var currentMojudSum = 0;
+        // const currMojud = JSON.parse(monthProgress.mojud)
+        // currMojud.forEach(function(MojudCurrent){
+        //     if ( MojudCurrent.time === moment().format("MMM-YYYY").toLowerCase() ) {
+        //         currentMojudSum += parseInt(MojudCurrent.amount)
+        //     }
+        // })
 
-            var montobboSum = "";
-            const currMontobbo = JSON.parse(monthProgress.comment)
-            currMontobbo.forEach(function(MontobboCurrent){
-                if ( MontobboCurrent.time === editDate ) {
-                    montobboSum = MontobboCurrent.msg
-                }
-            })
+        var montobboSum = "";
+        const currMontobbo = JSON.parse(monthProgress.comment)
+        currMontobbo.forEach(function(MontobboCurrent){
+            if ( MontobboCurrent.time === editDate ) {
+                montobboSum = MontobboCurrent.msg
+            }
+        })
 
 
         %>
@@ -100,7 +100,7 @@
                                 </p>
                             </div>
                             <div class="panel-body" >
-                                <form action="/center/monthlyProgressUpdate/<%=monthProgress.id%>" id="FieldTrialForm" class="form-horizontal" method="post"  role="form">
+                                <form action="/pd/monthlyProgressUpdate/<%=monthProgress.id%>" id="FieldTrialForm" class="form-horizontal" method="post"  role="form">
                                     <div id="signupalert" style="display:none" class="alert alert-danger">
                                         <p>Error:</p>
                                         <span></span>
@@ -163,7 +163,7 @@
                                     <div class="form-row mt-3">
                                         <div class="col">
                                             <label for="productionTarget" class="col-md-3 control-label">উৎপাদন (লক্ষ্যমাত্রা)</label>
-                                            <input type="text" readonly class="form-control" name="productionTarget" placeholder="উৎপাদন (লক্ষ্যমাত্রা)" value="<%= productionTargetSum %>">
+                                            <input type="text" class="form-control" name="productionTarget" placeholder="উৎপাদন (লক্ষ্যমাত্রা)" value="<%= productionTargetSum %>">
                                         </div>
                                     </div>
 
@@ -241,9 +241,6 @@
 
                                             <input type="hidden" name="editDate" readonly class="date-picker form-control" id="startDate" value="<%= editDate %>" />
                                         </div>
-
-
-
 
                                     </div>
 
