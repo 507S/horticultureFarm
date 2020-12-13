@@ -2272,6 +2272,7 @@ module.exports.monthlyProgressFilter=async(req,res)=>{
             const allCropCatg = await cropCategory.findAll();
             console.log("crop",cropCatg.length)
             const monthlyProgressList = await monthlyProgress.findAll({ where: {pd_id: req.session.user_id} });
+            console.log("monthlyprogressList1",monthlyProgressList)
             monthlyProgressList.map((monthlyProg) => {
                 const timeList = JSON.parse(monthlyProg.timeFrame)
                 timeList.map((eachTime) => {
@@ -2284,7 +2285,10 @@ module.exports.monthlyProgressFilter=async(req,res)=>{
                 res.send(html);
             });
         }else{
+            console.log("center_id",req.body.center)
+            console.log("center_id",req.session.user_id)
             const monthlyProgressList = await monthlyProgress.findAll({ where: {center_id : req.body.center, pd_id: req.session.user_id} });
+            console.log("monthlyprogressList",monthlyProgressList)
             monthlyProgressList.map((monthlyProg) => {
                 const timeList = JSON.parse(monthlyProg.timeFrame)
                 timeList.map((eachTime) => {
@@ -2301,7 +2305,7 @@ module.exports.monthlyProgressFilter=async(req,res)=>{
 
     }
     catch (e) {
-        console.log(e);
+        console.log(" mpl",e);
     }
 };
 
