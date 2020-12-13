@@ -128,8 +128,10 @@
         });
     });
 
-    $( "#content-wrapper" ).load( "no url rn",function() {
-        var year = $('.year').val();
+    $( "#wrapper" ).load( "no url rn",function() {
+        var year = moment().format("MMM-YYYY");
+        $('#startDate').val(year)
+
         var center = 0;
         $.ajax({
             type: "POST",
