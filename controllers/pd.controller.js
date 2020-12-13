@@ -58,7 +58,6 @@ module.exports.charaKolomFixed=async(req,res)=>{
 };
 module.exports.pdlogin=async(req,res)=>{
     res.render('pd/login', { title: 'Horticulture Wing Center Management Software',msg:'' });
-    res.send("log");
 };
 
 module.exports.pdloginpost=async(req,res)=>{
