@@ -10,7 +10,7 @@ const {fetchMaan,fetchWork,fetchShuchok,fetchEkok,fetchShuchokMaan,expenseAddPos
     rajosshoFormPost,expense,expenseYear,expenseForm,expenseFormPost,chak1,chak1Year,chak1Form,chak1FormPost,chak2,chak2Year,chak2Form,
     chak2FormPost,revolvingFund,revolvingFundYear,revolvingFundForm,revolvingFundFormPost,specialCoconut,specialCoconutYear,specialCoconutForm,
     specialCoconutFormPost,loan,loanYear,loanForm,loanFormPost,apa,apaYear,apaForm,apaFormPost,allcenter,centerlogin,centerloginpost,
-    centerDashboard,topSheet,topSheetYear,topSheetForm,topSheetFormPost,center,centerEdit,centerEditPost,centerDelete,charaKolom,charaKolomYear,charaKolomForm,
+    centerDashboard,topSheet,topSheetYear,center,centerEdit,centerEditPost,centerDelete,charaKolom,charaKolomYear,charaKolomForm,
     charaKolomFormPost,folMosholla,folMoshollaYear,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegYear,winterVegForm,fetchPodobiList,
     winterVegFormPost,summerVeg,summerVegYear,summerVegForm,summerVegFormPost,otherFlower,otherFlowerYear,otherFlowerForm,otherFlowerFormPost,
     seasonalFlower,seasonalFlowerYear,seasonalFlowerForm,seasonalFlowerFormPost,workerInfo,workerInfoYear,workerInfoForm,workerInfoFormPost,
@@ -28,8 +28,6 @@ router.post('/signups',centersignuppost);
 
 router.get('/topSheet',topSheet);
 router.post('/topSheetYear',topSheetYear);
-router.get('/topSheetForm',topSheetForm);
-router.post('/topSheetForms',topSheetFormPost);
 
 router.get('/center',center);
 router.get('/centerEdit/:id',centerEdit);
