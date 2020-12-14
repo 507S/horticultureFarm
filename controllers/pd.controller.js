@@ -1,7 +1,6 @@
 const db=require('../models');
 const center = db.center;
 const pd = db.pd;
-const topSheet = db.topSheet;
 const charaKolom = db.charaKolom;
 const folMosholla = db.folMosholla;
 const otherFlower = db.otherFlower;
@@ -319,9 +318,6 @@ module.exports.topSheet=async(req,res)=>{
         console.log("outside");
         res.render('pd/topSheet/topSheet', { title: 'টপশীট',success:'', records: err });
     })
-     
-    //  records:result
-
 };
 
 module.exports.topSheetFilter=async(req,res)=>{
@@ -371,35 +367,6 @@ module.exports.topSheetFilter=async(req,res)=>{
 
 };
 
-module.exports.topSheetForm=async(req,res)=>{
-    res.render('pd/topSheet/topSheetForm', { title: 'টপশীট',msg:'' ,success:'',user_id: req.session.user_id});
-};
-
-module.exports.topSheetFormPost=async(req,res)=>{
-    var item= req.body.item;
-    var target= req.body.target;
-    var lproduction= req.body.lproduction;
-    var cproduction= req.body.cproduction;
-    var tproduction= req.body.tproduction;
-    var year =req.body.year;
-    var user_id =req.body.user_id;
-
-    await topSheet.create({
-        item: item,
-        target:target,
-        lproduction:lproduction,
-        cproduction:cproduction,
-        tproduction:tproduction,
-        year:year,
-        center_id:user_id
-
-        }).then(data => {
-            res.redirect('/pd/topSheet');
-        }).catch(err => {
-            res.render('errorpage',err);
-        });
-  
-};
 //topSheet controller end
 
 //center controller
