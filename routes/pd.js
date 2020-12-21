@@ -4,8 +4,8 @@ const router = express.Router();
 const app=express();
 
 const {apaUddessho,apaMaan,karjokrom,suchok,ekok,suchokMaan,newKhorochCode,newRajosshoCode,addMainCategory,centerDelete,centerEdit,centerEditPost,
-    addSubcategory,addBiboron,addJaat,monthlyProgress,monthlyProgressFilter,expenseEdit,expenseEditPost,expenseDelete,
-    charaKolomFixed,pdsignup,pdsignuppost,rajossho,rajosshoFilter,rajosshoForm,rajosshoFormPost,newRajosshoCodeTable,
+    addSubcategory,addBiboron,addJaat,monthlyProgress,monthlyProgressFilter,expenseEdit,expenseEditPost,expenseDelete,centerPasswordEdit,centerPasswordEditPost,
+    charaKolomFixed,pdsignup,pdsignuppost,rajossho,rajosshoFilter,rajosshoForm,rajosshoFormPost,newRajosshoCodeTable,adminInfo,adminInfoEdit,adminInfoEditPost,
     newRajosshoCodeTableEdit,newRajosshoCodeTableDelete,newRajosshoCodeTableEditPost,expense,expenseFilter,newKhorochTable,newKhorochTableEdit,newKhorochTableEditPost,newKhorochTableDelete,
     expenseForm,expenseFormPost,chak1,chak1Filter,chak1Form,chak1FormPost,chak2,chak2Filter,chak2Form,chak2FormPost,revolvingFund,
     revolvingFundFilter,revolvingFundForm,revolvingFundFormPost,specialCoconut,specialCoconutFilter,specialCoconutForm,rajosshoEdit,rajosshoEditPost,rajosshoDelete,
@@ -42,8 +42,12 @@ router.post('/centerYear',centerYear);
 router.get('/centerEdit/:id',centerEdit);
 router.post('/centerEditPost/:id',centerEditPost);
 router.get('/centerDelete/:id',centerDelete);
-// router.get('/centerForm',centerForm);
-// router.post('/centerForms',centerFormPost);
+router.get('/centerPasswordEdit/:id',centerPasswordEdit);
+router.post('/centerPasswordEditPost/:id',centerPasswordEditPost);
+
+router.get('/adminInfo',adminInfo);
+router.get('/adminInfoEdit/:id',adminInfoEdit);
+router.post('/adminInfoEditPost/:id',adminInfoEditPost);
 
 router.get('/charaKolom',charaKolom);
 router.post('/charaKolomYear',charaKolomYear);
