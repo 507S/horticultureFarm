@@ -2374,7 +2374,7 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
 
     }).then(data => {
         console.log('productionTotal=',productionTotal);
-        res.redirect('/center/monthlyProgress');
+        res.redirect('/center/monthlyProgressForm');
     }).catch(err => {
         console.log("err",err);
         res.render('errorpage',err);
