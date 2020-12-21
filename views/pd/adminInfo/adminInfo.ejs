@@ -18,29 +18,15 @@
                             <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
                             <thead>
                             <tr>
-                                <th>সেন্টারের নাম</th>
-                                <th>সেন্টারের ইউজার নাম</th>
-                                <th>কর্মকর্তার নাম</th>
-                                <th>পদবী</th>
-                                <th>মোবাইল নং</th>
-                                <th>ই-মেইল</th>
-                                <th>পরিবর্তন/মুছুন</th>
+                                <th>এডমিন ইউজার নাম</th>
                                 <th>ইউজার আইডি ও পাসওয়ার্ড পরিবর্তন</th>
                             </tr>
                             </thead>
                             <tbody>
                                 <% records.forEach(function(row){ %>
                                     <tr>
-                                        <td><%= row.center %></td>
                                         <td><%= row.uname %></td>
-                                        <td><%= row.kormokorta %></td>
-                                        <td><%= row.podobi %></td>
-                                        <td><%= row.mobile %></td>
-                                        <td><%= row.email %></td>
-                                        <td><a class="btn btn-primary btn-xs" href="/pd/centerEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
-                                            <a class="btn btn-danger btn-xs" href="/pd/centerDelete/<%= row.id %>"><i class="fa fa-trash"></i></a>
-                                        </td> 
-                                        <td><a class="btn btn-primary btn-xs" href="/pd/centerPasswordEdit/<%= row.id %>"><i class="fa fa-wrench"></i></a>
+                                        <td><a class="btn btn-primary btn-xs" href="/pd/adminInfoEdit/<%= row.id %>"><i class="fa fa-wrench"></i></a>
                                         </td> 
                                        
                                     </tr>
@@ -51,13 +37,8 @@
                             <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
                                 <thead>
                                 <tr>
-                                    <th>সেন্টারের নাম</th>
-                                    <th>সেন্টারের ইউজার নাম</th>
-                                    <th>কর্মকর্তার নাম</th>
-                                    <th>পদবী</th>
-                                    <th>মোবাইল নং</th>
-                                    <th>ই-মেইল</th>
-                                    <th>ইউজার আইডি ও পাসওয়ার্ড পরিবর্তন</th>
+                                    <th>এডমিন ইউজার নাম</th>
+                                <th>ইউজার আইডি ও পাসওয়ার্ড পরিবর্তন</th>
                                 </tr>
                                 </thead>
                                 <tbody>

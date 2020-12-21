@@ -441,45 +441,78 @@ module.exports.centerDelete=async(req,res)=>{
     }
     
 };
+module.exports.centerPasswordEdit=async(req,res)=>{
+    await center.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('pd/centerInfo/centerPasswordEdit', { title: 'সেন্টারের যোগাযোগ তথ্য ফর্ম',msg:'' ,success:'',records: data});
+    })
+    .catch(err => {
+        console.log("outside");
+        res.render('pd/centerInfo/centerPasswordEdit', { title: 'সেন্টারের যোগাযোগ তথ্য ফর্ম',success:'', records: err });
+    })
+};
+module.exports.centerPasswordEditPost=async(req,res)=>{
+    var password = req.body.password;
+    var uname = req.body.uname;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await center.update({ 
+        uname:uname,
+        password:hashedPassword
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        console.log("data",data);
+        res.redirect('/pd/center');
+    }).catch(err => {
+        console.log(err);
+    });
+};
+//adminInfo controller
+module.exports.adminInfo=async(req,res)=>{
+    await pd.findAll()
+    .then(data => {
+        console.log("inside");
+        res.render('pd/adminInfo/adminInfo', { title: 'সেন্ট্রাল এডমিন তথ্য',success:'', records: data });
+    })
+    .catch(err => {
+        console.log(err);
+        res.render('pd/adminInfo/adminInfo', { title: 'সেন্ট্রাল এডমিন তথ্য ফর্ম',success:'', records: err });
+    })
+     
+    //  records:result
 
-// module.exports.centerForm=async(req,res)=>{
-
-
-//     res.render('pd/centerinfo/centerForm', { title: 'সেন্টারের যোগাযোগ তথ্য',msg:'' ,success:'',user_id: req.session.user_id});
-// };
-
-// module.exports.centerFormPost=async(req,res)=>{
-//     var center= req.body.center;
-//     var kormokorta= req.body.kormokorta;
-//     var podobi= req.body.podobi;
-//     var mobile= req.body.mobile;
-//     var email= req.body.email;
-//     var year =req.body.year;
-//     var user_id =req.body.user_id;
-
-//     await centerInfo.create({
-//         center: center,
-//         kormokorta:kormokorta,
-//         podobi:podobi,
-//         mobile:mobile,
-//         email:email,
-//         year:year,
-//         center_id:user_id
-
-//         }).then(data => {
-//             res.redirect('/pd/center');
-//         }).catch(err => {
-//             res.render('errorpage',err);
-//         });
-  
-// };
-
-
+};
+module.exports.adminInfoEdit=async(req,res)=>{
+    await pd.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('pd/adminInfo/adminInfoEdit', { title: 'সেন্ট্রাল এডমিন তথ্য ফর্ম',msg:'' ,success:'',records: data});
+    })
+    .catch(err => {
+        console.log("outside");
+        res.render('pd/adminInfo/adminInfoEdit', { title: 'সেন্ট্রাল এডমিন তথ্য ফর্ম',success:'', records: err });
+    })
+};
+module.exports.adminInfoEditPost=async(req,res)=>{
+    var password = req.body.password;
+    var uname = req.body.uname;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await pd.update({ 
+        uname:uname,
+        password:hashedPassword
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        res.redirect('/pd/adminInfo');
+    }).catch(err => {
+        console.log(err);
+    });
+};
 
 //charaKolom controller
-
-//charaKolom controller 
-
 module.exports.charaKolom=async(req,res)=>{
     await charaKolom.findAll()
     .then(data => {
