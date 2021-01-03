@@ -4,7 +4,7 @@ const router = express.Router();
 const app=express();
 
 
-const {fetchMaan,fetchWork,fetchShuchok,fetchEkok,fetchShuchokMaan,expenseAddPost,expenseAdd,fetchExpenseCode,rajosshoAdd,rajosshoAddPost,
+const {fetchMaan,fetchWork,fetchShuchok,fetchEkok,fetchShuchokMaan,expenseAddPost,expenseAdd,fetchExpenseCode,rajosshoAdd,rajosshoAddPost,allCenterInfo,
     fetchRajosshoCode,generatePdfMonthlyProgress,monthlyProgressEdit,monthlyProgressUpdate,monthlyProgress,monthlyProgressYear,
     monthlyProgressForm,monthlyProgressFormPost,charaKolomFixed,centersignup,centersignuppost,rajossho,rajosshoYear,rajosshoForm,
     rajosshoFormPost,expense,expenseYear,expenseForm,expenseFormPost,chak1,chak1Year,chak1Form,chak1FormPost,chak2,chak2Year,chak2Form,
@@ -18,6 +18,7 @@ const {fetchMaan,fetchWork,fetchShuchok,fetchEkok,fetchShuchokMaan,expenseAddPos
 
 
 router.get('/',allcenter);
+router.get('/allCenterInfo',allCenterInfo);
 router.get('/charaKolomFixed',charaKolomFixed);
 router.get('/login',centerlogin);
 router.post('/logins',centerloginpost);

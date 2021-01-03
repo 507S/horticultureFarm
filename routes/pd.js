@@ -7,12 +7,12 @@ const {apaUddessho,apaMaan,karjokrom,suchok,ekok,suchokMaan,newKhorochCode,newRa
     addSubcategory,addBiboron,addJaat,monthlyProgress,monthlyProgressFilter,expenseEdit,expenseEditPost,expenseDelete,centerPasswordEdit,centerPasswordEditPost,
     charaKolomFixed,pdsignup,pdsignuppost,rajossho,rajosshoFilter,rajosshoForm,rajosshoFormPost,newRajosshoCodeTable,adminInfo,adminInfoEdit,adminInfoEditPost,
     newRajosshoCodeTableEdit,newRajosshoCodeTableDelete,newRajosshoCodeTableEditPost,expense,expenseFilter,newKhorochTable,newKhorochTableEdit,newKhorochTableEditPost,newKhorochTableDelete,
-    expenseForm,expenseFormPost,chak1,chak1Filter,chak1Form,chak1FormPost,chak2,chak2Filter,chak2Form,chak2FormPost,revolvingFund,
+    expenseForm,expenseFormPost,chak1,chak1Filter,chak1Form,chak1FormPost,chak2,chak2Filter,chak2Form,chak2FormPost,revolvingFund,newKhorochCodeForm,
     revolvingFundFilter,revolvingFundForm,revolvingFundFormPost,specialCoconut,specialCoconutFilter,specialCoconutForm,rajosshoEdit,rajosshoEditPost,rajosshoDelete,
-    specialCoconutFormPost,loan,loanFilter,loanForm,loanFormPost,apa,apaFilter,apaYear,apaForm,apaFormPost,allcenter,pdlogin,
+    specialCoconutFormPost,loan,loanFilter,loanForm,loanFormPost,apa,apaFilter,apaYear,apaForm,apaFormPost,allcenter,pdlogin,newRajosshoCodeForm,
     pdloginpost,pdDashboard,topSheet,topSheetFilter,center,centerYear,newPodobiTable,newPodobiEdit,newPodobiEditPost,newPodobiDelete,newPodobi,
     charaKolomEdit,charaKolomEditPost,charaKolomDelete,winterVegEdit,winterVegEditPost,winterVegDelete,summerVegEdit,summerVegEditPost,summerVegDelete,
-    otherFlowerEdit,otherFlowerEditPost,otherFlowerDelete,seasonalFlowerEdit,seasonalFlowerEditPost,seasonalFlowerDelete,
+    otherFlowerEdit,otherFlowerEditPost,otherFlowerDelete,seasonalFlowerEdit,seasonalFlowerEditPost,seasonalFlowerDelete,podobiListForm,
     charaKolom,charaKolomYear,folMoshollaEdit,folMoshollaEditPost,folMoshollaDelete,newcropCategoryList,newcropCategoryListPost,newcropCategoryListEdit,
     charaKolomForm,charaKolomFormPost,folMosholla,folMoshollaYear,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegYear,winterVegForm,
     winterVegFormPost,summerVeg,summerVegYear,summerVegForm,summerVegFormPost,otherFlower,otherFlowerYear,otherFlowerForm,otherFlowerFormPost,
@@ -104,6 +104,7 @@ router.get('/workerInfoForm',workerInfoForm);
 router.post('/workerInfoForms',workerInfoFormPost);
 router.post('/newPodobi',newPodobi);
 router.get('/newPodobiTable',newPodobiTable);
+router.get('/podobiListForm',podobiListForm);
 router.get('/newPodobiEdit/:id',newPodobiEdit);
 router.post('/newPodobiEditPost/:id',newPodobiEditPost);
 router.get('/newPodobiDelete/:id',newPodobiDelete);
@@ -157,6 +158,7 @@ router.get('/rajosshoEdit/:id',rajosshoEdit);
 router.post('/rajosshoEditPost/:id',rajosshoEditPost);
 router.get('/rajosshoDelete/:id',rajosshoDelete);
 router.get('/newRajosshoCodeTable',newRajosshoCodeTable);
+router.get('/newRajosshoCodeForm',newRajosshoCodeForm);
 router.post('/newRajosshoCode',newRajosshoCode);
 router.get('/newRajosshoCodeTableEdit/:id',newRajosshoCodeTableEdit);
 router.post('/newRajosshoCodeTableEditPost/:id',newRajosshoCodeTableEditPost);
@@ -172,6 +174,7 @@ router.post('/expenseEditPost/:id',expenseEditPost);
 router.get('/expenseDelete/:id',expenseDelete);
 router.post('/newKhorochCode',newKhorochCode);
 router.get('/newKhorochTable',newKhorochTable);
+router.get('/newKhorochCodeForm',newKhorochCodeForm);
 router.get('/newKhorochTableEdit/:id',newKhorochTableEdit);
 router.post('/newKhorochTableEditPost/:id',newKhorochTableEditPost);
 router.get('/newKhorochTableDelete/:id',newKhorochTableDelete);

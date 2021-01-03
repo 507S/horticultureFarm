@@ -188,6 +188,17 @@ module.exports.centerDashboard = async(req,res) => {
         console.log(e)
     }
 };
+module.exports.allCenterInfo=async(req,res)=>{
+    await center.findAll()
+    .then(data => {
+        console.log(data);
+        res.render('allCenterInfo', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: data });
+    })
+    .catch(err => {
+        console.log("outside");
+        res.render('allCenterInfo', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: err });
+    })
+};
 
 //signUp controller
 module.exports.centersignup=async(req,res)=>{
