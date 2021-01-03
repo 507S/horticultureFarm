@@ -252,97 +252,9 @@
                             </div>
                         </div>
 
-                        <div class="card">
-                            <div class="card-body">
-                                <form action="/pd/newRajosshoCode" id="newRajosshoCode" class="form-horizontal" method="post"  role="form">
-                                <div class="form-row">
-                                        <label for="newRajosshoCode" class="col-md-1 control-label"> রাজস্বের নতুন আর্থিক কোড :</label>
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control" name="newRajosshoCode" placeholder="রাজস্বের নতুন আর্থিক কোড :">
-                                        </div>
-                                        <label for="newUpokhat" class="col-md-1 control-label"> রাজস্বের নতুন উপখাতের নাম :</label>
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control" name="newUpokhat" placeholder="রাজস্বের নতুন উপখাতের নাম :">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="submit" name="submit" value=" যোগ করুন" class="btn btn-primary">   
-                                        </div>
-                                </div>
-                            </form>
-                            <div class="col">
-                                            <% rajosshoCodes.forEach((row) => {
-                                            
-                                            %>
-                                                <span style="margin-right: 2px"> <%= row.upokhat %> </span> |
-                                            <%
-                                            
-                                            })
-                                            %>
-                                        </div>
-                            </div>
-                            </div>
-                        </div>
+                        
 
-                        <div class="card">
-                            <div class="card-body">
-                                <form action="/pd/newKhorochCode"  id="newKhorochCode" class="form-horizontal" method="post"  role="form">
-                                <div class="form-row">
-                                        <label for="newKhorochCode" class="col-md-1 control-label"> খরচের নতুন আর্থিক কোড :</label>
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control" name="newKhorochCode" placeholder="খরচের নতুন আর্থিক কোড :">
-                                        </div>
-                                        <label for="newkhat" class="col-md-1 control-label"> নতুন খাতের নাম :</label>
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control" name="newkhat" placeholder="নতুন খাতের নাম :">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="submit" name="submit" value="যোগ করুন" class="btn btn-primary">   
-                                        </div>
-                                </div>
-                            </form>
-                            <div class="col">
-                                            <% expenseCodes.forEach((row) => {
-                                            
-                                            %>
-                                                <span style="margin-right: 2px"> <%= row.khat %> </span> |
-                                            <%
-                                            
-                                            })
-                                            %>
-                                        </div>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-body">
-                                <form action="/pd/newPodobi" id="newPodobi" class="form-horizontal" method="post"  role="form">
-                                <div class="form-row">
-                                        <label for="podobi" class="col-md-1 control-label">পদবী :</label>
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control" name="podobi" placeholder="পদবী :">
-                                        </div>
-                                        <label for="grade" class="col-md-1 control-label"> গ্রেড :</label>
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control" name="grade" placeholder="গ্রেড :">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="submit" name="submit" value=" যোগ করুন" class="btn btn-primary">   
-                                        </div>
-                                </div>
-                            </form>
-                            <div class="col">
-                                            <% podobiLists.forEach((row) => {
-                                            
-                                            %>
-                                                <span style="margin-right: 2px"> <%= row.podobi %> </span> |
-                                            <%
-                                            
-                                            })
-                                            %>
-                                        </div>
-                            </div>
-                            </div>
-                        </div>
+                       
 
                         <div class="card">
                             <div class="card-body">

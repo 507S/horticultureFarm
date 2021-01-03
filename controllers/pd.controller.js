@@ -1187,6 +1187,10 @@ module.exports.newPodobiEdit=async(req,res)=>{
         res.render('pd/newPodobi/podobiListEdit', { title: 'কর্মকর্তা কর্মচারীদের পদবী ও গ্রেডের তালিকা',success:'', records: err });
     })
 };
+module.exports.podobiListForm=async(req,res)=>{
+        res.render('pd/newPodobi/podobiListForm', { title: 'কর্মকর্তা কর্মচারীদের পদবী ও গ্রেডের তালিকা ফর্ম',msg:'' ,success:''});
+
+};
 module.exports.newPodobiEditPost=async(req,res)=>{
     var podobi = req.body.podobi;
     var grade= req.body.grade;
@@ -1949,7 +1953,10 @@ module.exports.newRajosshoCodeTable=async(req,res)=>{
     })
      
     //  records:result
-
+    
+};
+module.exports.newRajosshoCodeForm=async(req,res)=>{
+        res.render('pd/rajossho/newRajosshoCodeForm', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির কোডসমূহ',msg:'' ,success:''});
 };
 module.exports.newRajosshoCodeTableEdit=async(req,res)=>{
     await rajosshoCode.findByPk(req.params.id)
@@ -1984,7 +1991,7 @@ module.exports.newRajosshoCodeTableDelete=async(req,res)=>{
         res.redirect("/pd/newRajosshoCodeTable");
     }
     catch{
-        res.render('errorpage',err);
+        console.log(err);
     }
     
 };
@@ -2204,6 +2211,9 @@ module.exports.newKhorochTable=async(req,res)=>{
      
     //  records:result
 
+};
+module.exports.newKhorochCodeForm=async(req,res)=>{
+        res.render('pd/expense/newKhorochCodeForm', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণীর কোডসমূহ',msg:'' ,success:'',});
 };
 module.exports.newKhorochTableEdit=async(req,res)=>{
     await expenseCode.findByPk(req.params.id)
@@ -2463,13 +2473,13 @@ module.exports.monthlyProgressUpdate = async(req,res) => {
 
 //newRajosshoCode
 module.exports.newRajosshoCode=async(req,res)=>{
-    var code= req.body.newRajosshoCode;
-    var upokhat= req.body.newUpokhat;
+    var code= req.body.code;
+    var upokhat= req.body.upokhat;
     await rajosshoCode.create({
         code: code,
         upokhat:upokhat
         }).then(data => {
-            res.redirect('/pd/dashboard');
+            res.redirect('/pd/newRajosshoCodeTable');
         }).catch(err => {
             res.render('errorpage',err);
         });
@@ -2479,13 +2489,13 @@ module.exports.newRajosshoCode=async(req,res)=>{
 
 //newKhorochCode
 module.exports.newKhorochCode=async(req,res)=>{
-    var code= req.body.newKhorochCode;
-    var khat= req.body.newkhat;
+    var code= req.body.code;
+    var khat= req.body.khat;
     await expenseCode.create({
         code: code,
         khat:khat
         }).then(data => {
-            res.redirect('/pd/dashboard');
+            res.redirect('/pd/newKhorochTable');
         }).catch(err => {
             res.render('errorpage',err);
         });
@@ -2500,7 +2510,7 @@ module.exports.newPodobi=async(req,res)=>{
         podobi: podobi,
         grade:grade
         }).then(data => {
-            res.redirect('/pd/dashboard');
+            res.redirect('/pd/newPodobiTable');
         }).catch(err => {
             res.render('errorpage',err);
         });
