@@ -9,33 +9,26 @@
                         <div class="col-md-10">
                             <h1 class="text-center"><%= title %></h1>
                         </div>
+                        
                     </div>
-                    <div class="row mb-2">
-                        <div class="col-md-12">
-                            <a href="/pd/newKhorochCodeForm" class="btn btn-success btn-group-sm ">খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণীর কোডসমূহ এর ফর্ম</a>
-                        </div>
+                  
 
-                    </div>
                      <div class="table-responsive" id="output">
                         <%if (records.length >0){ %>
                             <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
                             <thead>
                             <tr>
-                                <th>ক্রমিক নং</th>
-                                <th>খাতের নাম</th>
-                                <th>কোড নং</th>
-                               <th>পরিবর্তন/মুছুন</th>
+                                <th>এডমিন ইউজার নাম</th>
+                                <th>ইউজার আইডি ও পাসওয়ার্ড পরিবর্তন</th>
                             </tr>
                             </thead>
                             <tbody>
-                                <% records.forEach(function(row,index){ %>
+                                <% records.forEach(function(row){ %>
                                     <tr>
-                                        <td><%= index+1 %></td>
-                                        <td><%= row.khat %></td>
-                                        <td><%= row.code %></td>
-                                        <td><a class="btn btn-primary btn-xs" href="/pd/newKhorochTableEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
-                                            <a class="btn btn-danger btn-xs" href="/pd/newKhorochTableDelete/<%= row.id %>"><i class="fa fa-trash"></i></a>
-                                        </td>                                                                           
+                                        <td><%= row.uname %></td>
+                                        <td><a class="btn btn-primary btn-xs" href="/pd/adminInfoEdit/<%= row.id %>"><i class="fa fa-wrench"></i></a>
+                                        </td> 
+                                       
                                     </tr>
                                 <% }) %>
                             </tbody>
@@ -44,9 +37,8 @@
                             <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
                                 <thead>
                                 <tr>
-                                    <th>খাতের নাম</th>
-                                    <th>কোড নং</th>
-                                
+                                    <th>এডমিন ইউজার নাম</th>
+                                <th>ইউজার আইডি ও পাসওয়ার্ড পরিবর্তন</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -70,3 +62,5 @@
     </div>
 
     <%- include('../../includes/footer')-%>
+
+ 

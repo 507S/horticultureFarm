@@ -4,19 +4,19 @@ const router = express.Router();
 const app=express();
 
 const {apaUddessho,apaMaan,karjokrom,suchok,ekok,suchokMaan,newKhorochCode,newRajosshoCode,addMainCategory,centerDelete,centerEdit,centerEditPost,
-    addSubcategory,addBiboron,addJaat,monthlyProgress,monthlyProgressFilter,expenseEdit,expenseEditPost,expenseDelete,
-    charaKolomFixed,pdsignup,pdsignuppost,rajossho,rajosshoFilter,rajosshoForm,rajosshoFormPost,newRajosshoCodeTable,
+    addSubcategory,addBiboron,addJaat,monthlyProgress,monthlyProgressFilter,expenseEdit,expenseEditPost,expenseDelete,centerPasswordEdit,centerPasswordEditPost,
+    charaKolomFixed,pdsignup,pdsignuppost,rajossho,rajosshoFilter,rajosshoForm,rajosshoFormPost,newRajosshoCodeTable,adminInfo,adminInfoEdit,adminInfoEditPost,
     newRajosshoCodeTableEdit,newRajosshoCodeTableDelete,newRajosshoCodeTableEditPost,expense,expenseFilter,newKhorochTable,newKhorochTableEdit,newKhorochTableEditPost,newKhorochTableDelete,
-    expenseForm,expenseFormPost,chak1,chak1Filter,chak1Form,chak1FormPost,chak2,chak2Filter,chak2Form,chak2FormPost,revolvingFund,
+    expenseForm,expenseFormPost,chak1,chak1Filter,chak1Form,chak1FormPost,chak2,chak2Filter,chak2Form,chak2FormPost,revolvingFund,newKhorochCodeForm,
     revolvingFundFilter,revolvingFundForm,revolvingFundFormPost,specialCoconut,specialCoconutFilter,specialCoconutForm,rajosshoEdit,rajosshoEditPost,rajosshoDelete,
-    specialCoconutFormPost,loan,loanFilter,loanForm,loanFormPost,apa,apaFilter,apaYear,apaForm,apaFormPost,allcenter,pdlogin,
+    specialCoconutFormPost,loan,loanFilter,loanForm,loanFormPost,apa,apaFilter,apaYear,apaForm,apaFormPost,allcenter,pdlogin,newRajosshoCodeForm,
     pdloginpost,pdDashboard,topSheet,topSheetFilter,center,centerYear,newPodobiTable,newPodobiEdit,newPodobiEditPost,newPodobiDelete,newPodobi,
     charaKolomEdit,charaKolomEditPost,charaKolomDelete,winterVegEdit,winterVegEditPost,winterVegDelete,summerVegEdit,summerVegEditPost,summerVegDelete,
-    otherFlowerEdit,otherFlowerEditPost,otherFlowerDelete,seasonalFlowerEdit,seasonalFlowerEditPost,seasonalFlowerDelete,
+    otherFlowerEdit,otherFlowerEditPost,otherFlowerDelete,seasonalFlowerEdit,seasonalFlowerEditPost,seasonalFlowerDelete,podobiListForm,cropCategoryTable,
     charaKolom,charaKolomYear,folMoshollaEdit,folMoshollaEditPost,folMoshollaDelete,newcropCategoryList,newcropCategoryListPost,newcropCategoryListEdit,
-    charaKolomForm,charaKolomFormPost,folMosholla,folMoshollaYear,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegYear,winterVegForm,
+    charaKolomForm,charaKolomFormPost,folMosholla,folMoshollaYear,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegYear,winterVegForm,dashImageForm,dashImageFormPost,
     winterVegFormPost,summerVeg,summerVegYear,summerVegForm,summerVegFormPost,otherFlower,otherFlowerYear,otherFlowerForm,otherFlowerFormPost,
-    seasonalFlower,seasonalFlowerYear,seasonalFlowerForm,seasonalFlowerFormPost,workerInfo,workerInfoFilter,workerInfoForm,
+    seasonalFlower,seasonalFlowerYear,seasonalFlowerForm,seasonalFlowerFormPost,workerInfo,workerInfoFilter,workerInfoForm,apaCategoryTable,upload,
     workerInfoFormPost,workerNum,workerNumFilter,monthlyProgressEdit,monthlyProgressUpdate} = require('../controllers/pd.controller');
 
 router.get('/',allcenter);
@@ -30,6 +30,9 @@ router.get('/charaKolomFixed',charaKolomFixed);
 router.get('/login',pdlogin);
 router.post('/logins',pdloginpost);
 router.get('/dashboard',pdDashboard);
+router.post('/upload',upload);
+router.get('/dashImageForm',dashImageForm);
+router.post('/dashImageFormPost',dashImageFormPost);
 
 router.get('/signup',pdsignup);
 router.post('/signups',pdsignuppost);
@@ -42,8 +45,12 @@ router.post('/centerYear',centerYear);
 router.get('/centerEdit/:id',centerEdit);
 router.post('/centerEditPost/:id',centerEditPost);
 router.get('/centerDelete/:id',centerDelete);
-// router.get('/centerForm',centerForm);
-// router.post('/centerForms',centerFormPost);
+router.get('/centerPasswordEdit/:id',centerPasswordEdit);
+router.post('/centerPasswordEditPost/:id',centerPasswordEditPost);
+
+router.get('/adminInfo',adminInfo);
+router.get('/adminInfoEdit/:id',adminInfoEdit);
+router.post('/adminInfoEditPost/:id',adminInfoEditPost);
 
 router.get('/charaKolom',charaKolom);
 router.post('/charaKolomYear',charaKolomYear);
@@ -100,6 +107,7 @@ router.get('/workerInfoForm',workerInfoForm);
 router.post('/workerInfoForms',workerInfoFormPost);
 router.post('/newPodobi',newPodobi);
 router.get('/newPodobiTable',newPodobiTable);
+router.get('/podobiListForm',podobiListForm);
 router.get('/newPodobiEdit/:id',newPodobiEdit);
 router.post('/newPodobiEditPost/:id',newPodobiEditPost);
 router.get('/newPodobiDelete/:id',newPodobiDelete);
@@ -112,13 +120,14 @@ router.post('/apaFilter',apaFilter);
 router.post('/apaYear',apaYear);
 router.get('/apaForm',apaForm);
 router.post('/apaForms',apaFormPost);
-
 router.post('/apaUddessho',apaUddessho);
 router.post('/apaMaan',apaMaan);
 router.post('/karjokrom',karjokrom);
 router.post('/suchok',suchok);
 router.post('/ekok',ekok);
 router.post('/suchokMaan',suchokMaan);
+router.get('/apaCategoryTable',apaCategoryTable);
+
 
 router.get('/loan',loan);
 router.post('/loanFilter',loanFilter);
@@ -153,6 +162,7 @@ router.get('/rajosshoEdit/:id',rajosshoEdit);
 router.post('/rajosshoEditPost/:id',rajosshoEditPost);
 router.get('/rajosshoDelete/:id',rajosshoDelete);
 router.get('/newRajosshoCodeTable',newRajosshoCodeTable);
+router.get('/newRajosshoCodeForm',newRajosshoCodeForm);
 router.post('/newRajosshoCode',newRajosshoCode);
 router.get('/newRajosshoCodeTableEdit/:id',newRajosshoCodeTableEdit);
 router.post('/newRajosshoCodeTableEditPost/:id',newRajosshoCodeTableEditPost);
@@ -168,6 +178,7 @@ router.post('/expenseEditPost/:id',expenseEditPost);
 router.get('/expenseDelete/:id',expenseDelete);
 router.post('/newKhorochCode',newKhorochCode);
 router.get('/newKhorochTable',newKhorochTable);
+router.get('/newKhorochCodeForm',newKhorochCodeForm);
 router.get('/newKhorochTableEdit/:id',newKhorochTableEdit);
 router.post('/newKhorochTableEditPost/:id',newKhorochTableEditPost);
 router.get('/newKhorochTableDelete/:id',newKhorochTableDelete);
@@ -178,6 +189,7 @@ router.post('/monthlyProgressFilter',monthlyProgressFilter);
 router.get('/monthlyProgressEdit/:progressId/:editDate',monthlyProgressEdit)
 router.post('/monthlyProgressUpdate/:progressId',monthlyProgressUpdate)
 
+router.get('/cropCategoryTable',cropCategoryTable);
 router.get('/newcropCategoryList',newcropCategoryList);
 router.post('/newcropCategoryListPost/:id',newcropCategoryListPost);
 router.get('/newcropCategoryListEdit/:id',newcropCategoryListEdit);

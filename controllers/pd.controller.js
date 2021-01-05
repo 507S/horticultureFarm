@@ -22,6 +22,25 @@ const expense = db.expense;
 const monthlyProgress = db.monthlyProgress;
 const cropCategory = db.cropcategory;
 const podobiList = db.podobiList;
+const dashImages = db.dashImage;
+
+const multer = require("multer");
+const path = require("path");
+
+//multer setup for dashImage image
+var storagedashImage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/dashImage');
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    },
+  });  
+var upload = multer({
+    storage: storagedashImage,
+ }).single("newsUp");
+ exports.upload=upload;
+ //multer setup for dashImage image ends
 
 const jwt= require('jsonwebtoken');
 const bcrypt= require('bcryptjs'); 
@@ -120,7 +139,7 @@ module.exports.pdloginpost=async(req,res)=>{
 
 module.exports.pdDashboard = async(req,res) => {
     try{
-
+        const dashImage = await dashImages.findAll()
         const crop = await cropCategory.findAll();
         const centerinfo = await center.findAll();
         const monthly_progress = await monthlyProgress.findAll();
@@ -171,7 +190,7 @@ module.exports.pdDashboard = async(req,res) => {
         });
 
 
-        res.render('pd/dashboard', { title: 'Horticulture Wing Center Management Software', msg:'Welcome' ,podobiLists:podobiListss,rajosshoCodes:rajosshoCodess,expenseCodes:expenseCodess,totalrajossho:totalrajossho, totalProduction: totalProduct, totalBitoron: totalBitoron,  center:centerinfo, crop: crop,apaCodes:apaCodes });
+        res.render('pd/dashboard', { title: 'Horticulture Wing Center Management Software', msg:'Welcome' ,dashImage:dashImage,podobiLists:podobiListss,rajosshoCodes:rajosshoCodess,expenseCodes:expenseCodess,totalrajossho:totalrajossho, totalProduction: totalProduct, totalBitoron: totalBitoron,  center:centerinfo, crop: crop,apaCodes:apaCodes });
 
     }
     catch (e) {
@@ -441,45 +460,78 @@ module.exports.centerDelete=async(req,res)=>{
     }
     
 };
+module.exports.centerPasswordEdit=async(req,res)=>{
+    await center.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('pd/centerInfo/centerPasswordEdit', { title: 'সেন্টারের যোগাযোগ তথ্য ফর্ম',msg:'' ,success:'',records: data});
+    })
+    .catch(err => {
+        console.log("outside");
+        res.render('pd/centerInfo/centerPasswordEdit', { title: 'সেন্টারের যোগাযোগ তথ্য ফর্ম',success:'', records: err });
+    })
+};
+module.exports.centerPasswordEditPost=async(req,res)=>{
+    var password = req.body.password;
+    var uname = req.body.uname;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await center.update({ 
+        uname:uname,
+        password:hashedPassword
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        console.log("data",data);
+        res.redirect('/pd/center');
+    }).catch(err => {
+        console.log(err);
+    });
+};
+//adminInfo controller
+module.exports.adminInfo=async(req,res)=>{
+    await pd.findAll()
+    .then(data => {
+        console.log("inside");
+        res.render('pd/adminInfo/adminInfo', { title: 'সেন্ট্রাল এডমিন তথ্য',success:'', records: data });
+    })
+    .catch(err => {
+        console.log(err);
+        res.render('pd/adminInfo/adminInfo', { title: 'সেন্ট্রাল এডমিন তথ্য ফর্ম',success:'', records: err });
+    })
+     
+    //  records:result
 
-// module.exports.centerForm=async(req,res)=>{
-
-
-//     res.render('pd/centerinfo/centerForm', { title: 'সেন্টারের যোগাযোগ তথ্য',msg:'' ,success:'',user_id: req.session.user_id});
-// };
-
-// module.exports.centerFormPost=async(req,res)=>{
-//     var center= req.body.center;
-//     var kormokorta= req.body.kormokorta;
-//     var podobi= req.body.podobi;
-//     var mobile= req.body.mobile;
-//     var email= req.body.email;
-//     var year =req.body.year;
-//     var user_id =req.body.user_id;
-
-//     await centerInfo.create({
-//         center: center,
-//         kormokorta:kormokorta,
-//         podobi:podobi,
-//         mobile:mobile,
-//         email:email,
-//         year:year,
-//         center_id:user_id
-
-//         }).then(data => {
-//             res.redirect('/pd/center');
-//         }).catch(err => {
-//             res.render('errorpage',err);
-//         });
-  
-// };
-
-
+};
+module.exports.adminInfoEdit=async(req,res)=>{
+    await pd.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('pd/adminInfo/adminInfoEdit', { title: 'সেন্ট্রাল এডমিন তথ্য ফর্ম',msg:'' ,success:'',records: data});
+    })
+    .catch(err => {
+        console.log("outside");
+        res.render('pd/adminInfo/adminInfoEdit', { title: 'সেন্ট্রাল এডমিন তথ্য ফর্ম',success:'', records: err });
+    })
+};
+module.exports.adminInfoEditPost=async(req,res)=>{
+    var password = req.body.password;
+    var uname = req.body.uname;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await pd.update({ 
+        uname:uname,
+        password:hashedPassword
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        res.redirect('/pd/adminInfo');
+    }).catch(err => {
+        console.log(err);
+    });
+};
 
 //charaKolom controller
-
-//charaKolom controller 
-
 module.exports.charaKolom=async(req,res)=>{
     await charaKolom.findAll()
     .then(data => {
@@ -1154,6 +1206,10 @@ module.exports.newPodobiEdit=async(req,res)=>{
         res.render('pd/newPodobi/podobiListEdit', { title: 'কর্মকর্তা কর্মচারীদের পদবী ও গ্রেডের তালিকা',success:'', records: err });
     })
 };
+module.exports.podobiListForm=async(req,res)=>{
+        res.render('pd/newPodobi/podobiListForm', { title: 'কর্মকর্তা কর্মচারীদের পদবী ও গ্রেডের তালিকা ফর্ম',msg:'' ,success:''});
+
+};
 module.exports.newPodobiEditPost=async(req,res)=>{
     var podobi = req.body.podobi;
     var grade= req.body.grade;
@@ -1324,6 +1380,19 @@ module.exports.apaFormPost=async(req,res)=>{
             res.render('errorpage',err);
         });
   
+};
+module.exports.apaCategoryTable=async(req,res)=>{
+    await apaCode.findAll()
+    .then(data => {
+        res.render('pd/apa/apaCategoryTable', { title: 'এপিএ',success:'', apaCodes: data });
+    })
+    .catch(err => {
+        console.log(err);
+    })
+     
+
+    //  records:result
+
 };
 
 //apa controller end
@@ -1916,7 +1985,10 @@ module.exports.newRajosshoCodeTable=async(req,res)=>{
     })
      
     //  records:result
-
+    
+};
+module.exports.newRajosshoCodeForm=async(req,res)=>{
+        res.render('pd/rajossho/newRajosshoCodeForm', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির কোডসমূহ',msg:'' ,success:''});
 };
 module.exports.newRajosshoCodeTableEdit=async(req,res)=>{
     await rajosshoCode.findByPk(req.params.id)
@@ -1951,7 +2023,7 @@ module.exports.newRajosshoCodeTableDelete=async(req,res)=>{
         res.redirect("/pd/newRajosshoCodeTable");
     }
     catch{
-        res.render('errorpage',err);
+        console.log(err);
     }
     
 };
@@ -2171,6 +2243,9 @@ module.exports.newKhorochTable=async(req,res)=>{
      
     //  records:result
 
+};
+module.exports.newKhorochCodeForm=async(req,res)=>{
+        res.render('pd/expense/newKhorochCodeForm', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণীর কোডসমূহ',msg:'' ,success:'',});
 };
 module.exports.newKhorochTableEdit=async(req,res)=>{
     await expenseCode.findByPk(req.params.id)
@@ -2430,13 +2505,13 @@ module.exports.monthlyProgressUpdate = async(req,res) => {
 
 //newRajosshoCode
 module.exports.newRajosshoCode=async(req,res)=>{
-    var code= req.body.newRajosshoCode;
-    var upokhat= req.body.newUpokhat;
+    var code= req.body.code;
+    var upokhat= req.body.upokhat;
     await rajosshoCode.create({
         code: code,
         upokhat:upokhat
         }).then(data => {
-            res.redirect('/pd/dashboard');
+            res.redirect('/pd/newRajosshoCodeTable');
         }).catch(err => {
             res.render('errorpage',err);
         });
@@ -2446,13 +2521,13 @@ module.exports.newRajosshoCode=async(req,res)=>{
 
 //newKhorochCode
 module.exports.newKhorochCode=async(req,res)=>{
-    var code= req.body.newKhorochCode;
-    var khat= req.body.newkhat;
+    var code= req.body.code;
+    var khat= req.body.khat;
     await expenseCode.create({
         code: code,
         khat:khat
         }).then(data => {
-            res.redirect('/pd/dashboard');
+            res.redirect('/pd/newKhorochTable');
         }).catch(err => {
             res.render('errorpage',err);
         });
@@ -2467,7 +2542,7 @@ module.exports.newPodobi=async(req,res)=>{
         podobi: podobi,
         grade:grade
         }).then(data => {
-            res.redirect('/pd/dashboard');
+            res.redirect('/pd/newPodobiTable');
         }).catch(err => {
             res.render('errorpage',err);
         });
@@ -2489,6 +2564,21 @@ module.exports.apaCode=async(req,res)=>{
 //apaCode ends
 
 //cropCategoryList
+
+module.exports.cropCategoryTable=async(req,res)=>{
+        const crop = await cropCategory.findAll();
+
+    try{
+        console.log("inside");
+        res.render('pd/cropCategoryTable/cropCategoryTable', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির কোডসমূহ',success:'',crop:crop});
+    }
+    catch{
+        console.log(err);
+    }
+     
+    //  records:result
+
+};
 module.exports.newcropCategoryList=async(req,res)=>{
     var mainCategory=await cropCategory.findAll({
         where: {type : "mainCategory"}
@@ -2540,3 +2630,49 @@ module.exports.newcropCategoryListPost=async(req,res)=>{
         res.render('errorpage',err);
     });
 };
+
+// dashImage controller
+// module.exports.dashImage=async(req,res)=>{
+//     await dashImage.findAll()
+//     .then(data => {
+//         console.log("inside");
+//         res.render('pd/dashImage/dashImage', { title: 'সৌর আলো ফাঁদ বিতরণ তথ্য',success:'', records: data });
+//     })
+//     .catch(err => {
+//         console.log(err);
+//     })
+     
+//     //  records:result
+
+// };
+module.exports.dashImageForm=async(req,res)=>{
+    res.render('pd/dashImage/dashImageForm', { title: 'সৌর আলো ফাঁদ বিতরণ তথ্য',msg:'' ,success:'',user_id: req.session.user_id});
+};
+module.exports.dashImageFormPost=async(req,res)=>{
+    const path = req.file && req.file.path;
+    console.log("path",path);
+    if(path){
+        var imagePath = "/dashImage/" + req.file.filename;
+        var name= req.body.name;
+        var description= req.body.description;
+        var date= req.body.date;
+        await dashImage.create({
+                name: name,
+                description:description,
+                date:date,
+                image: imagePath,
+            })
+            .then(data => {
+            res.redirect('/pd/dashboard');
+            }).catch(err => {
+            console.log("file not uploaded successfully");
+            });
+        }
+        else{
+        
+            console.log("file not uploaded successfully",err);
+        };
+    
+  
+};
+// dashImage controller ends
