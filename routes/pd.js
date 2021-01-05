@@ -12,11 +12,11 @@ const {apaUddessho,apaMaan,karjokrom,suchok,ekok,suchokMaan,newKhorochCode,newRa
     specialCoconutFormPost,loan,loanFilter,loanForm,loanFormPost,apa,apaFilter,apaYear,apaForm,apaFormPost,allcenter,pdlogin,newRajosshoCodeForm,
     pdloginpost,pdDashboard,topSheet,topSheetFilter,center,centerYear,newPodobiTable,newPodobiEdit,newPodobiEditPost,newPodobiDelete,newPodobi,
     charaKolomEdit,charaKolomEditPost,charaKolomDelete,winterVegEdit,winterVegEditPost,winterVegDelete,summerVegEdit,summerVegEditPost,summerVegDelete,
-    otherFlowerEdit,otherFlowerEditPost,otherFlowerDelete,seasonalFlowerEdit,seasonalFlowerEditPost,seasonalFlowerDelete,podobiListForm,
+    otherFlowerEdit,otherFlowerEditPost,otherFlowerDelete,seasonalFlowerEdit,seasonalFlowerEditPost,seasonalFlowerDelete,podobiListForm,cropCategoryTable,
     charaKolom,charaKolomYear,folMoshollaEdit,folMoshollaEditPost,folMoshollaDelete,newcropCategoryList,newcropCategoryListPost,newcropCategoryListEdit,
-    charaKolomForm,charaKolomFormPost,folMosholla,folMoshollaYear,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegYear,winterVegForm,
+    charaKolomForm,charaKolomFormPost,folMosholla,folMoshollaYear,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegYear,winterVegForm,dashImageForm,dashImageFormPost,
     winterVegFormPost,summerVeg,summerVegYear,summerVegForm,summerVegFormPost,otherFlower,otherFlowerYear,otherFlowerForm,otherFlowerFormPost,
-    seasonalFlower,seasonalFlowerYear,seasonalFlowerForm,seasonalFlowerFormPost,workerInfo,workerInfoFilter,workerInfoForm,
+    seasonalFlower,seasonalFlowerYear,seasonalFlowerForm,seasonalFlowerFormPost,workerInfo,workerInfoFilter,workerInfoForm,apaCategoryTable,upload,
     workerInfoFormPost,workerNum,workerNumFilter,monthlyProgressEdit,monthlyProgressUpdate} = require('../controllers/pd.controller');
 
 router.get('/',allcenter);
@@ -30,6 +30,9 @@ router.get('/charaKolomFixed',charaKolomFixed);
 router.get('/login',pdlogin);
 router.post('/logins',pdloginpost);
 router.get('/dashboard',pdDashboard);
+router.post('/upload',upload);
+router.get('/dashImageForm',dashImageForm);
+router.post('/dashImageFormPost',dashImageFormPost);
 
 router.get('/signup',pdsignup);
 router.post('/signups',pdsignuppost);
@@ -117,13 +120,14 @@ router.post('/apaFilter',apaFilter);
 router.post('/apaYear',apaYear);
 router.get('/apaForm',apaForm);
 router.post('/apaForms',apaFormPost);
-
 router.post('/apaUddessho',apaUddessho);
 router.post('/apaMaan',apaMaan);
 router.post('/karjokrom',karjokrom);
 router.post('/suchok',suchok);
 router.post('/ekok',ekok);
 router.post('/suchokMaan',suchokMaan);
+router.get('/apaCategoryTable',apaCategoryTable);
+
 
 router.get('/loan',loan);
 router.post('/loanFilter',loanFilter);
@@ -185,6 +189,7 @@ router.post('/monthlyProgressFilter',monthlyProgressFilter);
 router.get('/monthlyProgressEdit/:progressId/:editDate',monthlyProgressEdit)
 router.post('/monthlyProgressUpdate/:progressId',monthlyProgressUpdate)
 
+router.get('/cropCategoryTable',cropCategoryTable);
 router.get('/newcropCategoryList',newcropCategoryList);
 router.post('/newcropCategoryListPost/:id',newcropCategoryListPost);
 router.get('/newcropCategoryListEdit/:id',newcropCategoryListEdit);

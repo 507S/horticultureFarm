@@ -43,5 +43,6 @@ db.expense = require("./expense.model.js")(sequelize, Sequelize);
 db.monthlyProgress = require("./monthlyProgress.model.js")(sequelize, Sequelize);
 db.cropcategory = require("./cropcategory")(sequelize, Sequelize);
 db.podobiList = require("./podobiList.model.js")(sequelize, Sequelize);
+db.dashImage = require("./dashImage.model.js")(sequelize, Sequelize);
 
 module.exports = db;

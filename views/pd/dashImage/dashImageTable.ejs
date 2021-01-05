@@ -1,0 +1,37 @@
+<%if (records.length >0){ %>
+  <div class="container">
+    <div class="row">
+      <% records.forEach(function(row){ %>
+      <div class="col-md-4" >
+        <div class="card">
+              <img class="card-img-top" src="<%= row.image %>"  width="auto" height="200px" alt="Card image">
+              <div class="card-body">
+                <h4 class="card-title"><%= row.name %></h4>
+                <p class="card-text"><%= row.description %></p>
+                <p class="card-text"><%= row.date%></p>
+                <a href="/open/<%= row.id %>" class="btn btn-success" style="text-decoration:none;"><i class="fa fa-search-plus"></i> Open   </a>
+                <a href="/edit/<%= row.id %>" class="btn btn-primary" style="text-decoration:none;"> <i class="fa fa-edit"></i> Edit  </a>
+                <a href="/delete/<%= row.id %>" class="btn btn-danger"  style="text-decoration:none;"> <i class="fa fa-trash"></i> Delete</a>
+              </div>
+        </div>
+      </div>
+    
+    <% }) %>
+  </div>
+</div>
+<% }else{ %>
+    <% records.forEach(function(row){ %>
+        <div class="container">
+            <h2></h2>
+            <p></p>
+            <div class="card" style="width:400px">
+              <img class="card-img-top" src="<%= row.image %>" alt="Card image" style="width:100%">
+              <div class="card-body">
+                <h4 class="card-title"> </h4>
+                <p class="card-text">No data Found</p>
+                <a href="#" class="btn btn-primary"></a>
+              </div>
+            </div>
+        </div>
+    <% }) %>
+<% } %>
