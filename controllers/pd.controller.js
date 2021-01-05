@@ -22,6 +22,25 @@ const expense = db.expense;
 const monthlyProgress = db.monthlyProgress;
 const cropCategory = db.cropcategory;
 const podobiList = db.podobiList;
+const dashImages = db.dashImage;
+
+const multer = require("multer");
+const path = require("path");
+
+//multer setup for dashImage image
+var storagedashImage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/dashImage');
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    },
+  });  
+var upload = multer({
+    storage: storagedashImage,
+ }).single("newsUp");
+ exports.upload=upload;
+ //multer setup for dashImage image ends
 
 const jwt= require('jsonwebtoken');
 const bcrypt= require('bcryptjs'); 
@@ -120,7 +139,7 @@ module.exports.pdloginpost=async(req,res)=>{
 
 module.exports.pdDashboard = async(req,res) => {
     try{
-
+        const dashImage = await dashImages.findAll()
         const crop = await cropCategory.findAll();
         const centerinfo = await center.findAll();
         const monthly_progress = await monthlyProgress.findAll();
@@ -171,7 +190,7 @@ module.exports.pdDashboard = async(req,res) => {
         });
 
 
-        res.render('pd/dashboard', { title: 'Horticulture Wing Center Management Software', msg:'Welcome' ,podobiLists:podobiListss,rajosshoCodes:rajosshoCodess,expenseCodes:expenseCodess,totalrajossho:totalrajossho, totalProduction: totalProduct, totalBitoron: totalBitoron,  center:centerinfo, crop: crop,apaCodes:apaCodes });
+        res.render('pd/dashboard', { title: 'Horticulture Wing Center Management Software', msg:'Welcome' ,dashImage:dashImage,podobiLists:podobiListss,rajosshoCodes:rajosshoCodess,expenseCodes:expenseCodess,totalrajossho:totalrajossho, totalProduction: totalProduct, totalBitoron: totalBitoron,  center:centerinfo, crop: crop,apaCodes:apaCodes });
 
     }
     catch (e) {
@@ -1362,6 +1381,19 @@ module.exports.apaFormPost=async(req,res)=>{
         });
   
 };
+module.exports.apaCategoryTable=async(req,res)=>{
+    await apaCode.findAll()
+    .then(data => {
+        res.render('pd/apa/apaCategoryTable', { title: 'এপিএ',success:'', apaCodes: data });
+    })
+    .catch(err => {
+        console.log(err);
+    })
+     
+
+    //  records:result
+
+};
 
 //apa controller end
 
@@ -2532,6 +2564,21 @@ module.exports.apaCode=async(req,res)=>{
 //apaCode ends
 
 //cropCategoryList
+
+module.exports.cropCategoryTable=async(req,res)=>{
+        const crop = await cropCategory.findAll();
+
+    try{
+        console.log("inside");
+        res.render('pd/cropCategoryTable/cropCategoryTable', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির কোডসমূহ',success:'',crop:crop});
+    }
+    catch{
+        console.log(err);
+    }
+     
+    //  records:result
+
+};
 module.exports.newcropCategoryList=async(req,res)=>{
     var mainCategory=await cropCategory.findAll({
         where: {type : "mainCategory"}
@@ -2583,3 +2630,49 @@ module.exports.newcropCategoryListPost=async(req,res)=>{
         res.render('errorpage',err);
     });
 };
+
+// dashImage controller
+// module.exports.dashImage=async(req,res)=>{
+//     await dashImage.findAll()
+//     .then(data => {
+//         console.log("inside");
+//         res.render('pd/dashImage/dashImage', { title: 'সৌর আলো ফাঁদ বিতরণ তথ্য',success:'', records: data });
+//     })
+//     .catch(err => {
+//         console.log(err);
+//     })
+     
+//     //  records:result
+
+// };
+module.exports.dashImageForm=async(req,res)=>{
+    res.render('pd/dashImage/dashImageForm', { title: 'সৌর আলো ফাঁদ বিতরণ তথ্য',msg:'' ,success:'',user_id: req.session.user_id});
+};
+module.exports.dashImageFormPost=async(req,res)=>{
+    const path = req.file && req.file.path;
+    console.log("path",path);
+    if(path){
+        var imagePath = "/dashImage/" + req.file.filename;
+        var name= req.body.name;
+        var description= req.body.description;
+        var date= req.body.date;
+        await dashImage.create({
+                name: name,
+                description:description,
+                date:date,
+                image: imagePath,
+            })
+            .then(data => {
+            res.redirect('/pd/dashboard');
+            }).catch(err => {
+            console.log("file not uploaded successfully");
+            });
+        }
+        else{
+        
+            console.log("file not uploaded successfully",err);
+        };
+    
+  
+};
+// dashImage controller ends
