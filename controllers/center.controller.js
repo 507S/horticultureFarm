@@ -2213,7 +2213,7 @@ module.exports.generatePdfMonthlyProgress=async(req,res) => {
         }
     });
 
-    ejs.renderFile(path.join(__dirname, '../views/center/monthlyProgress/', "pdf.ejs"), {records:tableData, moment: res.locals, dirname:__dirname}, (err, data) => {
+    ejs.renderFile(path.join(__dirname, '../views/center/monthlyProgress/', "pdf.ejs"), {records:tableData, moment: res.locals.moment, dirname:__dirname}, (err, data) => {
 
         if (err) {
             // console.log("error",err);
