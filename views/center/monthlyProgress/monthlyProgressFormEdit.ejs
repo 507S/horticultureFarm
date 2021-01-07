@@ -163,7 +163,7 @@
                                     <div class="form-row mt-3">
                                         <div class="col">
                                             <label for="productionTarget" class="col-md-3 control-label">উৎপাদন (লক্ষ্যমাত্রা)</label>
-                                            <input type="text" readonly class="form-control" name="productionTarget" placeholder="উৎপাদন (লক্ষ্যমাত্রা)" value="<%= productionTargetSum %>">
+                                            <input type="text" class="form-control" name="productionTarget" placeholder="উৎপাদন (লক্ষ্যমাত্রা)" value="<%= productionTargetSum %>">
                                         </div>
                                     </div>
 
@@ -175,7 +175,7 @@
                                                     <input readonly class="form-control" value="<%= currentProductionSum %> + " >
                                                 </div>
                                                 <div class="col-9">
-                                                    <input type="text" class="form-control" name="productionCurrent" placeholder="উৎপাদন (চলতি মাস)" value="0">
+                                                    <input type="text" class="form-control" name="productionCurrent" placeholder="উৎপাদন (চলতি মাস)" value="<%= currentProductionSum %>">
                                                 </div>
                                             </div>
                                         </div>
@@ -186,7 +186,7 @@
                                                     <input class="form-control" readonly type="text" value="<%= daePraptiSum %> + ">
                                                 </div>
                                                 <div class="col-9">
-                                                    <input type="text" class="form-control" name="daePrapti" placeholder="ডিএই চালানে প্রাপ্তি" value="0">
+                                                    <input type="text" class="form-control" name="daePrapti" placeholder="ডিএই চালানে প্রাপ্তি" value="<%= daePraptiSum %>">
                                                 </div>
                                             </div>
                                         </div>
@@ -197,7 +197,7 @@
                                                     <input readonly class="form-control" type="text" value="<%= currentBitoronSum %> + ">
                                                 </div>
                                                 <div class="col-9">
-                                                    <input type="text" class="form-control" name="bitotonCurrentMonth" placeholder="বিতরণ (চলতি মাস)" value="0">
+                                                    <input type="text" class="form-control" name="bitotonCurrentMonth" placeholder="বিতরণ (চলতি মাস)" value="<%= currentBitoronSum %>">
                                                 </div>
                                             </div>
 
@@ -209,7 +209,7 @@
                                                     <input readonly class="form-control" type="text" value="<%= currentDaeProdanSum %> +">
                                                 </div>
                                                 <div class="col-9">
-                                                    <input type="text" class="form-control" name="daeProdan" placeholder="ডিএই চালানে প্রদান" value="0">
+                                                    <input type="text" class="form-control" name="daeProdan" placeholder="ডিএই চালানে প্রদান" value="<%= currentDaeProdanSum %>">
                                                 </div>
                                             </div>
                                         </div>
@@ -224,7 +224,7 @@
                                                     <input type="text" value="<%= currentMritoSum %> + " readonly class="form-control">
                                                 </div>
                                                 <div class="col-9">
-                                                    <input type="text" class="form-control" name="deadWriteup" placeholder="মৃত/বিনষ্ট রাইটআপ" value="0">
+                                                    <input type="text" class="form-control" name="deadWriteup" placeholder="মৃত/বিনষ্ট রাইটআপ" value="<%= currentMritoSum %>">
                                                 </div>
                                             </div>
                                         </div>
