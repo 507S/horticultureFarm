@@ -2404,6 +2404,7 @@ module.exports.monthlyProgressEdit = async(req,res) => {
 }
 
 module.exports.monthlyProgressUpdate = async(req,res) => {
+    console.log("came",req.body.productionTarget)
     var category= req.body.category;
     var subCategory= req.body.subCategory;
     var biboron= req.body.biboron;
@@ -2435,53 +2436,59 @@ module.exports.monthlyProgressUpdate = async(req,res) => {
 
 
     ///////// moment(currentMonth).isAfter(bitorTotal.startTime) &&  moment(currentMonth).isBefore(bitorTotal.endTime)
+    var totalProductionTarget = JSON.parse(progress.productionTarget);
+    totalProductionTarget.forEach((prodTargetTotal,index) => {
+        if ( res.locals.moment(editDate).isAfter(prodTargetTotal.startTime) &&  res.locals.moment(editDate).isBefore(prodTargetTotal.endTime) ) {
+            totalProductionTarget[index].amount =  parseInt(productionTarget)
+        }
+    })
 
     var currentProduction = JSON.parse(progress.productionCurrent);
     currentProduction.forEach((prodCurrent,index) => {
         if ( prodCurrent.time === editDate ) {
-            currentProduction[index].amount = parseInt(currentProduction[index].amount) + parseInt(productionCurrent)
+            currentProduction[index].amount =  parseInt(productionCurrent)
         }
     })
 
     var totalProduction = JSON.parse(progress.productionTotal);
     totalProduction.forEach((prodTotal,index) => {
         if ( res.locals.moment(editDate).isAfter(prodTotal.startTime) &&  res.locals.moment(editDate).isBefore(prodTotal.endTime) ) {
-            totalProduction[index].amount = parseInt(totalProduction[index].amount) + parseInt(productionCurrent)
+            totalProduction[index].amount =  parseInt(productionCurrent)
         }
     })
 
     var currentDaePraptis = JSON.parse(progress.daePrapti);
     currentDaePraptis.forEach((daePraptiCurrent,index) => {
         if ( daePraptiCurrent.time === editDate ) {
-            currentDaePraptis[index].amount = parseInt(currentDaePraptis[index].amount) + parseInt(daePrapti)
+            currentDaePraptis[index].amount =  parseInt(daePrapti)
         }
     })
 
     var currentBitoron = JSON.parse(progress.bitoronCurrentMonth);
     currentBitoron.forEach((currentBitoronCurrent,index) => {
         if ( currentBitoronCurrent.time === editDate ) {
-            currentBitoron[index].amount = parseInt(currentBitoron[index].amount) + parseInt(bitoronCurrentMonth)
+            currentBitoron[index].amount =  parseInt(bitoronCurrentMonth)
         }
     })
 
     var totalBitoron = JSON.parse(progress.bitoronTotal);
     totalBitoron.forEach((bitoronTotal,index) => {
         if ( res.locals.moment(editDate).isAfter(bitoronTotal.startTime) &&  res.locals.moment(editDate).isBefore(bitoronTotal.endTime) ) {
-            totalBitoron[index].amount = parseInt(totalBitoron[index].amount) + parseInt(bitoronCurrentMonth)
+            totalBitoron[index].amount =  parseInt(bitoronCurrentMonth)
         }
     })
 
     var currentDaeProdan = JSON.parse(progress.daeProdan);
     currentDaeProdan.forEach((daeProdanCurrent,index) => {
         if ( daeProdanCurrent.time === editDate ) {
-            currentDaeProdan[index].amount = parseInt(currentDaeProdan[index].amount) + parseInt(daeProdan)
+            currentDaeProdan[index].amount =  parseInt(daeProdan)
         }
     })
 
     var currentDeadWriteup = JSON.parse(progress.deadWriteup);
     currentDeadWriteup.forEach((deadWriteupCurrent,index) => {
         if ( deadWriteupCurrent.time === editDate ) {
-            currentDeadWriteup[index].amount = parseInt(currentDeadWriteup[index].amount) + parseInt(deadWriteup)
+            currentDeadWriteup[index].amount =  parseInt(deadWriteup)
         }
     })
 
@@ -2512,7 +2519,7 @@ module.exports.monthlyProgressUpdate = async(req,res) => {
             subCategory: subCategoryName.name,
             biboron: biboronName.name,
             breed: breedName.name,
-            // productionTarget: productionTarget,
+            productionTarget: JSON.stringify(totalProductionTarget),
             productionCurrent: JSON.stringify(currentProduction),
             productionTotal: JSON.stringify(totalProduction),
             daePrapti: JSON.stringify(currentDaePraptis),
