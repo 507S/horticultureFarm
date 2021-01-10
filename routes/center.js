@@ -5,7 +5,7 @@ const app=express();
 
 
 const {fetchMaan,fetchWork,fetchShuchok,fetchEkok,fetchShuchokMaan,expenseAddPost,expenseAdd,fetchExpenseCode,rajosshoAdd,rajosshoAddPost,allCenterInfo,
-    fetchRajosshoCode,generatePdfMonthlyProgress,monthlyProgressEdit,monthlyProgressUpdate,monthlyProgress,monthlyProgressYear,
+    fetchRajosshoCode,generatePdfMonthlyProgress,monthlyProgressEdit,monthlyProgressUpdate,monthlyProgressDelete,monthlyProgress,monthlyProgressYear,
     monthlyProgressForm,monthlyProgressFormPost,charaKolomFixed,centersignup,centersignuppost,rajossho,rajosshoYear,rajosshoForm,
     rajosshoFormPost,expense,expenseYear,expenseForm,expenseFormPost,chak1,chak1Year,chak1Form,chak1FormPost,chak2,chak2Year,chak2Form,
     chak2FormPost,revolvingFund,revolvingFundYear,revolvingFundForm,revolvingFundFormPost,specialCoconut,specialCoconutYear,specialCoconutForm,
@@ -132,6 +132,7 @@ router.get('/generatePdfMonthlyProgress',generatePdfMonthlyProgress);
 
 router.get('/monthlyProgressEdit/:progressId/:editDate',monthlyProgressEdit)
 router.post('/monthlyProgressUpdate/:progressId',monthlyProgressUpdate)
+router.get('/monthlyProgressDelete/:progressId/:selectedDate',monthlyProgressDelete)
 
 router.post('/fetchSubCategory',fetchSubCategory);
 router.post('/fetchBiboron',fetchBiboron);
