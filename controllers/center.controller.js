@@ -2578,7 +2578,7 @@ module.exports.monthlyProgressDelete = async (req,res) => {
             productionCurrent = prodCurrent.amount;
             console.log("inside",selectedDate,index)
             currentProduction.splice(index,1);
-            console.log("inside",currentProduction.splice(index,1));
+            // console.log("inside",currentProduction.splice(index,1));
         }
     })
     console.log("after",currentProduction)
@@ -2640,11 +2640,17 @@ module.exports.monthlyProgressDelete = async (req,res) => {
         }
     })
 
+    var totalTimeFrame = JSON.parse(progress.timeFrame);
+    totalTimeFrame.forEach((currentTime,index) => {
+        if ( currentTime.time === selectedDate ) {
+            totalTimeFrame.splice(index,1)
+        }
+    })
+
 
 
     await monthlyProgress.update(
         {
-
             productionTarget: JSON.stringify(totalProductionTarget),
             productionCurrent: JSON.stringify(currentProduction),
             productionTotal: JSON.stringify(totalProduction),
@@ -2654,8 +2660,7 @@ module.exports.monthlyProgressDelete = async (req,res) => {
             daeProdan: JSON.stringify(currentDaeProdan),
             deadWriteup: JSON.stringify(currentDeadWriteup),
             comment: JSON.stringify(currentComment),
-            // timeFrame: time,
-
+            timeFrame: JSON.stringify(totalTimeFrame)
         },
         {
             where: {id: req.params.progressId}
