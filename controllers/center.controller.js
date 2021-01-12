@@ -2256,7 +2256,7 @@ module.exports.generatePdfMonthlyProgress=async(req,res) => {
 module.exports.monthlyProgressForm=async(req,res)=>{
     try {
         const categoryList = await cropCategory.findAll();
-        res.render('center/monthlyProgress/monthlyProgressForm', { title: 'মাসিক প্রতিবেদন',msg:'' ,success:'',user_id: req.session.user_id,categoryList: categoryList});
+        res.render('center/monthlyProgress/monthlyProgressForm', { title: 'মাসিক প্রতিবেদন',msg:'' ,success:'',user_id: req.session.user_id,categoryList: categoryList, currentMonth:res.locals.moment().format("MMM-YYYY").toLowerCase()});
     }catch (e) {
         console.log(e)
     }
@@ -2269,73 +2269,71 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
     var breed= req.body.breed;
     var productionTarget= req.body.productionTarget;
     var productionCurrent= req.body.productionCurrent;
-    var productionLast= req.body.productionLast;
     var productionTotal= req.body.productionTotal;
     var daePrapti= req.body.daePrapti;
-    var lastYear= req.body.lastYear;
-    var grandTotalProduction= req.body.grandTotalProduction;
     var bitoronCurrentMonth= req.body.bitotonCurrentMonth;
-    var bitotonLastMonth= req.body.bitotonLastMonth;
-    var bitoronTotal= req.body.bitoronTotal;
     var daeProdan= req.body.daeProdan;
     var deadWriteup= req.body.deadWriteup;
-    var grandTotalBitoron= req.body.grandTotalBitoron;
     var comment= req.body.comment;
     var user_id =req.body.user_id;
+    var selectedMonth =  req.body.currentMonth;
 
-    const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase()
+    const categoryName = await cropCategory.findByPk(category)
+    const subCategoryName = await cropCategory.findByPk(subCategory)
+    const biboronName = await cropCategory.findByPk(biboron)
+    const breedName = await cropCategory.findByPk(breed)
+    const centerInfo = await center.findByPk(user_id)
 
-    const available = await monthlyProgress.findOne({
+    const progressData = await monthlyProgress.findOne({
         where: {
-            category : category,
-            subCategory : subCategory,
-            biboron : biboron,
-            breed : breed,
+            category : categoryName.name,
+            subCategory : subCategoryName.name,
+            biboron : biboronName.name,
+            breed : breedName.name,
             center_id : user_id
         }
     })
-    console.log("outside start",available)
-    if (!available){
-        console.log("test",available)
+
+    if (!progressData){
         var currentProduction = [];
         var productionObj = {};
-        productionObj["time"] =  currentMonth;
+        productionObj["time"] =  selectedMonth;
         productionObj["amount"] =  productionCurrent;
         currentProduction.push(productionObj)
 
         var currentDaePraptis = [];
         var daePraptiObj = {};
-        daePraptiObj["time"] =  currentMonth;
+        daePraptiObj["time"] =  selectedMonth;
         daePraptiObj["amount"] =  daePrapti;
         currentDaePraptis.push(daePraptiObj)
 
         var currentBitoron = [];
         var bitoronObj = {};
-        bitoronObj["time"] =  currentMonth;
+        bitoronObj["time"] =  selectedMonth;
         bitoronObj["amount"] =  bitoronCurrentMonth;
         currentBitoron.push(bitoronObj)
 
         var currentDaeProdan = [];
         var daeProdanObj = {};
-        daeProdanObj["time"] =  currentMonth;
+        daeProdanObj["time"] =  selectedMonth;
         daeProdanObj["amount"] =  daeProdan;
         currentDaeProdan.push(daeProdanObj)
 
         var currentDeadWriteup = [];
         var deadWriteupObj = {};
-        deadWriteupObj["time"] =  currentMonth;
+        deadWriteupObj["time"] =  selectedMonth;
         deadWriteupObj["amount"] =  deadWriteup;
         currentDeadWriteup.push(deadWriteupObj)
 
         var currentComment = [];
         var commentObj = {};
-        commentObj["time"] =  currentMonth;
+        commentObj["time"] =  selectedMonth;
         commentObj["msg"] =  comment;
         currentComment.push(commentObj)
 
         var time = [];
         var timeObj = {};
-        timeObj["time"] =  currentMonth;
+        timeObj["time"] =  selectedMonth;
         time.push(timeObj)
 
         var startRange = "";
@@ -2369,41 +2367,178 @@ module.exports.monthlyProgressFormPost=async(req,res)=>{
         productionTargetObj["amount"] =  productionTarget;
         productionTargetList.push(productionTargetObj)
 
-        const categoryName = await cropCategory.findByPk(category)
-        const subCategoryName = await cropCategory.findByPk(subCategory)
-        const biboronName = await cropCategory.findByPk(biboron)
-        const breedName = await cropCategory.findByPk(breed)
-        const centerInfo = await center.findByPk(user_id)
 
-        await monthlyProgress.create({
-            category: categoryName.name,
-            subCategory: subCategoryName.name,
-            biboron: biboronName.name,
-            breed: breedName.name,
-            productionTarget: JSON.stringify(productionTargetList),
-            productionCurrent: JSON.stringify(currentProduction),
-            productionTotal: JSON.stringify(totalProduction),
-            daePrapti: JSON.stringify(currentDaePraptis),
-            bitoronCurrentMonth: JSON.stringify(currentBitoron),
-            bitoronTotal: JSON.stringify(totalBitoron),
 
-            daeProdan: JSON.stringify(currentDaeProdan),
-            deadWriteup: JSON.stringify(currentDeadWriteup),
-            comment: JSON.stringify(currentComment),
-            timeFrame: JSON.stringify(time),
-            center_id:user_id,
-            pd_id: centerInfo.pd_id
-
-        }).then(data => {
-            console.log('productionTotal=',productionTotal);
-            res.redirect('/center/monthlyProgressForm');
-        }).catch(err => {
-            console.log("err",err);
-            res.render('errorpage',err);
-        });
+        // await monthlyProgress.create({
+        //     category: categoryName.name,
+        //     subCategory: subCategoryName.name,
+        //     biboron: biboronName.name,
+        //     breed: breedName.name,
+        //     productionTarget: JSON.stringify(productionTargetList),
+        //     productionCurrent: JSON.stringify(currentProduction),
+        //     productionTotal: JSON.stringify(totalProduction),
+        //     daePrapti: JSON.stringify(currentDaePraptis),
+        //     bitoronCurrentMonth: JSON.stringify(currentBitoron),
+        //     bitoronTotal: JSON.stringify(totalBitoron),
+        //     daeProdan: JSON.stringify(currentDaeProdan),
+        //     deadWriteup: JSON.stringify(currentDeadWriteup),
+        //     comment: JSON.stringify(currentComment),
+        //     timeFrame: JSON.stringify(time),
+        //     center_id:user_id,
+        //     pd_id: centerInfo.pd_id
+        //
+        // }).then(data => {
+        //     req.flash('message', 'Successfully added');
+        //     res.redirect('/center/monthlyProgressForm');
+        // }).catch(err => {
+        //     console.log("err",err);
+        //     // res.render('errorpage',err);
+        // });
     }
     else{
-        console.log("already exists")
+
+        var currentProduction = JSON.parse(progressData.productionCurrent);
+        var productionObj = {};
+        productionObj["time"] =  selectedMonth;
+        productionObj["amount"] =  productionCurrent;
+        currentProduction.push(productionObj)
+
+        var currentDaePraptis = JSON.parse(progressData.daePrapti);
+        var daePraptiObj = {};
+        daePraptiObj["time"] =  selectedMonth;
+        daePraptiObj["amount"] =  daePrapti;
+        currentDaePraptis.push(daePraptiObj)
+
+        var currentBitoron = JSON.parse(progressData.bitoronCurrentMonth);
+        var bitoronObj = {};
+        bitoronObj["time"] =  selectedMonth;
+        bitoronObj["amount"] =  bitoronCurrentMonth;
+        currentBitoron.push(bitoronObj)
+
+        var currentDaeProdan = JSON.parse(progressData.daeProdan);
+        var daeProdanObj = {};
+        daeProdanObj["time"] =  selectedMonth;
+        daeProdanObj["amount"] =  daeProdan;
+        currentDaeProdan.push(daeProdanObj)
+
+        var currentDeadWriteup = JSON.parse(progressData.deadWriteup);
+        var deadWriteupObj = {};
+        deadWriteupObj["time"] =  selectedMonth;
+        deadWriteupObj["amount"] =  deadWriteup;
+        currentDeadWriteup.push(deadWriteupObj)
+
+        var currentComment = JSON.parse(progressData.comment);
+        var commentObj = {};
+        commentObj["time"] =  selectedMonth;
+        commentObj["msg"] =  comment;
+        currentComment.push(commentObj)
+
+        var time = JSON.parse(progressData.timeFrame);
+        var timeObj = {};
+        timeObj["time"] =  selectedMonth;
+        time.push(timeObj)
+
+        var startRange = "";
+        var endRange = "";
+        if ( res.locals.moment().format("M") < 7){
+            startRange = "jul"+"-"+res.locals.moment().subtract(1, "year").format('yyyy')
+            endRange = "jul"+"-"+res.locals.moment().format('yyyy')
+        }else{
+            startRange = "jul"+"-"+res.locals.moment().format('yyyy')
+            endRange = "jul"+"-"+res.locals.moment().add(1, "year").format('yyyy')
+        }
+
+        // const dateMatched = JSON.parse(progressData.timeFrame).filter(e => e.time === 'feb-2021').length > 0
+        var selectedDateEconomicYearStart = ""
+        var selectedDateEconomicYearEnd = ""
+        if ( res.locals.moment(selectedMonth).format("M") < 7){
+            selectedDateEconomicYearStart = "jul"+"-"+res.locals.moment().subtract(1, "year").format('yyyy')
+            selectedDateEconomicYearEnd = "jul"+"-"+res.locals.moment().format('yyyy')
+        }else{
+            selectedDateEconomicYearStart = "jul"+"-"+res.locals.moment().format('yyyy')
+            selectedDateEconomicYearEnd = "jul"+"-"+res.locals.moment().add(1, "year").format('yyyy')
+        }
+
+        const dateMatched = JSON.parse(progressData.productionTarget).filter(e => e.startTime === selectedDateEconomicYearStart && e.endTime === selectedDateEconomicYearEnd).length > 0
+
+        var productionTargetList = JSON.parse(progressData.productionTarget);
+        var totalProduction = JSON.parse(progressData.productionTotal);
+        var totalBitoron = JSON.parse(progressData.bitoronTotal);
+
+        if (dateMatched){
+
+            productionTargetList.forEach((prodTargetTotal,index) => {
+                if ( res.locals.moment(selectedMonth).isAfter(prodTargetTotal.startTime) &&  res.locals.moment(selectedMonth).isBefore(prodTargetTotal.endTime) ) {
+                    productionTargetList[index].amount =  parseInt(productionTarget)
+                }
+            })
+
+            totalProduction.forEach((prodTotal,index) => {
+                if ( res.locals.moment(selectedMonth).isAfter(prodTotal.startTime) &&  res.locals.moment(selectedMonth).isBefore(prodTotal.endTime) ) {
+                    totalProduction[index].amount +=  parseInt(productionCurrent)
+                }
+            })
+
+            totalBitoron.forEach((bitoronTotal,index) => {
+                if ( res.locals.moment(selectedMonth).isAfter(bitoronTotal.startTime) &&  res.locals.moment(selectedMonth).isBefore(bitoronTotal.endTime) ) {
+                    totalBitoron[index].amount +=  parseInt(bitoronCurrentMonth)
+                }
+            })
+        }
+        else{
+
+            var productionTargetObj = {};
+            productionTargetObj["startTime"] =  `${startRange}`;
+            productionTargetObj["endTime"] =  `${endRange}`;
+            productionTargetObj["amount"] =  productionTarget;
+            productionTargetList.push(productionTargetObj)
+
+
+            var totalProducObj = {};
+            totalProducObj["startTime"] =  `${startRange}`;
+            totalProducObj["endTime"] =  `${endRange}`;
+            totalProducObj["amount"] =  productionCurrent;
+            totalProduction.push(totalProducObj)
+
+
+            var totalBitoronObj = {};
+            totalBitoronObj["startTime"] =  `${startRange}`;
+            totalBitoronObj["endTime"] =  `${endRange}`;
+            totalBitoronObj["amount"] =  bitoronCurrentMonth;
+            totalBitoron.push(totalBitoronObj)
+        }
+
+
+
+        await monthlyProgress.update(
+            {
+                category: categoryName.name,
+                subCategory: subCategoryName.name,
+                biboron: biboronName.name,
+                breed: breedName.name,
+                productionTarget: JSON.stringify(productionTargetList),
+                productionCurrent: JSON.stringify(currentProduction),
+                productionTotal: JSON.stringify(totalProduction),
+                daePrapti: JSON.stringify(currentDaePraptis),
+                bitoronCurrentMonth: JSON.stringify(currentBitoron),
+                bitoronTotal: JSON.stringify(totalBitoron),
+                daeProdan: JSON.stringify(currentDaeProdan),
+                deadWriteup: JSON.stringify(currentDeadWriteup),
+                comment: JSON.stringify(currentComment),
+                timeFrame: JSON.stringify(time)
+
+            },
+            {
+                where: {id: progressData.id}
+            }
+        )
+            .then(data => {
+                req.flash('message', 'Successfully added on existing data');
+                res.redirect('/center/monthlyProgressForm');
+            }).catch(err => {
+                console.log("err",err);
+            });
+
     }
 
 
@@ -2427,13 +2562,14 @@ module.exports.monthlyProgressUpdate = async(req,res) => {
     var biboron= req.body.biboron;
     var breed= req.body.breed;
     var productionTarget= req.body.productionTarget;
-    var productionCurrent= req.body.productionCurrent;
-    var daePrapti= req.body.daePrapti;
-    var bitoronCurrentMonth= req.body.bitotonCurrentMonth;
-    var daeProdan= req.body.daeProdan;
-    var deadWriteup= req.body.deadWriteup;
+    var productionCurrent= req.body.productionCurrent ? req.body.productionCurrent : 0;
+    var daePrapti= req.body.daePrapti ? req.body.daePrapti : 0;
+    var bitoronCurrentMonth= req.body.bitotonCurrentMonth ? req.body.bitotonCurrentMonth : 0;
+    var daeProdan= req.body.daeProdan ? req.body.daeProdan : 0;
+    var deadWriteup= req.body.deadWriteup ? req.body.deadWriteup : 0;
     var comment= req.body.comment;
     var editDate = req.body.editDate.toLowerCase();
+    console.log("test current",req.body.productionCurrent ? 'empty' : 0)
 
 
     const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
@@ -2470,7 +2606,7 @@ module.exports.monthlyProgressUpdate = async(req,res) => {
     var totalProduction = JSON.parse(progress.productionTotal);
     totalProduction.forEach((prodTotal,index) => {
         if ( res.locals.moment(editDate).isAfter(prodTotal.startTime) &&  res.locals.moment(editDate).isBefore(prodTotal.endTime) ) {
-            totalProduction[index].amount =  parseInt(productionCurrent)
+            totalProduction[index].amount +=  parseInt(productionCurrent)
         }
     })
 
@@ -2491,7 +2627,7 @@ module.exports.monthlyProgressUpdate = async(req,res) => {
     var totalBitoron = JSON.parse(progress.bitoronTotal);
     totalBitoron.forEach((bitoronTotal,index) => {
         if ( res.locals.moment(editDate).isAfter(bitoronTotal.startTime) &&  res.locals.moment(editDate).isBefore(bitoronTotal.endTime) ) {
-            totalBitoron[index].amount =  parseInt(bitoronCurrentMonth)
+            totalBitoron[index].amount +=  parseInt(bitoronCurrentMonth)
         }
     })
 
