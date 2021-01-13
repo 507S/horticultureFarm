@@ -3,11 +3,19 @@
           <%- include('../../includes/topbar')-%>
             <div class="page-wrap">
               <%- include('../../includes/sidebar')-%>
+
               <div class="main-content">
                 <div class="container-fluid">
                     <h4 class="text-right"><b>Month & Year : </b><span> <%= moment().locale("bn").format("ll")   %></span></h4>
+                    <% if(messages.message){ %>
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong><%= messages.message %></strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <% } %>
                     <div class="row clearfix">
-
                     <div id="signupbox" style="margin-top:50px" class="mainbox col-md-12 col-md-offset-12 col-sm-12 col-sm-offset-12">
                         <div class="panel panel-info">
                             <div class="panel-heading">
@@ -64,26 +72,26 @@
                                     <div class="form-row mt-3">
                                         <div class="col">
                                             <label for="productionTarget" class="col-md-3 control-label">উৎপাদন (লক্ষ্যমাত্রা)</label>
-                                            <input type="text" class="form-control" name="productionTarget" placeholder="উৎপাদন (লক্ষ্যমাত্রা)">
+                                            <input type="number" class="form-control" name="productionTarget" placeholder="উৎপাদন (লক্ষ্যমাত্রা)" value="0">
                                         </div>
                                     </div>
 
                                     <div class="form-row mt-3">
                                         <div class="col">
                                             <label for="productionCurrent" class="col control-label">উৎপাদন (চলতি মাস)</label>
-                                            <input type="text" class="form-control" name="productionCurrent" placeholder="উৎপাদন (চলতি মাস)">
+                                            <input type="number" class="form-control" name="productionCurrent" placeholder="উৎপাদন (চলতি মাস)" value="0">
                                         </div>
                                         <div class="col">
                                             <label for="daePrapti" class="col control-label">ডিএই চালানে প্রাপ্তি (চলতি মাস)</label>
-                                            <input type="text" class="form-control" name="daePrapti" placeholder="ডিএই চালানে প্রাপ্তি">
+                                            <input type="number" class="form-control" name="daePrapti" placeholder="ডিএই চালানে প্রাপ্তি" value="0">
                                         </div>
                                         <div class="col">
                                             <label for="bitotonCurrentMonth" class="col control-label">বিতরণ (চলতি মাস)</label>
-                                            <input type="text" class="form-control" name="bitotonCurrentMonth" placeholder="বিতরণ (চলতি মাস)">
+                                            <input type="number" class="form-control" name="bitotonCurrentMonth" placeholder="বিতরণ (চলতি মাস)" value="0">
                                         </div>
                                         <div class="col">
                                             <label for="daeProdan" class="col control-label">ডিএই চালানে প্রদান (চলতি মাস)</label>
-                                            <input type="text" class="form-control" name="daeProdan" placeholder="ডিএই চালানে প্রদান">
+                                            <input type="number" class="form-control" name="daeProdan" placeholder="ডিএই চালানে প্রদান" value="0">
                                         </div>
                                     </div>
 
@@ -91,20 +99,25 @@
 
                                         <div class="col">
                                             <label for="deadWriteup" class="col control-label">মৃত/বিনষ্ট রাইটআপ (চলতি মাস)</label>
-                                            <input type="text" class="form-control" name="deadWriteup" placeholder="মৃত/বিনষ্ট রাইটআপ">
+                                            <input type="number" class="form-control" name="deadWriteup" placeholder="মৃত/বিনষ্ট রাইটআপ" value="0">
                                         </div>
 
                                         <div class="col">
                                             <label for="comment" class="col-md-3 control-label">মন্তব্য</label>
                                             <input type="text" class="form-control" name="comment" placeholder="মন্তব্য">
                                         </div>
-
                                     </div>
 
                                     <div class="form-group">
 <!--                                        <label for="year" class="col-md-3 control-label">userid</label>-->
                                         <div class="col-md-9">
                                             <input type="hidden" class="form-control" name="user_id" placeholder="id" value="<%= user_id %>" >
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <input type="hidden" class="form-control" name="currentMonth" value="<%= currentMonth %>">
                                         </div>
                                     </div>
                                     
@@ -121,6 +134,7 @@
                                      </div>
 
                                 </form>
+
                                 
                             </div>
                         </div>
