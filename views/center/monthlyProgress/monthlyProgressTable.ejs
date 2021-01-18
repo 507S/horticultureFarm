@@ -66,7 +66,6 @@
                         previousMonthProduction += parseInt(prodCurrent.amount)
                     }
                 })
-
                 // উৎপাদন (লক্ষ্যমাত্রা) *********
                 var productionTargetSum = 0;
                 const TargetProduction = JSON.parse(row.productionTarget)
@@ -180,7 +179,9 @@
                 <td><%= new Number(currentDaeProdanSum).toLocaleString("bn-BD") %></td>
                 <td><%= new Number(currentMritoSum).toLocaleString("bn-BD") %></td>
                 <td><%= new Number(currentDaeProdanSum + currentMritoSum).toLocaleString("bn-BD") %></td>
-                <td><%= new Number((totalProductionSum + daePraptiSum + prevYearJer) - (currentDaeProdanSum + currentMritoSum)).toLocaleString("bn-BD") %></td>
+                <td><%= new Number(totalProductionSum + daePraptiSum + prevYearJer).toLocaleString("bn-BD") %>
+                    <%= new Number(currentDaeProdanSum + currentMritoSum).toLocaleString("bn-BD") %>
+                    <%= new Number((totalProductionSum + daePraptiSum + prevYearJer) - (currentDaeProdanSum + currentMritoSum)).toLocaleString("bn-BD") %></td>
                 <td><%= montobboSum %></td>
                 <td>
                     <a class="btn btn-primary btn-xs" href="/center/monthlyProgressEdit/<%= row.id %>/<%= currentMonth %>"><i class="fa fa-edit"></i></a>

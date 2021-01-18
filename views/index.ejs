@@ -157,18 +157,21 @@
 
         <div class="row about-stats stats block-1-4 block-m-1-2 block-mob-full" data-aos="fade-up">
                 
-            <div class="col-block stats__col ">
-                <div class="stats__counts" id="totalProduction"><%= new Number(totalProduction).toLocaleString("bn-BD") %></div>
-                <h5>চারা উৎপাদন</h5>
-            </div>
-            <div class="col-block stats__col">
-                <div class="stats__counts" id="totalBitoron"> <%= new Number(totalBitoron).toLocaleString("bn-BD") %> </div>
-                <h5>চারা বিতরণ</h5>
-            </div>
+<!--            <div class="col-block stats__col ">-->
+<!--                <div class="stats__counts" id="totalProduction"><%= new Number(totalProduction).toLocaleString("bn-BD") %></div>-->
+<!--                <h5>চারা উৎপাদন</h5>-->
+<!--            </div>-->
+
+<!--            <div class="col-block stats__col">-->
+<!--                <div class="stats__counts" id="totalBitoron"> <%= new Number(totalBitoron).toLocaleString("bn-BD") %> </div>-->
+<!--                <h5>চারা বিতরণ</h5>-->
+<!--            </div>-->
+
             <div class="col-block stats__col">
                 <div class="stats__counts" id="totalMojud"><%= new Number(totalProduction - totalBitoron).toLocaleString("bn-BD") %></div>
                 <h5>চারা সংরক্ষণ/মজুদ</h5>
             </div>
+
             <div class="col-block stats__col">
                 <select style="font-size: 2.5rem; background: #39b54a;" class="browser-default custom-select" id="center">
                     <option value="all">সব  সেন্টার</option>
@@ -178,7 +181,30 @@
                   </select>
             </div>
 
+            <div class="col-block stats__col">
+                <select style="font-size: 2.5rem; background: #39b54a;" class="browser-default custom-select" id="biboron">
+                    <option value="all">সব বিবরণ </option>
+                    <% biboron.forEach((row) => { %>
+                        <option value="<%= row.name %>"> <%= row.name %> </option>
+                    <%  }) %>
+                </select>
+            </div>
+
+            <div class="col-block stats__col">
+                <select style="font-size: 2.5rem; background: #39b54a;" class="browser-default custom-select" id="breed">
+                    <option value="all">সব জাত </option>
+                    <% breed.forEach((row) => { %>
+                        <option value="<%= row.name %>"> <%= row.name %> </option>
+                    <%  }) %>
+                </select>
+            </div>
+
         </div> <!-- end about-stats -->
+        <p style="text-align:center" class=" home-content__buttons">
+            <span class="btn btn--stroke" id="findMojud">
+                khujun
+            </span>
+        </p>
         <p style="text-align:center" class=" home-content__buttons">
             <a href="/center/charaKolomFixed" class="btn btn--stroke">
                 চারা কলমের মূল্য তালিকা
@@ -453,12 +479,14 @@
     <script src="landingPage/js/plugins.js"></script>
     <script src="landingPage/js/main.js"></script>
     <script type="text/javascript">
-        $('#center').on("change",function () {
+        $('#findMojud').on("click",function () {
             var center = $('#center').val();
+            var biboron = $('#biboron').val();
+            var breed = $('#breed').val();
             $.ajax({
                 type: "POST",
-                url: "/centerData",
-                data: {center: center},
+                url: "/findMojud",
+                data: {center: center,biboron:biboron, breed:breed},
                 datatype: "json",
                 beforeSend: function() {
                     // setting a timeout
@@ -466,8 +494,8 @@
                     $('#output').hide();
                 },
                 success: function (data) {
-                    $('#totalProduction').html(new Number(data.totalProduction).toLocaleString("bn-BD"));
-                    $('#totalBitoron').html(new Number(data.totalBitoron).toLocaleString("bn-BD"));
+                    // $('#totalProduction').html(new Number(data.totalProduction).toLocaleString("bn-BD"));
+                    // $('#totalBitoron').html(new Number(data.totalBitoron).toLocaleString("bn-BD"));
                     $('#totalMojud').html(new Number(data.totalProduction - data.totalBitoron).toLocaleString("bn-BD"));
                 },
                 complete: function() {
