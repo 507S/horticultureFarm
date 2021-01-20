@@ -167,10 +167,7 @@
 <!--                <h5>চারা বিতরণ</h5>-->
 <!--            </div>-->
 
-            <div class="col-block stats__col">
-                <div class="stats__counts" id="totalMojud"><%= new Number(totalProduction - totalBitoron).toLocaleString("bn-BD") %></div>
-                <h5>চারা সংরক্ষণ/মজুদ</h5>
-            </div>
+            
 
             <div class="col-block stats__col">
                 <select style="font-size: 2.5rem; background: #39b54a;" class="browser-default custom-select" id="center">
@@ -199,10 +196,15 @@
                 </select>
             </div>
 
+            <div class="col-block stats__col">
+                <div class="stats__counts" id="totalMojud"><%= new Number(totalProduction - totalBitoron).toLocaleString("bn-BD") %></div>
+                <h5>চারা সংরক্ষণ/মজুদ</h5>
+            </div>
+
         </div> <!-- end about-stats -->
         <p style="text-align:center" class=" home-content__buttons">
             <span class="btn btn--stroke" id="findMojud">
-                khujun
+                খুঁজুন
             </span>
         </p>
         <p style="text-align:center" class=" home-content__buttons">

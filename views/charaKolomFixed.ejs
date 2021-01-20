@@ -94,19 +94,15 @@
                     <thead>
                     <tr>
                         <th style="color: #ffffff">চারা/কলমের নাম</th>
-                        <th style="color: #ffffff">২০১৭-১৮ অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
-                        <th style="color: #ffffff">২০১৮-১৯ অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
-                        <th style="color: #ffffff">২০১৯-২০ অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
-                        <th style="color: #ffffff">২০১৯-২০ অর্থবছরে পার্বত্য জেলাসমূহের অনুমোদিত অনুমোদিত বিক্রয়মূল্য</th>
+                        <th style="color: #ffffff">চলতি অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
+                        <th style="color: #ffffff">চলতি অর্থবছরে পার্বত্য জেলাসমূহের অনুমোদিত অনুমোদিত বিক্রয়মূল্য</th>
                     </tr>
                     </thead>
                     <tbody>
                         <% record1.forEach(function(row){ %>
                             <tr>
                                 <td style="color:#f5f5f5a6"><%= row.cname %></td>
-                                <td style="color:#f5f5f5a6"><%= row.shotero %></td>
-                                <td style="color:#f5f5f5a6"><%= row.atharo %></td>
-                                <td style="color:#f5f5f5a6"><%= row.unish %></td>
+                                <td style="color:#f5f5f5a6"><%= row.cholti %></td>
                                 <td style="color:#f5f5f5a6"><%= row.parbotto %></td>
                             </tr>
                         <% }) %>
@@ -115,13 +111,11 @@
                 <% }else{ %>
                     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
                         <thead>
-                        <tr>
-                            <th style="color: #ffffff">চারা/কলমের নাম</th>
-                        <th style="color: #ffffff">২০১৭-১৮ অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
-                        <th style="color: #ffffff">২০১৮-১৯ অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
-                        <th style="color: #ffffff">২০১৯-২০ অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
-                        <th style="color: #ffffff">২০১৯-২০ অর্থবছরে পার্বত্য জেলাসমূহের অনুমোদিত অনুমোদিত বিক্রয়মূল্য</th>
-                        </tr>
+                            <tr>
+                                <th style="color: #ffffff">চারা/কলমের নাম</th>
+                                <th style="color: #ffffff">চলতি অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
+                                <th style="color: #ffffff">চলতি অর্থবছরে পার্বত্য জেলাসমূহের অনুমোদিত অনুমোদিত বিক্রয়মূল্য</th>
+                            </tr>
                         </thead>
                         <tbody>
                         <% record1.forEach(function(row){ %>
@@ -171,9 +165,7 @@
                     <tr>
                         <th style="color: #ffffff">আইটেমের নাম</th>
                         <th style="color: #ffffff">পরিমাণ (সংখ্যা/কেজি/লিটার)</th>
-                        <th style="color: #ffffff">২০১৭-১৮ অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
-                        <th style="color: #ffffff">২০১৮-১৯ অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
-                        <th style="color: #ffffff">২০১৯-২০ অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
+                        <th style="color: #ffffff">চলতি অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -181,9 +173,7 @@
                             <tr>
                                 <td style="color:#f5f5f5a6"><%= row.item %></td>
                                 <td style="color:#f5f5f5a6"><%= row.amount %></td>
-                                <td style="color:#f5f5f5a6"><%= row.shotero %></td>
-                                <td style="color:#f5f5f5a6"><%= row.atharo %></td>
-                                <td style="color:#f5f5f5a6"><%= row.unish %></td>
+                                <td style="color:#f5f5f5a6"><%= row.cholti %></td>
                             </tr>
                         <% }) %>
                     </tbody>
@@ -193,11 +183,8 @@
                         <thead>
                         <tr>
                             <th style="color: #ffffff">আইটেমের নাম</th>
-                            <th style="color: #ffffff">পরিমাণ (সংখ্যা/কেজি/লিটার)</th>
-                            <th style="color: #ffffff">২০১৭-১৮ অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
-                            <th style="color: #ffffff">২০১৮-১৯ অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
-                            <th style="color: #ffffff">২০১৯-২০ অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
-                            <th style="color: #ffffff">পরিবর্তন/মুছুন</th>
+                        <th style="color: #ffffff">পরিমাণ (সংখ্যা/কেজি/লিটার)</th>
+                        <th style="color: #ffffff">চলতি অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -247,24 +234,18 @@
                     <thead>
                     <tr>
                         <th style="color: #ffffff">আইটেমের নাম (জাতওয়ারী)</th>
-                        <th style="color: #ffffff">প্রতি ১০ গ্রাম বীজের মূল্য(টাকায়) (২০১৮-১৯ সালে)</th>
-                        <th style="color: #ffffff">প্রতি ১০০ টি চারার (উচ্চ ফলনশীল) মূল্য(টাকায়) (২০১৮-১৯ সালে)</th>
-                        <th style="color: #ffffff">প্রতি ১০০ টি চারার (হাইব্রিড) মূল্য(টাকায়) (২০১৮-১৯ সালে)</th>
-                        <th style="color: #ffffff">প্রতি ১০ গ্রাম বীজের মূল্য(টাকায়) (২০১৯-২০ সালে)</th>
-                        <th style="color: #ffffff">প্রতি ১০০ টি চারার (উচ্চ ফলনশীল) মূল্য(টাকায়) (২০১৯-২০ সালে)</th>
-                        <th style="color: #ffffff">প্রতি ১০০ টি চারার (হাইব্রিড) মূল্য(টাকায়) (২০১৯-২০ সালে)</th>
+                        <th style="color: #ffffff">প্রতি ১০ গ্রাম বীজের মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
+                        <th style="color: #ffffff">প্রতি ১০০ টি চারার (উচ্চ ফলনশীল) মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
+                        <th style="color: #ffffff">প্রতি ১০০ টি চারার (হাইব্রিড) মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
                     </tr>
                     </thead>
                     <tbody>
                         <% record3.forEach(function(row){ %>
                             <tr>
                                 <td style="color:#f5f5f5a6"><%= row.item %></td>
-                                <td style="color:#f5f5f5a6"><%= row.doshatharo %></td>
-                                <td style="color:#f5f5f5a6"><%= row.ekshoucchoatharo %></td>
-                                <td style="color:#f5f5f5a6"><%= row.ekshohybridatharo %></td>
-                                <td style="color:#f5f5f5a6"><%= row.doshbijunish %></td>
-                                <td style="color:#f5f5f5a6"><%= row.ekshoucchounish %></td>
-                                <td style="color:#f5f5f5a6"><%= row.ekshohybridunish %></td>
+                                <td style="color:#f5f5f5a6"><%= row.doshcholti %></td>
+                                <td style="color:#f5f5f5a6"><%= row.ekshoucchocholti %></td>
+                                <td style="color:#f5f5f5a6"><%= row.ekshohybridcholti %></td>
                             </tr>
                         <% }) %>
                     </tbody>
@@ -274,12 +255,9 @@
                         <thead>
                         <tr>
                             <th style="color: #ffffff">আইটেমের নাম (জাতওয়ারী)</th>
-                            <th style="color: #ffffff">প্রতি ১০ গ্রাম বীজের মূল্য(টাকায়) (২০১৮-১৯ সালে)</th>
-                            <th style="color: #ffffff">প্রতি ১০০ টি চারার (উচ্চ ফলনশীল) মূল্য(টাকায়) (২০১৮-১৯ সালে)</th>
-                            <th style="color: #ffffff">প্রতি ১০০ টি চারার (হাইব্রিড) মূল্য(টাকায়) (২০১৮-১৯ সালে)</th>
-                            <th style="color: #ffffff">প্রতি ১০ গ্রাম বীজের মূল্য(টাকায়) (২০১৯-২০ সালে)</th>
-                            <th style="color: #ffffff">প্রতি ১০০ টি চারার (উচ্চ ফলনশীল) মূল্য(টাকায়) (২০১৯-২০ সালে)</th>
-                            <th style="color: #ffffff">প্রতি ১০০ টি চারার (হাইব্রিড) মূল্য(টাকায়) (২০১৯-২০ সালে)</th>
+                        <th style="color: #ffffff">প্রতি ১০ গ্রাম বীজের মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
+                        <th style="color: #ffffff">প্রতি ১০০ টি চারার (উচ্চ ফলনশীল) মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
+                        <th style="color: #ffffff">প্রতি ১০০ টি চারার (হাইব্রিড) মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -329,24 +307,18 @@
                     <thead>
                     <tr>
                         <th style="color: #ffffff">আইটেমের নাম (জাতওয়ারী)</th>
-                        <th style="color: #ffffff">প্রতি ১০ গ্রাম বীজের মূল্য(টাকায়) (২০১৮-১৯ সালে)</th>
-                        <th style="color: #ffffff">প্রতি ১০০ টি চারার (উচ্চ ফলনশীল) মূল্য(টাকায়) (২০১৮-১৯ সালে)</th>
-                        <th style="color: #ffffff">প্রতি ১০০ টি চারার (হাইব্রিড) মূল্য(টাকায়) (২০১৮-১৯ সালে)</th>
-                        <th style="color: #ffffff">প্রতি ১০ গ্রাম বীজের মূল্য(টাকায়) (২০১৯-২০ সালে)</th>
-                        <th style="color: #ffffff">প্রতি ১০০ টি চারার (উচ্চ ফলনশীল) মূল্য(টাকায়) (২০১৯-২০ সালে)</th>
-                        <th style="color: #ffffff">প্রতি ১০০ টি চারার (হাইব্রিড) মূল্য(টাকায়) (২০১৯-২০ সালে)</th>
+                        <th style="color: #ffffff">প্রতি ১০ গ্রাম বীজের মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
+                        <th style="color: #ffffff">প্রতি ১০০ টি চারার (উচ্চ ফলনশীল) মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
+                        <th style="color: #ffffff">প্রতি ১০০ টি চারার (হাইব্রিড) মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
                     </tr>
                     </thead>
                     <tbody>
                         <% record4.forEach(function(row){ %>
                             <tr>
                                 <td style="color:#f5f5f5a6"><%= row.item %></td>
-                                <td style="color:#f5f5f5a6"><%= row.doshatharo %></td>
-                                <td style="color:#f5f5f5a6"><%= row.ekshoucchoatharo %></td>
-                                <td style="color:#f5f5f5a6"><%= row.ekshohybridatharo %></td>
-                                <td style="color:#f5f5f5a6"><%= row.doshbijunish %></td>
-                                <td style="color:#f5f5f5a6"><%= row.ekshoucchounish %></td>
-                                <td style="color:#f5f5f5a6"><%= row.ekshohybridunish %></td>
+                                <td style="color:#f5f5f5a6"><%= row.doshcholti %></td>
+                                <td style="color:#f5f5f5a6"><%= row.ekshoucchocholti %></td>
+                                <td style="color:#f5f5f5a6"><%= row.ekshohybridcholti %></td>
                             </tr>
                         <% }) %>
                     </tbody>
@@ -356,12 +328,9 @@
                         <thead>
                         <tr>
                             <th style="color: #ffffff">আইটেমের নাম (জাতওয়ারী)</th>
-                            <th style="color: #ffffff">প্রতি ১০ গ্রাম বীজের মূল্য(টাকায়) (২০১৮-১৯ সালে)</th>
-                            <th style="color: #ffffff">প্রতি ১০০ টি চারার (উচ্চ ফলনশীল) মূল্য(টাকায়) (২০১৮-১৯ সালে)</th>
-                            <th style="color: #ffffff">প্রতি ১০০ টি চারার (হাইব্রিড) মূল্য(টাকায়) (২০১৮-১৯ সালে)</th>
-                            <th style="color: #ffffff">প্রতি ১০ গ্রাম বীজের মূল্য(টাকায়) (২০১৯-২০ সালে)</th>
-                            <th style="color: #ffffff">প্রতি ১০০ টি চারার (উচ্চ ফলনশীল) মূল্য(টাকায়) (২০১৯-২০ সালে)</th>
-                            <th style="color: #ffffff">প্রতি ১০০ টি চারার (হাইব্রিড) মূল্য(টাকায়) (২০১৯-২০ সালে)</th>
+                        <th style="color: #ffffff">প্রতি ১০ গ্রাম বীজের মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
+                        <th style="color: #ffffff">প্রতি ১০০ টি চারার (উচ্চ ফলনশীল) মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
+                        <th style="color: #ffffff">প্রতি ১০০ টি চারার (হাইব্রিড) মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -411,24 +380,16 @@
                     <thead>
                     <tr>
                         <th style="color: #ffffff">আইটেমের নাম (জাতওয়ারী)</th>
-                        <th style="color: #ffffff">পলিব্যাগ (২০১৭-১৮ এ বিক্রয়মূল্য)</th>
-                        <th style="color: #ffffff">টবে (২০১৭-১৮ এ বিক্রয়মূল্য)</th>
-                        <th style="color: #ffffff">পলিব্যাগ (২০১৮-১৯ এ বিক্রয়মূল্য)</th>
-                        <th style="color: #ffffff">টবে (২০১৮-১৯ এ বিক্রয়মূল্য)</th>
-                        <th style="color: #ffffff">পলিব্যাগ (২০১৯-২০ এ বিক্রয়মূল্য)</th>
-                        <th style="color: #ffffff">টবে (২০১৯-২০ এ বিক্রয়মূল্য)</th>
+                        <th style="color: #ffffff">পলিব্যাগ (চলতি অর্থবছরে বিক্রয়মূল্য)</th>
+                        <th style="color: #ffffff">টবে (চলতি অর্থবছরে বিক্রয়মূল্য))</th>
                     </tr>
                     </thead>
                     <tbody>
                         <% record5.forEach(function(row){ %>
                             <tr>
                                 <td style="color:#f5f5f5a6"><%= row.item %></td>
-                                <td style="color:#f5f5f5a6"><%= row.polyshotero %></td>
-                                <td style="color:#f5f5f5a6"><%= row.tobshotero %></td>
-                                <td style="color:#f5f5f5a6"><%= row.polyatharo %></td>
-                                <td style="color:#f5f5f5a6"><%= row.tobatharo %></td>
-                                <td style="color:#f5f5f5a6"><%= row.polyunish %></td>
-                                <td style="color:#f5f5f5a6"><%= row.tobunish %></td>
+                                <td style="color:#f5f5f5a6"><%= row.polycholti %></td>
+                                <td style="color:#f5f5f5a6"><%= row.tobcholti %></td>
                             </tr>
                         <% }) %>
                     </tbody>
@@ -438,12 +399,8 @@
                         <thead>
                         <tr>
                             <th style="color: #ffffff">আইটেমের নাম (জাতওয়ারী)</th>
-                            <th style="color: #ffffff">পলিব্যাগ (২০১৭-১৮ এ বিক্রয়মূল্য)</th>
-                            <th style="color: #ffffff">টবে (২০১৭-১৮ এ বিক্রয়মূল্য)</th>
-                            <th style="color: #ffffff">পলিব্যাগ (২০১৮-১৯ এ বিক্রয়মূল্য)</th>
-                            <th style="color: #ffffff">টবে (২০১৮-১৯ এ বিক্রয়মূল্য)</th>
-                            <th style="color: #ffffff">পলিব্যাগ (২০১৯-২০ এ বিক্রয়মূল্য)</th>
-                            <th style="color: #ffffff">টবে (২০১৯-২০ এ বিক্রয়মূল্য)</th>
+                        <th style="color: #ffffff">পলিব্যাগ (চলতি অর্থবছরে বিক্রয়মূল্য)</th>
+                        <th style="color: #ffffff">টবে (চলতি অর্থবছরে বিক্রয়মূল্য))</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -494,10 +451,8 @@
                     <tr>
                         <th style="color: #ffffff">আইটেমের নাম (জাতওয়ারী)</th>
                         <th style="color: #ffffff">পরিমাণ</th>
-                        <th style="color: #ffffff">পলিব্যাগ (২০১৮-১৯ এ বিক্রয়মূল্য)</th>
-                        <th style="color: #ffffff">বেডে (২০১৮-১৯ এ বিক্রয়মূল্য)</th>
-                        <th style="color: #ffffff">পলিব্যাগ (২০১৯-২০ এ বিক্রয়মূল্য)</th>
-                        <th style="color: #ffffff">বেডে (২০১৯-২০ এ বিক্রয়মূল্য)</th>
+                        <th style="color: #ffffff">পলিব্যাগ (চলতি অর্থবছরে বিক্রয়মূল্য)</th>
+                        <th style="color: #ffffff">বেডে (চলতি অর্থবছরে বিক্রয়মূল্য)</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -505,10 +460,8 @@
                             <tr>
                                 <td style="color:#f5f5f5a6"><%= row.item %></td>
                                 <td style="color:#f5f5f5a6"><%= row.poriman %></td>
-                                <td style="color:#f5f5f5a6"><%= row.polyatharo %></td>
-                                <td style="color:#f5f5f5a6"><%= row.bedatharo %></td>
-                                <td style="color:#f5f5f5a6"><%= row.polyunish %></td>
-                                <td style="color:#f5f5f5a6"><%= row.bedunish %></td>
+                                <td style="color:#f5f5f5a6"><%= row.polycholti %></td>
+                                <td style="color:#f5f5f5a6"><%= row.bedcholti %></td>
                             </tr>
                         <% }) %>
                     </tbody>
@@ -518,11 +471,9 @@
                         <thead>
                         <tr>
                             <th style="color: #ffffff">আইটেমের নাম (জাতওয়ারী)</th>
-                            <th style="color: #ffffff">পরিমাণ</th>
-                            <th style="color: #ffffff">পলিব্যাগ (২০১৮-১৯ এ বিক্রয়মূল্য)</th>
-                            <th style="color: #ffffff">বেডে (২০১৮-১৯ এ বিক্রয়মূল্য)</th>
-                            <th style="color: #ffffff">পলিব্যাগ (২০১৯-২০ এ বিক্রয়মূল্য)</th>
-                            <th style="color: #ffffff">বেডে (২০১৯-২০ এ বিক্রয়মূল্য)</th>
+                        <th style="color: #ffffff">পরিমাণ</th>
+                        <th style="color: #ffffff">পলিব্যাগ (চলতি অর্থবছরে বিক্রয়মূল্য)</th>
+                        <th style="color: #ffffff">বেডে (চলতি অর্থবছরে বিক্রয়মূল্য)</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -631,7 +582,7 @@
     </div>
 
 
-    <!-- Java Script
+    <!-- Java Scripts
     ================================================== -->
     <script src="/landingPage/js/jquery-3.2.1.min.js"></script>
     <script src="/landingPage/js/plugins.js"></script>

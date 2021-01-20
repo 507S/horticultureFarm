@@ -25,9 +25,18 @@
 
                                         
                                     <div class="form-group">
-                                        <label for="cname" class="col-md-3 control-label">চারা/কলমের নাম</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="cname" placeholder="চারা/কলমের নাম">
+                                            <div class="col-md-9">
+                                <label >বাছুন :</label>
+                                <select id="cname" name="cname" required>
+                                    <option value="">চারা/কলমের নাম</option>
+                                    <% if (records.length >0){ %>
+                                        <% records.forEach(function (row) { %>
+                                            <option value="<%= row.name %>"><%= row.name %></option>
+                                        <% }) %>
+                                    <% } %>
+                                </select>
+                            </div>
                                         </div>
                                     </div>
                                     
