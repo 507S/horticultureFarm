@@ -144,7 +144,7 @@ router.post('/findMojud', async(req,res) => {
         });
     }
 
-    console.log("mojud find 1", monthly_progress, req.body.center, req.body.biboron, req.body.breed, monthly_progress.length)
+    // console.log("mojud find 1", monthly_progress, req.body.center, req.body.biboron, req.body.breed, monthly_progress.length)
 
     var total_rajossho = [];
     if (req.body.center === "all"){

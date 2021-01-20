@@ -180,9 +180,12 @@
                 <td><%= new Number(currentDaeProdanSum).toLocaleString("bn-BD") %></td>
                 <td><%= new Number(currentMritoSum).toLocaleString("bn-BD") %></td>
                 <td><%= new Number(currentDaeProdanSum + currentMritoSum).toLocaleString("bn-BD") %></td>
-                <td><%= new Number((totalProductionSum + daePraptiSum + prevYearJer) - (currentDaeProdanSum + currentMritoSum)).toLocaleString("bn-BD") %></td>
+                <td><%= new Number((totalProductionSum ) - (totalBitoronSum )).toLocaleString("bn-BD") %></td>
                 <td><%= montobboSum %></td>
-                <td><a class="btn btn-primary btn-xs" href="/pd/monthlyProgressEdit/<%= row.id %>/<%= selectedDate %>"><i class="fa fa-edit"></i></a></td>
+                <td>
+                    <a class="btn btn-primary btn-xs" href="/pd/monthlyProgressEdit/<%= row.id %>/<%= selectedDate %>"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger btn-xs" href="/pd/monthlyProgressDelete/<%= row.id %>/<%= selectedDate %>"><i class="fa fa-trash"></i></a>
+                </td>
             </tr>
         <% }) %>
         </tbody>
