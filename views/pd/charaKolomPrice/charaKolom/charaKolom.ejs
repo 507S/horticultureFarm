@@ -78,7 +78,7 @@
     
         $("#wrapper").load( "no url rn",function() {
             
-            var year = new Date().getFullYear();
+            var year = $('#year').val();
             $.ajax({
                 type: "POST",
                 url: "/pd/charaKolomYear",

@@ -30,16 +30,16 @@ const path = require("path");
 //multer setup for dashImage image
 var storagedashImage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, './public/dashImage');
+      cb(null, './public/dashImageGallery');
     },
     filename: function (req, file, cb) {
       cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
     },
   });  
-var upload = multer({
+var uploaddashImage = multer({
     storage: storagedashImage,
- }).single("newsUp");
- exports.upload=upload;
+ }).single("dashImage");
+ exports.uploaddashImage=uploaddashImage;
  //multer setup for dashImage image ends
 
 const jwt= require('jsonwebtoken');
@@ -563,7 +563,15 @@ module.exports.charaKolomYear=async(req,res)=>{
 };
 
 module.exports.charaKolomForm=async(req,res)=>{
-    res.render('pd/charaKolomPrice/charaKolom/charaKolomForm', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য',msg:'' ,success:'',user_id: req.session.user_id});
+    await cropCategory.findAll({
+        where: {type:"jat"}
+    })
+    .then(data => {
+        res.render('pd/charaKolomPrice/charaKolom/charaKolomForm', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য',msg:'' ,success:'',records:data});
+    })
+    .catch(err => {
+        console.log(err);
+    })
 };
 
 module.exports.charaKolomFormPost=async(req,res)=>{
@@ -658,7 +666,15 @@ module.exports.folMoshollaYear=async(req,res)=>{
 };
 
 module.exports.folMoshollaForm=async(req,res)=>{
-    res.render('pd/charaKolomPrice/folMosholla/folMoshollaForm', { title: 'হরটিকালচার সেন্টারের ফল/মসলা ও শাক-সবজি বিক্রয় মূল্য',msg:'' ,success:'',user_id: req.session.user_id});
+    await cropCategory.findAll({
+        where: {type:"jat"}
+    })
+    .then(data => {
+        res.render('pd/charaKolomPrice/folMosholla/folMoshollaForm', { title: 'হরটিকালচার সেন্টারের ফল/মসলা ও শাক-সবজি বিক্রয় মূল্য',msg:'' ,success:'',records:data});
+    })
+    .catch(err => {
+        console.log(err);
+    })
 };
 
 module.exports.folMoshollaFormPost=async(req,res)=>{
@@ -754,7 +770,15 @@ module.exports.otherFlowerYear=async(req,res)=>{
 };
 
 module.exports.otherFlowerForm=async(req,res)=>{
-    res.render('pd/charaKolomPrice/otherFlower/otherFlowerForm', { title: 'বিভিন্ন ফুল ও সুদৃশ্য গাছের চারা/কলমের বিক্রয় মূল্য',msg:'' ,success:'',user_id: req.session.user_id});
+    await cropCategory.findAll({
+        where: {type:"jat"}
+    })
+    .then(data => {
+        res.render('pd/charaKolomPrice/otherFlower/otherFlowerForm', { title: 'বিভিন্ন ফুল ও সুদৃশ্য গাছের চারা/কলমের বিক্রয় মূল্য',msg:'' ,success:'',records:data});
+    })
+    .catch(err => {
+        console.log(err);
+    })
 };
 
 module.exports.otherFlowerFormPost=async(req,res)=>{
@@ -853,7 +877,15 @@ module.exports.seasonalFlowerYear=async(req,res)=>{
 };
 
 module.exports.seasonalFlowerForm=async(req,res)=>{
-    res.render('pd/charaKolomPrice/seasonalFlower/seasonalFlowerForm', { title: 'মৌসুমী ফুল ও চারার বিক্রয় মূল্য',msg:'' ,success:'',user_id: req.session.user_id});
+    await cropCategory.findAll({
+        where: {type:"jat"}
+    })
+    .then(data => {
+        res.render('pd/charaKolomPrice/seasonalFlower/seasonalFlowerForm', { title: 'মৌসুমী ফুল ও চারার বিক্রয় মূল্য',msg:'' ,success:'',records:data});
+    })
+    .catch(err => {
+        console.log(err);
+    })
 };
 
 module.exports.seasonalFlowerFormPost=async(req,res)=>{
@@ -954,7 +986,15 @@ module.exports.summerVegYear=async(req,res)=>{
 };
 
 module.exports.summerVegForm=async(req,res)=>{
-    res.render('pd/charaKolomPrice/summerVeg/summerVegForm', { title: 'গ্রীষ্মকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য',msg:'' ,success:'',user_id: req.session.user_id});
+    await cropCategory.findAll({
+        where: {type:"jat"}
+    })
+    .then(data => {
+        res.render('pd/charaKolomPrice/summerVeg/summerVegForm', { title: 'গ্রীষ্মকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য',msg:'' ,success:'',records:data});
+    })
+    .catch(err => {
+        console.log(err);
+    })
 };
 
 module.exports.summerVegFormPost=async(req,res)=>{
@@ -1056,7 +1096,15 @@ module.exports.winterVegYear=async(req,res)=>{
 };
 
 module.exports.winterVegForm=async(req,res)=>{
-    res.render('pd/charaKolomPrice/winterVeg/winterVegForm', { title: 'শীতকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য',msg:'' ,success:'',user_id: req.session.user_id});
+    await cropCategory.findAll({
+        where: {type:"jat"}
+    })
+    .then(data => {
+        res.render('pd/charaKolomPrice/winterVeg/winterVegForm', { title: 'শীতকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য',msg:'' ,success:'',records:data});
+    })
+    .catch(err => {
+        console.log(err);
+    })
 };
 
 module.exports.winterVegFormPost=async(req,res)=>{
@@ -1142,6 +1190,21 @@ module.exports.workerInfo=async(req,res)=>{
 };
 
 module.exports.workerInfoFilter=async(req,res)=>{
+    if (req.body.center === "all") {
+        console.log("resss")
+        await workerInfo.findAll({
+            where: {year: req.body.year,month:req.body.month}
+        })
+        .then(data => {
+            res.render('pd/worker/workerInfo/workerInfoTable', {records: data} ,function(err, html) {
+                res.send(html);
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
+    else{
     await workerInfo.findAll({
         where: {year: req.body.year,center_id : req.body.center,month:req.body.month}
     })
@@ -1153,7 +1216,7 @@ module.exports.workerInfoFilter=async(req,res)=>{
     .catch(err => {
         console.log(err);
     })
-
+    }
 };
 
 module.exports.workerInfoForm=async(req,res)=>{
@@ -1256,6 +1319,34 @@ module.exports.workerNum=async(req,res)=>{
 };
 
 module.exports.workerNumFilter=async(req,res)=>{
+    if (req.body.center === "all") {
+        console.log("resss")
+        await workerInfo.findAll({
+            where: {year: req.body.year,month: req.body.month}
+        })
+        .then(data => {
+            console.log("inside");
+            var reg=0;
+            var irreg=0;
+            data.forEach(function(row){
+                if(row.regularWorker !== 0){
+                    reg+=1;
+                };
+            });
+            data.forEach(function(row){
+                if(row.irregularWorker !== 0){
+                    irreg+=1;
+                };
+            });
+            var total;
+            total = reg+irreg;
+            res.render('pd/worker/workerNum/workerNumTable', { title: 'শ্রমিকদের সংখ্যা',success:'', totals:total,regs: reg,irregs:irreg,records:data });
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
+    else{
     await workerInfo.findAll({
         where: {center_id: req.body.center,year: req.body.year,month: req.body.month}
     })
@@ -1280,7 +1371,7 @@ module.exports.workerNumFilter=async(req,res)=>{
     .catch(err => {
         console.log(err);
     })
-
+    }
 };
 
 //workerNum controller end
@@ -1661,6 +1752,20 @@ module.exports.chak1=async(req,res)=>{
 };
 
 module.exports.chak1Filter=async(req,res)=>{
+    if (req.body.center === "all") {
+        await chak1.findAll({
+            where: {year: req.body.year,month:req.body.month}
+        })
+        .then(data => {
+            res.render('pd/employee/chak1/employeeChak1Table', {records: data} ,function(err, html) {
+                res.send(html);
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
+    else{
     await chak1.findAll({
         where: {year: req.body.year,center_id : req.body.center,month:req.body.month}
     })
@@ -1670,9 +1775,9 @@ module.exports.chak1Filter=async(req,res)=>{
         });
     })
     .catch(err => {
-        res.render('pd/employee/chak1/employeeChak1Year', { title: 'ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য',success:'', records: err });
+        console.log(err);
     })
-
+    }
 };
 
 module.exports.chak1Form=async(req,res)=>{
@@ -1734,6 +1839,20 @@ module.exports.chak2=async(req,res)=>{
 };
 
 module.exports.chak2Filter=async(req,res)=>{
+    if (req.body.center === "all") {
+        await chak2.findAll({
+            where: {year: req.body.year,month:req.body.month}
+        })
+        .then(data => {
+            res.render('pd/employee/chak2/employeeChak2Table', {records: data} ,function(err, html) {
+                res.send(html);
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
+    else{
     await chak2.findAll({
         where: {year: req.body.year,center_id : req.body.center,month:req.body.month}
     })
@@ -1745,7 +1864,7 @@ module.exports.chak2Filter=async(req,res)=>{
     .catch(err => {
         console.log(err);
     })
-
+    }
 };
 
 module.exports.chak2Form=async(req,res)=>{
@@ -2830,16 +2949,10 @@ module.exports.dashImageForm=async(req,res)=>{
 };
 module.exports.dashImageFormPost=async(req,res)=>{
     const path = req.file && req.file.path;
-    console.log("path",path);
+    console.log("path",path,req.file,req.file.path)
     if(path){
-        var imagePath = "/dashImage/" + req.file.filename;
-        var name= req.body.name;
-        var description= req.body.description;
-        var date= req.body.date;
-        await dashImage.create({
-                name: name,
-                description:description,
-                date:date,
+        var imagePath = "/dashImageGallery/" + req.file.filename;
+        await dashImages.create({
                 image: imagePath,
             })
             .then(data => {
@@ -2850,7 +2963,7 @@ module.exports.dashImageFormPost=async(req,res)=>{
         }
         else{
         
-            console.log("file not uploaded successfully",err);
+            console.log("path doesn't exist so file not uploaded successfully");
         };
     
   

@@ -16,8 +16,13 @@ const {apaUddessho,apaMaan,karjokrom,suchok,ekok,suchokMaan,newKhorochCode,newRa
     charaKolom,charaKolomYear,folMoshollaEdit,folMoshollaEditPost,folMoshollaDelete,newcropCategoryList,newcropCategoryListPost,newcropCategoryListEdit,
     charaKolomForm,charaKolomFormPost,folMosholla,folMoshollaYear,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegYear,winterVegForm,dashImageForm,dashImageFormPost,
     winterVegFormPost,summerVeg,summerVegYear,summerVegForm,summerVegFormPost,otherFlower,otherFlowerYear,otherFlowerForm,otherFlowerFormPost,
+<<<<<<< HEAD
     seasonalFlower,seasonalFlowerYear,seasonalFlowerForm,seasonalFlowerFormPost,workerInfo,workerInfoFilter,workerInfoForm,apaCategoryTable,upload,
     workerInfoFormPost,workerNum,workerNumFilter,monthlyProgressEdit,monthlyProgressUpdate,monthlyProgressDelete} = require('../controllers/pd.controller');
+=======
+    seasonalFlower,seasonalFlowerYear,seasonalFlowerForm,seasonalFlowerFormPost,workerInfo,workerInfoFilter,workerInfoForm,apaCategoryTable,uploaddashImage,
+    workerInfoFormPost,workerNum,workerNumFilter,monthlyProgressEdit,monthlyProgressUpdate} = require('../controllers/pd.controller');
+>>>>>>> 3046a2d160887069bf4bf7bed2f29be7a1b8bed2
 
 router.get('/',allcenter);
 
@@ -30,9 +35,8 @@ router.get('/charaKolomFixed',charaKolomFixed);
 router.get('/login',pdlogin);
 router.post('/logins',pdloginpost);
 router.get('/dashboard',pdDashboard);
-router.post('/upload',upload);
 router.get('/dashImageForm',dashImageForm);
-router.post('/dashImageFormPost',dashImageFormPost);
+router.post('/dashImageFormPost',uploaddashImage,dashImageFormPost);
 
 router.get('/signup',pdsignup);
 router.post('/signups',pdsignuppost);

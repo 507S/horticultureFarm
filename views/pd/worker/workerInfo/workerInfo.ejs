@@ -17,7 +17,7 @@
                                     <div class="col-md-3">
                                         <label >Choose a Center:</label>
                                         <select id="center" name="center" required>
-                                            <option value="">Choose center</option>
+                                            <option value="all">সকল সেন্টারের তথ্য</option>
                                             <% if (centers.length >0){ %>
                                                 <% centers.forEach(function (center) { %>
                                                     <option value="<%= center.id %>"><%= center.center %></option>
