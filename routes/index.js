@@ -9,6 +9,7 @@ const rajossho = db.rajossho;
 const center  = db.center;
 const cropcategory  = db.cropcategory;
 
+
 /* GET home page. */
 router.get('/', async function(req, res, next) {
   try{
@@ -195,6 +196,5 @@ router.post('/findMojud', async(req,res) => {
     // res.send({title: 'Horticulture' ,totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud, center: centerinfo });
     res.json({title: 'Horticulture',totalProduction: totalProduct, totalBitoron: totalBitoron,totalrajossho:totalrajossho })
 })
-
 
 module.exports = router;
