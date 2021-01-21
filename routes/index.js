@@ -10,6 +10,11 @@ const center  = db.center;
 const cropcategory  = db.cropcategory;
 
 
+const path = require("path");
+let pdf = require("html-pdf");
+var fs = require('fs');
+
+
 /* GET home page. */
 router.get('/', async function(req, res, next) {
   try{
