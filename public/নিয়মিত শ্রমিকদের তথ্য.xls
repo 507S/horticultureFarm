@@ -1,0 +1,32 @@
+<table class="table table-bordered table-striped dataTable no-footer" id="tblCustomers" cellspacing="0" cellpadding="0" role="grid" aria-describedby="tblCustomers_info">
+    <thead>
+    <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="tblCustomers" rowspan="1" colspan="1" aria-sort="ascending" aria-label="ক্রমিক নং: activate to sort column descending" style="width: 0px;">ক্রমিক নং</th><th class="sorting" tabindex="0" aria-controls="tblCustomers" rowspan="1" colspan="1" aria-label="পদবী: activate to sort column ascending" style="width: 0px;">পদবী</th><th class="sorting" tabindex="0" aria-controls="tblCustomers" rowspan="1" colspan="1" aria-label="নাম: activate to sort column ascending" style="width: 0px;">নাম</th><th class="sorting" tabindex="0" aria-controls="tblCustomers" rowspan="1" colspan="1" aria-label="পিতার নাম: activate to sort column ascending" style="width: 0px;">পিতার নাম</th><th class="sorting" tabindex="0" aria-controls="tblCustomers" rowspan="1" colspan="1" aria-label="ঠিকানা: activate to sort column ascending" style="width: 0px;">ঠিকানা</th><th class="sorting" tabindex="0" aria-controls="tblCustomers" rowspan="1" colspan="1" aria-label="মোবাইল নং: activate to sort column ascending" style="width: 0px;">মোবাইল নং</th><th class="sorting" tabindex="0" aria-controls="tblCustomers" rowspan="1" colspan="1" aria-label="যোগদানের তারিখ: activate to sort column ascending" style="width: 0px;">যোগদানের তারিখ</th><th class="sorting" tabindex="0" aria-controls="tblCustomers" rowspan="1" colspan="1" aria-label="এনআইডি নং: activate to sort column ascending" style="width: 0px;">এনআইডি নং</th><th class="sorting" tabindex="0" aria-controls="tblCustomers" rowspan="1" colspan="1" aria-label="ব্যাংক একাউন্ট নং: activate to sort column ascending" style="width: 0px;">ব্যাংক একাউন্ট নং</th></tr>
+    </thead>
+    <tbody>
+        
+            
+        
+            
+        
+    <tr role="row" class="odd">
+                <td class="sorting_1">1</td>
+                <td>অনিয়মিত</td>
+                <td>Mohaimin Rahman</td>
+                <td>Abdul Jabbar</td>
+                <td>mirpur-1</td>
+                <td>+8801521104119</td>
+                <td>2021-01-06</td>
+                <td>২৩৪৮৯৪</td>
+                <td>1525665</td>
+            </tr><tr role="row" class="even">
+                <td class="sorting_1">2</td>
+                <td>অনিয়মিত</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr></tbody>
+</table>

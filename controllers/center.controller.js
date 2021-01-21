@@ -820,7 +820,8 @@ module.exports.workerInfoFormPost = async (req, res) => {
         center_id: user_id
 
     }).then(data => {
-        res.redirect('/center/workerInfo');
+        req.flash('message', 'Successfully added');
+        res.redirect('/center/workerInfoForm');
     }).catch(err => {
         res.render('errorpage', err);
     });
@@ -963,7 +964,8 @@ module.exports.apaFormPost = async (req, res) => {
         center_id: user_id
 
     }).then(data => {
-        res.redirect('/center/apa');
+        req.flash('message', 'Successfully added');
+        res.redirect('/center/apaForm');
     }).catch(err => {
         res.render('errorpage', err);
     });
@@ -1093,7 +1095,8 @@ module.exports.loanFormPost = async (req, res) => {
         center_id: user_id
 
     }).then(data => {
-        res.redirect('/center/loan');
+        req.flash('message', 'Successfully added');
+        res.redirect('/center/loanForm');
     }).catch(err => {
         res.render('errorpage', err);
     });
@@ -1185,7 +1188,8 @@ module.exports.specialCoconutFormPost = async (req, res) => {
         center_id: user_id
 
     }).then(data => {
-        res.redirect('/center/specialCoconut');
+        req.flash('message', 'Successfully added');
+        res.redirect('/center/specialCoconutForm');
     }).catch(err => {
         res.render('errorpage', err);
     });
@@ -1276,7 +1280,8 @@ module.exports.revolvingFundFormPost = async (req, res) => {
         center_id: user_id
 
     }).then(data => {
-        res.redirect('/center/revolvingFund');
+        req.flash('message', 'Successfully added');
+        res.redirect('/center/revolvingFundForm');
     }).catch(err => {
         res.render('errorpage', err);
     });
@@ -1354,7 +1359,8 @@ module.exports.chak1FormPost = async (req, res) => {
         center_id: user_id
 
     }).then(data => {
-        res.redirect('/center/chak1');
+        req.flash('message', 'Successfully added');
+        res.redirect('/center/chak1Form');
     }).catch(err => {
         res.render('errorpage', err);
     });
@@ -1428,7 +1434,8 @@ module.exports.chak2FormPost = async (req, res) => {
         center_id: user_id
 
     }).then(data => {
-        res.redirect('/center/chak2');
+        req.flash('message', 'Successfully added');
+        res.redirect('/center/chak2Form');
     }).catch(err => {
         res.render('errorpage', err);
     });
@@ -1587,7 +1594,8 @@ module.exports.rajosshoFormPost = async (req, res) => {
         center_id: user_id
 
     }).then(data => {
-        res.redirect('/center/rajossho');
+        req.flash('message', 'Successfully added');
+        res.redirect('/center/rajosshoForm');
     }).catch(err => {
         res.render('errorpage', err);
     });
@@ -1912,7 +1920,8 @@ module.exports.expenseFormPost = async (req, res) => {
         center_id: user_id
 
     }).then(data => {
-        res.redirect('/center/expense');
+        req.flash('message', 'Successfully added');
+        res.redirect('/center/expenseForm');
     }).catch(err => {
         res.render('errorpage', err);
     });
