@@ -15,7 +15,7 @@
                             <div class="card-body">
                                 <div class="row clearfix">
                                     <div class="col-md-3">
-                                        <select id="center" name="center" required>
+                                        <select id="center" class="form-control" name="center" required>
                                             <option value="all">সকল সেন্টারের তথ্য</option>
                                             <% if (centers.length >0){ %>
                                                 <% centers.forEach(function (center) { %>
@@ -25,8 +25,8 @@
                                         </select>
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="month">মাস:</label>
-                                        <select id="month" name="month">
+                                        <!-- <label for="month">মাস:</label> -->
+                                        <select id="month" class="form-control" name="month">
                                             <option value="january">জানুয়ারি</option>
                                             <option value="february">ফেব্রুয়ারি</option>
                                             <option value="march">মার্চ</option>
@@ -42,8 +42,8 @@
                                         </select>
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="year">অর্থবছর:</label>
-                                        <select id="year" name="year">
+                                        <!-- <label for="year">অর্থবছর:</label> -->
+                                        <select id="year" class="form-control" name="year">
                                             <option value="2017">২০১৭-১৮</option>
                                             <option value="2018">২০১৮-১৯</option>
                                             <option value="2019">২০১৯-২০</option>
