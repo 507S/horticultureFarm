@@ -72,7 +72,7 @@
                         <div class="table-responsive" id="output"></div>
 
                         <input type="button" id="btnExport" value="Download PDF" />
-                        <button onclick="exportToExcel('tblCustomers', 'ছকপ্ত্র-ক')" class="btn btn-success">Export Table Data To Excel File</button>
+                        <button onclick="exportToExcel('tblexportData', 'ছকপ্ত্র-ক')" class="btn btn-success">Export Table Data To Excel File</button>
 
 
                         <div id="output"></div>
@@ -93,7 +93,7 @@
         var tableHTMLData = tableSelect.outerHTML.replace(/ /g, '%20');
         
         // Specify file name
-        filename = filename?filename+'.xlsx':'export_excel_data.xlsx';
+        filename = filename?filename+'.xls':'export_excel_data.xls';
         
         // Create download link element
         downloadurl = document.createElement("a");
