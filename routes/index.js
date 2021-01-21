@@ -204,14 +204,14 @@ router.post('/findMojud', async(req,res) => {
 
 router.get('/demoPdf', async (req,res) => {
     res.render('demoPdf',{name: "zahid"},function(err,html){
-        var options    = {format:'A4'};
-        pdf.create(html, options).toFile('../public/upload/demopdf.pdf', function(err, result) {
+        var options = {format:'A4'};
+        pdf.create(html, options).toFile('../public/upload/demoPdf.pdf', function(err, result) {
             if (err){
                 return console.log(err);
             }
             else{
                 console.log(res);
-                var datafile = fs.readFileSync('../public/upload/demopdf.pdf');
+                var datafile = fs.readFileSync('../public/upload/demoPdf.pdf');
                 res.header('content-type','application/pdf');
                 res.send(datafile);
             }
