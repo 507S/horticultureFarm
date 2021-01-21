@@ -10,9 +10,8 @@
                                 <h1 class="text-center"><%= title %></h1>
                             </div>
                             <div class="col-md-4">
-                                <label >Choose a Center:</label>
                                 <select id="center" name="center" required>
-                                    <option value="">Choose center</option>
+                                    <option value="">সকল সেন্টারের তথ্য</option>
                                     <% if (centers.length >0){ %>
                                         <% centers.forEach(function (center) { %>
                                             <option value="<%= center.id %>"><%= center.center %></option>
@@ -21,10 +20,9 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <label for="year">Choose a year:</label>
+                                <label for="year">অর্থবছর:</label>
 
                                 <select id="year" name="year">
-                                    <option value="">Choose year</option>
                                     <option value="2017">২০১৭-১৮</option>
                                     <option value="2018">২০১৮-১৯</option>
                                     <option value="2019">২০১৯-২০</option>

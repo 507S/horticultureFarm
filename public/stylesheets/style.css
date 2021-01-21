@@ -6,3 +6,11 @@ body {
 a {
   color: #00B7FF;
 }
+
+@font-face {
+  font-family: NikoshFont;
+  src: url(../Nikosh.ttf);
+}
+body{
+  font-family: NikoshFont
+}
