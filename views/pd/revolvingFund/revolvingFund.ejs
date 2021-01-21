@@ -11,7 +11,7 @@
                             </div>
                             <div class="col-md-4">
                                 <select id="center" name="center" required>
-                                    <option value="">সকল সেন্টারের তথ্য</option>
+                                    <option value="">সেন্টার বাছুনঃ</option>
                                     <% if (centers.length >0){ %>
                                         <% centers.forEach(function (center) { %>
                                             <option value="<%= center.id %>"><%= center.center %></option>
@@ -46,7 +46,7 @@
                         <div class="table-responsive" id="output"></div>
 
                         <input type="button" id="btnExport" value="Download PDF" />
-                        <button onclick="exportToExcel('tblexportData', 'রিভলভিং ফান্ড')" class="btn btn-success">Export Table Data To Excel File</button>
+                        <button onclick="exportToExcel('tblCustomers', 'রিভলভিং ফান্ড')" class="btn btn-success">Export Table Data To Excel File</button>
 
 
                         <div id="output"></div>

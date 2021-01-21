@@ -22,6 +22,14 @@
                                         <p>Error:</p>
                                         <span></span>
                                     </div>
+                                    <% if(messages.message){ %>
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong><%= messages.message %></strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <% } %>
 
                                     <div class="form-group">
                                         <label for="khat" class="col-md-3 control-label">খাতের নাম</label>
@@ -169,7 +177,10 @@
                                         </div>
                                     </div>
                                     
-                                    
+                                    <div class="col-md-offset-3 col-md-9">
+                                    <button> <a href="/center/expense" class="col-md-offset-3 col-md-9">Finish Submitting Report</a>
+                                     </button>
+                                     </div>
                                         
                                     
                                 </form>
