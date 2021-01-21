@@ -81,3 +81,10 @@
         padding: 0;
     }
 }
+@font-face {
+    font-family: NikoshFont;
+    src: url(../../Nikosh.ttf);
+  }
+  body{
+      font-family: NikoshFont
+  }
