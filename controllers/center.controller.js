@@ -2253,6 +2253,8 @@ module.exports.generatePdfMonthlyProgress = async (req, res) => {
             //     }
             // });
 
+
+
             pdf.create(data, options).toStream(function (err, stream) {
                 if (err) return res.send(err);
                 res.setHeader('Content-type', 'application/pdf');
