@@ -10,6 +10,11 @@ const center  = db.center;
 const cropcategory  = db.cropcategory;
 
 
+const path = require("path");
+let pdf = require("html-pdf");
+var fs = require('fs');
+
+
 /* GET home page. */
 router.get('/', async function(req, res, next) {
   try{
@@ -195,6 +200,23 @@ router.post('/findMojud', async(req,res) => {
     });
     // res.send({title: 'Horticulture' ,totalProduction: totalProduct, totalBitoron: totalBitoron, totalMojud:totalMojud, center: centerinfo });
     res.json({title: 'Horticulture',totalProduction: totalProduct, totalBitoron: totalBitoron,totalrajossho:totalrajossho })
+})
+
+router.get('/demoPdf', async (req,res) => {
+    res.render('demoPdf',{name: "zahid"},function(err,html){
+        var options    = {format:'A4'};
+        pdf.create(html, options).toFile('../public/upload/demopdf.pdf', function(err, result) {
+            if (err){
+                return console.log(err);
+            }
+            else{
+                console.log(res);
+                var datafile = fs.readFileSync('../public/upload/demopdf.pdf');
+                res.header('content-type','application/pdf');
+                res.send(datafile);
+            }
+        });
+    })
 })
 
 module.exports = router;
