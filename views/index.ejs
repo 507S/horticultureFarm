@@ -180,7 +180,7 @@
 
             <div class="col-block stats__col">
                 <select style="font-size: 2.5rem; background: #39b54a;" class="browser-default custom-select" id="biboron">
-                    <option value="all">সব বিবরণ </option>
+                    <option value="all">বিবরণ বাছুন </option>
                     <% biboron.forEach((row) => { %>
                         <option value="<%= row.name %>"> <%= row.name %> </option>
                     <%  }) %>
@@ -189,7 +189,7 @@
 
             <div class="col-block stats__col">
                 <select style="font-size: 2.5rem; background: #39b54a;" class="browser-default custom-select" id="breed">
-                    <option value="all">সব জাত </option>
+                    <option value="all">জাত বাছুন </option>
                     <% breed.forEach((row) => { %>
                         <option value="<%= row.name %>"> <%= row.name %> </option>
                     <%  }) %>
