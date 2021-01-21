@@ -2246,9 +2246,10 @@ module.exports.generatePdfMonthlyProgress = async (req, res) => {
 
             pdf.create(data, options).toStream(function (err, stream) {
                 if (err) return res.send(err);
-                res.header("Content-Type", "application/pdf");
+                res.setHeader('Content-type', 'application/pdf');
                 stream.pipe(res);
                 res.type('pdf');
+                res.download('pdf')
             });
         }
     });
