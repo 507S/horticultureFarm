@@ -2830,7 +2830,7 @@ module.exports.generatePdfMonthlyProgress = async (req, res) => {
           .create(data, options)
           .toFile("./public/pdfs/monthlyprogress.pdf", function (err, file) {
             if (err) {
-              consolegit.log(err);
+              console.log(err);
               res.send({ success: false });
             } else {
               res.send({ success: true });
