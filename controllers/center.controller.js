@@ -2825,20 +2825,22 @@ module.exports.generatePdfMonthlyProgress = async (req, res) => {
         //     // res.send("File created successfully");
         //   }
         // });
-        // pdf
-        //   .create(data, options)
-        //   .toFile("./businesscard.pdf", function (err, res) {
-        //     if (err) return console.log(err);
-        //     console.log(res); // { filename: '/app/businesscard.pdf' }
-        //     res.send("File created successfully");
-        //   });
-        pdf.create(data, options).toStream(function (err, stream) {
-          if (err) return res.send(err);
-          console.log(err);
-          res.setHeader("Content-type", "application/pdf");
-          stream.pipe(res.stream);
-          res.type("pdf");
-        });
+        //console.log(data);
+        pdf
+          .create(data, options)
+          .toFile("./public/pdfs/monthlyprogress.pdf", function (err, file) {
+            if (err) {
+              res.json({ success: false });
+            }
+            res.json({ success: true });
+          });
+        // pdf.create(data, options).toStream(function (err, stream) {
+        //     if (err) return res.send(err);
+        //     console.log(err)
+        //     res.setHeader('Content-type', 'application/pdf');
+        //     stream.pipe(res);
+        //     res.type('pdf');
+        // });
       }
     }
   );
