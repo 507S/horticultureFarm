@@ -2830,9 +2830,11 @@ module.exports.generatePdfMonthlyProgress = async (req, res) => {
           .create(data, options)
           .toFile("./public/pdfs/monthlyprogress.pdf", function (err, file) {
             if (err) {
-              res.json({ success: false });
+              console.log(err);
+              res.send({ success: false });
+            } else {
+              res.send({ success: true });
             }
-            res.json({ success: true });
           });
         // pdf.create(data, options).toStream(function (err, stream) {
         //     if (err) return res.send(err);
