@@ -40,16 +40,18 @@
 
         <div class="table-responsive" id="output"></div>
 
-        <!-- <a href="/center/generatePdfMonthlyProgress" class="btn btn-primary">Download pdf</a> -->
+        <a href="/center/generatePdfMonthlyProgress" class="btn btn-primary"
+          >Download pdf</a
+        >
         <button
           onclick="exportToExcel('tblexportData', 'মাসিক প্রতিবেদন')"
           class="btn btn-success"
         >
           Export Table Data To Excel File
         </button>
-        <button onclick="exportToPdf()" class="btn btn-success">
+        <!-- <button onclick="exportToPdf()" class="btn btn-success">
           Download PDF
-        </button>
+        </button> -->
 
         <div id="output"></div>
         <!--                    <div id="loading" class="loading"><img src="{{ asset('assets/img/icon/loading.gif') }}" alt=""></div>-->
@@ -66,12 +68,18 @@
       url: "/center/generatePdfMonthlyProgress",
       method: "GET",
     });
-    if (data.data.success) {
-      window.open("/pdfs/monthlyprogress.pdf");
-    } else {
+    // if (data.data.success) {
+    //   window.open("/pdfs/monthlyprogress.pdf");
+    // } else {
+    //   alert("There was an error in creating pdf file");
+    // }
+    // console.log(data);
+    if (data.data.success === "failed") {
       alert("There was an error in creating pdf file");
+      return;
     }
     console.log(data);
+    window.open("data:application/pdf;base64" + data.data);
   }
   function exportToExcel(tableID, filename = "") {
     var downloadurl;

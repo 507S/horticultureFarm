@@ -1,7 +1,7 @@
 const db = require("../models");
 const Op = db.Sequelize.Op;
 const { fn, col, cast } = db.sequelize;
-
+const fs = require("fs");
 const path = require("path");
 
 let pdf = require("html-pdf");
@@ -2816,30 +2816,29 @@ module.exports.generatePdfMonthlyProgress = async (req, res) => {
           },
           base: "file:///" + assesPath,
         };
-        // pdf.create(data, options).toBuffer(function (err, buffer) {
-        //   if (err) {
-        //     res.send(err);
-        //   } else {
-        //     res.type("pdf");
-        //     res.end(buffer, "binary");
-        //     // res.send("File created successfully");
-        //   }
-        // });
-        //console.log(data);
-        pdf
-          .create(data, options)
-          .toFile(
-            `${__dirname}/public/pdfs/monthlyprogress.pdf`,
-            function (err, file) {
-              if (err) {
-                console.log(err);
-                res.json({ success: false });
-              } else {
-                res.json({ success: true });
-              }
-              // res.download(file, "monthlyprogress.pdf");
-            }
-          );
+        pdf.create(data, options).toStream(function (err, stream) {
+          if (err) {
+            res.json({ success: "failed" });
+          } else {
+            res.setHeader("Content-Type", "application/pdf");
+            stream.pipe(res);
+          }
+        });
+        // console.log(data);
+        // pdf
+        //   .create(data, options)
+        //   .toFile(
+        //     `${__dirname}/public/pdfs/monthlyprogress.pdf`,
+        //     function (err, file) {
+        //       if (err) {
+        //         console.log(err);
+        //         res.json({ success: false });
+        //       } else {
+        //         res.json({ success: true });
+        //       }
+        //       // res.download(file, "monthlyprogress.pdf");
+        //     }
+        //   );
         // pdf.create(data, options).toStream(function (err, stream) {
         //     if (err) return res.send(err);
         //     console.log(err)
