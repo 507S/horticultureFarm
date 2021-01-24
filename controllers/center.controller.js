@@ -2829,13 +2829,14 @@ module.exports.generatePdfMonthlyProgress = async (req, res) => {
         pdf
           .create(data, options)
           .toFile(
-            __dirname + "/public/pdfs/monthlyprogress.pdf",
+            `${__dirname}/public/pdfs/monthlyprogress.pdf`,
             function (err, file) {
               if (err) {
                 console.log(err);
                 res.send({ success: false });
               }
-              res.download(file, "monthlyprogress.pdf");
+              res.send({ success: true });
+              // res.download(file, "monthlyprogress.pdf");
             }
           );
         // pdf.create(data, options).toStream(function (err, stream) {
