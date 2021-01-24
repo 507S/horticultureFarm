@@ -62,15 +62,16 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript">
   async function exportToPdf() {
-    const { data } = await axios({
+    const data = await axios({
       url: "/center/generatePdfMonthlyProgress",
       method: "GET",
     });
-    if (data.success) {
+    if (data.data.success) {
       window.open("/pdfs/monthlyprogress.pdf");
     } else {
       alert("There was an error in creating pdf file");
     }
+    console.log(data);
   }
   function exportToExcel(tableID, filename = "") {
     var downloadurl;
