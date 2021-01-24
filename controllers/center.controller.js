@@ -2834,8 +2834,9 @@ module.exports.generatePdfMonthlyProgress = async (req, res) => {
               if (err) {
                 console.log(err);
                 res.json({ success: false });
+              } else {
+                res.json({ success: true });
               }
-              res.json({ success: true });
               // res.download(file, "monthlyprogress.pdf");
             }
           );
