@@ -40,18 +40,18 @@
 
         <div class="table-responsive" id="output"></div>
 
-        <a href="/center/generatePdfMonthlyProgress" class="btn btn-primary"
+        <!-- <a href="/center/generatePdfMonthlyProgress" class="btn btn-primary"
           >Download pdf</a
-        >
+        > -->
         <button
           onclick="exportToExcel('tblexportData', 'মাসিক প্রতিবেদন')"
           class="btn btn-success"
         >
           Export Table Data To Excel File
         </button>
-        <!-- <button onclick="exportToPdf()" class="btn btn-success">
+        <button onclick="exportToPdf()" class="btn btn-success">
           Download PDF
-        </button> -->
+        </button>
 
         <div id="output"></div>
         <!--                    <div id="loading" class="loading"><img src="{{ asset('assets/img/icon/loading.gif') }}" alt=""></div>-->
@@ -62,24 +62,28 @@
 
 <%- include('../../includes/footer')-%>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"
+  integrity="sha512-s/XK4vYVXTGeUSv4bRPOuxSDmDlTedEpMEcAQk0t/FMd9V6ft8iXdwSBxV0eD60c6w/tjotSlKu9J2AAW1ckTA=="
+  crossorigin="anonymous"
+></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.0/jspdf.umd.min.js"></script>
 <script type="text/javascript">
   async function exportToPdf() {
-    const data = await axios({
+    const { data } = await axios({
       url: "/center/generatePdfMonthlyProgress",
       method: "GET",
     });
-    // if (data.data.success) {
-    //   window.open("/pdfs/monthlyprogress.pdf");
-    // } else {
-    //   alert("There was an error in creating pdf file");
-    // }
-    // console.log(data);
-    if (data.data.success === "failed") {
-      alert("There was an error in creating pdf file");
-      return;
-    }
-    console.log(data);
-    window.open("data:application/pdf;base64" + data.data);
+    var mywindow = window.open("", "PRINT", "height=400,width=600");
+
+    mywindow.document.write(data.html);
+
+    mywindow.document.close(); // necessary for IE >= 10
+    mywindow.focus(); // necessary for IE >= 10*/
+
+    mywindow.print();
+
+    return true;
   }
   function exportToExcel(tableID, filename = "") {
     var downloadurl;

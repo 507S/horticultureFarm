@@ -2816,15 +2816,18 @@ module.exports.generatePdfMonthlyProgress = async (req, res) => {
           },
           base: "file:///" + assesPath,
         };
-        pdf.create(data, options).toStream(function (err, stream) {
-          if (err) {
-            res.json({ success: "failed" });
-          } else {
-            res.setHeader("Content-Type", "application/pdf");
-            stream.pipe(res);
-          }
-        });
+        // pdf.create(data, options).toStream(function (err, stream) {
+        //   console.log(`${process.cwd()}`);
+        //   if (err) {
+        //     console.log(err);
+        //     res.json({ success: "failed" });
+        //   } else {
+        //     res.setHeader("Content-Type", "application/pdf");
+        //     stream.pipe(res);
+        //   }
+        // });
         // console.log(data);
+        res.json({ html: data });
         // pdf
         //   .create(data, options)
         //   .toFile(
