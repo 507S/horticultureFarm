@@ -202,21 +202,4 @@ router.post('/findMojud', async(req,res) => {
     res.json({title: 'Horticulture',totalProduction: totalProduct, totalBitoron: totalBitoron,totalrajossho:totalrajossho })
 })
 
-router.get('/demoPdf', async (req,res) => {
-    res.render('demoPdf',{name: "zahid"},function(err,html){
-        var options = {format:'A4'};
-        pdf.create(html, options).toFile('../public/upload/demoPdf.pdf', function(err, result) {
-            if (err){
-                return console.log(err);
-            }
-            else{
-                console.log(res);
-                var datafile = fs.readFileSync('../public/upload/demoPdf.pdf');
-                res.header('content-type','application/pdf');
-                res.send(datafile);
-            }
-        });
-    })
-})
-
 module.exports = router;

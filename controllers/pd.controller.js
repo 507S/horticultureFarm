@@ -25,7 +25,11 @@ const podobiList = db.podobiList;
 const dashImages = db.dashImage;
 
 const multer = require("multer");
+const fs = require("fs");
 const path = require("path");
+
+let pdf = require("html-pdf");
+let ejs = require("ejs");
 
 //multer setup for dashImage image
 var storagedashImage = multer.diskStorage({
@@ -2446,8 +2450,6 @@ module.exports.monthlyProgressFilter=async(req,res)=>{
                 res.send(html);
             });
         }else{
-            console.log("center_id",req.body.center)
-            console.log("center_id",req.session.user_id)
             const monthlyProgressList = await monthlyProgress.findAll({ where: {center_id : req.body.center, pd_id: req.session.user_id} });
 
             monthlyProgressList.map((monthlyProg) => {
@@ -2468,6 +2470,105 @@ module.exports.monthlyProgressFilter=async(req,res)=>{
     catch (e) {
         console.log(" mpl",e);
     }
+};
+
+module.exports.generatePdfMonthlyProgress = async (req, res) => {
+    try{
+        const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
+        const selectedDate = req.body.year.toLowerCase();
+        var data = [];
+        if (req.body.center === "all") {
+            const cropCatg = await cropCategory.findAll({where: {type: 'jat'} });
+            const allCropCatg = await cropCategory.findAll();
+
+            const monthlyProgressList = await monthlyProgress.findAll({ where: {pd_id: req.session.user_id} });
+
+            monthlyProgressList.map((monthlyProg) => {
+                const timeList = JSON.parse(monthlyProg.timeFrame)
+                timeList.map((eachTime) => {
+                    if (eachTime.time === selectedDate){
+                        data.push(monthlyProg);
+                    }
+                })
+            })
+
+            ejs.renderFile(
+                path.join(__dirname, "../views/pd/monthlyProgress/", "pdfForAllCenter.ejs"),
+                { records: data, selectedDate:selectedDate, cropCatg:cropCatg, allCropCatg:allCropCatg, centerName: "সকল সেন্টার", moment: res.locals.moment, dirname: __dirname },
+                (err, data) => {
+                    if (err) {
+                        console.log("error", err);
+                        res.send(err);
+                    } else {
+                        var assesPath = path.join(__dirname, "../public/");
+                        // console.log(assesPath);
+                        assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+                        var options = {
+                            height: "11.25in",
+                            width: "18.5in",
+                            header: {
+                                height: "20mm",
+                            },
+                            footer: {
+                                height: "20mm",
+                            },
+                            base: "file:///" + assesPath,
+                        };
+                        res.json({ html: data });
+                    }
+                }
+            )
+
+        }
+        else{
+            const monthlyProgressList = await monthlyProgress.findAll({ where: {center_id : req.body.center, pd_id: req.session.user_id} });
+            const centerInfo = await center.findByPk(req.body.center)
+
+            monthlyProgressList.map((monthlyProg) => {
+                const timeList = JSON.parse(monthlyProg.timeFrame)
+                timeList.map((eachTime) => {
+                    if (eachTime.time === selectedDate){
+                        data.push(monthlyProg);
+                    }
+                })
+            })
+
+            ejs.renderFile(
+                path.join(__dirname, "../views/pd/monthlyProgress/", "pdf.ejs"),
+                { records: data,selectedDate:selectedDate, centerName: centerInfo.center, moment: res.locals.moment, dirname: __dirname },
+                (err, data) => {
+                    if (err) {
+                        console.log("error", err);
+                        res.send(err);
+                    } else {
+                        var assesPath = path.join(__dirname, "../public/");
+                        // console.log(assesPath);
+                        assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+                        var options = {
+                            height: "11.25in",
+                            width: "18.5in",
+                            header: {
+                                height: "20mm",
+                            },
+                            footer: {
+                                height: "20mm",
+                            },
+                            base: "file:///" + assesPath,
+                        };
+                        res.json({ html: data });
+                    }
+                }
+            )
+
+        }
+
+    }
+    catch (e) {
+        console.log(" mpl",e);
+    }
+
 };
 
 module.exports.monthlyProgressEdit = async(req,res) => {

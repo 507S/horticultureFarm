@@ -4,140 +4,159 @@
         display: none;
     }
 </style>
-        <div id="wrapper" class="wrapper" >
-            <%- include('../../includes/topbar')-%>
-            <div class="page-wrap">
-                <%- include('../../includes/sidebar')-%>
-                <div class="main-content">
-                    <div class="container-fluid">
-                        <div class="row clearfix">
-                            <div class="col-md-8"></div>
-                            <div class="col-md-4">
-                                <div class="row">
-                                    <div class="col">
-                                        <input name="startDate" id="startDate" class="date-picker year form-control" placeholder="Date" autocomplete="off"/>
-                                    </div>
-                                    <button class="btn btn-success col" id="search">Search</button>
-                                </div>
+<div id="wrapper" class="wrapper">
+    <%- include('../../includes/topbar')-%>
+    <div class="page-wrap">
+        <%- include('../../includes/sidebar')-%>
+        <div class="main-content">
+            <div class="container-fluid">
+                <div class="row clearfix">
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col">
+                                <input
+                                        name="startDate"
+                                        id="startDate"
+                                        class="date-picker year form-control"
+                                        placeholder="Date"
+                                        autocomplete="off"
+                                />
                             </div>
+                            <button class="btn btn-success col" id="search">Search</button>
                         </div>
-                        <h1 class="text-center"><%= title %></h1>
-                        <div class="row mb-2">
-                            <div class="col-md-12">
-                                <a href="/center/monthlyProgressForm" class="btn btn-success btn-group-sm ">মাসিক প্রতিবেদন ফর্ম</a>
-                            </div>
-
-                        </div>
-
-                        <div class="table-responsive" id="output"></div>
-
-                        <a href="/center/generatePdfMonthlyProgress" class="btn btn-primary">Download pdf</a>
-
-
-                        <div id="output"></div>
-        <!--                    <div id="loading" class="loading"><img src="{{ asset('assets/img/icon/loading.gif') }}" alt=""></div>-->
-                        <input type="button" id="#export-btn" class="btn" value="Export" />
                     </div>
                 </div>
+                <h1 class="text-center"><%= title %></h1>
+                <div class="row mb-2">
+                    <div class="col-md-12">
+                        <a
+                                href="/center/monthlyProgressForm"
+                                class="btn btn-success btn-group-sm"
+                        >মাসিক প্রতিবেদন ফর্ম</a
+                        >
+                    </div>
+                </div>
+
+                <div class="table-responsive" id="output"></div>
+
+                <!-- <a href="/center/generatePdfMonthlyProgress" class="btn btn-primary"
+                  >Download pdf</a
+                > -->
+                <button
+                        onclick="exportToExcel('tblexportData', 'মাসিক প্রতিবেদন')"
+                        class="btn btn-success"
+                >
+                    Export Table Data To Excel File
+                </button>
+
+                <div id="output"></div>
+                <!--                    <div id="loading" class="loading"><img src="{{ asset('assets/img/icon/loading.gif') }}" alt=""></div>-->
             </div>
         </div>
+    </div>
+</div>
 
-
-   
 <%- include('../../includes/footer')-%>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+,
 <script>
-        
-    $(document).ready(function(){
-        
-      $('.dropdown a.test').on("click", function(e){
-        $(this).next('ul').toggle();
-        e.stopPropagation();
-        e.preventDefault();
-      });
+
+    function exportToExcel(tableID, filename = "") {
+        var downloadurl;
+        var dataFileType = "application/vnd.ms-excel";
+        var tableSelect = document.getElementById(tableID);
+        // var tableSelect = document.getElementsByClassName(tableID);
+        var tableHTMLData = tableSelect.outerHTML.replace(/ /g, "%20");
+        // Specify file name
+        filename = filename ? filename + ".xls" : "export_excel_data.xls";
+        // Create download link element
+        downloadurl = document.createElement("a");
+        document.body.appendChild(downloadurl);
+        if (navigator.msSaveOrOpenBlob) {
+            var blob = new Blob(["\ufeff", tableHTMLData], {
+                type: dataFileType,
+            });
+            navigator.msSaveOrOpenBlob(blob, filename);
+        } else {
+            // Create a link to the file
+            downloadurl.href = "data:" + dataFileType + ", " + tableHTMLData;
+            // Setting the file name
+            downloadurl.download = filename;
+            //triggering the function
+            downloadurl.click();
+        }
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $(".dropdown a.test").on("click", function (e) {
+            $(this).next("ul").toggle();
+            e.stopPropagation();
+            e.preventDefault();
+        });
     });
 </script>
 
 <script type="text/javascript">
-
-    
-    $("#wrapper").load( "no url rn",function() {
+    $("#wrapper").load("no url rn", function () {
         var year = moment().format("MMM-YYYY");
-        $('#startDate').val(year)
-
+        $("#startDate").val(year);
         $.ajax({
             type: "POST",
             url: "/center/monthlyProgressYear",
-            data: {year: year},
+            data: { year: year },
             datatype: "json",
-            beforeSend: function() {
+            beforeSend: function () {
                 // setting a timeout
-                $('#loading').show();
-                $('#output').hide();
-
+                $("#loading").show();
+                $("#output").hide();
             },
             success: function (data) {
-                $('#output').html(data);
-                $('#tblCustomers').DataTable();
+                $("#output").html(data);
+                $("#tblCustomers").DataTable();
             },
-            complete: function() {
-                $('#loading').hide();
-                $('#output').show();
-            }
+            complete: function () {
+                $("#loading").hide();
+                $("#output").show();
+            },
         });
     });
-
-    $('#search').on("change click",function () {
-        var year = $('.year').val();
+    $("#search").on("change click", function () {
+        var year = $(".year").val();
         $.ajax({
             type: "POST",
             url: "/center/monthlyProgressYear",
-            data: {year: year},
+            data: { year: year },
             datatype: "json",
-            beforeSend: function() {
+            beforeSend: function () {
                 // setting a timeout
-                $('#loading').show();
-                $('#output').hide();
+                $("#loading").show();
+                $("#output").hide();
             },
             success: function (data) {
-                $('#output').html(data);
-                $('#tblCustomers').DataTable();
+                $("#output").html(data);
+                $("#tblCustomers").DataTable();
             },
-            complete: function() {
-                $('#loading').hide();
-                $('#output').show();
-            }
+            complete: function () {
+                $("#loading").hide();
+                $("#output").show();
+            },
         });
     });
-
-    $('.date-picker').datepicker( {
+    $(".date-picker").datepicker({
         changeMonth: true,
         changeYear: true,
         showButtonPanel: true,
-        dateFormat: 'M-yy',
-        onClose: function(dateText, inst) {
-            $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
-        }
+        dateFormat: "M-yy",
+        onClose: function (dateText, inst) {
+            $(this).datepicker(
+                "setDate",
+                new Date(inst.selectedYear, inst.selectedMonth, 1)
+            );
+        },
     });
-
-    $(document).ready(function() {
-        $('#tblCustomers').DataTable();
-    } );
-
-
-
-</script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#export-btn').on('click', function(e){
-            e.preventDefault();
-            ResultsToTable();
-        });
-
-        function ResultsToTable(){
-            $("#tblCustomers").table2excel({
-                exclude: ".noExl",
-                name: "Results"
-            });
-        }
+    $(document).ready(function () {
+        $("#tblCustomers").DataTable();
     });
 </script>
