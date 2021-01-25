@@ -33,8 +33,10 @@
 
                         <a href="/center/generatePdfMonthlyProgress" class="btn btn-primary">Download pdf</a>
 
+
                         <div id="output"></div>
         <!--                    <div id="loading" class="loading"><img src="{{ asset('assets/img/icon/loading.gif') }}" alt=""></div>-->
+                        <input type="button" id="#export-btn" class="btn" value="Export" />
                     </div>
                 </div>
             </div>
@@ -123,4 +125,19 @@
 
 
 
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#export-btn').on('click', function(e){
+            e.preventDefault();
+            ResultsToTable();
+        });
+
+        function ResultsToTable(){
+            $("#tblCustomers").table2excel({
+                exclude: ".noExl",
+                name: "Results"
+            });
+        }
+    });
 </script>
