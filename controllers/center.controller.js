@@ -2767,14 +2767,14 @@ module.exports.monthlyProgressYear = async (req, res) => {
     if (selectedDate === currentMonth) {
       res.render(
         "center/monthlyProgress/monthlyProgressTable",
-        { records: data },
+        { records: data, selectedDate: currentMonth },
         function (err, html) {
           res.send(html);
         }
       );
     } else {
       res.render(
-        "center/monthlyProgress/monthlyProgressCustomTable",
+        "center/monthlyProgress/monthlyProgressTable",
         { records: data, selectedDate: selectedDate },
         function (err, html) {
           res.send(html);
@@ -2787,6 +2787,45 @@ module.exports.monthlyProgressYear = async (req, res) => {
 };
 
 module.exports.generatePdfMonthlyProgress = async (req, res) => {
+  try {
+    const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
+    const selectedDate = req.body.year.toLowerCase();
+
+    var data = [];
+    const allMonthlyProgress = await monthlyProgress.findAll({
+      where: { center_id: req.session.user_id },
+    });
+    allMonthlyProgress.map((monthlyProg, key) => {
+      const timeList = JSON.parse(monthlyProg.timeFrame);
+      timeList.map((eachTime, index) => {
+        if (eachTime.time === selectedDate) {
+          data.push(monthlyProg);
+        }
+      });
+    });
+
+    if (selectedDate === currentMonth) {
+      res.render(
+          "center/monthlyProgress/monthlyProgressTable",
+          { records: data, selectedDate: currentMonth },
+          function (err, html) {
+            res.send(html);
+          }
+      );
+    } else {
+      res.render(
+          "center/monthlyProgress/monthlyProgressTable",
+          { records: data, selectedDate: selectedDate },
+          function (err, html) {
+            res.send(html);
+          }
+      );
+    }
+  } catch (e) {
+    console.log(e);
+  }
+
+
   const tableData = await monthlyProgress.findAll({
     where: {
       center_id: req.session.user_id,
