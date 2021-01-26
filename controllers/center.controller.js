@@ -766,7 +766,7 @@ module.exports.workerInfo = async (req, res) => {
 
 module.exports.workerInfoYear = async (req, res) => {
     await workerInfo.findAll({
-        where: { year: req.body.year, month: req.body.month }
+        where: { year: req.body.year, month: req.body.month,center_id: req.session.user_id }
     })
         .then(data => {
             res.render('center/worker/workerInfo/workerInfoTable', { records: data }, function (err, html) {
@@ -1310,7 +1310,7 @@ module.exports.chak1 = async (req, res) => {
 
 module.exports.chak1Year = async (req, res) => {
     await chak1.findAll({
-        where: { year: req.body.year, month: req.body.month }
+        where: { year: req.body.year, month: req.body.month,center_id: req.session.user_id }
     })
         .then(data => {
             console.log("inside2", data);
@@ -1389,7 +1389,7 @@ module.exports.chak2 = async (req, res) => {
 
 module.exports.chak2Year = async (req, res) => {
     await chak2.findAll({
-        where: { year: req.body.year, month: req.body.month }
+        where: { year: req.body.year, month: req.body.month ,center_id: req.session.user_id}
     })
         .then(data => {
             res.render('center/employee/chak2/employeeChak2Table', { records: data }, function (err, html) {
