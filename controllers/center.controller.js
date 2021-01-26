@@ -1654,27 +1654,19 @@ module.exports.chak1 = async (req, res) => {
 };
 
 module.exports.chak1Year = async (req, res) => {
-  await chak1
-    .findAll({
-      where: { year: req.body.year, month: req.body.month },
+    await chak1.findAll({
+        where: { year: req.body.year, month: req.body.month,center_id: req.session.user_id }
     })
-    .then((data) => {
-      console.log("inside2", data);
-      res.render(
-        "center/employee/chak1/employeeChak1Table",
-        { records: data },
-        function (err, html) {
-          res.send(html);
-        }
-      );
-    })
-    .catch((err) => {
-      res.render("center/employee/chak1/employeeChak1Year", {
-        title: "ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য",
-        success: "",
-        records: err,
-      });
-    });
+        .then(data => {
+            console.log("inside2", data);
+            res.render('center/employee/chak1/employeeChak1Table', { records: data }, function (err, html) {
+                res.send(html);
+            });
+        })
+        .catch(err => {
+            res.render('center/employee/chak1/employeeChak1Year', { title: 'ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য', success: '', records: err });
+        })
+
 };
 
 module.exports.chak1Form = async (req, res) => {
@@ -1757,9 +1749,8 @@ module.exports.chak2 = async (req, res) => {
 };
 
 module.exports.chak2Year = async (req, res) => {
-  await chak2
-    .findAll({
-      where: { year: req.body.year, month: req.body.month },
+    await chak2.findAll({
+        where: { year: req.body.year, month: req.body.month ,center_id: req.session.user_id}
     })
     .then((data) => {
       res.render(
