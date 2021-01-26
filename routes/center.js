@@ -128,7 +128,7 @@ router.post('/fetchExpenseCode',fetchExpenseCode);
 router.get('/monthlyProgress',monthlyProgress);
 router.post('/monthlyProgressYear',monthlyProgressYear);
 router.get('/monthlyProgressForm',monthlyProgressForm);
-router.get('/generatePdfMonthlyProgress',generatePdfMonthlyProgress);
+router.get('/generatePdfMonthlyProgress/:selectedDate',generatePdfMonthlyProgress);
 
 router.get('/monthlyProgressEdit/:progressId/:editDate',monthlyProgressEdit)
 router.post('/monthlyProgressUpdate/:progressId',monthlyProgressUpdate)

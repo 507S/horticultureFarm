@@ -17,7 +17,7 @@ const {apaUddessho,apaMaan,karjokrom,suchok,ekok,suchokMaan,newKhorochCode,newRa
     charaKolomForm,charaKolomFormPost,folMosholla,folMoshollaYear,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegYear,winterVegForm,dashImageForm,dashImageFormPost,
     winterVegFormPost,summerVeg,summerVegYear,summerVegForm,summerVegFormPost,otherFlower,otherFlowerYear,otherFlowerForm,otherFlowerFormPost,
     seasonalFlower,seasonalFlowerYear,seasonalFlowerForm,seasonalFlowerFormPost,workerInfo,workerInfoFilter,workerInfoForm,apaCategoryTable,uploaddashImage,
-    workerInfoFormPost,workerNum,workerNumFilter,monthlyProgressEdit,monthlyProgressUpdate,monthlyProgressDelete} = require('../controllers/pd.controller');
+    workerInfoFormPost,workerNum,workerNumFilter,monthlyProgressEdit,monthlyProgressUpdate,monthlyProgressDelete,generatePdfMonthlyProgress} = require('../controllers/pd.controller');
 
 
 router.get('/',allcenter);
@@ -185,6 +185,7 @@ router.get('/newKhorochTableDelete/:id',newKhorochTableDelete);
 
 router.get('/monthlyProgress',monthlyProgress);
 router.post('/monthlyProgressFilter',monthlyProgressFilter);
+router.post('/generatePdfMonthlyProgress',generatePdfMonthlyProgress);
 
 router.get('/monthlyProgressEdit/:progressId/:editDate',monthlyProgressEdit)
 router.post('/monthlyProgressUpdate/:progressId',monthlyProgressUpdate)
