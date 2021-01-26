@@ -949,13 +949,11 @@ module.exports.winterVegFormPost = async (req, res) => {
 
 //workerInfo controller
 module.exports.workerInfo = async (req, res) => {
-  console.log("das", req.session.type);
   await workerInfo
     .findAll({
       where: { center_id: req.session.user_id },
     })
     .then((data) => {
-      console.log("inside");
       res.render("center/worker/workerInfo/workerInfo", {
         title: "শ্রমিকদের তথ্য",
         success: "",
@@ -963,7 +961,6 @@ module.exports.workerInfo = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
       res.render("center/worker/workerInfo/workerInfo", {
         title: "শ্রমিকদের তথ্য",
         success: "",
@@ -977,7 +974,7 @@ module.exports.workerInfo = async (req, res) => {
 module.exports.workerInfoYear = async (req, res) => {
   await workerInfo
     .findAll({
-      where: { year: req.body.year, month: req.body.month },
+      where: { year: req.body.year, month: req.body.month,center_id: req.session.user_id },
     })
     .then((data) => {
       res.render(
