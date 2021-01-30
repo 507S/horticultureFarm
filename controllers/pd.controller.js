@@ -591,7 +591,8 @@ module.exports.charaKolomFormPost=async(req,res)=>{
         year:year,
 
         }).then(data => {
-            res.redirect('/pd/charaKolom');
+            req.flash("message", "Successfully added");
+            res.redirect('/pd/charaKolomForm');
         }).catch(err => {
             res.render('errorpage',err);
         });
@@ -694,7 +695,9 @@ module.exports.folMoshollaFormPost=async(req,res)=>{
         year:year,
 
         }).then(data => {
-            res.redirect('/pd/folMosholla');
+            req.flash("message", "Successfully added");
+
+            res.redirect('/pd/folMoshollaForm');
         }).catch(err => {
             res.render('errorpage',err);
         });
@@ -800,8 +803,8 @@ module.exports.otherFlowerFormPost=async(req,res)=>{
         year:year,
 
         }).then(data => {
-            console.log(data)
-            res.redirect('/pd/otherFlower');
+            req.flash("message", "Successfully added");
+            res.redirect('/pd/otherFlowerForm');
         }).catch(err => {
             console.log(err);
             res.render('errorpage',err);
@@ -907,7 +910,8 @@ module.exports.seasonalFlowerFormPost=async(req,res)=>{
         year:year,
 
         }).then(data => {
-            res.redirect('/pd/seasonalFlower');
+            req.flash("message", "Successfully added");
+            res.redirect('/pd/seasonalFlowerForm');
         }).catch(err => {
             res.render('errorpage',err);
         });
@@ -1016,7 +1020,8 @@ module.exports.summerVegFormPost=async(req,res)=>{
         year:year,
 
         }).then(data => {
-            res.redirect('/pd/summerVeg');
+            req.flash("message", "Successfully added");
+            res.redirect('/pd/summerVegForm');
         }).catch(err => {
             res.render('errorpage',err);
         });
@@ -1126,7 +1131,8 @@ module.exports.winterVegFormPost=async(req,res)=>{
         year:year,
 
         }).then(data => {
-            res.redirect('/pd/winterVeg');
+            req.flash("message", "Successfully added");
+            res.redirect('/pd/winterVegForm');
         }).catch(err => {
             res.render('errorpage',err);
         });
