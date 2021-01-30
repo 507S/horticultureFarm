@@ -568,7 +568,7 @@ module.exports.charaKolomYear=async(req,res)=>{
 
 module.exports.charaKolomForm=async(req,res)=>{
     await cropCategory.findAll({
-        where: {type:"jat"}
+        where: {type:"biboron"}
     })
     .then(data => {
         res.render('pd/charaKolomPrice/charaKolom/charaKolomForm', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য',msg:'' ,success:'',records:data});
@@ -671,7 +671,7 @@ module.exports.folMoshollaYear=async(req,res)=>{
 
 module.exports.folMoshollaForm=async(req,res)=>{
     await cropCategory.findAll({
-        where: {type:"jat"}
+        where: {type:"biboron"}
     })
     .then(data => {
         res.render('pd/charaKolomPrice/folMosholla/folMoshollaForm', { title: 'হরটিকালচার সেন্টারের ফল/মসলা ও শাক-সবজি বিক্রয় মূল্য',msg:'' ,success:'',records:data});
@@ -775,7 +775,7 @@ module.exports.otherFlowerYear=async(req,res)=>{
 
 module.exports.otherFlowerForm=async(req,res)=>{
     await cropCategory.findAll({
-        where: {type:"jat"}
+        where: {type:"biboron"}
     })
     .then(data => {
         res.render('pd/charaKolomPrice/otherFlower/otherFlowerForm', { title: 'বিভিন্ন ফুল ও সুদৃশ্য গাছের চারা/কলমের বিক্রয় মূল্য',msg:'' ,success:'',records:data});
@@ -882,7 +882,7 @@ module.exports.seasonalFlowerYear=async(req,res)=>{
 
 module.exports.seasonalFlowerForm=async(req,res)=>{
     await cropCategory.findAll({
-        where: {type:"jat"}
+        where: {type:"biboron"}
     })
     .then(data => {
         res.render('pd/charaKolomPrice/seasonalFlower/seasonalFlowerForm', { title: 'মৌসুমী ফুল ও চারার বিক্রয় মূল্য',msg:'' ,success:'',records:data});
@@ -991,7 +991,7 @@ module.exports.summerVegYear=async(req,res)=>{
 
 module.exports.summerVegForm=async(req,res)=>{
     await cropCategory.findAll({
-        where: {type:"jat"}
+        where: {type:"biboron"}
     })
     .then(data => {
         res.render('pd/charaKolomPrice/summerVeg/summerVegForm', { title: 'গ্রীষ্মকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য',msg:'' ,success:'',records:data});
@@ -1101,7 +1101,7 @@ module.exports.winterVegYear=async(req,res)=>{
 
 module.exports.winterVegForm=async(req,res)=>{
     await cropCategory.findAll({
-        where: {type:"jat"}
+        where: {type:"biboron"}
     })
     .then(data => {
         res.render('pd/charaKolomPrice/winterVeg/winterVegForm', { title: 'শীতকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য',msg:'' ,success:'',records:data});
