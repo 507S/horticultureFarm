@@ -208,7 +208,7 @@ module.exports.addMainCategory = async(req,res) => {
         parent_id : null,
         type : 'mainCategory'
     })
-    res.redirect('/pd/dashboard')
+    res.redirect('/pd/cropCategoryTable')
 }
 
 module.exports.addSubcategory = async(req,res) => {
@@ -217,7 +217,7 @@ module.exports.addSubcategory = async(req,res) => {
         parent_id : req.body.main_category,
         type : 'subCategory'
     })
-    res.redirect('/pd/dashboard')
+    res.redirect('/pd/cropCategoryTable')
 }
 
 module.exports.addBiboron = async(req,res) => {
@@ -226,7 +226,7 @@ module.exports.addBiboron = async(req,res) => {
         parent_id : req.body.sub_category_list,
         type : 'biboron'
     })
-    res.redirect('/pd/dashboard')
+    res.redirect('/pd/cropCategoryTable')
 }
 
 module.exports.addJaat = async(req,res) => {
@@ -235,7 +235,7 @@ module.exports.addJaat = async(req,res) => {
         parent_id : req.body.biboron_list,
         type : 'jat'
     })
-    res.redirect('/pd/dashboard')
+    res.redirect('/pd/cropCategoryTable')
 }
 
 module.exports.apaUddessho = async(req,res) => {
@@ -244,7 +244,7 @@ module.exports.apaUddessho = async(req,res) => {
         parent_id : null,
         type : 'apaUddessho'
     })
-    res.redirect('/pd/dashboard')
+    res.redirect('/pd/apaCategoryTable')
 }
 
 module.exports.apaMaan = async(req,res) => {
@@ -253,7 +253,7 @@ module.exports.apaMaan = async(req,res) => {
         parent_id : req.body.apaUddessho,
         type : 'apaMaan'
     })
-    res.redirect('/pd/dashboard')
+    res.redirect('/pd/apaCategoryTable')
 }
 
 module.exports.karjokrom = async(req,res) => {
@@ -262,7 +262,7 @@ module.exports.karjokrom = async(req,res) => {
         parent_id : req.body.apaMaan,
         type : 'karjokrom'
     })
-    res.redirect('/pd/dashboard')
+    res.redirect('/pd/apaCategoryTable')
 }
 
 module.exports.suchok = async(req,res) => {
@@ -271,7 +271,7 @@ module.exports.suchok = async(req,res) => {
         parent_id : req.body.karjokrom,
         type : 'suchok'
     })
-    res.redirect('/pd/dashboard')
+    res.redirect('/pd/apaCategoryTable')
 }
 
 module.exports.ekok = async(req,res) => {
@@ -280,7 +280,7 @@ module.exports.ekok = async(req,res) => {
         parent_id : req.body.suchok,
         type : 'ekok'
     })
-    res.redirect('/pd/dashboard')
+    res.redirect('/pd/apaCategoryTable')
 }
 module.exports.suchokMaan = async(req,res) => {
     const suchokMaan = await apaCode.create({
@@ -288,7 +288,7 @@ module.exports.suchokMaan = async(req,res) => {
         parent_id : req.body.suchok,
         type : 'suchokMaan'
     })
-    res.redirect('/pd/dashboard')
+    res.redirect('/pd/apaCategoryTable')
 }
 
 
