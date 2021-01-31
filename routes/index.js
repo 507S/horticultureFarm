@@ -141,11 +141,13 @@ router.post('/findMojud', async(req,res) => {
     if (req.body.center === "all"){
         monthly_progress = await monthlyProgress.findAll();
     }else{
+        const biboron = await cropcategory.findByPk(req.body.biboron)
+        const breed = await cropcategory.findByPk(req.body.breed)
         monthly_progress = await monthlyProgress.findAll({
             where:{
                 center_id : req.body.center,
-                biboron : req.body.biboron,
-                breed : req.body.breed
+                biboron : biboron.name,
+                breed : breed.name
             }
         });
     }
