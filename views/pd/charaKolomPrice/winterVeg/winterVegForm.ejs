@@ -23,13 +23,21 @@
                                         <span></span>
                                     </div>
 
+                                    <% if(messages.message){ %>
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong><%= messages.message %></strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <% } %>
                                         
                                     <div class="form-group">
                                         <div class="col-md-9">
                                             <div class="col-md-9">
                                 <label >বাছুন :</label>
                                 <select id="item" name="item" required>
-                                    <option value="">আইটেমের নাম (জাতওয়ারী)</option>
+                                    <option value="">আইটেমের নাম </option>
                                     <% if (records.length >0){ %>
                                         <% records.forEach(function (row) { %>
                                             <option value="<%= row.name %>"><%= row.name %></option>
@@ -84,7 +92,10 @@
                                         </div>
                                     </div>
                                     
-                                    
+                                    <div class="col-md-offset-3 col-md-9">
+                                    <button> <a href="/pd/winterVeg" class="col-md-offset-3 col-md-9">Finish Submitting Report</a>
+                                     </button>
+                                     </div>
                                         
                                     
                                 </form>

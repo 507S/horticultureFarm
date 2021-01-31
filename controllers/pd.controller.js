@@ -208,7 +208,7 @@ module.exports.addMainCategory = async(req,res) => {
         parent_id : null,
         type : 'mainCategory'
     })
-    res.redirect('/pd/dashboard')
+    res.redirect('/pd/cropCategoryTable')
 }
 
 module.exports.addSubcategory = async(req,res) => {
@@ -217,7 +217,7 @@ module.exports.addSubcategory = async(req,res) => {
         parent_id : req.body.main_category,
         type : 'subCategory'
     })
-    res.redirect('/pd/dashboard')
+    res.redirect('/pd/cropCategoryTable')
 }
 
 module.exports.addBiboron = async(req,res) => {
@@ -226,7 +226,7 @@ module.exports.addBiboron = async(req,res) => {
         parent_id : req.body.sub_category_list,
         type : 'biboron'
     })
-    res.redirect('/pd/dashboard')
+    res.redirect('/pd/cropCategoryTable')
 }
 
 module.exports.addJaat = async(req,res) => {
@@ -235,7 +235,7 @@ module.exports.addJaat = async(req,res) => {
         parent_id : req.body.biboron_list,
         type : 'jat'
     })
-    res.redirect('/pd/dashboard')
+    res.redirect('/pd/cropCategoryTable')
 }
 
 module.exports.apaUddessho = async(req,res) => {
@@ -244,7 +244,7 @@ module.exports.apaUddessho = async(req,res) => {
         parent_id : null,
         type : 'apaUddessho'
     })
-    res.redirect('/pd/dashboard')
+    res.redirect('/pd/apaCategoryTable')
 }
 
 module.exports.apaMaan = async(req,res) => {
@@ -253,7 +253,7 @@ module.exports.apaMaan = async(req,res) => {
         parent_id : req.body.apaUddessho,
         type : 'apaMaan'
     })
-    res.redirect('/pd/dashboard')
+    res.redirect('/pd/apaCategoryTable')
 }
 
 module.exports.karjokrom = async(req,res) => {
@@ -262,7 +262,7 @@ module.exports.karjokrom = async(req,res) => {
         parent_id : req.body.apaMaan,
         type : 'karjokrom'
     })
-    res.redirect('/pd/dashboard')
+    res.redirect('/pd/apaCategoryTable')
 }
 
 module.exports.suchok = async(req,res) => {
@@ -271,7 +271,7 @@ module.exports.suchok = async(req,res) => {
         parent_id : req.body.karjokrom,
         type : 'suchok'
     })
-    res.redirect('/pd/dashboard')
+    res.redirect('/pd/apaCategoryTable')
 }
 
 module.exports.ekok = async(req,res) => {
@@ -280,7 +280,7 @@ module.exports.ekok = async(req,res) => {
         parent_id : req.body.suchok,
         type : 'ekok'
     })
-    res.redirect('/pd/dashboard')
+    res.redirect('/pd/apaCategoryTable')
 }
 module.exports.suchokMaan = async(req,res) => {
     const suchokMaan = await apaCode.create({
@@ -288,7 +288,7 @@ module.exports.suchokMaan = async(req,res) => {
         parent_id : req.body.suchok,
         type : 'suchokMaan'
     })
-    res.redirect('/pd/dashboard')
+    res.redirect('/pd/apaCategoryTable')
 }
 
 
@@ -568,7 +568,7 @@ module.exports.charaKolomYear=async(req,res)=>{
 
 module.exports.charaKolomForm=async(req,res)=>{
     await cropCategory.findAll({
-        where: {type:"jat"}
+        where: {type:"biboron"}
     })
     .then(data => {
         res.render('pd/charaKolomPrice/charaKolom/charaKolomForm', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য',msg:'' ,success:'',records:data});
@@ -591,7 +591,8 @@ module.exports.charaKolomFormPost=async(req,res)=>{
         year:year,
 
         }).then(data => {
-            res.redirect('/pd/charaKolom');
+            req.flash("message", "Successfully added");
+            res.redirect('/pd/charaKolomForm');
         }).catch(err => {
             res.render('errorpage',err);
         });
@@ -671,7 +672,7 @@ module.exports.folMoshollaYear=async(req,res)=>{
 
 module.exports.folMoshollaForm=async(req,res)=>{
     await cropCategory.findAll({
-        where: {type:"jat"}
+        where: {type:"biboron"}
     })
     .then(data => {
         res.render('pd/charaKolomPrice/folMosholla/folMoshollaForm', { title: 'হরটিকালচার সেন্টারের ফল/মসলা ও শাক-সবজি বিক্রয় মূল্য',msg:'' ,success:'',records:data});
@@ -694,7 +695,9 @@ module.exports.folMoshollaFormPost=async(req,res)=>{
         year:year,
 
         }).then(data => {
-            res.redirect('/pd/folMosholla');
+            req.flash("message", "Successfully added");
+
+            res.redirect('/pd/folMoshollaForm');
         }).catch(err => {
             res.render('errorpage',err);
         });
@@ -775,7 +778,7 @@ module.exports.otherFlowerYear=async(req,res)=>{
 
 module.exports.otherFlowerForm=async(req,res)=>{
     await cropCategory.findAll({
-        where: {type:"jat"}
+        where: {type:"biboron"}
     })
     .then(data => {
         res.render('pd/charaKolomPrice/otherFlower/otherFlowerForm', { title: 'বিভিন্ন ফুল ও সুদৃশ্য গাছের চারা/কলমের বিক্রয় মূল্য',msg:'' ,success:'',records:data});
@@ -800,8 +803,8 @@ module.exports.otherFlowerFormPost=async(req,res)=>{
         year:year,
 
         }).then(data => {
-            console.log(data)
-            res.redirect('/pd/otherFlower');
+            req.flash("message", "Successfully added");
+            res.redirect('/pd/otherFlowerForm');
         }).catch(err => {
             console.log(err);
             res.render('errorpage',err);
@@ -882,7 +885,7 @@ module.exports.seasonalFlowerYear=async(req,res)=>{
 
 module.exports.seasonalFlowerForm=async(req,res)=>{
     await cropCategory.findAll({
-        where: {type:"jat"}
+        where: {type:"biboron"}
     })
     .then(data => {
         res.render('pd/charaKolomPrice/seasonalFlower/seasonalFlowerForm', { title: 'মৌসুমী ফুল ও চারার বিক্রয় মূল্য',msg:'' ,success:'',records:data});
@@ -907,7 +910,8 @@ module.exports.seasonalFlowerFormPost=async(req,res)=>{
         year:year,
 
         }).then(data => {
-            res.redirect('/pd/seasonalFlower');
+            req.flash("message", "Successfully added");
+            res.redirect('/pd/seasonalFlowerForm');
         }).catch(err => {
             res.render('errorpage',err);
         });
@@ -991,7 +995,7 @@ module.exports.summerVegYear=async(req,res)=>{
 
 module.exports.summerVegForm=async(req,res)=>{
     await cropCategory.findAll({
-        where: {type:"jat"}
+        where: {type:"biboron"}
     })
     .then(data => {
         res.render('pd/charaKolomPrice/summerVeg/summerVegForm', { title: 'গ্রীষ্মকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য',msg:'' ,success:'',records:data});
@@ -1016,7 +1020,8 @@ module.exports.summerVegFormPost=async(req,res)=>{
         year:year,
 
         }).then(data => {
-            res.redirect('/pd/summerVeg');
+            req.flash("message", "Successfully added");
+            res.redirect('/pd/summerVegForm');
         }).catch(err => {
             res.render('errorpage',err);
         });
@@ -1101,7 +1106,7 @@ module.exports.winterVegYear=async(req,res)=>{
 
 module.exports.winterVegForm=async(req,res)=>{
     await cropCategory.findAll({
-        where: {type:"jat"}
+        where: {type:"biboron"}
     })
     .then(data => {
         res.render('pd/charaKolomPrice/winterVeg/winterVegForm', { title: 'শীতকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য',msg:'' ,success:'',records:data});
@@ -1126,7 +1131,8 @@ module.exports.winterVegFormPost=async(req,res)=>{
         year:year,
 
         }).then(data => {
-            res.redirect('/pd/winterVeg');
+            req.flash("message", "Successfully added");
+            res.redirect('/pd/winterVegForm');
         }).catch(err => {
             res.render('errorpage',err);
         });
