@@ -138,11 +138,12 @@ router.post('/centerData', async (req,res) => {
 
 router.post('/findMojud', async(req,res) => {
     var monthly_progress = [];
+    const biboron = await cropcategory.findByPk(req.body.biboron)
+    const breed = await cropcategory.findByPk(req.body.breed)
+
     if (req.body.center === "all"){
         monthly_progress = await monthlyProgress.findAll();
     }else{
-        const biboron = await cropcategory.findByPk(req.body.biboron)
-        const breed = await cropcategory.findByPk(req.body.breed)
         monthly_progress = await monthlyProgress.findAll({
             where:{
                 center_id : req.body.center,
@@ -153,18 +154,6 @@ router.post('/findMojud', async(req,res) => {
     }
 
     // console.log("mojud find 1", monthly_progress, req.body.center, req.body.biboron, req.body.breed, monthly_progress.length)
-
-    var total_rajossho = [];
-    if (req.body.center === "all"){
-        total_rajossho = await rajossho.findAll();
-    }else{
-        total_rajossho = await rajossho.findAll({
-            where:{
-                center_id : req.body.center
-            }
-        });
-    }
-
 
     var startRange = "";
     var endRange = "";
@@ -180,22 +169,58 @@ router.post('/findMojud', async(req,res) => {
     var totalBitoron = 0;
     var totalMojud = 0;
     var totalrajossho = 0;
-    monthly_progress.forEach((row) => {
-        const productTotalParse = JSON.parse(row.productionTotal);
-        const bitoronParse = JSON.parse(row.bitoronTotal);
-        // const mojudParse = JSON.parse(row.mojud);
-        productTotalParse.forEach((prodTotal)=> {
-            if (prodTotal.startTime === startRange && prodTotal.endTime === endRange){
-                totalProduct += parseInt(prodTotal.amount)
-            }
-        })
-        bitoronParse.forEach((bitorTotal) => {
-            if (bitorTotal.startTime === startRange && bitorTotal.endTime === endRange){
-                totalBitoron += parseInt(bitorTotal.amount)
-            }
-        })
 
-    });
+    if (req.body.center === "all"){
+        monthly_progress.forEach((row) => {
+            const productTotalParse = JSON.parse(row.productionTotal);
+            const bitoronParse = JSON.parse(row.bitoronTotal);
+            // const mojudParse = JSON.parse(row.mojud);
+
+            productTotalParse.forEach((prodTotal)=> {
+                if (prodTotal.startTime === startRange && prodTotal.endTime === endRange && row.breed === breed.name){
+                    totalProduct += parseInt(prodTotal.amount)
+                }
+            })
+            bitoronParse.forEach((bitorTotal) => {
+                if (bitorTotal.startTime === startRange && bitorTotal.endTime === endRange && row.breed === breed.name){
+                    totalBitoron += parseInt(bitorTotal.amount)
+                }
+            })
+
+        });
+    }
+    else{
+        monthly_progress.forEach((row) => {
+            const productTotalParse = JSON.parse(row.productionTotal);
+            const bitoronParse = JSON.parse(row.bitoronTotal);
+            // const mojudParse = JSON.parse(row.mojud);
+
+            productTotalParse.forEach((prodTotal)=> {
+                if (prodTotal.startTime === startRange && prodTotal.endTime === endRange){
+                    totalProduct += parseInt(prodTotal.amount)
+                }
+            })
+            bitoronParse.forEach((bitorTotal) => {
+                if (bitorTotal.startTime === startRange && bitorTotal.endTime === endRange){
+                    totalBitoron += parseInt(bitorTotal.amount)
+                }
+            })
+
+        });
+    }
+
+    var total_rajossho = [];
+    if (req.body.center === "all"){
+        total_rajossho = await rajossho.findAll();
+    }else{
+        total_rajossho = await rajossho.findAll({
+            where:{
+                center_id : req.body.center
+            }
+        });
+    }
+
+
     total_rajossho.forEach((row) => {
         totalrajossho += parseInt(row.total)
 
