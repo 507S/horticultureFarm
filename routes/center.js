@@ -10,8 +10,8 @@ const {fetchMaan,fetchWork,fetchShuchok,fetchEkok,fetchShuchokMaan,expenseAddPos
     rajosshoFormPost,expense,expenseYear,expenseForm,expenseFormPost,chak1,chak1Year,chak1Form,chak1FormPost,chak2,chak2Year,chak2Form,
     chak2FormPost,revolvingFund,revolvingFundYear,revolvingFundForm,revolvingFundFormPost,specialCoconut,specialCoconutYear,specialCoconutForm,
     specialCoconutFormPost,loan,loanYear,loanForm,loanFormPost,apa,apaYear,apaForm,apaFormPost,allcenter,centerlogin,centerloginpost,
-    centerDashboard,topSheet,topSheetYear,center,centerEdit,centerEditPost,centerDelete,charaKolom,charaKolomYear,charaKolomForm,
-    charaKolomFormPost,folMosholla,folMoshollaYear,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegYear,winterVegForm,fetchPodobiList,
+    centerDashboard,topSheet,topSheetYear,center,centerEdit,centerEditPost,centerDelete,charaKolom,charaKolomYear,charaKolomForm,chak1Delete,chak1Edit,chak1EditPost,chak2Delete,chak2Edit,chak2EditPost,
+    charaKolomFormPost,folMosholla,folMoshollaYear,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegYear,winterVegForm,fetchPodobiList,workerInfoDelete,workerInfoEdit,workerInfoEditPost,
     winterVegFormPost,summerVeg,summerVegYear,summerVegForm,summerVegFormPost,otherFlower,otherFlowerYear,otherFlowerForm,otherFlowerFormPost,
     seasonalFlower,seasonalFlowerYear,seasonalFlowerForm,seasonalFlowerFormPost,workerInfo,workerInfoYear,workerInfoForm,workerInfoFormPost,
     workerNum,workerNumYear,fetchSubCategory,fetchBiboron,fetchBreed} = require('../controllers/center.controller');
@@ -69,6 +69,9 @@ router.get('/workerInfo',workerInfo);
 router.post('/workerInfoYear',workerInfoYear);
 router.get('/workerInfoForm',workerInfoForm);
 router.post('/workerInfoForms',workerInfoFormPost);
+router.get('/workerInfoDelete/:id',workerInfoDelete);
+router.get('/workerInfoEdit/:id',workerInfoEdit);
+router.post('/workerInfoEditPost/:id',workerInfoEditPost);
 
 router.get('/workerNum',workerNum);
 router.post('/workerNumYear',workerNumYear);
@@ -102,13 +105,18 @@ router.get('/chak1',chak1);
 router.post('/chak1Year',chak1Year);
 router.get('/chak1Form',chak1Form);
 router.post('/chak1Forms',chak1FormPost);
+router.get('/chak1Delete/:id',chak1Delete);
+router.get('/chak1Edit/:id',chak1Edit);
+router.post('/chak1EditPost/:id',chak1EditPost);
 
 router.get('/chak2',chak2);
 router.post('/chak2Year',chak2Year);
 router.get('/chak2Form',chak2Form);
 router.post('/chak2Forms',chak2FormPost);
 router.post('/fetchPodobiList',fetchPodobiList);
-
+router.get('/chak2Delete/:id',chak2Delete);
+router.get('/chak2Edit/:id',chak2Edit);
+router.post('/chak2EditPost/:id',chak2EditPost);
 
 router.get('/rajossho',rajossho);
 router.post('/rajosshoYear',rajosshoYear);

@@ -1268,6 +1268,11 @@ module.exports.newPodobiTable=async(req,res)=>{
     //  records:result
 
 };
+
+module.exports.podobiListForm=async(req,res)=>{
+        res.render('pd/newPodobi/podobiListForm', { title: 'কর্মকর্তা কর্মচারীদের পদবী ও গ্রেডের তালিকা ফর্ম',msg:'' ,success:''});
+
+};
 module.exports.newPodobiEdit=async(req,res)=>{
     await podobiList.findByPk(req.params.id)
     .then(data => {
@@ -1278,10 +1283,6 @@ module.exports.newPodobiEdit=async(req,res)=>{
         console.log("outside");
         res.render('pd/newPodobi/podobiListEdit', { title: 'কর্মকর্তা কর্মচারীদের পদবী ও গ্রেডের তালিকা',success:'', records: err });
     })
-};
-module.exports.podobiListForm=async(req,res)=>{
-        res.render('pd/newPodobi/podobiListForm', { title: 'কর্মকর্তা কর্মচারীদের পদবী ও গ্রেডের তালিকা ফর্ম',msg:'' ,success:''});
-
 };
 module.exports.newPodobiEditPost=async(req,res)=>{
     var podobi = req.body.podobi;

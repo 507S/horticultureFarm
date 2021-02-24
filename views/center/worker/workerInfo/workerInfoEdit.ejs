@@ -1,0 +1,104 @@
+<%- include('../../../includes/header')-%>
+        <div class="wrapper">
+          <%- include('../../../includes/topbar')-%>
+            <div class="page-wrap">
+              <%- include('../../../includes/sidebar')-%>
+              <div class="main-content">
+                <div class="container-fluid">
+                    <div class="row clearfix">
+                    <div id="signupbox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <div class="panel-title"><h2>কর্মকর্তা কর্মচারীদের পদবী ও গ্রেডের তালিকার ফর্ম</h2></div>
+                                <p><%
+                                if(success !=''){ %>
+                                <%= success %>
+                                    <% } %>
+                                </p>
+                                </div>  
+                            <div class="panel-body" >
+                                <form action="/center/workerInfoEditPost/<%=records.id%>" id="FieldTrialForm" class="form-horizontal" method="post"  role="form">
+                                    <div id="signupalert" style="display:none" class="alert alert-danger">
+                                        <p>Error:</p>
+                                        <span></span>
+                                    </div>
+
+                                        
+                                    <div class="form-group">
+                                        <label for="podobi" class="col-md-3 control-label">পদবী</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="podobi" value="<%= records.podobi %>">
+                                        </div>
+                                    </div>
+                                        
+                                    <div class="form-group">
+                                        <label for="name" class="col-md-3 control-label">নাম</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="name" value="<%= records.name %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="fname" class="col-md-3 control-label">পিতার নাম</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="fname" value="<%= records.fname %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="address" class="col-md-3 control-label">ঠিকানা</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="address" value="<%= records.address %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="mobile" class="col-md-3 control-label">মোবাইল নং</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="mobile" value="<%= records.mobile %>">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="date" class="col-md-3 control-label">সেন্টারে যোগদানের তারিখ</label>
+                                        <div class="col-md-9">
+                                            <input type="date" class="form-control" name="date" value="<%= records.date %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="nid" class="col-md-3 control-label">এনআইডি নং</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="nid" value="<%= records.nid %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="bank" class="col-md-3 control-label">ব্যাংক একাউন্ট নং</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="bank" value="<%= records.bank %>">
+                                        </div>
+                                    </div>
+
+
+                                    <input type="hidden" class="form-control" name="user_id" placeholder="id" value="<%= user_id %>" >
+                                    
+                                    <div class="form-group">
+                                        <!-- Button -->                                        
+                                        <div class="col-md-offset-3 col-md-9">
+                                        <input type="submit" name="submit" value="submit" class="btn btn-primary">   
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                        
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<%- include('../../../includes/footer')-%>

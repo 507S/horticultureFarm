@@ -1048,6 +1048,63 @@ module.exports.workerInfoFormPost = async (req, res) => {
       res.render("errorpage", err);
     });
 };
+module.exports.workerInfoEdit=async(req,res)=>{
+  await workerInfo.findByPk(req.params.id)
+  .then(data => {
+      console.log("inside");
+      res.render('center/worker/workerInfo/workerInfoEdit', { title: 'শ্রমিকদের তথ্য',msg:'' ,success:'',records: data});
+  })
+  .catch(err => {
+      console.log("outside",err);
+  })
+};
+module.exports.workerInfoEditPost=async(req,res)=>{
+  var center = req.body.center;
+  var porichito = req.body.porichito;
+  var kormokorta = req.body.kormokorta;
+  var nijDistrict = req.body.nijDistrict;
+  var podobi = req.body.podobi;
+  var birthDate = req.body.birthDate;
+  var firstdate = req.body.firstdate;
+  var presentDate = req.body.presentDate;
+  var pastWorkstation = req.body.pastWorkstation;
+  var comment = req.body.comment;
+  var month = req.body.month;
+  var year = req.body.year;
+  var user_id = req.body.user_id;
+  await workerInfo.update({ 
+    center: center,
+    porichito: porichito,
+    kormokorta: kormokorta,
+    nijDistrict: nijDistrict,
+    podobi: podobi,
+    birthDate: birthDate,
+    firstdate: firstdate,
+    presentDate: presentDate,
+    pastWorkstation: pastWorkstation,
+    comment: comment,
+    month: month,
+    year: year,
+  },
+  {
+      where: {id: req.params.id}
+  }).then(data => {
+      res.redirect('/center/workerInfo');
+  }).catch(err => {
+      res.render('errorpage',err);
+  });
+};
+module.exports.workerInfoDelete=async(req,res)=>{
+  var workerInfoDelete = await workerInfo.findByPk(req.params.id);
+  try {
+    workerInfoDelete.destroy();
+      res.redirect("/center/workerInfo");
+  }
+  catch{
+      res.render('errorpage',err);
+  }
+  
+};
 //workerInfo controller end
 
 //workerNum controller
@@ -1717,6 +1774,64 @@ module.exports.chak1FormPost = async (req, res) => {
       res.render("errorpage", err);
     });
 };
+module.exports.chak1Edit=async(req,res)=>{
+  await chak1.findByPk(req.params.id)
+  .then(data => {
+      console.log("inside");
+      res.render('center/employee/chak1/employeeChak1Edit', { title: 'ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য',msg:'' ,success:'',records: data});
+  })
+  .catch(err => {
+      console.log("outside",err);
+  })
+};
+module.exports.chak1EditPost=async(req,res)=>{
+  var center = req.body.center;
+  var porichito = req.body.porichito;
+  var kormokorta = req.body.kormokorta;
+  var nijDistrict = req.body.nijDistrict;
+  var podobi = req.body.podobi;
+  var birthDate = req.body.birthDate;
+  var firstdate = req.body.firstdate;
+  var presentDate = req.body.presentDate;
+  var pastWorkstation = req.body.pastWorkstation;
+  var comment = req.body.comment;
+  var month = req.body.month;
+  var year = req.body.year;
+  var user_id = req.body.user_id;
+  await chak1.update({ 
+    center: center,
+    porichito: porichito,
+    kormokorta: kormokorta,
+    nijDistrict: nijDistrict,
+    podobi: podobi,
+    birthDate: birthDate,
+    firstdate: firstdate,
+    presentDate: presentDate,
+    pastWorkstation: pastWorkstation,
+    comment: comment,
+    month: month,
+    year: year,
+  },
+  {
+      where: {id: req.params.id}
+  }).then(data => {
+      res.redirect('/center/chak1');
+  }).catch(err => {
+      res.render('errorpage',err);
+  });
+};
+module.exports.chak1Delete=async(req,res)=>{
+  var chak1Delete = await chak1.findByPk(req.params.id);
+  try {
+    chak1Delete.destroy();
+      res.redirect("/center/chak1");
+  }
+  catch{
+      res.render('errorpage',err);
+  }
+  
+};
+
 
 //chak1 controller end
 
@@ -1832,6 +1947,55 @@ module.exports.fetchPodobiList = async (req, res) => {
     .catch((err) => {
       console.log(err);
     });
+};
+module.exports.chak2Edit=async(req,res)=>{
+  await chak2.findByPk(req.params.id)
+  .then(data => {
+      console.log("inside");
+      res.render('center/employee/chak2/employeeChak2Edit', { title: 'হরটিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা',msg:'' ,success:'',records: data});
+  })
+  .catch(err => {
+      console.log("outside",err);
+  })
+};
+module.exports.chak2EditPost=async(req,res)=>{
+  var name = req.body.name;
+  var grade = req.body.grade;
+  var pod = req.body.pod;
+  var working = req.body.working;
+  var shunno = req.body.shunno;
+  var comment = req.body.comment;
+  var month = req.body.month;
+  var year = req.body.year;
+  var user_id = req.body.user_id;
+  await chak2.update({ 
+    name: name,
+    grade: grade,
+    pod: pod,
+    working: working,
+    shunno: shunno,
+    comment: comment,
+    month: month,
+    year: year,
+  },
+  {
+      where: {id: req.params.id}
+  }).then(data => {
+      res.redirect('/center/chak2');
+  }).catch(err => {
+      res.render('errorpage',err);
+  });
+};
+module.exports.chak2Delete=async(req,res)=>{
+  var chak2Delete = await chak2.findByPk(req.params.id);
+  try {
+    chak2Delete.destroy();
+      res.redirect("/center/chak2");
+  }
+  catch{
+      res.render('errorpage',err);
+  }
+  
 };
 //chak2 controller end
 
