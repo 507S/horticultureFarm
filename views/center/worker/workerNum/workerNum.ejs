@@ -58,8 +58,9 @@
                         
                         <div class="table-responsive" id="output"></div>
 
-                        <input type="button" id="btnExport" value="Download PDF" />
-
+                        <button onclick="exportToPdf()" class="btn btn-success">
+                            Download PDF
+                        </button>
                         <div id="output"></div>
         <!--                    <div id="loading" class="loading"><img src="{{ asset('assets/img/icon/loading.gif') }}" alt=""></div>-->
                     </div>
@@ -70,6 +71,20 @@
 
    
 <%- include('../../../includes/footer')-%>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    async function exportToPdf() {
+        var year = $('#year').val();
+        var center = $('#center').val();
+        const { data } = await axios.post(`/center/generatePdfworkerNum`,{year: year, center:center});
+        var mywindow = window.open("", "PRINT", "height=400,width=600");
+        mywindow.document.write(data.html);
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10*/
+        mywindow.print();
+        return true;
+    }
+</script>
 <script>
         
     $(document).ready(function(){

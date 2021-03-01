@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>রিভলভিং ফান্ড</title>
+
+    <style>
+        .flex-container {
+            display: flex;
+
+            justify-content: center
+        }
+        .table, td, th {
+            border: 1px solid black;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .center {
+            text-align: center;
+        }
+        .inline-block-child {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+<div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
+    <div>
+        <h1>রিভলভিং ফান্ড</h1>
+        <p><b>সেন্টারের নাম :</b><%= centerName %></p>
+        <%if (records.length >0){ %>
+            <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
+            <thead>
+            <tr>
+                <th>অর্থ প্রাপ্তি HDDA তে জমা</th>
+                <th>অর্থ উত্তোলন (বর্তমান মাসে উত্তোলন)</th>
+                <th>অর্থ উত্তোলন (পূর্ববর্তী মাস পর্যন্ত উত্তোলন)</th>
+                <th>অর্থ উত্তোলন (এ পর্যন্ত মোট উত্তোলন)</th>
+                <th>ব্যাংকে স্থিতি</th>
+                <th>বিক্রিত অর্থ জমা (পূর্ববর্তী মাস পর্যন্ত জমা)</th>
+                <th>বিক্রিত অর্থ জমা (বর্তমান মাসে জমা)</th>
+                <th>বিক্রিত অর্থ জমা (মোট জমা)</th>
+                <th>চারা/কলমের নাম</th>
+                <th>চারা/কলম উতপাদন(সংখ্যায়) (লক্ষ্যমাত্রা)</th>
+                <th>চারা/কলম উতপাদন(সংখ্যায়) (পূর্ববর্তী মাস পর্যন্ত উৎপাদন)</th>
+                <th>চারা/কলম উতপাদন(সংখ্যায়) (বর্তমান মাসে উৎপাদন)</th>
+                <th>চারা/কলম উতপাদন(সংখ্যায়) (মোট উৎপাদন)</th>
+                <th>চারা/কলম বিতরণ(সংখ্যায়) (পূর্ববর্তী মাস পর্যন্ত বিতরণ)</th>
+                <th>চারা/কলম বিতরণ(সংখ্যায়) (বর্তমান মাসে বিতরণ)</th>
+                <th>চারা/কলম বিতরণ(সংখ্যায়) (মৃত/অবিক্রয়যোগ্য সংখ্যা(মোট))</th>
+                <th>মোট বিতরণ (বিক্রি/মৃত)</th>
+                <th>নীট মজুদ</th>
+            </tr>
+            </thead>
+            <tbody>
+                <% records.forEach(function(row){ %>
+                    <tr>
+                        <td><%= row.prapti %></td>
+                        <td><%= row.presentOrtho %></td>
+                        <td><%= row.pastOrtho %></td>
+                        <td><%= row.totalOrtho %></td>
+                        <td><%= row.bank %></td>
+                        <td><%= row.soldPast %></td>
+                        <td><%= row.soldPresent %></td>
+                        <td><%= row.soldTotal %></td>
+                        <td><%= row.chara %></td>
+                        <td><%= row.productionTarget %></td>
+                        <td><%= row.productionPast %></td>
+                        <td><%= row.productionPresent %></td>
+                        <td><%= row.productionTotal %></td>
+                        <td><%= row.bitoronPast %></td>
+                        <td><%= row.bitoronPresent %></td>
+                        <td><%= row.bitoronDead %></td>
+                        <td><%= row.bitoronTotal %></td>
+                        <td><%= row.totalMojud %></td>
+                        
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+        <% }else{ %>
+            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+                <thead>
+                <tr>
+                    <th>অর্থ প্রাপ্তি HDDA তে জমা</th>
+                    <th>অর্থ উত্তোলন (বর্তমান মাসে উত্তোলন)</th>
+                    <th>অর্থ উত্তোলন (পূর্ববর্তী মাস পর্যন্ত উত্তোলন)</th>
+                    <th>অর্থ উত্তোলন (এ পর্যন্ত মোট উত্তোলন)</th>
+                    <th>ব্যাংকে স্থিতি</th>
+                    <th>বিক্রিত অর্থ জমা (পূর্ববর্তী মাস পর্যন্ত জমা)</th>
+                    <th>বিক্রিত অর্থ জমা (বর্তমান মাসে জমা)</th>
+                    <th>বিক্রিত অর্থ জমা (মোট জমা)</th>
+                    <th>চারা/কলমের নাম</th>
+                    <th>চারা/কলম উতপাদন(সংখ্যায়) (লক্ষ্যমাত্রা)</th>
+                    <th>চারা/কলম উতপাদন(সংখ্যায়) (পূর্ববর্তী মাস পর্যন্ত উৎপাদন)</th>
+                    <th>চারা/কলম উতপাদন(সংখ্যায়) (বর্তমান মাসে উৎপাদন)</th>
+                    <th>চারা/কলম উতপাদন(সংখ্যায়) (মোট উৎপাদন)</th>
+                    <th>চারা/কলম বিতরণ(সংখ্যায়) (পূর্ববর্তী মাস পর্যন্ত বিতরণ)</th>
+                    <th>চারা/কলম বিতরণ(সংখ্যায়) (বর্তমান মাসে বিতরণ)</th>
+                    <th>চারা/কলম বিতরণ(সংখ্যায়) (মৃত/অবিক্রয়যোগ্য সংখ্যা(মোট))</th>
+                    <th>মোট বিতরণ (বিক্রি/মৃত)</th>
+                    <th>নীট মজুদ</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% records.forEach(function(row){ %>
+                    <tr>
+                        <td colspan="10">No data Found</td>
+                    </tr>
+                <% }) %>
+                </tbody>
+            </table>
+        <% } %>
+    </div>
+</div>
+
+</body>
+</html>

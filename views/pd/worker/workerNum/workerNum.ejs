@@ -85,6 +85,20 @@
 
    
 <%- include('../../../includes/footer')-%>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    async function exportToPdf() {
+        var year = $('#startDate').val();
+        var center = $('#center').val();
+        const { data } = await axios.post(`/pd/generatePdfworkerNum`,{year: year, center:center});
+        var mywindow = window.open("", "PRINT", "height=400,width=600");
+        mywindow.document.write(data.html);
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10*/
+        mywindow.print();
+        return true;
+    }
+</script>
 <script type="text/javascript">
     function exportToExcel(tableID, filename = ''){
         var downloadurl;
