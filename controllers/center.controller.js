@@ -470,11 +470,7 @@ module.exports.workerInfoYear = async (req, res) => {
       );
     })
     .catch((err) => {
-      res.render("center/worker/workerInfo/workerInfoYear", {
-        title: "শ্রমিকদের তথ্য",
-        success: "",
-        records: err,
-      });
+      console.log(err);
     });
 };
 
@@ -589,17 +585,18 @@ module.exports.workerInfoDelete=async(req,res)=>{
   }
   
 };
-module.exports.generatePdfworkerInfo= async (req, res) => {
+module.exports.generatePdfworkerInfo = async (req, res) => {
   try {
     var centerNames= await center.findOne({
       where: { id: req.session.user_id },
     })
-  var data= await workerInfo.findAll({
-      where: { year: req.body.year,month: req.body.month, center_id: req.session.user_id },
+   var data= await workerInfo
+    .findAll({
+      where: { year: req.body.year, month: req.body.month,center_id: req.session.user_id },
     })
       ejs.renderFile(
-          path.join(__dirname, "../views/center/worker/workerInfo/", "pdf.ejs"),
-          { records: data,centerName:centerNames,dirname: __dirname },
+          path.join(__dirname, "../views/center/worker/workerInfo", "pdf.ejs"),
+          { records: data,centerName:centerNames, },
           (err, data) => {
             if (err) {
               console.log("error", err);
@@ -630,7 +627,7 @@ module.exports.generatePdfworkerInfo= async (req, res) => {
     console.log(e);
   }
 
-};
+};                                        
 //workerInfo controller end
 
 //workerNum controller
@@ -687,6 +684,9 @@ module.exports.workerNumYear = async (req, res) => {
 };
 module.exports.generatePdfworkerNum  = async (req, res) => {
   try {
+    var centerNames= await center.findOne({
+      where: { id: req.session.user_id },
+    })
     var data=await workerInfo.findAll({where: {center_id: req.session.user_id,year: req.body.year,month: req.body.month},})
       var reg = 0;
       var irreg = 0;
@@ -701,14 +701,6 @@ module.exports.generatePdfworkerNum  = async (req, res) => {
         }
       });
       var total = reg + irreg;
-      res.render("center/worker/workerNum/workerNumTable", {
-        title: "শ্রমিকদের সংখ্যা",
-        success: "",
-        totals: total,
-        regs: reg,
-        irregs: irreg,
-        records: data,
-      });
       ejs.renderFile(
           path.join(__dirname, "../views/center/worker/workerNum", "pdf.ejs"),
           { records: data,centerName:centerNames,totals: total,regs: reg,irregs: irreg,dirname: __dirname },

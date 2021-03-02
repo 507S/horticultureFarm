@@ -45,7 +45,9 @@
 
                         <div class="table-responsive" id="output"></div>
 
-                        <input type="button" id="btnExport" value="Download PDF" />
+                        <button onclick="exportToPdf()" class="btn btn-success">
+                            Download PDF
+                        </button>
                         <button onclick="exportToExcel('tblexportData', 'রিভলভিং ফান্ড')" class="btn btn-success">Export Table Data To Excel File</button>
 
 
@@ -62,7 +64,7 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
     async function exportToPdf() {
-        var year = $('#startDate').val();
+        var year = $('#year').val();
         var center = $('#center').val();
         const { data } = await axios.post(`/pd/generatePdfrevolvingFund`,{year: year, center:center});
         var mywindow = window.open("", "PRINT", "height=400,width=600");

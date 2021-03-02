@@ -31,7 +31,7 @@
 <div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
     <div>
         <h1>শ্রমিকের তথ্য</h1>
-        <p><b>সেন্টারের নাম :</b><%= centerName %></p>
+        <p><b>সেন্টারের নাম :</b><%= centerName.center %></p>
         <%if (records.length >0){ %>
             <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
             <thead>
@@ -45,7 +45,6 @@
                 <th>যোগদানের তারিখ</th>
                 <th>এনআইডি নং</th>
                 <th>ব্যাংক একাউন্ট নং</th>
-                <th>পরিবর্তন/মুছুন</th>
             </tr>
             </thead>
             <tbody>
@@ -60,9 +59,7 @@
                         <td><%= row.date %></td>
                         <td><%= row.nid %></td>
                         <td><%= row.bank %></td>
-                        <td><a class="btn btn-primary btn-xs" href="/center/workerInfoEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
-                            <a class="btn btn-danger btn-xs" href="/center/workerInfoDelete/<%= row.id %>"><i class="fa fa-trash"></i></a>
-                        </td>
+                        
                     </tr>
                 <% }) %>
             </tbody>

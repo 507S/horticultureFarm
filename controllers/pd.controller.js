@@ -1310,6 +1310,50 @@ module.exports.newPodobiDelete=async(req,res)=>{
     }
     
 };
+module.exports.generatePdfworkerInfo = async (req, res) => {
+    if (req.body.center === "all") {
+        console.log("resss")
+        var data=await workerInfo.findAll({
+            where: {year: req.body.year,month:req.body.month}
+        })
+        
+        ejs.renderFile(
+            path.join(__dirname, "../views/pd/worker/workerInfo", "pdf.ejs"),
+            { records: data,centerName:centerNames, },
+            (err, data) => {
+              if (err) {
+                console.log("error", err);
+                res.send(err);
+              } else {
+                var assesPath = path.join(__dirname, "../public/");
+                // console.log(assesPath);
+                assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+  
+                var options = {
+                  height: "11.25in",
+                  width: "18.5in",
+                  header: {
+                    height: "20mm",
+                  },
+                  footer: {
+                    height: "20mm",
+                  },
+                  base: "file:///" + assesPath,
+                };
+                res.json({ html: data });
+              }
+            }
+        )
+    }
+    else{
+    var data= await workerInfo.findAll({
+        where: {year: req.body.year,center_id : req.body.center,month:req.body.month}
+    })
+        res.render('pd/worker/workerInfo/workerInfoTable', {records: data} ,function(err, html) {
+            res.send(html);
+        });
+    }
+  };
 //workerInfo controller end
 
 //workerInfo controller
@@ -1384,6 +1428,104 @@ module.exports.workerNumFilter=async(req,res)=>{
     })
     }
 };
+module.exports.generatePdfworkerNum  = async (req, res) => {
+    if (req.body.center === "all") {
+        var centerNames= await center.findOne({
+            where: { id: req.body.center },
+          })
+        var data=await workerInfo.findAll({where: {year: req.body.year,month: req.body.month}})
+
+            var reg=0;
+            var irreg=0;
+            data.forEach(function(row){
+                if(row.regularWorker !== 0){
+                    reg+=1;
+                };
+            });
+            data.forEach(function(row){
+                if(row.irregularWorker !== 0){
+                    irreg+=1;
+                };
+            });
+            var total;
+            total = reg+irreg;
+            ejs.renderFile(
+                path.join(__dirname, "../views/pd/worker/workerNum", "pdf.ejs"),
+                { records: data,centerName:centerNames,totals: total,regs: reg,irregs: irreg,dirname: __dirname },
+                (err, data) => {
+                  if (err) {
+                    console.log("error", err);
+                    res.send(err);
+                  } else {
+                    var assesPath = path.join(__dirname, "../public/");
+                    // console.log(assesPath);
+                    assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+      
+                    var options = {
+                      height: "11.25in",
+                      width: "18.5in",
+                      header: {
+                        height: "20mm",
+                      },
+                      footer: {
+                        height: "20mm",
+                      },
+                      base: "file:///" + assesPath,
+                    };
+                    res.json({ html: data });
+                  }
+                }
+            )
+    }
+    else{
+        var centerNames= await center.findOne({
+            where: { id: req.body.center },
+          })
+        var data=await workerInfo.findAll({where: {center_id: req.body.center,year: req.body.year,month: req.body.month}})
+        var reg=0;
+        var irreg=0;
+        data.forEach(function(row){
+            if(row.regularWorker !== 0){
+                reg+=1;
+            };
+        });
+        data.forEach(function(row){
+            if(row.irregularWorker !== 0){
+                irreg+=1;
+            };
+        });
+        var total;
+        total = reg+irreg;
+        ejs.renderFile(
+            path.join(__dirname, "../views/pd/worker/workerNum", "pdf.ejs"),
+            { records: data,centerName:centerNames,totals: total,regs: reg,irregs: irreg,dirname: __dirname },
+            (err, data) => {
+              if (err) {
+                console.log("error", err);
+                res.send(err);
+              } else {
+                var assesPath = path.join(__dirname, "../public/");
+                // console.log(assesPath);
+                assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+  
+                var options = {
+                  height: "11.25in",
+                  width: "18.5in",
+                  header: {
+                    height: "20mm",
+                  },
+                  footer: {
+                    height: "20mm",
+                  },
+                  base: "file:///" + assesPath,
+                };
+                res.json({ html: data });
+              }
+            }
+        )
+    }
+  
+  };
 
 //workerNum controller end
 
@@ -1415,21 +1557,6 @@ module.exports.apaFilter=async(req,res)=>{
     })
     .catch(err => {
         console.log(err);
-    })
-
-};
-
-module.exports.apaYear=async(req,res)=>{
-    await apa.findAll({
-        where: {year: req.body.year, center_id: req.session.user_id}
-    })
-    .then(data => {
-        res.render('pd/apa/apaTable', {records: data} ,function(err, html) {
-            res.send(html);
-        });
-    })
-    .catch(err => {
-        res.render('pd/apa/apaYear', { title: 'এপিএ',success:'', records: err });
     })
 
 };
@@ -1496,6 +1623,48 @@ module.exports.apaCategoryTable=async(req,res)=>{
     //  records:result
 
 };
+module.exports.generatePdfapa = async (req, res) => {
+    try {
+      var centerNames= await center.findOne({
+        where: { id: req.body.center },
+      })
+    var data= await apa.findAll({
+        where: {center_id : req.body.center,year: req.body.year}
+    })
+        ejs.renderFile(
+            path.join(__dirname, "../views/pd/apa/", "pdf.ejs"),
+            { records: data,centerName:centerNames,dirname: __dirname },
+            (err, data) => {
+              if (err) {
+                console.log("error", err);
+                res.send(err);
+              } else {
+                var assesPath = path.join(__dirname, "../public/");
+                // console.log(assesPath);
+                assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+  
+                var options = {
+                  height: "11.25in",
+                  width: "18.5in",
+                  header: {
+                    height: "20mm",
+                  },
+                  footer: {
+                    height: "20mm",
+                  },
+                  base: "file:///" + assesPath,
+                };
+                res.json({ html: data });
+              }
+            }
+        )
+      
+      
+    } catch (e) {
+      console.log(e);
+    }
+  
+  };
 
 //apa controller end
 
@@ -1564,6 +1733,48 @@ module.exports.loanFormPost=async(req,res)=>{
         });
   
 };
+module.exports.generatePdfloan = async (req, res) => {
+    try {
+      var centerNames= await center.findOne({
+        where: { id: req.body.center },
+      })
+    var data= await loan.findAll({
+        where: { year: req.body.year, center_id: req.body.center },
+      })
+        ejs.renderFile(
+            path.join(__dirname, "../views/pd/loan/", "pdf.ejs"),
+            { records: data,centerName:centerNames,dirname: __dirname },
+            (err, data) => {
+              if (err) {
+                console.log("error", err);
+                res.send(err);
+              } else {
+                var assesPath = path.join(__dirname, "../public/");
+                // console.log(assesPath);
+                assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+  
+                var options = {
+                  height: "11.25in",
+                  width: "18.5in",
+                  header: {
+                    height: "20mm",
+                  },
+                  footer: {
+                    height: "20mm",
+                  },
+                  base: "file:///" + assesPath,
+                };
+                res.json({ html: data });
+              }
+            }
+        )
+      
+      
+    } catch (e) {
+      console.log(e);
+    }
+  
+  };
 
 //apa controller end
 
@@ -1654,6 +1865,48 @@ module.exports.specialCoconutFormPost=async(req,res)=>{
         });
   
 };
+module.exports.generatePdfspecialCoconut = async (req, res) => {
+    try {
+      var centerNames= await center.findOne({
+        where: { id: req.body.center },
+      })
+    var data= await specialCoconut.findAll({
+        where: { year: req.body.year, center_id: req.body.center },
+      })
+        ejs.renderFile(
+            path.join(__dirname, "../views/pd/specialCoconut/", "pdf.ejs"),
+            { records: data,centerName:centerNames,dirname: __dirname },
+            (err, data) => {
+              if (err) {
+                console.log("error", err);
+                res.send(err);
+              } else {
+                var assesPath = path.join(__dirname, "../public/");
+                // console.log(assesPath);
+                assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+  
+                var options = {
+                  height: "11.25in",
+                  width: "18.5in",
+                  header: {
+                    height: "20mm",
+                  },
+                  footer: {
+                    height: "20mm",
+                  },
+                  base: "file:///" + assesPath,
+                };
+                res.json({ html: data });
+              }
+            }
+        )
+      
+      
+    } catch (e) {
+      console.log(e);
+    }
+  
+  };
 
 //specialCoconut controller end
 
@@ -1743,7 +1996,48 @@ module.exports.revolvingFundFormPost=async(req,res)=>{
         });
   
 };
-
+module.exports.generatePdfrevolvingFund = async (req, res) => {
+    try {
+      var centerNames= await center.findOne({
+        where: { id: req.body.center},
+      })
+    var data= await revolvingFund.findAll({
+        where: { year: req.body.year, center_id: req.body.center },
+      })
+        ejs.renderFile(
+            path.join(__dirname, "../views/pd/revolvingFund/", "pdf.ejs"),
+            { records: data,centerName:centerNames,dirname: __dirname },
+            (err, data) => {
+              if (err) {
+                console.log("error", err);
+                res.send(err);
+              } else {
+                var assesPath = path.join(__dirname, "../public/");
+                // console.log(assesPath);
+                assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+  
+                var options = {
+                  height: "11.25in",
+                  width: "18.5in",
+                  header: {
+                    height: "20mm",
+                  },
+                  footer: {
+                    height: "20mm",
+                  },
+                  base: "file:///" + assesPath,
+                };
+                res.json({ html: data });
+              }
+            }
+        )
+      
+      
+    } catch (e) {
+      console.log(e);
+    }
+  
+  };
 //revolvingFund controller end
 
 //specialCoconut controller
@@ -1830,7 +2124,48 @@ module.exports.chak1FormPost=async(req,res)=>{
         });
   
 };
-
+module.exports.generatePdfchak1 = async (req, res) => {
+    try {
+      var centerNames= await center.findOne({
+        where: { id: req.body.center },
+      })
+    var data= await chak1.findAll({
+        where: { year: req.body.year,month: req.body.month, center_id: req.body.center },
+      })
+        ejs.renderFile(
+            path.join(__dirname, "../views/pd/employee/chak1/", "pdf.ejs"),
+            { records: data,centerName:centerNames,dirname: __dirname },
+            (err, data) => {
+              if (err) {
+                console.log("error", err);
+                res.send(err);
+              } else {
+                var assesPath = path.join(__dirname, "../public/");
+                // console.log(assesPath);
+                assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+  
+                var options = {
+                  height: "11.25in",
+                  width: "18.5in",
+                  header: {
+                    height: "20mm",
+                  },
+                  footer: {
+                    height: "20mm",
+                  },
+                  base: "file:///" + assesPath,
+                };
+                res.json({ html: data });
+              }
+            }
+        )
+      
+      
+    } catch (e) {
+      console.log(e);
+    }
+  
+  };
 //chak1 controller end
 
 //chak2 controller
@@ -1909,7 +2244,48 @@ module.exports.chak2FormPost=async(req,res)=>{
         });
   
 };
-
+module.exports.generatePdfchak2 = async (req, res) => {
+    try {
+      var centerNames= await center.findOne({
+        where: { id: req.body.center },
+      })
+    var data= await chak2.findAll({
+        where: { year: req.body.year, month: req.body.month,center_id: req.body.center },
+      })
+        ejs.renderFile(
+            path.join(__dirname, "../views/pd/employee/chak2/", "pdf.ejs"),
+            { records: data,centerName:centerNames,dirname: __dirname },
+            (err, data) => {
+              if (err) {
+                console.log("error", err);
+                res.send(err);
+              } else {
+                var assesPath = path.join(__dirname, "../public/");
+                // console.log(assesPath);
+                assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+  
+                var options = {
+                  height: "11.25in",
+                  width: "18.5in",
+                  header: {
+                    height: "20mm",
+                  },
+                  footer: {
+                    height: "20mm",
+                  },
+                  base: "file:///" + assesPath,
+                };
+                res.json({ html: data });
+              }
+            }
+        )
+      
+      
+    } catch (e) {
+      console.log(e);
+    }
+  
+  };
 //chak2 controller end
 
 //rajossho controller
@@ -2157,6 +2533,49 @@ module.exports.newRajosshoCodeTableDelete=async(req,res)=>{
     }
     
 };
+module.exports.generatePdfrajossho= async (req, res) => {
+    try {
+      var centerNames= await center.findOne({
+        where: { id: req.body.center },
+      });
+      console.log("centerNames",centerNames)
+    var data= await rajossho.findAll({
+        where: { year: req.body.year, center_id: req.body.center },
+      })
+        ejs.renderFile(
+            path.join(__dirname, "../views/pd/rajossho/", "pdf.ejs"),
+            { records: data,centerName:centerNames,dirname: __dirname },
+            (err, data) => {
+              if (err) {
+                console.log("error", err);
+                res.send(err);
+              } else {
+                var assesPath = path.join(__dirname, "../public/");
+                // console.log(assesPath);
+                assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+  
+                var options = {
+                  height: "11.25in",
+                  width: "18.5in",
+                  header: {
+                    height: "20mm",
+                  },
+                  footer: {
+                    height: "20mm",
+                  },
+                  base: "file:///" + assesPath,
+                };
+                res.json({ html: data });
+              }
+            }
+        )
+      
+      
+    } catch (e) {
+      console.log(e);
+    }
+  
+  };
 //rajossho controller end
 
 //expense controller
@@ -2414,7 +2833,48 @@ module.exports.newKhorochTableDelete=async(req,res)=>{
     }
     
 };
-
+module.exports.generatePdfexpense = async (req, res) => {
+    try {
+      var centerNames= await center.findOne({
+        where: { id: req.body.center },
+      })
+    var data= await expense.findAll({
+        where: { year: req.body.year, center_id: req.body.center },
+      })
+        ejs.renderFile(
+            path.join(__dirname, "../views/pd/expense/", "pdf.ejs"),
+            { records: data,centerName:centerNames,dirname: __dirname },
+            (err, data) => {
+              if (err) {
+                console.log("error", err);
+                res.send(err);
+              } else {
+                var assesPath = path.join(__dirname, "../public/");
+                // console.log(assesPath);
+                assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+  
+                var options = {
+                  height: "11.25in",
+                  width: "18.5in",
+                  header: {
+                    height: "20mm",
+                  },
+                  footer: {
+                    height: "20mm",
+                  },
+                  base: "file:///" + assesPath,
+                };
+                res.json({ html: data });
+              }
+            }
+        )
+      
+      
+    } catch (e) {
+      console.log(e);
+    }
+  
+  };
 //expense controller end
 
 //monthlyProgress controller
@@ -2478,7 +2938,7 @@ module.exports.monthlyProgressFilter=async(req,res)=>{
         console.log(" mpl",e);
     }
 };
-
+                                                                               
 module.exports.generatePdfMonthlyProgress = async (req, res) => {
     try{
         const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
