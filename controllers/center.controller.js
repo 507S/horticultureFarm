@@ -700,7 +700,7 @@ module.exports.generatePdfworkerNum  = async (req, res) => {
           irreg += 1;
         }
       });
-      var total = reg + irreg;
+      var total = reg + irreg; 
       ejs.renderFile(
           path.join(__dirname, "../views/center/worker/workerNum", "pdf.ejs"),
           { records: data,centerName:centerNames,totals: total,regs: reg,irregs: irreg,dirname: __dirname },
