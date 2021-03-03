@@ -143,7 +143,10 @@ module.exports.pdloginpost=async(req,res)=>{
 
 module.exports.pdDashboard = async(req,res) => {
     try{
-        const dashImage = await dashImages.findAll()
+        const dashImage = await dashImages.findAll({order: [
+            ['createdAt', 'DESC'],
+        ],
+        attributes: ['id', 'title', 'image', 'createdAt', 'updatedAt']})
         const crop = await cropCategory.findAll();
         const centerinfo = await center.findAll();
         const monthly_progress = await monthlyProgress.findAll();
@@ -1312,11 +1315,15 @@ module.exports.newPodobiDelete=async(req,res)=>{
 };
 module.exports.generatePdfworkerInfo = async (req, res) => {
     if (req.body.center === "all") {
-        console.log("resss")
+        
+        var centerNames= await center.findAll({
+            where: { id: req.body.center },
+          })
+          console.log("centerNames",centerNames)
         var data=await workerInfo.findAll({
             where: {year: req.body.year,month:req.body.month}
         })
-        
+         
         ejs.renderFile(
             path.join(__dirname, "../views/pd/worker/workerInfo", "pdf.ejs"),
             { records: data,centerName:centerNames, },
@@ -1346,12 +1353,39 @@ module.exports.generatePdfworkerInfo = async (req, res) => {
         )
     }
     else{
+        var centerNames= await center.findOne({
+            where: { id: req.body.center },
+          })
     var data= await workerInfo.findAll({
         where: {year: req.body.year,center_id : req.body.center,month:req.body.month}
     })
-        res.render('pd/worker/workerInfo/workerInfoTable', {records: data} ,function(err, html) {
-            res.send(html);
-        });
+    ejs.renderFile(
+        path.join(__dirname, "../views/pd/worker/workerInfo", "pdf.ejs"),
+        { records: data,centerName:centerNames, },
+        (err, data) => {
+          if (err) {
+            console.log("error", err);
+            res.send(err);
+          } else {
+            var assesPath = path.join(__dirname, "../public/");
+            // console.log(assesPath);
+            assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+            var options = {
+              height: "11.25in",
+              width: "18.5in",
+              header: {
+                height: "20mm",
+              },
+              footer: {
+                height: "20mm",
+              },
+              base: "file:///" + assesPath,
+            };
+            res.json({ html: data });
+          }
+        }
+    )
     }
   };
 //workerInfo controller end
@@ -3516,12 +3550,14 @@ module.exports.dashImageForm=async(req,res)=>{
     res.render('pd/dashImage/dashImageForm', { title: 'সৌর আলো ফাঁদ বিতরণ তথ্য',msg:'' ,success:'',user_id: req.session.user_id});
 };
 module.exports.dashImageFormPost=async(req,res)=>{
+    var title= req.body.title;
     const path = req.file && req.file.path;
     console.log("path",path,req.file,req.file.path)
     if(path){
         var imagePath = "/dashImageGallery/" + req.file.filename;
         await dashImages.create({
                 image: imagePath,
+                title:title,
             })
             .then(data => {
             res.redirect('/pd/dashboard');
@@ -3535,5 +3571,17 @@ module.exports.dashImageFormPost=async(req,res)=>{
         };
     
   
+};
+
+module.exports.dashImageDelete=async(req,res)=>{
+    var dashImageDelete = await dashImages.findByPk(req.params.id);
+    try {
+        dashImageDelete.destroy();
+        res.redirect("/pd/dashboard");
+    }
+    catch{
+        console.log(err);
+    }
+    
 };
 // dashImage controller ends

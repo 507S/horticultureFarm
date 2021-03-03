@@ -28,6 +28,7 @@ const cropCategory = db.cropcategory;
 const rajosshoCode = db.rajosshoCode;
 const expenseCode = db.expenseCode;
 const podobiList = db.podobiList;
+const dashImages = db.dashImage;
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -125,6 +126,10 @@ module.exports.centerloginpost = async (req, res) => {
 
 module.exports.centerDashboard = async (req, res) => {
   try {
+    const dashImage = await dashImages.findAll({order: [
+      ['createdAt', 'DESC'],
+  ],
+  attributes: ['id', 'title', 'image', 'createdAt', 'updatedAt']})
     const monthly_progress = await monthlyProgress.findAll({
       where: {
         center_id: req.session.user_id,
@@ -186,6 +191,7 @@ module.exports.centerDashboard = async (req, res) => {
     res.render("center/dashboard", {
       title: "Horticulture Wing Center Management Software",
       msg: "Welcome",
+      dashImage:dashImage,
       totalrajossho: totalrajossho,
       totalProduction: totalProduct,
       totalBitoron: totalBitoron,

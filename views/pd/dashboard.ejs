@@ -96,11 +96,16 @@
                             </form>
                             </div>
                         </div>
-
+                        
                         <div class="container gallery-container">
+                            <h1 text-align:center>Notice Board</h1>
                             <form action="/pd/dashImageFormPost" id="FieldTrialForm" class="form-horizontal" method="post"  role="form" enctype="multipart/form-data">
                                 <div class="form-group">
-                                    <label >নতুন ছবি আপ্লোড করুন</label>
+                                    <label >নতুন নোটিশের টাইটেল</label>
+                                    <input type="text" id="title" class="form-control" name="title" required>
+                                </div>
+                                <div class="form-group">
+                                    <label >নতুন নোটিশ আপ্লোড করুন</label>
                                     <input type="file" id="filename" class="form-control" name="dashImage" required>
                                 </div>
                                             
@@ -110,18 +115,54 @@
                           <div class="col-md-offset-3 col-md-3">
                             <input type="submit" name="submit" value="আপ্লোড" class="btn btn-primary">   
                         </div>
+                        </form>
 
                             
                             <div class="tz-gallery">
                                 <div class="row">
-                                    <% dashImage.forEach(function(row,index){ %>
-                                    <div class="col-sm-12 col-md-4">
-                                        <a class="lightbox" href="<%= row.image %>">
-                                            <img class="chobi" src="<%= row.image %>">
-                                        </a>
-                                    </div>
-                                    <% }) %>
-                                    
+                                    <%if (dashImage.length >0){ %>
+                                        <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+                                        <thead>
+                                        <tr>
+                                            <th>ক্রমিক নং</th>
+                                            <th>টাইটেল</th>
+                                            <th>ফাইল</th>
+                                            <th>মুছুন</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% dashImage.forEach(function(row,index){ %>
+                                                <tr>
+                                                    <td><%= index+1 %></td>
+                                                    <td><%= row.title %></td>
+                                                    <td><a  href="<%= row.image %>"><i class="fas fa-file"></i>
+                                                    </a></td>
+                                                    <td>
+                                                        <a class="btn btn-danger btn-xs" href="/pd/dashImageDelete/<%= row.id %>"><i class="fa fa-trash"></i></a>
+                                                    </td>
+                                                </tr>
+                                            <% }) %>
+                                        </tbody>
+                                    </table>
+                                    <% }else{ %>
+                                        <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
+                                            <thead>
+                                            <tr>
+                                                <th>ক্রমিক নং</th>
+                                                <th>টাইটেল</th>
+                                                <th>ফাইল</th>
+                                                <th>পরিবর্তন/মুছুন</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <% records.forEach(function(row){ %>
+                                                <tr>
+                                                    <td colspan="10">No data Found</td>
+                                                </tr>
+                                            <% }) %>
+                                            </tbody>
+                                        </table>
+                                    <% } %>
                                     
 
                                 </div>
