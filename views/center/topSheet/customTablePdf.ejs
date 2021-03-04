@@ -1,6 +1,38 @@
-<%if (records.length >0){ %>
-    <input type="hidden" id="selectedDate" value="<%= selectedDate %>">
-    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News PDF</title>
+
+    <style>
+        .flex-container {
+            display: flex;
+
+            justify-content: center
+        }
+        .table, td, th {
+            border: 1px solid black;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .center {
+            text-align: center;
+        }
+        .inline-block-child {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+<div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
+    <div>
+        <h1>টপশীট</h1>
+        <%if (records.length >0){ %>
+            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
         <thead>
         <tr>
             <th>আইটেমের নাম</th>
@@ -69,42 +101,29 @@
         <% }) %>
         </tbody>
     </table>
-    <button onclick="exportToPdf()" class="btn btn-success">
-        Download PDF
-    </button>
-<% }else{ %>
-    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-        <thead>
-        <tr>
-            <th>আইটেমের নাম</th>
-            <th>লক্ষ্যমাত্রা (সংখ্যা/প্যাকেট)</th>
-            <th>গত মাস পর্যন্ত উৎপাদন (সংখ্যা/প্যাকেট)</th>
-            <th>চলতি মাসে উতপাদন(সংখ্যা/প্যাকেট)</th>
-            <th>আলোচ্য মাস পর্যন্ত মোট উৎপাদন (সংখ্যা/প্যাকেট)</th>
-            <th>পরিবর্তন/মুছুন</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% records.forEach(function(row){ %>
-            <tr>
-                <td colspan="10">No data Found</td>
-            </tr>
-        <% }) %>
-        </tbody>
-    </table>
-<% } %>
-<script>
-    async function exportToPdf() {
-        const selectedDate = $("#selectedDate").val();
-        const { data } = await axios({
-            url: `/center/generatePdfTopSheet/${selectedDate}`,
-            method: "GET",
-        });
-        var mywindow = window.open("", "PRINT", "height=400,width=600");
-        mywindow.document.write(data.html);
-        mywindow.document.close(); // necessary for IE >= 10
-        mywindow.focus(); // necessary for IE >= 10*/
-        mywindow.print();
-        return true;
-    }
-</script>
+        <% }else{ %>
+            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+                <thead>
+                <tr>
+                    <th>আইটেমের নাম</th>
+                    <th>লক্ষ্যমাত্রা (সংখ্যা/প্যাকেট)</th>
+                    <th>গত মাস পর্যন্ত উৎপাদন (সংখ্যা/প্যাকেট)</th>
+                    <th>চলতি মাসে উতপাদন(সংখ্যা/প্যাকেট)</th>
+                    <th>আলোচ্য মাস পর্যন্ত মোট উৎপাদন (সংখ্যা/প্যাকেট)</th>
+                    <th>পরিবর্তন/মুছুন</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% records.forEach(function(row){ %>
+                    <tr>
+                        <td colspan="10">No data Found</td>
+                    </tr>
+                <% }) %>
+                </tbody>
+            </table>
+        <% } %>
+    </div>
+</div>
+
+</body>
+</html>

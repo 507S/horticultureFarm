@@ -395,7 +395,7 @@ module.exports.topSheetYear = async (req, res) => {
     if (selectedDate === currentMonth) {
       res.render(
         "center/topSheet/topSheetTable",
-        { records: topSheets, cropCatg: cropCatg },
+        { records: topSheets, cropCatg: cropCatg, selectedDate:selectedDate },
         function (err, html) {
           res.send(html);
         }
@@ -409,10 +409,86 @@ module.exports.topSheetYear = async (req, res) => {
         }
       );
     }
+
   } catch (e) {
     console.log(e);
   }
 };
+
+module.exports.generatePdfTopSheet = async (req,res) => {
+  try {
+    const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
+    const selectedDate = req.params.selectedDate.toLowerCase();
+    const cropCatg = await cropCategory.findAll({
+      where: { type: "subCategory" },
+    });
+    const topSheets = await monthlyProgress.findAll({
+      where: { center_id: req.session.user_id },
+    });
+
+    if (selectedDate === currentMonth) {
+
+      ejs.renderFile(
+          path.join(__dirname, "../views/center/topSheet", "pdf.ejs"),
+          { records: topSheets, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              // console.log(assesPath);
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+
+    } else {
+
+      ejs.renderFile(
+          path.join(__dirname, "../views/center/topSheet", "customTablePdf.ejs"),
+          { records: topSheets, cropCatg: cropCatg, selectedDate: selectedDate , moment: res.locals.moment, dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              // console.log(assesPath);
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
 //topSheet controller end
 
 //charaKolom controller
