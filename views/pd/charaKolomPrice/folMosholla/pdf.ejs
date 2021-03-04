@@ -31,7 +31,6 @@
 <div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
     <div>
         <h1>হর্টিকালচার সেন্টারের ফল/মসলা ও শাক-সবজি বিক্রয় মূল্য</h1>
-        <p><b>সেন্টারের নাম :</b><%= centerName %></p>
         <%if (records.length >0){ %>
             <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
             <thead>
@@ -59,6 +58,7 @@
             <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
                 <thead>
                 <tr>
+                    <th>ক্রমিক নং</th>
                     <th>আইটেমের নাম</th>
                 <th>পরিমাণ (সংখ্যা/কেজি/লিটার)</th>
                 <th>চলতি অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>

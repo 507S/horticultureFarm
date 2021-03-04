@@ -13,10 +13,11 @@ const {apaUddessho,apaMaan,karjokrom,suchok,ekok,suchokMaan,newKhorochCode,newRa
     pdloginpost,pdDashboard,topSheet,topSheetFilter,center,centerYear,newPodobiTable,newPodobiEdit,newPodobiEditPost,newPodobiDelete,newPodobi,dashImageDelete,
     charaKolomEdit,charaKolomEditPost,charaKolomDelete,winterVegEdit,winterVegEditPost,winterVegDelete,summerVegEdit,summerVegEditPost,summerVegDelete,generatePdfexpense,
     otherFlowerEdit,otherFlowerEditPost,otherFlowerDelete,seasonalFlowerEdit,seasonalFlowerEditPost,seasonalFlowerDelete,podobiListForm,cropCategoryTable,
-    charaKolom,charaKolomYear,folMoshollaEdit,folMoshollaEditPost,folMoshollaDelete,newcropCategoryList,newcropCategoryListPost,newcropCategoryListEdit,
-    charaKolomForm,charaKolomFormPost,folMosholla,folMoshollaYear,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegYear,winterVegForm,dashImageForm,dashImageFormPost,
-    winterVegFormPost,summerVeg,summerVegYear,summerVegForm,summerVegFormPost,otherFlower,otherFlowerYear,otherFlowerForm,otherFlowerFormPost,generatePdfworkerInfo,generatePdfworkerNum,generatePdfapa,generatePdfloan,generatePdfspecialCoconut,generatePdfrevolvingFund,generatePdfchak1,generatePdfchak2,generatePdfrajossho,
-    seasonalFlower,seasonalFlowerYear,seasonalFlowerForm,seasonalFlowerFormPost,workerInfo,workerInfoFilter,workerInfoForm,apaCategoryTable,uploaddashImage,
+    charaKolom,folMoshollaEdit,folMoshollaEditPost,folMoshollaDelete,newcropCategoryList,newcropCategoryListPost,newcropCategoryListEdit,
+    charaKolomForm,charaKolomFormPost,folMosholla,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegForm,dashImageForm,dashImageFormPost,
+    winterVegFormPost,summerVeg,summerVegForm,summerVegFormPost,otherFlower,otherFlowerForm,otherFlowerFormPost,generatePdfworkerInfo,generatePdfworkerNum,generatePdfapa,generatePdfloan,generatePdfspecialCoconut,generatePdfrevolvingFund,generatePdfchak1,generatePdfchak2,generatePdfrajossho,
+    seasonalFlower,seasonalFlowerForm,seasonalFlowerFormPost,workerInfo,workerInfoFilter,workerInfoForm,apaCategoryTable,uploaddashImage,
+    generatePdfcharaKolom,generatePdffolMosholla,generatePdfwinterVeg,generatePdfsummerVeg,generatePdfotherFlower,generatePdfseasonalFlower,
     workerInfoFormPost,workerNum,workerNumFilter,monthlyProgressEdit,monthlyProgressUpdate,monthlyProgressDelete,generatePdfMonthlyProgress} = require('../controllers/pd.controller');
 
 
@@ -54,53 +55,52 @@ router.get('/adminInfoEdit/:id',adminInfoEdit);
 router.post('/adminInfoEditPost/:id',adminInfoEditPost);
 
 router.get('/charaKolom',charaKolom);
-router.post('/charaKolomYear',charaKolomYear);
 router.get('/charaKolomForm',charaKolomForm);
 router.post('/charaKolomForms',charaKolomFormPost);
 router.get('/charaKolomEdit/:id',charaKolomEdit);
 router.post('/charaKolomEditPost/:id',charaKolomEditPost);
 router.get('/charaKolomDelete/:id',charaKolomDelete);
+router.post('/generatePdfcharaKolom',generatePdfcharaKolom);
 
 router.get('/folMosholla',folMosholla);
-router.post('/folMoshollaYear',folMoshollaYear);
 router.get('/folMoshollaForm',folMoshollaForm);
 router.post('/folMoshollaForms',folMoshollaFormPost);
 router.get('/folMoshollaEdit/:id',folMoshollaEdit);
 router.post('/folMoshollaEditPost/:id',folMoshollaEditPost);
 router.get('/folMoshollaDelete/:id',folMoshollaDelete);
-
+router.post('/generatePdffolMosholla',generatePdffolMosholla);
 
 router.get('/winterVeg',winterVeg);
-router.post('/winterVegYear',winterVegYear);
 router.get('/winterVegForm',winterVegForm);
 router.post('/winterVegForms',winterVegFormPost);
 router.get('/winterVegEdit/:id',winterVegEdit);
 router.post('/winterVegEditPost/:id',winterVegEditPost);
 router.get('/winterVegDelete/:id',winterVegDelete);
+router.post('/generatePdfwinterVeg',generatePdfwinterVeg);
 
 router.get('/summerVeg',summerVeg);
-router.post('/summerVegYear',summerVegYear);
 router.get('/summerVegForm',summerVegForm);
 router.post('/summerVegForms',summerVegFormPost);
 router.get('/summerVegEdit/:id',summerVegEdit);
 router.post('/summerVegEditPost/:id',summerVegEditPost);
 router.get('/summerVegDelete/:id',summerVegDelete);
+router.post('/generatePdfsummerVeg',generatePdfsummerVeg);
 
 router.get('/otherFlower',otherFlower);
-router.post('/otherFlowerYear',otherFlowerYear);
 router.get('/otherFlowerForm',otherFlowerForm);
 router.post('/otherFlowerForms',otherFlowerFormPost);
 router.get('/otherFlowerEdit/:id',otherFlowerEdit);
 router.post('/otherFlowerEditPost/:id',otherFlowerEditPost);
 router.get('/otherFlowerDelete/:id',otherFlowerDelete);
+router.post('/generatePdfotherFlower',generatePdfotherFlower);
 
 router.get('/seasonalFlower',seasonalFlower);
-router.post('/seasonalFlowerYear',seasonalFlowerYear);
 router.get('/seasonalFlowerForm',seasonalFlowerForm);
 router.post('/seasonalFlowerForms',seasonalFlowerFormPost);
 router.get('/seasonalFlowerEdit/:id',seasonalFlowerEdit);
 router.post('/seasonalFlowerEditPost/:id',seasonalFlowerEditPost);
 router.get('/seasonalFlowerDelete/:id',seasonalFlowerDelete);
+router.post('/generatePdfseasonalFlower',generatePdfseasonalFlower);
 
 router.get('/workerInfo',workerInfo);
 router.post('/workerInfoFilter',workerInfoFilter);

@@ -290,11 +290,6 @@ module.exports.center = async (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.render("center/centerInfo/center", {
-        title: "সেন্টারের যোগাযোগ তথ্য",
-        success: "",
-        records: err,
-      });
     });
 
   //  records:result
@@ -313,11 +308,6 @@ module.exports.centerEdit = async (req, res) => {
     })
     .catch((err) => {
       console.log("outside");
-      res.render("center/centerInfo/centerEdit", {
-        title: "সেন্টারের যোগাযোগ তথ্য ফর্ম",
-        success: "",
-        records: err,
-      });
     });
 };
 module.exports.centerEditPost = async (req, res) => {
@@ -451,11 +441,7 @@ module.exports.workerInfo = async (req, res) => {
       });
     })
     .catch((err) => {
-      res.render("center/worker/workerInfo/workerInfo", {
-        title: "শ্রমিকদের তথ্য",
-        success: "",
-        records: err,
-      });
+      console.log(err);
     });
 
   //  records:result
@@ -678,12 +664,7 @@ module.exports.workerNumYear = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
-      res.render("center/worker/workerNum/workerNumYear", {
-        title: "শ্রমিকদের সংখ্যা",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
     });
 
   //  records:result
@@ -758,12 +739,7 @@ module.exports.apa = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
-      res.render("center/apa/apa", {
-        title: "এপিএ",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
     });
 
   //  records:result
@@ -784,11 +760,7 @@ module.exports.apaYear = async (req, res) => {
       );
     })
     .catch((err) => {
-      res.render("center/apa/apaYear", {
-        title: "এপিএ",
-        success: "",
-        records: err,
-      });
+      console.log(err);
     });
 };
 
@@ -999,12 +971,7 @@ module.exports.loan = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
-      res.render("center/loan/loan", {
-        title: "ঋণ বিতরণ ও আদায় এর অগ্রগতির প্রতিবেদন",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
     });
 
   //  records:result
@@ -1025,11 +992,7 @@ module.exports.loanYear = async (req, res) => {
       );
     })
     .catch((err) => {
-      res.render("center/loan/loanYear", {
-        title: "ঋণ বিতরণ ও আদায় এর অগ্রগতির প্রতিবেদন",
-        success: "",
-        records: err,
-      });
+      console.log(err);
     });
 };
 
@@ -1134,12 +1097,7 @@ module.exports.specialCoconut = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
-      res.render("center/specialCoconut/specialCoconut", {
-        title: "বিশেষ নারিকেল কর্মসূচি",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
     });
 
   //  records:result
@@ -1160,11 +1118,7 @@ module.exports.specialCoconutYear = async (req, res) => {
       );
     })
     .catch((err) => {
-      res.render("center/specialCoconut/specialCoconutYear", {
-        title: "বিশেষ নারিকেল কর্মসূচি",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
     });
 };
 
@@ -1289,12 +1243,8 @@ module.exports.revolvingFund = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
-      res.render("center/revolvingFund/revolvingFund", {
-        title: "রিভলভিং ফান্ড",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
+
     });
 
   //  records:result
@@ -1315,11 +1265,8 @@ module.exports.revolvingFundYear = async (req, res) => {
       );
     })
     .catch((err) => {
-      res.render("center/revolvingFund/revolvingFundYear", {
-        title: "রিভলভিং ফান্ড",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
+
     });
 };
 
@@ -1444,12 +1391,8 @@ module.exports.chak1 = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
-      res.render("center/employee/chak1/employeeChak1", {
-        title: "ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
+
     });
 
   //  records:result
@@ -1466,7 +1409,7 @@ module.exports.chak1Year = async (req, res) => {
             });
         })
         .catch(err => {
-            res.render('center/employee/chak1/employeeChak1Year', { title: 'ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য', success: '', records: err });
+          console.log("outside",err);
         })
 
 };
@@ -1638,13 +1581,8 @@ module.exports.chak2 = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
-      res.render("center/employee/chak2/employeeChak2", {
-        title:
-          "হরটিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
+
     });
 
   //  records:result
@@ -1664,12 +1602,8 @@ module.exports.chak2Year = async (req, res) => {
       );
     })
     .catch((err) => {
-      res.render("center/employee/chak2/employeeChak2Year", {
-        title:
-          "হরটিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
+
     });
 };
 
@@ -1843,12 +1777,8 @@ module.exports.rajossho = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
-      res.render("center/rajossho/rajossho", {
-        title: "মাসিক রাজস্ব অর্থ প্রাপ্তির হিসাব",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
+
     });
 
   //  records:result
@@ -1869,11 +1799,8 @@ module.exports.rajosshoYear = async (req, res) => {
       );
     })
     .catch((err) => {
-      res.render("center/rajossho/rajosshoYear", {
-        title: "মাসিক রাজস্ব অর্থ প্রাপ্তির হিসাব",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
+
     });
 };
 
@@ -1948,21 +1875,6 @@ module.exports.rajosshoFormPost = async (req, res) => {
   if (june2 == null) {
     june2 = 0;
   }
-  console.log(
-    "july1,august1,sept1,oct1,nov1,dec1,jan2,feb2,march2,apr2,may2,june2",
-    july1,
-    august1,
-    sept1,
-    oct1,
-    nov1,
-    dec1,
-    jan2,
-    feb2,
-    march2,
-    apr2,
-    may2,
-    june2
-  );
   var july1 = parseInt(july1);
   var august1 = parseInt(august1);
   var sept1 = parseInt(sept1);
@@ -1988,22 +1900,6 @@ module.exports.rajosshoFormPost = async (req, res) => {
     apr2 +
     may2 +
     june2;
-  console.log(
-    "july1,august1,sept1,oct1,nov1,dec1,jan2,feb2,march2,apr2,may2,june2,total",
-    july1,
-    august1,
-    sept1,
-    oct1,
-    nov1,
-    dec1,
-    jan2,
-    feb2,
-    march2,
-    apr2,
-    may2,
-    june2,
-    total
-  );
 
   var year = req.body.year;
   var user_id = req.body.user_id;
@@ -2049,12 +1945,8 @@ module.exports.rajosshoAdd = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
-      res.render("center/rajossho/rajossho", {
-        title: "মাসিক রাজস্ব অর্থ প্রাপ্তির",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
+
     });
 };
 
@@ -2294,12 +2186,8 @@ module.exports.expense = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
-      res.render("center/expense/expense", {
-        title: "খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
+
     });
 
   //  records:result
@@ -2499,12 +2387,7 @@ module.exports.expenseAdd = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
-      res.render("center/expense/expense", {
-        title: "খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
     });
 };
 
@@ -2797,15 +2680,6 @@ module.exports.monthlyProgress = async (req, res) => {
     title: "মাসিক প্রতিবেদন",
     success: "",
   });
-  // await monthlyProgress.findAll({
-  //     where: {center_id: req.session.user_id}
-  // })
-  // .then(data => {
-  //     res.render('center/monthlyProgress/monthlyProgress', { title: 'মাসিক প্রতিবেদন',success:'', records: data });
-  // })
-  // .catch(err => {
-  //     res.render('center/monthlyProgress/monthlyProgress', { title: 'মাসিক প্রতিবেদন',success:'', records: err });
-  // })
 };
 
 module.exports.monthlyProgressYear = async (req, res) => {
