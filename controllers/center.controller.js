@@ -28,6 +28,7 @@ const cropCategory = db.cropcategory;
 const rajosshoCode = db.rajosshoCode;
 const expenseCode = db.expenseCode;
 const podobiList = db.podobiList;
+const dashImages = db.dashImage;
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -96,13 +97,7 @@ module.exports.centerloginpost = async (req, res) => {
               req.session.type = "center";
               req.session.user_id = data[0].id;
               const id = req.session.user_id;
-              // res.locals.type = req.session.type;
-              // res.locals.user_id = req.session.user_id;
               console.log("session=", req.session.type, res.locals);
-              // const token=jwt.sign({id},process.env.JWT_SECRET,token{
-              //     expiresIn:process.env.JWT_EXPIRES_IN
-              // });
-              // console.log("the token is :"+)
               res.redirect("/center/dashboard");
             } else {
               return res.status(200).render("center/login", {
@@ -124,27 +119,6 @@ module.exports.centerloginpost = async (req, res) => {
             err.message || "Some error occurred while retrieving tutorials.",
         });
       });
-    // center.findAll({ where: {uname: uname} })
-    // .then(data => {
-    //     if(data.length > 0){
-    //         bcrypt.compareSync(password , center.password, function(err, result) {
-    //             if(result== true){
-    //                 res.redirect('/center/dashboard');
-    //             }
-    //             else{
-    //                 res.redirect('/center/dashboard');
-    //             }
-    //         });
-    //     }else{
-    //         return res.status(200).render('center/login', { title: 'Horticulture Wing Center Management Software',msg:'Please provide a username and password' });
-    //     }
-    // })
-    // .catch(err => {
-    //   res.status(500).send({
-    //     message:
-    //       err.message || "Some error occurred while retrieving tutorials."
-    //   });
-    // });
   } catch (error) {
     console.log(error);
   }
@@ -152,6 +126,10 @@ module.exports.centerloginpost = async (req, res) => {
 
 module.exports.centerDashboard = async (req, res) => {
   try {
+    const dashImage = await dashImages.findAll({order: [
+      ['createdAt', 'DESC'],
+  ],
+  attributes: ['id', 'title', 'image', 'createdAt', 'updatedAt']})
     const monthly_progress = await monthlyProgress.findAll({
       where: {
         center_id: req.session.user_id,
@@ -213,6 +191,7 @@ module.exports.centerDashboard = async (req, res) => {
     res.render("center/dashboard", {
       title: "Horticulture Wing Center Management Software",
       msg: "Welcome",
+      dashImage:dashImage,
       totalrajossho: totalrajossho,
       totalProduction: totalProduct,
       totalBitoron: totalBitoron,
@@ -414,6 +393,7 @@ module.exports.topSheetYear = async (req, res) => {
     console.log(e);
   }
 };
+
 
 module.exports.generatePdfTopSheet = async (req,res) => {
   try {
@@ -936,92 +916,30 @@ module.exports.summerVegFormPost = async (req, res) => {
 //winterVeg controller
 module.exports.winterVeg = async (req, res) => {
   await center
-    .findAll({
-      where: { center_id: req.session.user_id },
-    })
-    .then((data) => {
-      console.log("inside");
-      res.render("center/charaKolomPrice/winterVeg/winterVeg", {
-        title: "শীতকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য",
-        success: "",
-        records: data,
+      .findAll({
+        where: { center_id: req.session.user_id },
+      })
+      .then((data) => {
+        console.log("inside");
+        res.render("center/charaKolomPrice/winterVeg/winterVeg", {
+          title: "শীতকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য",
+          success: "",
+          records: data,
+        });
+      })
+      .catch((err) => {
+        console.log("outside");
+        res.render("center/charaKolomPrice/winterVeg/winterVeg", {
+          title: "শীতকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য",
+          success: "",
+          records: err,
+        });
       });
-    })
-    .catch((err) => {
-      console.log("outside");
-      res.render("center/charaKolomPrice/winterVeg/winterVeg", {
-        title: "শীতকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য",
-        success: "",
-        records: err,
-      });
-    });
 
   //  records:result
 };
+//topSheet controller end
 
-module.exports.winterVegYear = async (req, res) => {
-  await winterVeg
-    .findAll({
-      where: { year: req.body.year, center_id: req.session.user_id },
-    })
-    .then((data) => {
-      res.render(
-        "center/charaKolomPrice/winterVeg/winterVegTable",
-        { records: data },
-        function (err, html) {
-          res.send(html);
-        }
-      );
-    })
-    .catch((err) => {
-      res.render("center/charaKolomPrice/winterVeg/winterVegYear", {
-        title: "শীতকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য",
-        success: "",
-        records: err,
-      });
-    });
-};
-
-module.exports.winterVegForm = async (req, res) => {
-  res.render("center/charaKolomPrice/winterVeg/winterVegForm", {
-    title: "শীতকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য",
-    msg: "",
-    success: "",
-    user_id: req.session.user_id,
-  });
-};
-
-module.exports.winterVegFormPost = async (req, res) => {
-  var item = req.body.item;
-  var doshatharo = req.body.doshatharo;
-  var ekshoucchoatharo = req.body.ekshoucchoatharo;
-  var ekshohybridatharo = req.body.ekshohybridatharo;
-  var doshbijunish = req.body.doshbijunish;
-  var ekshoucchounish = req.body.ekshoucchounish;
-  var ekshohybridunish = req.body.ekshohybridunish;
-  var year = req.body.year;
-  var user_id = req.body.user_id;
-
-  await winterVeg
-    .create({
-      item: item,
-      doshatharo: doshatharo,
-      ekshoucchoatharo: ekshoucchoatharo,
-      ekshohybridatharo: ekshohybridatharo,
-      doshbijunish: doshbijunish,
-      ekshoucchounish: ekshoucchounish,
-      ekshohybridunish: ekshohybridunish,
-      year: year,
-      center_id: user_id,
-    })
-    .then((data) => {
-      res.redirect("/center/winterVeg");
-    })
-    .catch((err) => {
-      res.render("errorpage", err);
-    });
-};
-//winterVeg controller end
 
 //workerInfo controller
 module.exports.workerInfo = async (req, res) => {
@@ -1062,11 +980,7 @@ module.exports.workerInfoYear = async (req, res) => {
       );
     })
     .catch((err) => {
-      res.render("center/worker/workerInfo/workerInfoYear", {
-        title: "শ্রমিকদের তথ্য",
-        success: "",
-        records: err,
-      });
+      console.log(err);
     });
 };
 
@@ -1124,6 +1038,106 @@ module.exports.workerInfoFormPost = async (req, res) => {
       res.render("errorpage", err);
     });
 };
+module.exports.workerInfoEdit=async(req,res)=>{
+  await workerInfo.findByPk(req.params.id)
+  .then(data => {
+      console.log("inside");
+      res.render('center/worker/workerInfo/workerInfoEdit', { title: 'শ্রমিকদের তথ্য',msg:'' ,success:'',records: data});
+  })
+  .catch(err => {
+      console.log("outside",err);
+  })
+};
+module.exports.workerInfoEditPost=async(req,res)=>{
+  var center = req.body.center;
+  var porichito = req.body.porichito;
+  var kormokorta = req.body.kormokorta;
+  var nijDistrict = req.body.nijDistrict;
+  var podobi = req.body.podobi;
+  var birthDate = req.body.birthDate;
+  var firstdate = req.body.firstdate;
+  var presentDate = req.body.presentDate;
+  var pastWorkstation = req.body.pastWorkstation;
+  var comment = req.body.comment;
+  var month = req.body.month;
+  var year = req.body.year;
+  var user_id = req.body.user_id;
+  await workerInfo.update({ 
+    center: center,
+    porichito: porichito,
+    kormokorta: kormokorta,
+    nijDistrict: nijDistrict,
+    podobi: podobi,
+    birthDate: birthDate,
+    firstdate: firstdate,
+    presentDate: presentDate,
+    pastWorkstation: pastWorkstation,
+    comment: comment,
+    month: month,
+    year: year,
+  },
+  {
+      where: {id: req.params.id}
+  }).then(data => {
+      res.redirect('/center/workerInfo');
+  }).catch(err => {
+      res.render('errorpage',err);
+  });
+};
+module.exports.workerInfoDelete=async(req,res)=>{
+  var workerInfoDelete = await workerInfo.findByPk(req.params.id);
+  try {
+    workerInfoDelete.destroy();
+      res.redirect("/center/workerInfo");
+  }
+  catch{
+      res.render('errorpage',err);
+  }
+  
+};
+module.exports.generatePdfworkerInfo = async (req, res) => {
+  try {
+    var centerNames= await center.findOne({
+      where: { id: req.session.user_id },
+    })
+   var data= await workerInfo
+    .findAll({
+      where: { year: req.body.year, month: req.body.month,center_id: req.session.user_id },
+    })
+      ejs.renderFile(
+          path.join(__dirname, "../views/center/worker/workerInfo", "pdf.ejs"),
+          { records: data,centerName:centerNames, },
+          (err, data) => {
+            if (err) {
+              console.log("error", err);
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              // console.log(assesPath);
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+    
+    
+  } catch (e) {
+    console.log(e);
+  }
+
+};                                        
 //workerInfo controller end
 
 //workerNum controller
@@ -1178,7 +1192,59 @@ module.exports.workerNumYear = async (req, res) => {
 
   //  records:result
 };
+module.exports.generatePdfworkerNum  = async (req, res) => {
+  try {
+    var centerNames= await center.findOne({
+      where: { id: req.session.user_id },
+    })
+    var data=await workerInfo.findAll({where: {center_id: req.session.user_id,year: req.body.year,month: req.body.month},})
+      var reg = 0;
+      var irreg = 0;
+      data.forEach(function (row) {
+        if (row.regularWorker !== 0) {
+          reg += 1;
+        }
+      });
+      data.forEach(function (row) {
+        if (row.irregularWorker !== 0) {
+          irreg += 1;
+        }
+      });
+      var total = reg + irreg; 
+      ejs.renderFile(
+          path.join(__dirname, "../views/center/worker/workerNum", "pdf.ejs"),
+          { records: data,centerName:centerNames,totals: total,regs: reg,irregs: irreg,dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              console.log("error", err);
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              // console.log(assesPath);
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
 
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+    
+    
+  } catch (e) {
+    console.log(e);
+  }
+
+};
 //irregularWorker controller end
 
 //apa controller
@@ -1378,7 +1444,48 @@ module.exports.fetchShuchokMaan = async (req, res) => {
       console.log(err);
     });
 };
+module.exports.generatePdfapa = async (req, res) => {
+  try {
+    var centerNames= await center.findOne({
+      where: { id: req.session.user_id },
+    })
+  var data= await apa.findAll({
+      where: { year: req.body.year, center_id: req.session.user_id },
+    })
+      ejs.renderFile(
+          path.join(__dirname, "../views/center/apa/", "pdf.ejs"),
+          { records: data,centerName:centerNames,dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              console.log("error", err);
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              // console.log(assesPath);
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
 
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+    
+    
+  } catch (e) {
+    console.log(e);
+  }
+
+};
 //apa controller end
 
 //loan controller
@@ -1472,7 +1579,48 @@ module.exports.loanFormPost = async (req, res) => {
       res.render("errorpage", err);
     });
 };
+module.exports.generatePdfloan = async (req, res) => {
+  try {
+    var centerNames= await center.findOne({
+      where: { id: req.session.user_id },
+    })
+  var data= await loan.findAll({
+      where: { year: req.body.year, center_id: req.session.user_id },
+    })
+      ejs.renderFile(
+          path.join(__dirname, "../views/center/loan/", "pdf.ejs"),
+          { records: data,centerName:centerNames,dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              console.log("error", err);
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              // console.log(assesPath);
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
 
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+    
+    
+  } catch (e) {
+    console.log(e);
+  }
+
+};
 //apa controller end
 
 //specialCoconut controller
@@ -1586,7 +1734,48 @@ module.exports.specialCoconutFormPost = async (req, res) => {
       res.render("errorpage", err);
     });
 };
+module.exports.generatePdfspecialCoconut = async (req, res) => {
+  try {
+    var centerNames= await center.findOne({
+      where: { id: req.session.user_id },
+    })
+  var data= await specialCoconut.findAll({
+      where: { year: req.body.year, center_id: req.session.user_id },
+    })
+      ejs.renderFile(
+          path.join(__dirname, "../views/center/specialCoconut/", "pdf.ejs"),
+          { records: data,centerName:centerNames,dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              console.log("error", err);
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              // console.log(assesPath);
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
 
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+    
+    
+  } catch (e) {
+    console.log(e);
+  }
+
+};
 //specialCoconut controller end
 
 //revolvingFund controller
@@ -1700,7 +1889,48 @@ module.exports.revolvingFundFormPost = async (req, res) => {
       res.render("errorpage", err);
     });
 };
+module.exports.generatePdfrevolvingFund = async (req, res) => {
+  try {
+    var centerNames= await center.findOne({
+      where: { id: req.session.user_id },
+    })
+  var data= await revolvingFund.findAll({
+      where: { year: req.body.year, center_id: req.session.user_id },
+    })
+      ejs.renderFile(
+          path.join(__dirname, "../views/center/revolvingFund/", "pdf.ejs"),
+          { records: data,centerName:centerNames,dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              console.log("error", err);
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              // console.log(assesPath);
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
 
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+    
+    
+  } catch (e) {
+    console.log(e);
+  }
+
+};
 //revolvingFund controller end
 
 //chak1 controller
@@ -1793,6 +2023,106 @@ module.exports.chak1FormPost = async (req, res) => {
       res.render("errorpage", err);
     });
 };
+module.exports.chak1Edit=async(req,res)=>{
+  await chak1.findByPk(req.params.id)
+  .then(data => {
+      console.log("inside");
+      res.render('center/employee/chak1/employeeChak1Edit', { title: 'ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য',msg:'' ,success:'',records: data});
+  })
+  .catch(err => {
+      console.log("outside",err);
+  })
+};
+module.exports.chak1EditPost=async(req,res)=>{
+  var center = req.body.center;
+  var porichito = req.body.porichito;
+  var kormokorta = req.body.kormokorta;
+  var nijDistrict = req.body.nijDistrict;
+  var podobi = req.body.podobi;
+  var birthDate = req.body.birthDate;
+  var firstdate = req.body.firstdate;
+  var presentDate = req.body.presentDate;
+  var pastWorkstation = req.body.pastWorkstation;
+  var comment = req.body.comment;
+  var month = req.body.month;
+  var year = req.body.year;
+  var user_id = req.body.user_id;
+  await chak1.update({ 
+    center: center,
+    porichito: porichito,
+    kormokorta: kormokorta,
+    nijDistrict: nijDistrict,
+    podobi: podobi,
+    birthDate: birthDate,
+    firstdate: firstdate,
+    presentDate: presentDate,
+    pastWorkstation: pastWorkstation,
+    comment: comment,
+    month: month,
+    year: year,
+  },
+  {
+      where: {id: req.params.id}
+  }).then(data => {
+      res.redirect('/center/chak1');
+  }).catch(err => {
+      res.render('errorpage',err);
+  });
+};
+module.exports.chak1Delete=async(req,res)=>{
+  var chak1Delete = await chak1.findByPk(req.params.id);
+  try {
+    chak1Delete.destroy();
+      res.redirect("/center/chak1");
+  }
+  catch{
+      res.render('errorpage',err);
+  }
+  
+};
+module.exports.generatePdfchak1 = async (req, res) => {
+  try {
+    var centerNames= await center.findOne({
+      where: { id: req.session.user_id },
+    })
+  var data= await chak1.findAll({
+      where: { year: req.body.year,month: req.body.month, center_id: req.session.user_id },
+    })
+      ejs.renderFile(
+          path.join(__dirname, "../views/center/employee/chak1/", "pdf.ejs"),
+          { records: data,centerName:centerNames,dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              console.log("error", err);
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              // console.log(assesPath);
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+    
+    
+  } catch (e) {
+    console.log(e);
+  }
+
+};
+
 
 //chak1 controller end
 
@@ -1908,6 +2238,97 @@ module.exports.fetchPodobiList = async (req, res) => {
     .catch((err) => {
       console.log(err);
     });
+};
+module.exports.chak2Edit=async(req,res)=>{
+  await chak2.findByPk(req.params.id)
+  .then(data => {
+      console.log("inside");
+      res.render('center/employee/chak2/employeeChak2Edit', { title: 'হরটিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা',msg:'' ,success:'',records: data});
+  })
+  .catch(err => {
+      console.log("outside",err);
+  })
+};
+module.exports.chak2EditPost=async(req,res)=>{
+  var name = req.body.name;
+  var grade = req.body.grade;
+  var pod = req.body.pod;
+  var working = req.body.working;
+  var shunno = req.body.shunno;
+  var comment = req.body.comment;
+  var month = req.body.month;
+  var year = req.body.year;
+  var user_id = req.body.user_id;
+  await chak2.update({ 
+    name: name,
+    grade: grade,
+    pod: pod,
+    working: working,
+    shunno: shunno,
+    comment: comment,
+    month: month,
+    year: year,
+  },
+  {
+      where: {id: req.params.id}
+  }).then(data => {
+      res.redirect('/center/chak2');
+  }).catch(err => {
+      res.render('errorpage',err);
+  });
+};
+module.exports.chak2Delete=async(req,res)=>{
+  var chak2Delete = await chak2.findByPk(req.params.id);
+  try {
+    chak2Delete.destroy();
+      res.redirect("/center/chak2");
+  }
+  catch{
+      res.render('errorpage',err);
+  }
+  
+};
+module.exports.generatePdfchak2 = async (req, res) => {
+  try {
+    var centerNames= await center.findOne({
+      where: { id: req.session.user_id },
+    })
+  var data= await chak2.findAll({
+      where: { year: req.body.year, month: req.body.month,center_id: req.session.user_id },
+    })
+      ejs.renderFile(
+          path.join(__dirname, "../views/center/employee/chak2/", "pdf.ejs"),
+          { records: data,centerName:centerNames,dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              console.log("error", err);
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              // console.log(assesPath);
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+    
+    
+  } catch (e) {
+    console.log(e);
+  }
+
 };
 //chak2 controller end
 
@@ -2317,6 +2738,49 @@ module.exports.fetchRajosshoCode = async (req, res) => {
       console.log(err);
     });
 };
+module.exports.generatePdfrajossho= async (req, res) => {
+  try {
+    var centerNames= await center.findOne({
+      where: { id: req.session.user_id },
+    });
+    console.log("centerNames",centerNames)
+  var data= await rajossho.findAll({
+      where: { year: req.body.year, center_id: req.session.user_id },
+    })
+      ejs.renderFile(
+          path.join(__dirname, "../views/center/rajossho/", "pdf.ejs"),
+          { records: data,centerName:centerNames,dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              console.log("error", err);
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              // console.log(assesPath);
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+    
+    
+  } catch (e) {
+    console.log(e);
+  }
+
+};
 //rajossho controller end
 
 //expense controller
@@ -2360,11 +2824,7 @@ module.exports.expenseYear = async (req, res) => {
       );
     })
     .catch((err) => {
-      res.render("center/expense/expenseYear", {
-        title: "খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী",
-        success: "",
-        records: err,
-      });
+      console.log(err);
     });
 };
 
@@ -2750,6 +3210,48 @@ module.exports.fetchExpenseCode = async (req, res) => {
     .catch((err) => {
       console.log(err);
     });
+};
+module.exports.generatePdfexpense = async (req, res) => {
+  try {
+    var centerNames= await center.findOne({
+      where: { id: req.session.user_id },
+    })
+  var data= await expense.findAll({
+      where: { year: req.body.year, center_id: req.session.user_id },
+    })
+      ejs.renderFile(
+          path.join(__dirname, "../views/center/expense/", "pdf.ejs"),
+          { records: data,centerName:centerNames,dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              console.log("error", err);
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              // console.log(assesPath);
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+    
+    
+  } catch (e) {
+    console.log(e);
+  }
+
 };
 //expense controller end
 

@@ -8,6 +8,7 @@
         <th>কর্মরত</th>
         <th>শুন্যপদ</th>
         <th>মন্তব্য</th>
+        <th>পরিবর্তন/মুছুন</th>
     </tr>
     </thead>
     <tbody>
@@ -19,7 +20,9 @@
                 <td><%= row.working %></td>
                 <td><%= row.shunno %></td>
                 <td><%= row.comment %></td>
-               
+                <td><a class="btn btn-primary btn-xs" href="/center/chak2Edit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger btn-xs" href="/center/chak2Delete/<%= row.id %>"><i class="fa fa-trash"></i></a>
+                </td>
             </tr>
         <% }) %>
     </tbody>

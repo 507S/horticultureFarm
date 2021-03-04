@@ -9,13 +9,13 @@ const {apaUddessho,apaMaan,karjokrom,suchok,ekok,suchokMaan,newKhorochCode,newRa
     newRajosshoCodeTableEdit,newRajosshoCodeTableDelete,newRajosshoCodeTableEditPost,expense,expenseFilter,newKhorochTable,newKhorochTableEdit,newKhorochTableEditPost,newKhorochTableDelete,
     expenseForm,expenseFormPost,chak1,chak1Filter,chak1Form,chak1FormPost,chak2,chak2Filter,chak2Form,chak2FormPost,revolvingFund,newKhorochCodeForm,
     revolvingFundFilter,revolvingFundForm,revolvingFundFormPost,specialCoconut,specialCoconutFilter,specialCoconutForm,rajosshoEdit,rajosshoEditPost,rajosshoDelete,
-    specialCoconutFormPost,loan,loanFilter,loanForm,loanFormPost,apa,apaFilter,apaYear,apaForm,apaFormPost,allcenter,pdlogin,newRajosshoCodeForm,
-    pdloginpost,pdDashboard,topSheet,topSheetFilter,center,centerYear,newPodobiTable,newPodobiEdit,newPodobiEditPost,newPodobiDelete,newPodobi,
-    charaKolomEdit,charaKolomEditPost,charaKolomDelete,winterVegEdit,winterVegEditPost,winterVegDelete,summerVegEdit,summerVegEditPost,summerVegDelete,
+    specialCoconutFormPost,loan,loanFilter,loanForm,loanFormPost,apa,apaFilter,apaForm,apaFormPost,allcenter,pdlogin,newRajosshoCodeForm,
+    pdloginpost,pdDashboard,topSheet,topSheetFilter,center,centerYear,newPodobiTable,newPodobiEdit,newPodobiEditPost,newPodobiDelete,newPodobi,dashImageDelete,
+    charaKolomEdit,charaKolomEditPost,charaKolomDelete,winterVegEdit,winterVegEditPost,winterVegDelete,summerVegEdit,summerVegEditPost,summerVegDelete,generatePdfexpense,
     otherFlowerEdit,otherFlowerEditPost,otherFlowerDelete,seasonalFlowerEdit,seasonalFlowerEditPost,seasonalFlowerDelete,podobiListForm,cropCategoryTable,
     charaKolom,charaKolomYear,folMoshollaEdit,folMoshollaEditPost,folMoshollaDelete,newcropCategoryList,newcropCategoryListPost,newcropCategoryListEdit,
     charaKolomForm,charaKolomFormPost,folMosholla,folMoshollaYear,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegYear,winterVegForm,dashImageForm,dashImageFormPost,
-    winterVegFormPost,summerVeg,summerVegYear,summerVegForm,summerVegFormPost,otherFlower,otherFlowerYear,otherFlowerForm,otherFlowerFormPost,
+    winterVegFormPost,summerVeg,summerVegYear,summerVegForm,summerVegFormPost,otherFlower,otherFlowerYear,otherFlowerForm,otherFlowerFormPost,generatePdfworkerInfo,generatePdfworkerNum,generatePdfapa,generatePdfloan,generatePdfspecialCoconut,generatePdfrevolvingFund,generatePdfchak1,generatePdfchak2,generatePdfrajossho,
     seasonalFlower,seasonalFlowerYear,seasonalFlowerForm,seasonalFlowerFormPost,workerInfo,workerInfoFilter,workerInfoForm,apaCategoryTable,uploaddashImage,
     workerInfoFormPost,workerNum,workerNumFilter,monthlyProgressEdit,monthlyProgressUpdate,monthlyProgressDelete,generatePdfMonthlyProgress} = require('../controllers/pd.controller');
 
@@ -33,6 +33,7 @@ router.post('/logins',pdloginpost);
 router.get('/dashboard',pdDashboard);
 router.get('/dashImageForm',dashImageForm);
 router.post('/dashImageFormPost',uploaddashImage,dashImageFormPost);
+router.get('/dashImageDelete/:id',dashImageDelete);
 
 router.get('/signup',pdsignup);
 router.post('/signups',pdsignuppost);
@@ -111,13 +112,14 @@ router.get('/podobiListForm',podobiListForm);
 router.get('/newPodobiEdit/:id',newPodobiEdit);
 router.post('/newPodobiEditPost/:id',newPodobiEditPost);
 router.get('/newPodobiDelete/:id',newPodobiDelete);
+router.post('/generatePdfworkerInfo',generatePdfworkerInfo);
 
 router.get('/workerNum',workerNum);
 router.post('/workerNumFilter',workerNumFilter);
+router.post('/generatePdfworkerNum',generatePdfworkerNum);
 
 router.get('/apa',apa);
 router.post('/apaFilter',apaFilter);
-router.post('/apaYear',apaYear);
 router.get('/apaForm',apaForm);
 router.post('/apaForms',apaFormPost);
 router.post('/apaUddessho',apaUddessho);
@@ -127,32 +129,37 @@ router.post('/suchok',suchok);
 router.post('/ekok',ekok);
 router.post('/suchokMaan',suchokMaan);
 router.get('/apaCategoryTable',apaCategoryTable);
-
+router.post('/generatePdfapa',generatePdfapa);
 
 router.get('/loan',loan);
 router.post('/loanFilter',loanFilter);
 router.get('/loanForm',loanForm);
 router.post('/loanForms',loanFormPost);
+router.post('/generatePdfloan',generatePdfloan);
 
 router.get('/specialCoconut',specialCoconut);
 router.post('/specialCoconutFilter',specialCoconutFilter);
 router.get('/specialCoconutForm',specialCoconutForm);
 router.post('/specialCoconutForms',specialCoconutFormPost);
+router.post('/generatePdfspecialCoconut',generatePdfspecialCoconut);
 
 router.get('/revolvingFund',revolvingFund);
 router.post('/revolvingFundFilter',revolvingFundFilter);
 router.get('/revolvingFundForm',revolvingFundForm);
 router.post('/revolvingFundForms',revolvingFundFormPost);
+router.post('/generatePdfrevolvingFund',generatePdfrevolvingFund);
 
 router.get('/chak1',chak1);
 router.post('/chak1Filter',chak1Filter);
 router.get('/chak1Form',chak1Form);
 router.post('/chak1Forms',chak1FormPost);
+router.post('/generatePdfchak1',generatePdfchak1);
 
 router.get('/chak2',chak2);
 router.post('/chak2Filter',chak2Filter);
 router.get('/chak2Form',chak2Form);
 router.post('/chak2Forms',chak2FormPost);
+router.post('/generatePdfchak2',generatePdfchak2);
 
 router.get('/rajossho',rajossho);
 router.post('/rajosshoFilter',rajosshoFilter);
@@ -167,7 +174,7 @@ router.post('/newRajosshoCode',newRajosshoCode);
 router.get('/newRajosshoCodeTableEdit/:id',newRajosshoCodeTableEdit);
 router.post('/newRajosshoCodeTableEditPost/:id',newRajosshoCodeTableEditPost);
 router.get('/newRajosshoCodeTableDelete/:id',newRajosshoCodeTableDelete);
-
+router.post('/generatePdfrajossho',generatePdfrajossho);
 
 router.get('/expense',expense);
 router.post('/expenseFilter',expenseFilter);
@@ -182,6 +189,7 @@ router.get('/newKhorochCodeForm',newKhorochCodeForm);
 router.get('/newKhorochTableEdit/:id',newKhorochTableEdit);
 router.post('/newKhorochTableEditPost/:id',newKhorochTableEditPost);
 router.get('/newKhorochTableDelete/:id',newKhorochTableDelete);
+router.post('/generatePdfexpense',generatePdfexpense);
 
 router.get('/monthlyProgress',monthlyProgress);
 router.post('/monthlyProgressFilter',monthlyProgressFilter);
