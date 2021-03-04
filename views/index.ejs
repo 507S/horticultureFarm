@@ -62,7 +62,8 @@
                     <li class="current"><a class="smoothscroll"  href="#home" title="home">হোম</a></li>
                     <li><a class="smoothscroll"  href="#about" title="about">চারা কলম তালিকা</a></li>
                     <li><a class="smoothscroll"  href="#services" title="services">আমাদের সম্পর্কে</a></li>
-                    <li><a class="smoothscroll"  href="#contact" title="contact">যোগাযোগ</a></li>
+                    <li><a class=""  href="/center/allCenterInfo" title="contact">যোগাযোগ</a></li>
+                    <li><a class=""  href="/center/charaKolomFixed" title="contact">চারা কলমের মূল্য তালিকা</a></li>
                 </ul>
 
             </div> <!-- end header-nav__content -->
@@ -94,7 +95,7 @@
                 <div class="row text-center">
             
                         <a href="/">
-                            <img src="landingPage/images/daelogo.png" alt="Homepage" width="80px">
+                            <img src="landingPage/images/daelogo.png" alt="DAE" width="80px">
                         </a>
                         <a class="text-center" href="/">
                             <img src="landingPage/images/bdlogo.png" alt="Homepage" width="80px">
@@ -143,15 +144,13 @@
             <div class="col-full">
                 <h5 class="subhead subhead--dark">হর্টিকালচার সেন্টার সমূহের</h5>
                     <br>
-                <h1 class="display-1 display-1--light">চারা উৎপাদন-বিতরণ-সংরক্ষণ/মজুদ তালিকা</h1>
+                <h1 class="display-1 display-1--light">চারা / কলমের মজুদ  তালিকা </h1>
             </div>
         </div> <!-- end section-header -->
 
         <div class="row about-desc" data-aos="fade-up">
             <div class="col-full">
-                <p>
-                নিম্নে দেশব্যাপী সেন্টারসমূহে চারা উৎপাদনের পরিসংখ্যান এবং সরকার কর্তৃক নির্ধারিত বিভিন্ন চারা কলম সমূহের মূল্যতালিকার লিস্ট সংযুক্ত করে দেওয়া হলো-
-                </p>
+
             </div>
         </div> <!-- end about-desc -->
 
@@ -182,7 +181,7 @@
                 <select style="font-size: 2.5rem; background: #39b54a;" class="browser-default custom-select" id="biboron">
                     <option value="all">বিবরণ বাছুন </option>
                     <% biboron.forEach((row) => { %>
-                        <option value="<%= row.name %>"> <%= row.name %> </option>
+                        <option value="<%= row.id %>"> <%= row.name %> </option>
                     <%  }) %>
                 </select>
             </div>
@@ -190,9 +189,7 @@
             <div class="col-block stats__col">
                 <select style="font-size: 2.5rem; background: #39b54a;" class="browser-default custom-select" id="breed">
                     <option value="all">জাত বাছুন </option>
-                    <% breed.forEach((row) => { %>
-                        <option value="<%= row.name %>"> <%= row.name %> </option>
-                    <%  }) %>
+
                 </select>
             </div>
 
@@ -203,14 +200,10 @@
 
         </div> <!-- end about-stats -->
         <p style="text-align:center" class=" home-content__buttons">
-            <span class="btn btn--stroke" id="findMojud">
-                খুঁজুন
-            </span>
+
         </p>
         <p style="text-align:center" class=" home-content__buttons">
-            <a href="/center/charaKolomFixed" class="btn btn--stroke">
-                চারা কলমের মূল্য তালিকা
-            </a>
+
         </p>
         <div class="about__line"></div>
 
@@ -481,7 +474,7 @@
     <script src="landingPage/js/plugins.js"></script>
     <script src="landingPage/js/main.js"></script>
     <script type="text/javascript">
-        $('#findMojud').on("click",function () {
+        $('#breed').on("change click",function () {
             var center = $('#center').val();
             var biboron = $('#biboron').val();
             var breed = $('#breed').val();
@@ -499,6 +492,36 @@
                     // $('#totalProduction').html(new Number(data.totalProduction).toLocaleString("bn-BD"));
                     // $('#totalBitoron').html(new Number(data.totalBitoron).toLocaleString("bn-BD"));
                     $('#totalMojud').html(new Number(data.totalProduction - data.totalBitoron).toLocaleString("bn-BD"));
+                },
+                complete: function() {
+                    $('#loading').hide();
+                    $('#output').show();
+                }
+            });
+        });
+
+        $('#biboron').on("change click",function () {
+            var biboron = $('#biboron').val();
+            $.ajax({
+                type: "POST",
+                url: "/center/fetchBreed",
+                data: {biboron: biboron},
+                datatype: "json",
+                beforeSend: function() {
+                    // setting a timeout
+                    $('#loading').show();
+                    $('#output').hide();
+                },
+                success: function (data) {
+                    $('#breed').empty();
+                    if(data){
+                        $('#breed').append('<option value="0"> Choose Breed </option>');
+                        $.each(data, function(key, value){
+                            $('#breed').append('<option value="'+value.id+'">' + value.name + '</option>');
+                        });
+                    }else {
+                        $('#breed').empty();
+                    }
                 },
                 complete: function() {
                     $('#loading').hide();

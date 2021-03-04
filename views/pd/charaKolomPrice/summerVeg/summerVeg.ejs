@@ -52,7 +52,7 @@
         async function exportToPdf() {
             var year = $('#startDate').val();
             var center = $('#center').val();
-            const { data } = await axios.post(`/pd/generatePdfMonthlyProgress`,{year: year, center:center});
+            const { data } = await axios.post(`/pd/generatePdfsummerVeg`,{year: year, center:center});
             var mywindow = window.open("", "PRINT", "height=400,width=600");
             mywindow.document.write(data.html);
             mywindow.document.close(); // necessary for IE >= 10
@@ -61,7 +61,6 @@
             return true;
         }
     </script>
-
     <script>
         
         $(document).ready(function(){

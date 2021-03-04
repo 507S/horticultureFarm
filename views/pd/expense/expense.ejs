@@ -9,31 +9,37 @@
                             <div class="col-md-10">
                                 <h1 class="text-center"><%= title %></h1>
                             </div>
-                            <div class="col-md-4">
-                                <select id="center" name="center" required>
-                                    <option value="">সেন্টার বাছুনঃ</option>
-                                    <% if (centers.length >0){ %>
-                                        <% centers.forEach(function (center) { %>
-                                            <option value="<%= center.id %>"><%= center.center %></option>
-                                        <% }) %>
-                                    <% } %>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="year">অর্থবছর:</label>
-
-                                <select id="year" name="year">
-                                    <option value="2017">২০১৭-১৮</option>
-                                    <option value="2018">২০১৮-১৯</option>
-                                    <option value="2019">২০১৯-২০</option>
-                                    <option value="2020" selected>২০২০-২১</option>
-                                    <option value="2021">২০২১-২২</option>
-                                    <option value="2022">২০২২-২৩</option>
-                                    <option value="2023">২০২৩-২৪</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <input type="submit" value="Submit" id="submit" class="btn btn-success">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row clearfix">
+                                        <div class="col-md-4">
+                                            <select id="center" name="center" required>
+                                                <option value="">সেন্টার বাছুনঃ</option>
+                                                <% if (centers.length >0){ %>
+                                                    <% centers.forEach(function (center) { %>
+                                                        <option value="<%= center.id %>"><%= center.center %></option>
+                                                    <% }) %>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="year">অর্থবছর:</label>
+            
+                                            <select id="year" name="year">
+                                                <option value="2017">২০১৭-১৮</option>
+                                                <option value="2018">২০১৮-১৯</option>
+                                                <option value="2019">২০১৯-২০</option>
+                                                <option value="2020" selected>২০২০-২১</option>
+                                                <option value="2021">২০২১-২২</option>
+                                                <option value="2022">২০২২-২৩</option>
+                                                <option value="2023">২০২৩-২৪</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="submit" value="Submit" id="submit" class="btn btn-success">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- <div class="row mb-2">
@@ -45,7 +51,9 @@
 
                         <div class="table-responsive" id="output"></div>
 
-                        <input type="button" id="btnExport" value="Download PDF" />
+                        <button onclick="exportToPdf()" class="btn btn-success">
+                            Download PDF
+                        </button>
                         <button onclick="exportToExcel('tblexportData', 'খরচ')" class="btn btn-success">Export Table Data To Excel File</button>
 
                         <div id="output"></div>
@@ -58,6 +66,20 @@
 
    
 <%- include('../../includes/footer')-%>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    async function exportToPdf() {
+        var year = $('#year').val();
+        var center = $('#center').val();
+        const { data } = await axios.post(`/pd/generatePdfexpense`,{year: year, center:center});
+        var mywindow = window.open("", "PRINT", "height=400,width=600");
+        mywindow.document.write(data.html);
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10*/
+        mywindow.print();
+        return true;
+    }
+</script>
 <script type="text/javascript">
     function exportToExcel(tableID, filename = ''){
         var downloadurl;

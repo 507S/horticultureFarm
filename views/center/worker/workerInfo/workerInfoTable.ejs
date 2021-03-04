@@ -11,7 +11,8 @@
         <th>যোগদানের তারিখ</th>
         <th>এনআইডি নং</th>
         <th>ব্যাংক একাউন্ট নং</th>
-        <!-- <th>পরিবর্তন/মুছুন</th> -->
+        <th>পরিবর্তন/মুছুন</th>
+
     </tr>
     </thead>
     <tbody>
@@ -26,6 +27,9 @@
                 <td><%= row.date %></td>
                 <td><%= row.nid %></td>
                 <td><%= row.bank %></td>
+                <td><a class="btn btn-primary btn-xs" href="/center/workerInfoEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger btn-xs" href="/center/workerInfoDelete/<%= row.id %>"><i class="fa fa-trash"></i></a>
+                </td>
             </tr>
         <% }) %>
     </tbody>
