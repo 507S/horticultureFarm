@@ -514,7 +514,6 @@ module.exports.workerInfoFormPost = async (req, res) => {
   var date = req.body.date;
   var nid = req.body.nid;
   var bank = req.body.bank;
-  var month = req.body.month;
 
   var user_id = req.body.user_id;
   if (podobi === "নিয়মিত") {
@@ -536,7 +535,6 @@ module.exports.workerInfoFormPost = async (req, res) => {
       date: date,
       nid: nid,
       bank: bank,
-      month: month,
       regularWorker: regularWorker,
       irregularWorker: irregularWorker,
       center_id: user_id,
@@ -546,8 +544,7 @@ module.exports.workerInfoFormPost = async (req, res) => {
       res.redirect("/center/workerInfoForm");
     })
     .catch((err) => {
-      res.render("errorpage", err);
-    });
+console.log(err);    });
 };
 module.exports.workerInfoEdit=async(req,res)=>{
   await workerInfo.findByPk(req.params.id)
@@ -1456,8 +1453,7 @@ module.exports.chak1FormPost = async (req, res) => {
   var presentDate = req.body.presentDate;
   var pastWorkstation = req.body.pastWorkstation;
   var comment = req.body.comment;
-  var month = req.body.month;
-  var year = req.body.year;
+
   var user_id = req.body.user_id;
 
   await chak1
@@ -1472,8 +1468,7 @@ module.exports.chak1FormPost = async (req, res) => {
       presentDate: presentDate,
       pastWorkstation: pastWorkstation,
       comment: comment,
-      month: month,
-      year: year,
+
       center_id: user_id,
     })
     .then((data) => {
@@ -1481,8 +1476,7 @@ module.exports.chak1FormPost = async (req, res) => {
       res.redirect("/center/chak1Form");
     })
     .catch((err) => {
-      res.render("errorpage", err);
-    });
+console.log(err);    });
 };
 module.exports.chak1Edit=async(req,res)=>{
   await chak1.findByPk(req.params.id)
@@ -1652,8 +1646,7 @@ module.exports.chak2FormPost = async (req, res) => {
   var working = req.body.working;
   var shunno = req.body.shunno;
   var comment = req.body.comment;
-  var month = req.body.month;
-  var year = req.body.year;
+
   var user_id = req.body.user_id;
 
   await chak2
@@ -1664,8 +1657,7 @@ module.exports.chak2FormPost = async (req, res) => {
       working: working,
       shunno: shunno,
       comment: comment,
-      month: month,
-      year: year,
+
       center_id: user_id,
     })
     .then((data) => {
@@ -1673,8 +1665,7 @@ module.exports.chak2FormPost = async (req, res) => {
       res.redirect("/center/chak2Form");
     })
     .catch((err) => {
-      res.render("errorpage", err);
-    });
+console.log(err);    });
 };
 module.exports.fetchPodobiList = async (req, res) => {
   console.log("upokhat", req.body.podobi);
