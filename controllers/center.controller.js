@@ -567,8 +567,6 @@ module.exports.workerInfoEditPost=async(req,res)=>{
   var presentDate = req.body.presentDate;
   var pastWorkstation = req.body.pastWorkstation;
   var comment = req.body.comment;
-  var month = req.body.month;
-  var year = req.body.year;
   var user_id = req.body.user_id;
   await workerInfo.update({ 
     center: center,
@@ -581,8 +579,6 @@ module.exports.workerInfoEditPost=async(req,res)=>{
     presentDate: presentDate,
     pastWorkstation: pastWorkstation,
     comment: comment,
-    month: month,
-    year: year,
   },
   {
       where: {id: req.params.id}
@@ -1499,8 +1495,6 @@ module.exports.chak1EditPost=async(req,res)=>{
   var presentDate = req.body.presentDate;
   var pastWorkstation = req.body.pastWorkstation;
   var comment = req.body.comment;
-  var month = req.body.month;
-  var year = req.body.year;
   var user_id = req.body.user_id;
   await chak1.update({ 
     center: center,
@@ -1513,8 +1507,6 @@ module.exports.chak1EditPost=async(req,res)=>{
     presentDate: presentDate,
     pastWorkstation: pastWorkstation,
     comment: comment,
-    month: month,
-    year: year,
   },
   {
       where: {id: req.params.id}

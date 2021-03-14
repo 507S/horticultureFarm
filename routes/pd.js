@@ -9,14 +9,14 @@ const {apaUddessho,apaMaan,karjokrom,suchok,ekok,suchokMaan,newKhorochCode,newRa
     newRajosshoCodeTableEdit,newRajosshoCodeTableDelete,newRajosshoCodeTableEditPost,expense,expenseFilter,newKhorochTable,newKhorochTableEdit,newKhorochTableEditPost,newKhorochTableDelete,
     expenseForm,expenseFormPost,chak1,chak1Filter,chak1Form,chak1FormPost,chak2,chak2Filter,chak2Form,chak2FormPost,revolvingFund,newKhorochCodeForm,
     revolvingFundFilter,revolvingFundForm,revolvingFundFormPost,specialCoconut,specialCoconutFilter,specialCoconutForm,rajosshoEdit,rajosshoEditPost,rajosshoDelete,
-    specialCoconutFormPost,loan,loanFilter,loanForm,loanFormPost,apa,apaFilter,apaForm,apaFormPost,allcenter,pdlogin,newRajosshoCodeForm,
+    specialCoconutFormPost,loan,loanFilter,loanForm,loanFormPost,apa,apaFilter,apaForm,apaFormPost,allcenter,pdlogin,newRajosshoCodeForm,chak1Delete,chak2Delete,
     pdloginpost,pdDashboard,topSheet,topSheetFilter,center,centerYear,newPodobiTable,newPodobiEdit,newPodobiEditPost,newPodobiDelete,newPodobi,dashImageDelete,
     charaKolomEdit,charaKolomEditPost,charaKolomDelete,winterVegEdit,winterVegEditPost,winterVegDelete,summerVegEdit,summerVegEditPost,summerVegDelete,generatePdfexpense,
     otherFlowerEdit,otherFlowerEditPost,otherFlowerDelete,seasonalFlowerEdit,seasonalFlowerEditPost,seasonalFlowerDelete,podobiListForm,cropCategoryTable,
-    charaKolom,folMoshollaEdit,folMoshollaEditPost,folMoshollaDelete,newcropCategoryList,newcropCategoryListPost,newcropCategoryListEdit,
+    charaKolom,folMoshollaEdit,folMoshollaEditPost,folMoshollaDelete,newcropCategoryList,newcropCategoryListPost,newcropCategoryListEdit,chak1Edit,chak1EditPost,chak2Edit,chak2EditPost,
     charaKolomForm,charaKolomFormPost,folMosholla,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegForm,dashImageForm,dashImageFormPost,
     winterVegFormPost,summerVeg,summerVegForm,summerVegFormPost,otherFlower,otherFlowerForm,otherFlowerFormPost,generatePdfworkerInfo,generatePdfworkerNum,generatePdfapa,generatePdfloan,generatePdfspecialCoconut,generatePdfrevolvingFund,generatePdfchak1,generatePdfchak2,generatePdfrajossho,
-    seasonalFlower,seasonalFlowerForm,seasonalFlowerFormPost,workerInfo,workerInfoFilter,workerInfoForm,apaCategoryTable,uploaddashImage,
+    seasonalFlower,seasonalFlowerForm,seasonalFlowerFormPost,workerInfo,workerInfoFilter,workerInfoForm,apaCategoryTable,uploaddashImage,workerInfoDelete,
     generatePdfcharaKolom,generatePdffolMosholla,generatePdfwinterVeg,generatePdfsummerVeg,generatePdfotherFlower,generatePdfseasonalFlower,
     workerInfoFormPost,workerNum,workerNumFilter,monthlyProgressEdit,monthlyProgressUpdate,monthlyProgressDelete,generatePdfMonthlyProgress} = require('../controllers/pd.controller');
 
@@ -106,6 +106,7 @@ router.get('/workerInfo',workerInfo);
 router.post('/workerInfoFilter',workerInfoFilter);
 router.get('/workerInfoForm',workerInfoForm);
 router.post('/workerInfoForms',workerInfoFormPost);
+router.get('/workerInfoDelete/:id',workerInfoDelete);
 router.post('/newPodobi',newPodobi);
 router.get('/newPodobiTable',newPodobiTable);
 router.get('/podobiListForm',podobiListForm);
@@ -153,12 +154,18 @@ router.get('/chak1',chak1);
 router.post('/chak1Filter',chak1Filter);
 router.get('/chak1Form',chak1Form);
 router.post('/chak1Forms',chak1FormPost);
+router.get('/chak1Edit/:id',chak1Edit);
+router.post('/chak1EditPost/:id',chak1EditPost);
+router.get('/chak1Delete/:id',chak1Delete);
 router.post('/generatePdfchak1',generatePdfchak1);
 
 router.get('/chak2',chak2);
 router.post('/chak2Filter',chak2Filter);
 router.get('/chak2Form',chak2Form);
 router.post('/chak2Forms',chak2FormPost);
+router.get('/chak2Edit/:id',chak2Edit);
+router.post('/chak2EditPost/:id',chak2EditPost);
+router.get('/chak2Delete/:id',chak2Delete);
 router.post('/generatePdfchak2',generatePdfchak2);
 
 router.get('/rajossho',rajossho);

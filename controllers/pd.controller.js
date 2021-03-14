@@ -1377,6 +1377,59 @@ module.exports.workerInfoFormPost=async(req,res)=>{
         });
   
 };
+module.exports.workerInfoEdit=async(req,res)=>{
+    await workerInfo.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('pd/worker/workerInfo/workerInfoEdit', { title: 'শ্রমিকদের তথ্য',msg:'' ,success:'',records: data});
+    })
+    .catch(err => {
+        console.log("outside",err);
+    })
+  };
+  module.exports.workerInfoEditPost=async(req,res)=>{
+    var center = req.body.center;
+    var porichito = req.body.porichito;
+    var kormokorta = req.body.kormokorta;
+    var nijDistrict = req.body.nijDistrict;
+    var podobi = req.body.podobi;
+    var birthDate = req.body.birthDate;
+    var firstdate = req.body.firstdate;
+    var presentDate = req.body.presentDate;
+    var pastWorkstation = req.body.pastWorkstation;
+    var comment = req.body.comment;
+    var user_id = req.body.user_id;
+    await workerInfo.update({ 
+      center: center,
+      porichito: porichito,
+      kormokorta: kormokorta,
+      nijDistrict: nijDistrict,
+      podobi: podobi,
+      birthDate: birthDate,
+      firstdate: firstdate,
+      presentDate: presentDate,
+      pastWorkstation: pastWorkstation,
+      comment: comment,
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        res.redirect('/pd/workerInfo');
+    }).catch(err => {
+        res.render('errorpage',err);
+    });
+  };
+  module.exports.workerInfoDelete=async(req,res)=>{
+    var workerInfoDelete = await workerInfo.findByPk(req.params.id);
+    try {
+      workerInfoDelete.destroy();
+        res.redirect("/pd/workerInfo");
+    }
+    catch{
+        res.render('errorpage',err);
+    }
+    
+  };
 module.exports.newPodobiTable=async(req,res)=>{
     await podobiList.findAll()
     .then(data => {
@@ -2271,6 +2324,61 @@ module.exports.chak1FormPost=async(req,res)=>{
         });
   
 };
+module.exports.chak1Edit=async(req,res)=>{
+    await chak1.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('pd/employee/chak1/employeeChak1Edit', { title: 'ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য',msg:'' ,success:'',records: data});
+    })
+    .catch(err => {
+        console.log("outside",err);
+    })
+  };
+  module.exports.chak1EditPost=async(req,res)=>{
+    var center = req.body.center;
+    var porichito = req.body.porichito;
+    var kormokorta = req.body.kormokorta;
+    var nijDistrict = req.body.nijDistrict;
+    var podobi = req.body.podobi;
+    var birthDate = req.body.birthDate;
+    var firstdate = req.body.firstdate;
+    var presentDate = req.body.presentDate;
+    var pastWorkstation = req.body.pastWorkstation;
+    var comment = req.body.comment;
+
+    var user_id = req.body.user_id;
+    await chak1.update({ 
+      center: center,
+      porichito: porichito,
+      kormokorta: kormokorta,
+      nijDistrict: nijDistrict,
+      podobi: podobi,
+      birthDate: birthDate,
+      firstdate: firstdate,
+      presentDate: presentDate,
+      pastWorkstation: pastWorkstation,
+      comment: comment,
+
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        res.redirect('/pd/chak1');
+    }).catch(err => {
+        res.render('errorpage',err);
+    });
+  };
+  module.exports.chak1Delete=async(req,res)=>{
+    var chak1Delete = await chak1.findByPk(req.params.id);
+    try {
+      chak1Delete.destroy();
+        res.redirect("/pd/chak1");
+    }
+    catch{
+        res.render('errorpage',err);
+    }
+    
+  };
 module.exports.generatePdfchak1 = async (req, res) => {
     try {
       var centerNames= await center.findOne({
@@ -2389,6 +2497,41 @@ module.exports.chak2FormPost=async(req,res)=>{
         });
   
 };
+
+module.exports.chak2Edit=async(req,res)=>{
+    await chak2.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('pd/employee/chak2/employeeChak2Edit', { title: 'হরটিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা',msg:'' ,success:'',records: data});
+    })
+    .catch(err => {
+        console.log("outside",err);
+    })
+  };
+  module.exports.chak2EditPost=async(req,res)=>{
+    var name = req.body.name;
+    var grade = req.body.grade;
+    var pod = req.body.pod;
+    var working = req.body.working;
+    var shunno = req.body.shunno;
+    var comment = req.body.comment;
+    var user_id = req.body.user_id;
+    await chak2.update({ 
+      name: name,
+      grade: grade,
+      pod: pod,
+      working: working,
+      shunno: shunno,
+      comment: comment,
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        res.redirect('/pd/chak2');
+    }).catch(err => {
+        res.render('errorpage',err);
+    });
+  };
 module.exports.generatePdfchak2 = async (req, res) => {
     try {
       var centerNames= await center.findOne({
@@ -2430,6 +2573,17 @@ module.exports.generatePdfchak2 = async (req, res) => {
       console.log(e);
     }
   
+  };
+  module.exports.chak2Delete=async(req,res)=>{
+    var chak2Delete = await chak2.findByPk(req.params.id);
+    try {
+      chak2Delete.destroy();
+        res.redirect("/pd/chak2");
+    }
+    catch{
+        res.render('errorpage',err);
+    }
+    
   };
 //chak2 controller end
 
