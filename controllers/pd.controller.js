@@ -2475,7 +2475,7 @@ module.exports.chak2FormPost=async(req,res)=>{
     var grade= req.body.grade;
     var pod= req.body.pod;
     var working= req.body.working;
-    var shunno= req.body.shunno;
+    var shunno = parseInt(pod)-parseInt(working);
     var comment= req.body.comment;
     var year =req.body.year;
     var user_id =req.body.user_id;
@@ -2513,7 +2513,7 @@ module.exports.chak2Edit=async(req,res)=>{
     var grade = req.body.grade;
     var pod = req.body.pod;
     var working = req.body.working;
-    var shunno = req.body.shunno;
+    var shunno = parseInt(pod)-parseInt(working);
     var comment = req.body.comment;
     var user_id = req.body.user_id;
     await chak2.update({ 

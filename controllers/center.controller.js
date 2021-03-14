@@ -52,7 +52,6 @@ module.exports.charaKolomFixed = async (req, res) => {
     const otherFlowers = await otherFlower.findAll();
     const seasonalFlowers = await seasonalFlower.findAll();
     const summerVegs = await summerVeg.findAll();
-    console.log("inside");
     res.render("charaKolomFixed", {
       title: "হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য",
       success: "",
@@ -64,7 +63,6 @@ module.exports.charaKolomFixed = async (req, res) => {
       record6: seasonalFlowers,
     });
   } catch (err) {
-    console.log("outside");
     res.render("charaKolomFixed", {
       title: "হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য",
       success: "",
@@ -97,7 +95,6 @@ module.exports.centerloginpost = async (req, res) => {
               req.session.type = "center";
               req.session.user_id = data[0].id;
               const id = req.session.user_id;
-              console.log("session=", req.session.type, res.locals);
               res.redirect("/center/dashboard");
             } else {
               return res.status(200).render("center/login", {
@@ -204,7 +201,6 @@ module.exports.allCenterInfo = async (req, res) => {
   await center
     .findAll()
     .then((data) => {
-      console.log(data);
       res.render("allCenterInfo", {
         title: "সেন্টারের যোগাযোগ তথ্য",
         success: "",
@@ -247,7 +243,6 @@ module.exports.centersignuppost = async (req, res) => {
       // var mobiles= mobile;
       // var emails=email;
       const hashedPassword = await bcrypt.hash(password, 10);
-      console.log(hashedPassword);
       try {
         const createCenter = await center.create({
           uname: uname,
@@ -276,7 +271,6 @@ module.exports.center = async (req, res) => {
       where: { id: req.session.user_id },
     })
     .then((data) => {
-      console.log("inside", data);
       res.render("center/centerInfo/center", {
         title: "সেন্টারের যোগাযোগ তথ্য",
         success: "",
@@ -293,7 +287,6 @@ module.exports.centerEdit = async (req, res) => {
   await center
     .findByPk(req.params.id)
     .then((data) => {
-      console.log("inside");
       res.render("center/centerInfo/centerEdit", {
         title: "সেন্টারের যোগাযোগ তথ্য ফর্ম",
         msg: "",
@@ -302,7 +295,7 @@ module.exports.centerEdit = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
+      console.log(err);
     });
 };
 module.exports.centerEditPost = async (req, res) => {
@@ -401,7 +394,6 @@ module.exports.generatePdfTopSheet = async (req,res) => {
               res.send(err);
             } else {
               var assesPath = path.join(__dirname, "../public/");
-              // console.log(assesPath);
               assesPath = assesPath.replace(new RegExp(/\\/g), "/");
 
               var options = {
@@ -430,7 +422,6 @@ module.exports.generatePdfTopSheet = async (req,res) => {
               res.send(err);
             } else {
               var assesPath = path.join(__dirname, "../public/");
-              // console.log(assesPath);
               assesPath = assesPath.replace(new RegExp(/\\/g), "/");
 
               var options = {
@@ -524,7 +515,6 @@ module.exports.workerInfoFormPost = async (req, res) => {
     var regularWorker = 0;
     var irregularWorker = 1;
   }
-  console.log("regularWorker,irregularWorker", regularWorker, irregularWorker);
   await workerInfo
     .create({
       podobi: podobi,
@@ -549,7 +539,6 @@ console.log(err);    });
 module.exports.workerInfoEdit=async(req,res)=>{
   await workerInfo.findByPk(req.params.id)
   .then(data => {
-      console.log("inside");
       res.render('center/worker/workerInfo/workerInfoEdit', { title: 'শ্রমিকদের তথ্য',msg:'' ,success:'',records: data});
   })
   .catch(err => {
@@ -654,7 +643,6 @@ module.exports.workerNum = async (req, res) => {
       },
     })
     .then((data) => {
-      console.log("inside");
       var reg = 0;
       var irreg = 0;
       data.forEach(function (row) {
@@ -746,7 +734,6 @@ module.exports.apa = async (req, res) => {
       where: { center_id: req.session.user_id },
     })
     .then((data) => {
-      console.log("inside");
       res.render("center/apa/apa", {
         title: "এপিএ",
         success: "",
@@ -816,16 +803,7 @@ module.exports.apaFormPost = async (req, res) => {
   var total = totals.toFixed(2);
   var percentages = (total / best) * 100;
   var percentage = percentages.toFixed(2);
-  console.log(
-    "best,firstThree,secondThree,thirdThree,fourthThree,total,percentage",
-    best,
-    firstThree,
-    secondThree,
-    thirdThree,
-    fourthThree,
-    total,
-    percentage
-  );
+
   const uddesshoName = await apaCode.findByPk(uddessho);
   const maanName = await apaCode.findByPk(maan);
   const workName = await apaCode.findByPk(work);
@@ -864,7 +842,6 @@ module.exports.apaFormPost = async (req, res) => {
     });
 };
 module.exports.fetchMaan = async (req, res) => {
-  console.log("parent id", req.body.uddessho);
   await apaCode
     .findAll({
       where: { parent_id: req.body.uddessho },
@@ -978,7 +955,6 @@ module.exports.loan = async (req, res) => {
       where: { center_id: req.session.user_id },
     })
     .then((data) => {
-      console.log("inside");
       res.render("center/loan/loan", {
         title: "ঋণ বিতরণ ও আদায় এর অগ্রগতির প্রতিবেদন",
         success: "",
@@ -1104,7 +1080,6 @@ module.exports.specialCoconut = async (req, res) => {
       where: { center_id: req.session.user_id },
     })
     .then((data) => {
-      console.log("inside");
       res.render("center/specialCoconut/specialCoconut", {
         title: "বিশেষ নারিকেল কর্মসূচি",
         success: "",
@@ -1250,7 +1225,6 @@ module.exports.revolvingFund = async (req, res) => {
       where: { center_id: req.session.user_id },
     })
     .then((data) => {
-      console.log("inside");
       res.render("center/revolvingFund/revolvingFund", {
         title: "রিভলভিং ফান্ড",
         success: "",
@@ -1398,7 +1372,6 @@ module.exports.chak1 = async (req, res) => {
       where: { center_id: req.session.user_id },
     })
     .then((data) => {
-      console.log("inside", data);
       res.render("center/employee/chak1/employeeChak1", {
         title: "ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য",
         success: "",
@@ -1418,7 +1391,6 @@ module.exports.chak1Year = async (req, res) => {
         where: { center_id: req.session.user_id }
     })
         .then(data => {
-            console.log("inside2", data);
             res.render('center/employee/chak1/employeeChak1Table', { records: data }, function (err, html) {
                 res.send(html);
             });
@@ -1430,12 +1402,21 @@ module.exports.chak1Year = async (req, res) => {
 };
 
 module.exports.chak1Form = async (req, res) => {
+  await center.findOne({
+    where: { id: req.session.user_id }
+})
+    .then(data => {
   res.render("center/employee/chak1/employeeChak1Form", {
     title: "ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য",
     msg: "",
     success: "",
+    centers:data.center,
     user_id: req.session.user_id,
   });
+})
+.catch(err => {
+  console.log("outside",err);
+})
 };
 
 module.exports.chak1FormPost = async (req, res) => {
@@ -1477,7 +1458,6 @@ console.log(err);    });
 module.exports.chak1Edit=async(req,res)=>{
   await chak1.findByPk(req.params.id)
   .then(data => {
-      console.log("inside");
       res.render('center/employee/chak1/employeeChak1Edit', { title: 'ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য',msg:'' ,success:'',records: data});
   })
   .catch(err => {
@@ -1580,7 +1560,6 @@ module.exports.chak2 = async (req, res) => {
       where: { center_id: req.session.user_id },
     })
     .then((data) => {
-      console.log("inside");
       res.render("center/employee/chak2/employeeChak2", {
         title:
           "হরটিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা",
@@ -1636,7 +1615,7 @@ module.exports.chak2FormPost = async (req, res) => {
   var grade = req.body.grade;
   var pod = req.body.pod;
   var working = req.body.working;
-  var shunno = req.body.shunno;
+  var shunno = parseInt(pod)-parseInt(working);
   var comment = req.body.comment;
 
   var user_id = req.body.user_id;
@@ -1677,7 +1656,6 @@ module.exports.fetchPodobiList = async (req, res) => {
 module.exports.chak2Edit=async(req,res)=>{
   await chak2.findByPk(req.params.id)
   .then(data => {
-      console.log("inside");
       res.render('center/employee/chak2/employeeChak2Edit', { title: 'হরটিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা',msg:'' ,success:'',records: data});
   })
   .catch(err => {
@@ -1689,7 +1667,7 @@ module.exports.chak2EditPost=async(req,res)=>{
   var grade = req.body.grade;
   var pod = req.body.pod;
   var working = req.body.working;
-  var shunno = req.body.shunno;
+  var shunno = parseInt(pod)-parseInt(working);
   var comment = req.body.comment;
   var month = req.body.month;
   var year = req.body.year;
@@ -1774,7 +1752,6 @@ module.exports.rajossho = async (req, res) => {
       where: { center_id: req.session.user_id },
     })
     .then((data) => {
-      console.log("inside");
       res.render("center/rajossho/rajossho", {
         title: "মাসিক রাজস্ব অর্থ প্রাপ্তির হিসাব",
         success: "",
@@ -1941,7 +1918,6 @@ module.exports.rajosshoAdd = async (req, res) => {
   await rajossho
     .findByPk(req.params.id)
     .then((data) => {
-      console.log("inside");
       res.render("center/rajossho/rajosshoAdd", {
         title: "মাসিক রাজস্ব অর্থ প্রাপ্তি",
         msg: "",
@@ -1956,7 +1932,6 @@ module.exports.rajosshoAdd = async (req, res) => {
 };
 
 module.exports.rajosshoAddPost = async (req, res) => {
-  console.log("idddsss", req.params.id);
   try {
     var data = await rajossho.findByPk(req.params.id);
     const m = res.locals.moment();
@@ -2085,10 +2060,8 @@ module.exports.rajosshoAddPost = async (req, res) => {
         }
       );
     } else if (months == 10) {
-      console.log("data.nov1", data.nov1);
       nov1 = income + parseInt(data.nov1);
       total = income + currentTotal;
-      console.log("dekhi to vai", nov1);
       var varib = await rajossho.update(
         {
           nov1: nov1,
@@ -2117,13 +2090,11 @@ module.exports.rajosshoAddPost = async (req, res) => {
   }
 };
 module.exports.fetchRajosshoCode = async (req, res) => {
-  console.log("upokhat", req.body.upokhat);
   await rajosshoCode
     .findOne({
       where: { id: req.body.upokhat },
     })
     .then((data) => {
-      console.log("data", data.code);
       var code = data.code;
       res.send(code);
     })
@@ -2136,7 +2107,6 @@ module.exports.generatePdfrajossho= async (req, res) => {
     var centerNames= await center.findOne({
       where: { id: req.session.user_id },
     });
-    console.log("centerNames",centerNames)
   var data= await rajossho.findAll({
       where: { year: req.body.year, center_id: req.session.user_id },
     })
@@ -2178,43 +2148,33 @@ module.exports.generatePdfrajossho= async (req, res) => {
 
 //expense controller
 module.exports.expense = async (req, res) => {
-  await expense
-    .findAll({
-      where: { center_id: req.session.user_id },
-    })
-    .then((data) => {
-      console.log("inside");
-      res.render("center/expense/expense", {
-        title: "খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী",
-        success: "",
-        records: data,
-      });
-    })
-    .catch((err) => {
-      console.log("outside",err);
-
-    });
-
-  //  records:result
+  var codess=await expenseCode.findAll();
+  var data=await expense.findAll({where: { center_id: req.session.user_id },});
+    try {
+      console.log("expense");
+      res.render("center/expense/expense", {title: "মাসিক রাজস্ব অর্থ প্রাপ্তির হিসাব",success: "",records: data,codes:codess})
+    }
+    catch {
+      console.log(err);
+    };
 };
-
 module.exports.expenseYear = async (req, res) => {
-  await expense
-    .findAll({
-      where: { year: req.body.year, center_id: req.session.user_id },
-    })
-    .then((data) => {
+  
+    try {
+      var codess=await expenseCode.findAll();
+  var data=await expense.findAll({where: { year: req.body.year, center_id: req.session.user_id }});
+      console.log("expenseYear");
       res.render(
         "center/expense/expenseTable",
-        { records: data },
+        { records: data,codes:codess },
         function (err, html) {
           res.send(html);
         }
       );
-    })
-    .catch((err) => {
+    }
+    catch (err) {
       console.log(err);
-    });
+    };
 };
 
 module.exports.expenseForm = async (req, res) => {
@@ -2289,21 +2249,6 @@ module.exports.expenseFormPost = async (req, res) => {
   if (june2 == null) {
     june2 = 0;
   }
-  console.log(
-    "july1,august1,sept1,oct1,nov1,dec1,jan2,feb2,march2,apr2,may2,june2",
-    july1,
-    august1,
-    sept1,
-    oct1,
-    nov1,
-    dec1,
-    jan2,
-    feb2,
-    march2,
-    apr2,
-    may2,
-    june2
-  );
   var boraddo = parseInt(boraddo);
   var july1 = parseInt(july1);
   var august1 = parseInt(august1);
@@ -2331,23 +2276,7 @@ module.exports.expenseFormPost = async (req, res) => {
     may2 +
     june2;
   var baki = boraddo - total;
-  console.log(
-    "july1,august1,sept1,oct1,nov1,dec1,jan2,feb2,march2,apr2,may2,june2,total",
-    july1,
-    august1,
-    sept1,
-    oct1,
-    nov1,
-    dec1,
-    jan2,
-    feb2,
-    march2,
-    apr2,
-    may2,
-    june2,
-    total
-  );
-
+ 
   await expense
     .create({
       code: code,
@@ -2383,7 +2312,7 @@ module.exports.expenseAdd = async (req, res) => {
   await expense
     .findByPk(req.params.id)
     .then((data) => {
-      console.log("inside");
+
       res.render("center/expense/expenseAdd", {
         title: "খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী",
         msg: "",
@@ -2397,7 +2326,7 @@ module.exports.expenseAdd = async (req, res) => {
 };
 
 module.exports.expenseAddPost = async (req, res) => {
-  console.log("idddsss", req.params.id);
+ 
   try {
     var data = await expense.findByPk(req.params.id);
     const m = res.locals.moment();
@@ -2546,11 +2475,11 @@ module.exports.expenseAddPost = async (req, res) => {
         }
       );
     } else if (months == 10) {
-      console.log("data.nov1", data.nov1);
+     
       nov1 = khoroch + parseInt(data.nov1);
       total = khoroch + currentTotal;
       baki = currentbaki - khoroch;
-      console.log("dekhi to vai", nov1);
+    
       var varib = await expense.update(
         {
           nov1: nov1,
@@ -2587,7 +2516,7 @@ module.exports.fetchExpenseCode = async (req, res) => {
       where: { id: req.body.khat },
     })
     .then((data) => {
-      console.log("data", data.code);
+    
       var code = data.code;
       res.send(code);
     })
@@ -2608,7 +2537,7 @@ module.exports.generatePdfexpense = async (req, res) => {
           { records: data,centerName:centerNames,dirname: __dirname },
           (err, data) => {
             if (err) {
-              console.log("error", err);
+        
               res.send(err);
             } else {
               var assesPath = path.join(__dirname, "../public/");
@@ -2640,7 +2569,7 @@ module.exports.generatePdfexpense = async (req, res) => {
 //expense controller end
 
 module.exports.fetchSubCategory = async (req, res) => {
-  console.log("parent id", req.body.category);
+  
   await cropCategory
     .findAll({
       where: { parent_id: req.body.category },
