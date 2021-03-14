@@ -38,9 +38,7 @@ module.exports = (sequelize, Sequelize) => {
       irregularWorker: {
         type: Sequelize.INTEGER
       },
-      year: {
-        type: Sequelize.STRING
-      },
+     
       center_id: {
         type: Sequelize.INTEGER
       }

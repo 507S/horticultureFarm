@@ -1327,9 +1327,7 @@ module.exports.workerInfo=async(req,res)=>{
 module.exports.workerInfoFilter=async(req,res)=>{
     if (req.body.center === "all") {
         console.log("resss")
-        await workerInfo.findAll({
-            where: {year: req.body.year,month:req.body.month}
-        })
+        await workerInfo.findAll()
         .then(data => {
             res.render('pd/worker/workerInfo/workerInfoTable', {records: data} ,function(err, html) {
                 res.send(html);
@@ -1341,7 +1339,7 @@ module.exports.workerInfoFilter=async(req,res)=>{
     }
     else{
     await workerInfo.findAll({
-        where: {year: req.body.year,center_id : req.body.center,month:req.body.month}
+        where: {center_id : req.body.center}
     })
     .then(data => {
         res.render('pd/worker/workerInfo/workerInfoTable', {records: data} ,function(err, html) {
@@ -1532,9 +1530,7 @@ module.exports.workerNum=async(req,res)=>{
 module.exports.workerNumFilter=async(req,res)=>{
     if (req.body.center === "all") {
         console.log("resss")
-        await workerInfo.findAll({
-            where: {year: req.body.year,month: req.body.month}
-        })
+        await workerInfo.findAll()
         .then(data => {
             console.log("inside");
             var reg=0;
@@ -1559,7 +1555,7 @@ module.exports.workerNumFilter=async(req,res)=>{
     }
     else{
     await workerInfo.findAll({
-        where: {center_id: req.body.center,year: req.body.year,month: req.body.month}
+        where: {center_id: req.body.center}
     })
     .then(data => {
         console.log("inside");
@@ -2211,9 +2207,7 @@ module.exports.chak1=async(req,res)=>{
 
 module.exports.chak1Filter=async(req,res)=>{
     if (req.body.center === "all") {
-        await chak1.findAll({
-            where: {year: req.body.year,month:req.body.month}
-        })
+        await chak1.findAll()
         .then(data => {
             res.render('pd/employee/chak1/employeeChak1Table', {records: data} ,function(err, html) {
                 res.send(html);
@@ -2225,7 +2219,7 @@ module.exports.chak1Filter=async(req,res)=>{
     }
     else{
     await chak1.findAll({
-        where: {year: req.body.year,center_id : req.body.center,month:req.body.month}
+        where: {center_id : req.body.center}
     })
     .then(data => {
         res.render('pd/employee/chak1/employeeChak1Table', {records: data} ,function(err, html) {
@@ -2339,9 +2333,7 @@ module.exports.chak2=async(req,res)=>{
 
 module.exports.chak2Filter=async(req,res)=>{
     if (req.body.center === "all") {
-        await chak2.findAll({
-            where: {year: req.body.year,month:req.body.month}
-        })
+        await chak2.findAll()
         .then(data => {
             res.render('pd/employee/chak2/employeeChak2Table', {records: data} ,function(err, html) {
                 res.send(html);
@@ -2353,7 +2345,7 @@ module.exports.chak2Filter=async(req,res)=>{
     }
     else{
     await chak2.findAll({
-        where: {year: req.body.year,center_id : req.body.center,month:req.body.month}
+        where: {center_id : req.body.center}
     })
     .then(data => {
         res.render('pd/employee/chak2/employeeChak2Table', {records: data} ,function(err, html) {

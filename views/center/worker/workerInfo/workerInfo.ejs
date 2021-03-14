@@ -12,7 +12,7 @@
                             </div>
                         </div>
 
-                        <div class="card">
+                        <!-- <div class="card">
                             <div class="card-body">
                                 <div class="row clearfix">
                                     <div class="col-md-4">
@@ -46,14 +46,13 @@
                                         </select>
                                     </div>
                                     <div class="col-md-4">
-                                        <!-- Button -->                                        
                                         <div>
                                         <input type="submit" id="submit" name="submit" value="submit" class="btn btn-primary">   
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         
                         <div class="row mb-2">
                             <div class="col-md-12">
@@ -62,7 +61,68 @@
 
                         </div>
 
-                        <div class="table-responsive" id="output"></div>
+                        <div class="table-responsive" id="output">
+                            <%if (records.length >0){ %>
+                                <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+                                <thead>
+                                <tr>
+                                    <th>ক্রমিক নং</th>
+                                    <th>পদবী</th>
+                                    <th>নাম</th>
+                                    <th>পিতার নাম</th>
+                                    <th>ঠিকানা</th>
+                                    <th>মোবাইল নং</th>
+                                    <th>যোগদানের তারিখ</th>
+                                    <th>এনআইডি নং</th>
+                                    <th>ব্যাংক একাউন্ট নং</th>
+                                    <th>পরিবর্তন/মুছুন</th>
+                            
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <% records.forEach(function(row,index){ %>
+                                        <tr>
+                                            <td><%= index+1 %></td>
+                                            <td><%= row.podobi %></td>
+                                            <td><%= row.name %></td>
+                                            <td><%= row.fname %></td>
+                                            <td><%= row.address %></td>
+                                            <td><%= row.mobile %></td>
+                                            <td><%= row.date %></td>
+                                            <td><%= row.nid %></td>
+                                            <td><%= row.bank %></td>
+                                            <td><a class="btn btn-primary btn-xs" href="/center/workerInfoEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-danger btn-xs" href="/center/workerInfoDelete/<%= row.id %>"><i class="fa fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                            <% }else{ %>
+                                <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+                                    <thead>
+                                    <tr>
+                                        <th>ক্রমিক নং</th>
+                                    <th>পদবী</th>
+                                    <th>নাম</th>
+                                    <th>পিতার নাম</th>
+                                    <th>ঠিকানা</th>
+                                    <th>মোবাইল নং</th>
+                                    <th>যোগদানের তারিখ</th>
+                                    <th>এনআইডি নং</th>
+                                    <th>ব্যাংক একাউন্ট নং</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <% records.forEach(function(row){ %>
+                                        <tr>
+                                            <td colspan="10">No data Found</td>
+                                        </tr>
+                                    <% }) %>
+                                    </tbody>
+                                </table>
+                            <% } %>
+                        </div>
 
                         <button onclick="exportToPdf()" class="btn btn-success">
                             Download PDF
@@ -104,7 +164,7 @@
     });
 </script>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
    
     $("body").on("click", "#btnExport", function () {
         html2canvas($('#tblCustomers')[0], {
@@ -178,4 +238,4 @@
 
     
 
-</script>
+</script> -->

@@ -12,7 +12,7 @@ const {fetchMaan,fetchWork,fetchShuchok,fetchEkok,fetchShuchokMaan,expenseAddPos
     specialCoconutFormPost,loan,loanYear,loanForm,loanFormPost,apa,apaYear,apaForm,apaFormPost,allcenter,centerlogin,centerloginpost,
     centerDashboard,topSheet,topSheetYear,generatePdfTopSheet,center,centerEdit,centerEditPost,centerDelete,chak1Delete,chak1Edit,chak1EditPost,chak2Delete,chak2Edit,chak2EditPost,
     fetchPodobiList,workerInfoDelete,workerInfoEdit,workerInfoEditPost,generatePdfworkerInfo,generatePdfworkerNum,generatePdfapa,generatePdfloan,generatePdfspecialCoconut,generatePdfrevolvingFund,generatePdfchak1,generatePdfchak2,generatePdfrajossho,
-    workerInfo,workerInfoYear,workerInfoForm,workerInfoFormPost,workerNum,workerNumYear,fetchSubCategory,fetchBiboron,fetchBreed} = require('../controllers/center.controller');
+    workerInfo,workerInfoForm,workerInfoFormPost,workerNum,fetchSubCategory,fetchBiboron,fetchBreed} = require('../controllers/center.controller');
 
 
 router.get('/',allcenter);
@@ -37,7 +37,6 @@ router.get('/centerDelete/:id',centerDelete);
 
 
 router.get('/workerInfo',workerInfo);
-router.post('/workerInfoYear',workerInfoYear);
 router.get('/workerInfoForm',workerInfoForm);
 router.post('/workerInfoForms',workerInfoFormPost);
 router.get('/workerInfoDelete/:id',workerInfoDelete);
@@ -46,7 +45,6 @@ router.post('/workerInfoEditPost/:id',workerInfoEditPost);
 router.post('/generatePdfworkerInfo',generatePdfworkerInfo);
 
 router.get('/workerNum',workerNum);
-router.post('/workerNumYear',workerNumYear);
 router.post('/generatePdfworkerNum',generatePdfworkerNum);
 
 router.get('/apa',apa);

@@ -12,7 +12,7 @@
                             </div>
                         </div>
 
-                        <div class="card">
+                        <!-- <div class="card">
                             <div class="card-body">
                                 <div class="row clearfix">
                                     <div class="col-md-4">
@@ -46,17 +46,57 @@
                                         </select>
                                     </div>
                                     <div class="col-md-4">
-                                        <!-- Button -->                                        
+                                                      
                                         <div>
                                         <input type="submit" id="submit" name="submit" value="submit" class="btn btn-primary">   
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div> -->
+                        
+                        
+                        <div class="table-responsive" id="output">
+                            <%if (records.length >0){ %>
+                                <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+                                <thead>
+                                <tr>
+                                    <th>নিয়মিত শ্রমিকের সংখ্যা</th>
+                                    <th>অনিয়মিত শ্রমিকের সংখ্যা</th>
+                                    <th>মোট</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td><%= regs %></td>
+                                            <td><%= irregs %></td>
+                                            <td><%= totals %></td>
+                                            
+                                            
+                                           
+                                        </tr>
+                                </tbody>
+                            </table>
+                            <% }else{ %>
+                                <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+                                    <thead>
+                                    <tr>
+                                        <th>নিয়মিত শ্রমিকের সংখ্যা</th>
+                                        <th>অনিয়মিত শ্রমিকের সংখ্যা</th>
+                                        <th>মোট</th>
+                            
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <% records.forEach(function(row){ %>
+                                        <tr>
+                                            <td colspan="10">No data Found</td>
+                                        </tr>
+                                    <% }) %>
+                                    </tbody>
+                                </table>
+                            <% } %>
                         </div>
-                        
-                        
-                        <div class="table-responsive" id="output"></div>
 
                         <button onclick="exportToPdf()" class="btn btn-success">
                             Download PDF
@@ -97,7 +137,7 @@
     });
 </script>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
    
     $("body").on("click", "#btnExport", function () {
         html2canvas($('#tblCustomers')[0], {
@@ -171,4 +211,4 @@
 
     
 
-</script>
+</script> -->

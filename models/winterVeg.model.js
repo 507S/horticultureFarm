@@ -16,9 +16,6 @@ module.exports = (sequelize, Sequelize) => {
       },
       ekshohybridcholti: {
         type: Sequelize.STRING
-      },
-      year: {
-        type: Sequelize.STRING
       }
     });
   

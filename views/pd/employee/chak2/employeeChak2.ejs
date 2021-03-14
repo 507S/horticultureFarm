@@ -24,8 +24,7 @@
                                             <% } %>
                                         </select>
                                     </div>
-                                    <div class="col-md-3">
-                                        <!-- <label for="month">মাস:</label> -->
+                                    <!-- <div class="col-md-3">
                                         <select id="month" class="form-control" name="month">
                                             <option value="january">জানুয়ারি</option>
                                             <option value="february">ফেব্রুয়ারি</option>
@@ -42,7 +41,6 @@
                                         </select>
                                     </div>
                                     <div class="col-md-3">
-                                        <!-- <label for="year">অর্থবছর:</label> -->
                                         <select id="year" class="form-control" name="year">
                                             <option value="2017">২০১৭-১৮</option>
                                             <option value="2018">২০১৮-১৯</option>
@@ -52,13 +50,12 @@
                                             <option value="2022">২০২২-২৩</option>
                                             <option value="2023">২০২৩-২৪</option>
                                         </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <!-- Button -->                                        
+                                    </div> -->
+                                    <!-- <div class="col-md-3">
                                         <div>
                                         <input type="submit" id="submit" name="submit" value="submit" class="btn btn-primary">   
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -165,13 +162,11 @@
     });
 
     $( "#content-wrapper" ).load( "no url rn",function() {
-        var year = $('#year').val();
         var center = $('#center').val();
-        var month = $('#month').val();
         $.ajax({
             type: "POST",
             url: "/pd/chak2Filter",
-            data: {year: year, center:center,month:month},
+            data: {center:center},
             datatype: "json",
             beforeSend: function() {
                 // setting a timeout
@@ -191,14 +186,12 @@
     });
 
 
-    $('#submit').on("click",function () {
-        var year = $('#year').val();
+    $('#center').on("change",function () {
         var center = $('#center').val();
-        var month = $('#month').val();
         $.ajax({
             type: "POST",
             url: "/pd/chak2Filter",
-            data: {year: year, center:center,month: month},
+            data: { center:center},
             datatype: "json",
             beforeSend: function() {
                 // setting a timeout

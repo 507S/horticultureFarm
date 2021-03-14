@@ -212,12 +212,7 @@ module.exports.allCenterInfo = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
-      res.render("allCenterInfo", {
-        title: "সেন্টারের যোগাযোগ তথ্য",
-        success: "",
-        records: err,
-      });
+      console.log(err);
     });
 };
 
@@ -461,475 +456,6 @@ module.exports.generatePdfTopSheet = async (req,res) => {
 }
 //topSheet controller end
 
-//charaKolom controller
-module.exports.charaKolom = async (req, res) => {
-  await charaKolom
-    .findAll({
-      where: { center_id: req.session.user_id },
-    })
-    .then((data) => {
-      console.log("inside");
-      res.render("center/charaKolomPrice/charaKolom/charaKolom", {
-        title: "হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য",
-        success: "",
-        records: data,
-      });
-    })
-    .catch((err) => {
-      console.log("outside");
-      res.render("center/charaKolomPrice/charaKolom/charaKolom", {
-        title: "হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য",
-        success: "",
-        records: err,
-      });
-    });
-
-  //  records:result
-};
-
-module.exports.charaKolomYear = async (req, res) => {
-  await charaKolom
-    .findAll({
-      where: { year: req.body.year, center_id: req.session.user_id },
-    })
-    .then((data) => {
-      res.render(
-        "center/charaKolomPrice/charaKolom/charaKolomTable",
-        { records: data },
-        function (err, html) {
-          res.send(html);
-        }
-      );
-    })
-    .catch((err) => {
-      res.render("center/charaKolomPrice/charaKolom/charaKolomYear", {
-        title: "হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য",
-        success: "",
-        records: err,
-      });
-    });
-};
-
-module.exports.charaKolomForm = async (req, res) => {
-  res.render("center/charaKolomPrice/charaKolom/charaKolomForm", {
-    title: "হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য",
-    msg: "",
-    success: "",
-    user_id: req.session.user_id,
-  });
-};
-
-module.exports.charaKolomFormPost = async (req, res) => {
-  var cname = req.body.cname;
-  var shotero = req.body.shotero;
-  var atharo = req.body.atharo;
-  var unish = req.body.unish;
-  var parbotto = req.body.parbotto;
-  var year = req.body.year;
-  var user_id = req.body.user_id;
-
-  await charaKolom
-    .create({
-      cname: cname,
-      shotero: shotero,
-      atharo: atharo,
-      unish: unish,
-      parbotto: parbotto,
-      year: year,
-      center_id: user_id,
-    })
-    .then((data) => {
-      res.redirect("/center/charaKolom");
-    })
-    .catch((err) => {
-      res.render("errorpage", err);
-    });
-};
-//charaKolom controller end
-
-//folMosholla controller
-module.exports.folMosholla = async (req, res) => {
-  await folMosholla
-    .findAll({
-      where: { center_id: req.session.user_id },
-    })
-    .then((data) => {
-      console.log("inside");
-      res.render("center/charaKolomPrice/folMosholla/folMosholla", {
-        title: "হরটিকালচার সেন্টারের ফল/মসলা ও শাক-সবজি বিক্রয় মূল্য",
-        success: "",
-        records: data,
-      });
-    })
-    .catch((err) => {
-      console.log("outside");
-      res.render("center/charaKolomPrice/folMosholla/folMosholla", {
-        title: "হরটিকালচার সেন্টারের ফল/মসলা ও শাক-সবজি বিক্রয় মূল্য",
-        success: "",
-        records: err,
-      });
-    });
-
-  //  records:result
-};
-
-module.exports.folMoshollaYear = async (req, res) => {
-  await folMosholla
-    .findAll({
-      where: { year: req.body.year, center_id: req.session.user_id },
-    })
-    .then((data) => {
-      res.render(
-        "center/charaKolomPrice/folMosholla/folMoshollaTable",
-        { records: data },
-        function (err, html) {
-          res.send(html);
-        }
-      );
-    })
-    .catch((err) => {
-      res.render("center/charaKolomPrice/folMosholla/folMoshollaYear", {
-        title: "হরটিকালচার সেন্টারের ফল/মসলা ও শাক-সবজি বিক্রয় মূল্য",
-        success: "",
-        records: err,
-      });
-    });
-};
-
-module.exports.folMoshollaForm = async (req, res) => {
-  res.render("center/charaKolomPrice/folMosholla/folMoshollaForm", {
-    title: "হরটিকালচার সেন্টারের ফল/মসলা ও শাক-সবজি বিক্রয় মূল্য",
-    msg: "",
-    success: "",
-    user_id: req.session.user_id,
-  });
-};
-
-module.exports.folMoshollaFormPost = async (req, res) => {
-  var item = req.body.item;
-  var amount = req.body.amount;
-  var shotero = req.body.shotero;
-  var atharo = req.body.atharo;
-  var unish = req.body.unish;
-  var year = req.body.year;
-  var user_id = req.body.user_id;
-
-  await folMosholla
-    .create({
-      item: item,
-      amount: amount,
-      shotero: shotero,
-      atharo: atharo,
-      unish: unish,
-      year: year,
-      center_id: user_id,
-    })
-    .then((data) => {
-      res.redirect("/center/folMosholla");
-    })
-    .catch((err) => {
-      res.render("errorpage", err);
-    });
-};
-//folMosholla controller end
-
-//otherFlower controller
-module.exports.otherFlower = async (req, res) => {
-  await otherFlower
-    .findAll({
-      where: { center_id: req.session.user_id },
-    })
-    .then((data) => {
-      console.log("inside");
-      res.render("center/charaKolomPrice/otherFlower/otherFlower", {
-        title: "বিভিন্ন ফুল ও সুদৃশ্য গাছের চারা/কলমের বিক্রয় মূল্য",
-        success: "",
-        records: data,
-      });
-    })
-    .catch((err) => {
-      console.log("outside");
-      res.render("center/charaKolomPrice/otherFlower/otherFlower", {
-        title: "বিভিন্ন ফুল ও সুদৃশ্য গাছের চারা/কলমের বিক্রয় মূল্য",
-        success: "",
-        records: err,
-      });
-    });
-
-  //  records:result
-};
-
-module.exports.otherFlowerYear = async (req, res) => {
-  await otherFlower
-    .findAll({
-      where: { year: req.body.year, center_id: req.session.user_id },
-    })
-    .then((data) => {
-      res.render(
-        "center/charaKolomPrice/otherFlower/otherFlowerTable",
-        { records: data },
-        function (err, html) {
-          res.send(html);
-        }
-      );
-    })
-    .catch((err) => {
-      res.render("center/charaKolomPrice/otherFlower/otherFlowerYear", {
-        title: "বিভিন্ন ফুল ও সুদৃশ্য গাছের চারা/কলমের বিক্রয় মূল্য",
-        success: "",
-        records: err,
-      });
-    });
-};
-
-module.exports.otherFlowerForm = async (req, res) => {
-  res.render("center/charaKolomPrice/otherFlower/otherFlowerForm", {
-    title: "বিভিন্ন ফুল ও সুদৃশ্য গাছের চারা/কলমের বিক্রয় মূল্য",
-    msg: "",
-    success: "",
-    user_id: req.session.user_id,
-  });
-};
-
-module.exports.otherFlowerFormPost = async (req, res) => {
-  var item = req.body.item;
-  var polyshotero = req.body.polyshotero;
-  var tobshotero = req.body.tobshotero;
-  var polyatharo = req.body.polyatharo;
-  var tobatharo = req.body.tobatharo;
-  var polyunish = req.body.polyunish;
-  var tobunish = req.body.tobunish;
-  var year = req.body.year;
-  var user_id = req.body.user_id;
-
-  await otherFlower
-    .create({
-      item: item,
-      polyshotero: polyshotero,
-      tobshotero: tobshotero,
-      polyatharo: polyatharo,
-      tobatharo: tobatharo,
-      polyunish: polyunish,
-      tobunish: tobunish,
-      year: year,
-      center_id: user_id,
-    })
-    .then((data) => {
-      console.log(data);
-      res.redirect("/center/otherFlower");
-    })
-    .catch((err) => {
-      console.log(err);
-      res.render("errorpage", err);
-    });
-};
-//otherFlower controller end
-
-//seasonalFlower controller
-module.exports.seasonalFlower = async (req, res) => {
-  await seasonalFlower
-    .findAll({
-      where: { center_id: req.session.user_id },
-    })
-    .then((data) => {
-      console.log("inside");
-      res.render("center/charaKolomPrice/seasonalFlower/seasonalFlower", {
-        title: "মৌসুমী ফুল ও চারার বিক্রয় মূল্য",
-        success: "",
-        records: data,
-      });
-    })
-    .catch((err) => {
-      console.log("outside");
-      res.render("center/charaKolomPrice/seasonalFlower/seasonalFlower", {
-        title: "মৌসুমী ফুল ও চারার বিক্রয় মূল্য",
-        success: "",
-        records: err,
-      });
-    });
-
-  //  records:result
-};
-
-module.exports.seasonalFlowerYear = async (req, res) => {
-  await seasonalFlower
-    .findAll({
-      where: { year: req.body.year, center_id: req.session.user_id },
-    })
-    .then((data) => {
-      res.render(
-        "center/charaKolomPrice/seasonalFlower/seasonalFlowerTable",
-        { records: data },
-        function (err, html) {
-          res.send(html);
-        }
-      );
-    })
-    .catch((err) => {
-      res.render("center/charaKolomPrice/seasonalFlower/seasonalFlowerYear", {
-        title: "মৌসুমী ফুল ও চারার বিক্রয় মূল্য",
-        success: "",
-        records: err,
-      });
-    });
-};
-
-module.exports.seasonalFlowerForm = async (req, res) => {
-  res.render("center/charaKolomPrice/seasonalFlower/seasonalFlowerForm", {
-    title: "মৌসুমী ফুল ও চারার বিক্রয় মূল্য",
-    msg: "",
-    success: "",
-    user_id: req.session.user_id,
-  });
-};
-
-module.exports.seasonalFlowerFormPost = async (req, res) => {
-  var item = req.body.item;
-  var poriman = req.body.poriman;
-  var polyatharo = req.body.polyatharo;
-  var bedatharo = req.body.bedatharo;
-  var polyunish = req.body.polyunish;
-  var bedunish = req.body.bedunish;
-  var year = req.body.year;
-  var user_id = req.body.user_id;
-
-  await seasonalFlower
-    .create({
-      item: item,
-      poriman: poriman,
-      polyatharo: polyatharo,
-      bedatharo: bedatharo,
-      polyunish: polyunish,
-      bedunish: bedunish,
-      year: year,
-      center_id: user_id,
-    })
-    .then((data) => {
-      res.redirect("/center/seasonalFlower");
-    })
-    .catch((err) => {
-      res.render("errorpage", err);
-    });
-};
-//seasonalFlower controller end
-
-//summerVeg controller
-module.exports.summerVeg = async (req, res) => {
-  await summerVeg
-    .findAll({
-      where: { center_id: req.session.user_id },
-    })
-    .then((data) => {
-      console.log("inside");
-      res.render("center/charaKolomPrice/summerVeg/summerVeg", {
-        title: "গ্রীষ্মকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য",
-        success: "",
-        records: data,
-      });
-    })
-    .catch((err) => {
-      console.log("outside");
-      res.render("center/charaKolomPrice/summerVeg/summerVeg", {
-        title: "গ্রীষ্মকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য",
-        success: "",
-        records: err,
-      });
-    });
-
-  //  records:result
-};
-
-module.exports.summerVegYear = async (req, res) => {
-  await summerVeg
-    .findAll({
-      where: { year: req.body.year, center_id: req.session.user_id },
-    })
-    .then((data) => {
-      res.render(
-        "center/charaKolomPrice/summerVeg/summerVegTable",
-        { records: data },
-        function (err, html) {
-          res.send(html);
-        }
-      );
-    })
-    .catch((err) => {
-      res.render("center/charaKolomPrice/summerVeg/summerVegYear", {
-        title: "গ্রীষ্মকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য",
-        success: "",
-        records: err,
-      });
-    });
-};
-
-module.exports.summerVegForm = async (req, res) => {
-  res.render("center/charaKolomPrice/summerVeg/summerVegForm", {
-    title: "গ্রীষ্মকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য",
-    msg: "",
-    success: "",
-    user_id: req.session.user_id,
-  });
-};
-
-module.exports.summerVegFormPost = async (req, res) => {
-  var item = req.body.item;
-  var doshatharo = req.body.doshatharo;
-  var ekshoucchoatharo = req.body.ekshoucchoatharo;
-  var ekshohybridatharo = req.body.ekshohybridatharo;
-  var doshbijunish = req.body.doshbijunish;
-  var ekshoucchounish = req.body.ekshoucchounish;
-  var ekshohybridunish = req.body.ekshohybridunish;
-  var year = req.body.year;
-  var user_id = req.body.user_id;
-
-  await summerVeg
-    .create({
-      item: item,
-      doshatharo: doshatharo,
-      ekshoucchoatharo: ekshoucchoatharo,
-      ekshohybridatharo: ekshohybridatharo,
-      doshbijunish: doshbijunish,
-      ekshoucchounish: ekshoucchounish,
-      ekshohybridunish: ekshohybridunish,
-      year: year,
-      center_id: user_id,
-    })
-    .then((data) => {
-      res.redirect("/center/summerVeg");
-    })
-    .catch((err) => {
-      res.render("errorpage", err);
-    });
-};
-//summerVeg controller end
-
-//winterVeg controller
-module.exports.winterVeg = async (req, res) => {
-  await center
-      .findAll({
-        where: { center_id: req.session.user_id },
-      })
-      .then((data) => {
-        console.log("inside");
-        res.render("center/charaKolomPrice/winterVeg/winterVeg", {
-          title: "শীতকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য",
-          success: "",
-          records: data,
-        });
-      })
-      .catch((err) => {
-        console.log("outside");
-        res.render("center/charaKolomPrice/winterVeg/winterVeg", {
-          title: "শীতকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য",
-          success: "",
-          records: err,
-        });
-      });
-
-  //  records:result
-};
-//topSheet controller end
-
 
 //workerInfo controller
 module.exports.workerInfo = async (req, res) => {
@@ -951,24 +477,24 @@ module.exports.workerInfo = async (req, res) => {
   //  records:result
 };
 
-module.exports.workerInfoYear = async (req, res) => {
-  await workerInfo
-    .findAll({
-      where: { year: req.body.year, month: req.body.month,center_id: req.session.user_id },
-    })
-    .then((data) => {
-      res.render(
-        "center/worker/workerInfo/workerInfoTable",
-        { records: data },
-        function (err, html) {
-          res.send(html);
-        }
-      );
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
+// module.exports.workerInfoYear = async (req, res) => {
+//   await workerInfo
+//     .findAll({
+//       where: { center_id: req.session.user_id },
+//     })
+//     .then((data) => {
+//       res.render(
+//         "center/worker/workerInfo/workerInfoTable",
+//         { records: data },
+//         function (err, html) {
+//           res.send(html);
+//         }
+//       );
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
 
 module.exports.workerInfoForm = async (req, res) => {
   res.render("center/worker/workerInfo/workerInfoForm", {
@@ -989,7 +515,7 @@ module.exports.workerInfoFormPost = async (req, res) => {
   var nid = req.body.nid;
   var bank = req.body.bank;
   var month = req.body.month;
-  var year = req.body.year;
+
   var user_id = req.body.user_id;
   if (podobi === "নিয়মিত") {
     var regularWorker = 1;
@@ -1013,7 +539,6 @@ module.exports.workerInfoFormPost = async (req, res) => {
       month: month,
       regularWorker: regularWorker,
       irregularWorker: irregularWorker,
-      year: year,
       center_id: user_id,
     })
     .then((data) => {
@@ -1088,7 +613,7 @@ module.exports.generatePdfworkerInfo = async (req, res) => {
     })
    var data= await workerInfo
     .findAll({
-      where: { year: req.body.year, month: req.body.month,center_id: req.session.user_id },
+      where: {center_id: req.session.user_id },
     })
       ejs.renderFile(
           path.join(__dirname, "../views/center/worker/workerInfo", "pdf.ejs"),
@@ -1128,18 +653,11 @@ module.exports.generatePdfworkerInfo = async (req, res) => {
 
 //workerNum controller
 module.exports.workerNum = async (req, res) => {
-  res.render("center/worker/workerNum/workerNum", {
-    title: "শ্রমিকদের সংখ্যা",
-    success: "",
-  });
-};
-module.exports.workerNumYear = async (req, res) => {
   await workerInfo
     .findAll({
       where: {
         center_id: req.session.user_id,
-        year: req.body.year,
-        month: req.body.month,
+
       },
     })
     .then((data) => {
@@ -1158,7 +676,7 @@ module.exports.workerNumYear = async (req, res) => {
       });
       var total;
       total = reg + irreg;
-      res.render("center/worker/workerNum/workerNumTable", {
+      res.render("center/worker/workerNum/workerNum", {
         title: "শ্রমিকদের সংখ্যা",
         success: "",
         totals: total,
@@ -1904,7 +1422,7 @@ module.exports.chak1 = async (req, res) => {
 
 module.exports.chak1Year = async (req, res) => {
     await chak1.findAll({
-        where: { year: req.body.year, month: req.body.month,center_id: req.session.user_id }
+        where: { center_id: req.session.user_id }
     })
         .then(data => {
             console.log("inside2", data);
@@ -2094,7 +1612,7 @@ module.exports.chak2 = async (req, res) => {
 
 module.exports.chak2Year = async (req, res) => {
     await chak2.findAll({
-        where: { year: req.body.year, month: req.body.month ,center_id: req.session.user_id}
+        where: { center_id: req.session.user_id}
     })
     .then((data) => {
       res.render(

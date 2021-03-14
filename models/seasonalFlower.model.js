@@ -16,10 +16,6 @@ module.exports = (sequelize, Sequelize) => {
       },
       bedcholti: {
         type: Sequelize.STRING
-      },
-      
-      year: {
-        type: Sequelize.STRING
       }
     });
   

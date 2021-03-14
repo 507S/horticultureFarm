@@ -13,7 +13,7 @@
                             </div>
                         </div>
 
-                        <div class="card">
+                        <!-- <div class="card">
                             <div class="card-body">
                                 <div class="row clearfix">
                                     <div class="col-md-4">
@@ -47,14 +47,13 @@
                                         </select>
                                     </div>
                                     <div class="col-md-4">
-                                        <!-- Button -->                                        
                                         <div>
                                         <input type="submit" id="submit" name="submit" value="submit" class="btn btn-primary">   
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         
                         <div class="row mb-2">
                             <div class="col-md-12">
@@ -63,7 +62,58 @@
 
                         </div>
 
-                        <div class="table-responsive" id="output"></div>
+                        <div class="table-responsive" id="output">
+                            <%if (records.length >0){ %>
+                                <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+                                <thead>
+                                <tr>
+                                    <th>পদের নাম</th>
+                                    <th>গ্রেড</th>
+                                    <th>মঞ্জুরীকৃত পদ</th>
+                                    <th>কর্মরত</th>
+                                    <th>শুন্যপদ</th>
+                                    <th>মন্তব্য</th>
+                                    <th>পরিবর্তন/মুছুন</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <% records.forEach(function(row){ %>
+                                        <tr>
+                                            <td><%= row.name %></td>
+                                            <td><%= row.grade %></td>
+                                            <td><%= row.pod %></td>
+                                            <td><%= row.working %></td>
+                                            <td><%= row.shunno %></td>
+                                            <td><%= row.comment %></td>
+                                            <td><a class="btn btn-primary btn-xs" href="/center/chak2Edit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-danger btn-xs" href="/center/chak2Delete/<%= row.id %>"><i class="fa fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                            <% }else{ %>
+                                <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+                                    <thead>
+                                    <tr>
+                                        <th>পদের নাম</th>
+                                        <th>গ্রেড</th>
+                                        <th>মঞ্জুরীকৃত পদ</th>
+                                        <th>কর্মরত</th>
+                                        <th>শুন্যপদ</th>
+                                        <th>মন্তব্য</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <% records.forEach(function(row){ %>
+                                        <tr>
+                                            <td colspan="10">No data Found</td>
+                                        </tr>
+                                    <% }) %>
+                                    </tbody>
+                                </table>
+                            <% } %>
+                        </div>
 
                         <button onclick="exportToPdf()" class="btn btn-success">
                             Download PDF
@@ -105,7 +155,7 @@
     });
 </script>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
    
     $("body").on("click", "#btnExport", function () {
         html2canvas($('#tblCustomers')[0], {
@@ -179,4 +229,4 @@
 
     
 
-</script>
+</script> -->

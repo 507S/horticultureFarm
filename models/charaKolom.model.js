@@ -13,10 +13,6 @@ module.exports = (sequelize, Sequelize) => {
       },
       parbotto: {
         type: Sequelize.STRING
-      },
-      
-      year: {
-        type: Sequelize.STRING
       }
     });
   
