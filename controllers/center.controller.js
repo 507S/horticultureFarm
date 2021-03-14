@@ -1613,7 +1613,7 @@ module.exports.chak2Year = async (req, res) => {
       console.log("outside",err);
 
     });
-};
+}; 
 
 module.exports.chak2Form = async (req, res) => {
   try {
