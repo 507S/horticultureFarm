@@ -1660,13 +1660,13 @@ module.exports.chak2FormPost = async (req, res) => {
 console.log(err);    });
 };
 module.exports.fetchPodobiList = async (req, res) => {
-  console.log("upokhat", req.body.podobi);
+
   await podobiList
     .findOne({
-      where: { id: req.body.podobi },
+      where: { podobi: req.body.podobi },
     })
     .then((data) => {
-      console.log("data", data.grade);
+    
       var grade = data.grade;
       res.send(grade);
     })
