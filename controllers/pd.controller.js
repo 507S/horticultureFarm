@@ -2894,18 +2894,38 @@ module.exports.expense=async(req,res)=>{
 };
 
 module.exports.expenseFilter=async(req,res)=>{
-    await expense.findAll({
-        where: {year: req.body.year,center_id : req.body.center}
-    })
-    .then(data => {
-        res.render('pd/expense/expenseTable', {records: data} ,function(err, html) {
-            res.send(html);
-        });
-    })
-    .catch(err => {
-        console.log(err);
-    })
-
+    if (req.body.center === "all") {
+        try {
+        var codess=await expenseCode.findAll();
+        var data=await expense.findAll()
+        res.render(
+            'pd/expense/expenseTableAll',
+            { records: data,codes:codess },
+            function (err, html) {
+              res.send(html);
+            }
+          );
+        }
+        catch(err) {
+            console.log(err);
+        }
+    }
+    else{
+        try {
+            var codess=await expenseCode.findAll();
+            var data=await expense.findAll({where: {year: req.body.year,center_id : req.body.center}});
+            res.render(
+                'pd/expense/expenseTable',
+                { records: data,codes:codess },
+                function (err, html) {
+                  res.send(html);
+                }
+              );
+            }
+            catch(err) {
+                console.log(err);
+            }
+};
 };
 
 module.exports.expenseForm=async(req,res)=>{

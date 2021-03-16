@@ -2152,7 +2152,7 @@ module.exports.expense = async (req, res) => {
   var data=await expense.findAll({where: { center_id: req.session.user_id },});
     try {
       console.log("expense");
-      res.render("center/expense/expense", {title: "মাসিক রাজস্ব অর্থ প্রাপ্তির হিসাব",success: "",records: data,codes:codess})
+      res.render("center/expense/expense", {title: "খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী",success: "",records: data,codes:codess})
     }
     catch {
       console.log(err);

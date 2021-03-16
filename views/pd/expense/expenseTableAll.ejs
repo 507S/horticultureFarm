@@ -1,0 +1,146 @@
+<%if (records.length >0){ %>
+    <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
+    <thead>
+    <tr>
+        <th>ক্রমিক নং</th>
+        <th>কোড নং</th>
+            <th>খাতের নাম</th>
+            <th>চলতি অর্থ বছরের প্রাপ্ত বরাদ্দ</th>
+            <th>জুলাই</th>
+            <th>আগস্ট</th>
+            <th>সেপ্টে</th>
+            <th>অক্টো</th>
+            <th>নভে</th>
+            <th>ডিসে</th>
+            <th>জানু</th>
+            <th>ফেব্রু</th>
+            <th>মার্চ</th>
+             <th>এপ্রিল</th>
+            <th>মে</th>
+            <th>জুন</th>
+            <th>মোট খরচ</th>
+            <th>অবশিষ্ট</th>
+            <th>মন্তব্য অতিরিক্ত খরচ বেতন</th>
+    </tr>
+    </thead>
+    <tbody>
+        
+        <% codes.forEach(function(row,index){ %>
+            <% var sumboraddo =0;
+                var sumjuly1 =0;
+                var sumaugust1 =0;
+                var sumsept1 =0;
+                var sumoct1 =0;
+                var sumnov1 =0;
+                var sumdec1 =0;
+                var sumjan2 =0;
+                var sumfeb2 =0;
+                var summarch2 =0;
+                var sumapr2 =0;
+                var summay2 =0;
+                var sumjune2 =0;
+                var sumtotal =0;
+                var sumbaki =0;
+             %>
+            <tr>
+                <td><%= index+1 %></td>
+                <td><%= row.code %></td>
+                <td><%= row.khat %></td>
+                <% for (var i=0; i<= records.length;i++) { 
+                    console.log("sumboraddo",sumboraddo)
+                    if(records[i].code == row.code){
+                        console.log("sumboraddo",records[i].code, row.code);
+                        sumboraddo=sumboraddo+records[i].boraddo ;
+                        sumjuly1=sumjuly1+records[i].july1 ;
+                        sumaugust1=sumaugust1+records[i].august1; 
+                        sumsept1=sumsept1+records[i].sept1 ;
+                        sumoct1=sumoct1+records[i].oct1 ;
+                        sumnov1=sumnov1+records[i].nov1 ;
+                        sumdec1=sumdec1+ records[i].dec1 ;
+                        sumjan2=sumjan2+records[i].jan2 ;
+                        sumfeb2=sumfeb2+ records[i].feb2 ;
+                        summarch2=summarch2+ records[i].march2 ;
+                        sumapr2=sumapr2+ records[i].apr2 ;
+                        summay2=summay2+ records[i].may2 ;
+                        sumjune2=sumjune2+ records[i].june2; 
+                        sumtotal=sumtotal+ records[i].total ;
+                        sumbaki=sumbaki+ records[i].baki ;
+                        console.log("sumboraddo",sumboraddo);
+                    }}  %>
+                    <% for (var i=0; i<= records.length;i++) { %>
+                        <%  if(records[i].code == row.code){%>
+                            <td><%= sumboraddo %></td>
+                            <td><%= sumjuly1 %></td>
+                            <td><%= sumaugust1 %></td>
+                            <td><%= sumsept1 %></td>
+                            <td><%= sumoct1 %></td>
+                            <td><%= sumnov1 %></td>
+                            <td><%= sumdec1 %></td>
+                            <td><%= sumjan2 %></td>
+                            <td><%= sumfeb2 %></td>
+                            <td><%= summarch2 %></td>
+                            <td><%= sumapr2 %></td>
+                            <td><%= summay2 %></td>
+                            <td><%= sumjune2 %></td>
+                            <td><%= sumtotal %></td>
+                            <td><%= sumbaki %></td>
+                            <td><%= row.comment %></td>
+                                <% console.log("sumboraddo",sumboraddo)
+                                break; %> 
+                        <% } else{%>          
+                            <td>0</td> 
+                            <td>0</td> 
+                            <td>0</td> 
+                            <td>0</td> 
+                            <td>0</td> 
+                            <td>0</td> 
+                            <td>0</td> 
+                            <td>0</td> 
+                            <td>0</td> 
+                            <td>0</td> 
+                            <td>0</td> 
+                            <td>0</td> 
+                            <td>0</td> 
+                            <td>0</td> 
+                            <td>0</td> 
+                            <td>0</td>  
+                            <% break; %> 
+                        <% } %>
+                        <% } %>
+                            </tr>
+                        <% }) %>
+    </tbody>
+</table>
+<% }else{ %>
+    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th>কোড নং</th>
+            <th>খাতের নাম</th>
+            <th>চলতি অর্থ বছরের প্রাপ্ত বরাদ্দ</th>
+            <th>জুলাই</th>
+            <th>আগস্ট</th>
+            <th>সেপ্টে</th>
+            <th>অক্টো</th>
+            <th>নভে</th>
+            <th>ডিসে</th>
+            <th>জানু</th>
+            <th>ফেব্রু</th>
+            <th>মার্চ</th>
+            <th>এপ্রিল</th>
+            <th>মে</th>
+            <th>জুন</th>
+            <th>মোট খরচ</th>
+            <th>অবশিষ্ট</th>
+            <th>মন্তব্য অতিরিক্ত খরচ বেতন</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% codes.forEach(function(row){ %>
+            <tr>
+                <td colspan="10">No data Found</td>
+            </tr>
+        <% }) %>
+        </tbody>
+    </table>
+<% } %>
