@@ -56,10 +56,14 @@
                 <h3>নেভিগেশন</h3>
 
                 <ul class="header-nav__list">
-                    <li class="current"><a class="smoothscroll"  href="#home" title="home">হোম</a></li>
-                    <li><a class="smoothscroll"  href="#about" title="about">চারা কলম তালিকা</a></li>
-                    <li><a class="smoothscroll"  href="#services" title="services">আমাদের সম্পর্কে</a></li>
-                    <li><a class="smoothscroll"  href="#contact" title="contact">যোগাযোগ</a></li>
+                    <li class=""><a class="smoothscroll"  href="/" title="home">হোম</a></li>
+                    <li><a class=""  href="/#services" title="services">আমাদের সম্পর্কে</a></li>
+                    <li><a class=""  href="/center/charaKolomFixed" title="contact">চারা কলমের মূল্য তালিকা</a></li>
+                    <li><a class=""  href="/#about" title="about">চারা কলমের মজুদ</a></li>
+                    
+                    <li><a class=""  href="/center/allCenterInfo" title="contact">সেন্টারের যোগাযোগ তথ্য</a></li>
+                    <li><a class=""  href="/#contact" title="contact">প্রধান কার্যালয়ের যোগাযোগ তথ্য</a></li>
+                    
                 </ul>
 
             </div> <!-- end header-nav__content -->
@@ -76,9 +80,9 @@
 
     <!-- home
     ================================================== -->
-    <section id="home" class="s-home target-section" data-parallax="scroll" data-image-src="/landingPage/images/hero-bg5.jpg" data-natural-width=3000 data-natural-height=2000 data-position-y=center>
+    <section id="home" class="s-home target-section" data-parallax="scroll" data-image-src="/landingPage/images/hero-bg10.jpg" data-natural-width=3000 data-natural-height=2000 data-position-y=center>
 
-        <div class="overlay"></div>
+        <!-- <div class="overlay"></div> -->
         <div class="shadow-overlay"></div>
 
         <div class="home-content">
@@ -86,24 +90,26 @@
           
             <div class="row home-content__main">
 
-                <h1 class="text-center">১. হর্টিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য</h1>
+                <h1 style="color: #070707; text-decoration: underline; font-weight: bold;" class="text-center">১. হর্টিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য</h1>
             
             <div class="table-responsive" id="output">
                 <%if (record1.length >0){ %>
                     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
                     <thead>
                     <tr>
-                        <th style="color: #ffffff">চারা/কলমের নাম</th>
-                        <th style="color: #ffffff">চলতি অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
-                        <th style="color: #ffffff">চলতি অর্থবছরে পার্বত্য জেলাসমূহের অনুমোদিত বিক্রয়মূল্য</th>
+                        <th style="color: #070707; border: 1px solid black;padding: 10px;" >ক্রমিক নং</th>
+                        <th style="color: #070707 ; border: 1px solid black">চারা/কলমের নাম</th>
+                        <th style="color: #070707 ; border: 1px solid black">চলতি অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
+                        <th style="color: #070707 ; border: 1px solid black">চলতি অর্থবছরে পার্বত্য জেলাসমূহের অনুমোদিত বিক্রয়মূল্য</th>
                     </tr>
                     </thead>
                     <tbody>
-                        <% record1.forEach(function(row){ %>
+                        <% record1.forEach(function(row,index){ %>
                             <tr>
-                                <td style="color:#f5f5f5a6"><%= row.cname %></td>
-                                <td style="color:#f5f5f5a6"><%= row.cholti %></td>
-                                <td style="color:#f5f5f5a6"><%= row.parbotto %></td>
+                                <th style="color: #0707076c ; border: 1px solid black;padding: 10px; "><%= index+1 %></td>
+                                <th style="color: #0707076c ; border: 1px solid black"><%= row.cname %></td>
+                                <th style="color: #0707076c ; border: 1px solid black"><%= row.cholti %></td>
+                                <th style="color: #0707076c ; border: 1px solid black"><%= row.parbotto %></td>
                             </tr>
                         <% }) %>
                     </tbody>
@@ -112,13 +118,13 @@
                     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
                         <thead>
                             <tr>
-                                <th style="color: #ffffff">চারা/কলমের নাম</th>
-                                <th style="color: #ffffff">চলতি অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
-                                <th style="color: #ffffff">চলতি অর্থবছরে পার্বত্য জেলাসমূহের অনুমোদিত বিক্রয়মূল্য</th>
+                                <th style="color: #070707 ; border: 1px solid black">চারা/কলমের নাম</th>
+                                <th style="color: #070707 ; border: 1px solid black">চলতি অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
+                                <th style="color: #070707 ; border: 1px solid black">চলতি অর্থবছরে পার্বত্য জেলাসমূহের অনুমোদিত বিক্রয়মূল্য</th>
                             </tr>
                         </thead>
                         <tbody>
-                        <% record1.forEach(function(row){ %>
+                        <% record1.forEach(function(row,index){ %>
                             <tr>
                                 <td colspan="10">No data Found</td>
                             </tr>
@@ -148,7 +154,7 @@
     ================================================== -->
     <section id="home" class="s-home target-section" data-parallax="scroll" data-image-src="/landingPage/images/hero-bg2.jpg" data-natural-width=3000 data-natural-height=2000 data-position-y=center>
 
-        <div class="overlay"></div>
+        <!-- <div class="overlay"></div> -->
         <div class="shadow-overlay"></div>
 
         <div class="home-content">
@@ -156,24 +162,26 @@
           
             <div class="row home-content__main">
 
-                <h1 class="text-center">২. হর্টিকালচার সেন্টারের ফল/মসলা ও শাক-সবজি বিক্রয় মূল্য</h1>
+                <h1 style="color: #070707; text-decoration: underline; font-weight: bold;" class="text-center">২. হর্টিকালচার সেন্টারের ফল/মসলা ও শাক-সবজি বিক্রয় মূল্য</h1>
             
             <div class="table-responsive" id="output">
                 <%if (record2.length >0){ %>
                     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
                     <thead>
                     <tr>
-                        <th style="color: #ffffff">আইটেমের নাম</th>
-                        <th style="color: #ffffff">পরিমাণ (সংখ্যা/কেজি/লিটার)</th>
-                        <th style="color: #ffffff">চলতি অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
+                        <th style="color: #070707; border: 1px solid black;padding: 10px;" >ক্রমিক নং</th>
+                        <th style="color: #070707 ; border: 1px solid black">আইটেমের নাম</th>
+                        <th style="color: #070707 ; border: 1px solid black">পরিমাণ (সংখ্যা/কেজি/লিটার)</th>
+                        <th style="color: #070707 ; border: 1px solid black">চলতি অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
                     </tr>
                     </thead>
                     <tbody>
-                        <% record2.forEach(function(row){ %>
+                        <% record2.forEach(function(row,index){ %>
                             <tr>
-                                <td style="color:#f5f5f5a6"><%= row.item %></td>
-                                <td style="color:#f5f5f5a6"><%= row.amount %></td>
-                                <td style="color:#f5f5f5a6"><%= row.cholti %></td>
+                                <th style="color: #0707076c ; border: 1px solid black;padding: 10px; "><%= index+1 %></td>
+                                <th style="color: #0707076c ; border: 1px solid black"><%= row.item %></td>
+                                <th style="color: #0707076c ; border: 1px solid black"><%= row.amount %></td>
+                                <th style="color: #0707076c ; border: 1px solid black"><%= row.cholti %></td>
                             </tr>
                         <% }) %>
                     </tbody>
@@ -182,13 +190,13 @@
                     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
                         <thead>
                         <tr>
-                            <th style="color: #ffffff">আইটেমের নাম</th>
-                        <th style="color: #ffffff">পরিমাণ (সংখ্যা/কেজি/লিটার)</th>
-                        <th style="color: #ffffff">চলতি অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
+                            <th style="color: #070707 ; border: 1px solid black">আইটেমের নাম</th>
+                        <th style="color: #070707 ; border: 1px solid black">পরিমাণ (সংখ্যা/কেজি/লিটার)</th>
+                        <th style="color: #070707 ; border: 1px solid black">চলতি অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <% record2.forEach(function(row){ %>
+                        <% record2.forEach(function(row,index){ %>
                             <tr>
                                 <td colspan="10">No data Found</td>
                             </tr>
@@ -218,7 +226,7 @@
     ================================================== -->
     <section id="home" class="s-home target-section" data-parallax="scroll" data-image-src="/landingPage/images/hero-bg3.jpg" data-natural-width=3000 data-natural-height=2000 data-position-y=center>
 
-        <div class="overlay"></div>
+        <!-- <div class="overlay"></div> -->
         <div class="shadow-overlay"></div>
 
         <div class="home-content">
@@ -226,26 +234,28 @@
           
             <div class="row home-content__main">
 
-                <h1 class="text-center">৩. শীতকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য</h1>
+                <h1 style="color: #070707; text-decoration: underline; font-weight: bold;" class="text-center">৩. শীতকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য</h1>
             
             <div class="table-responsive" id="output">
                 <%if (record3.length >0){ %>
                     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
                     <thead>
                     <tr>
-                        <th style="color: #ffffff">আইটেমের নাম </th>
-                        <th style="color: #ffffff">প্রতি ১০ গ্রাম বীজের মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
-                        <th style="color: #ffffff">প্রতি ১০০ টি চারার (উচ্চ ফলনশীল) মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
-                        <th style="color: #ffffff">প্রতি ১০০ টি চারার (হাইব্রিড) মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
+                        <th style="color: #070707; border: 1px solid black;padding: 10px;" >ক্রমিক নং</th>
+                        <th style="color: #070707 ; border: 1px solid black">আইটেমের নাম </th>
+                        <th style="color: #070707 ; border: 1px solid black">প্রতি ১০ গ্রাম বীজের মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
+                        <th style="color: #070707 ; border: 1px solid black">প্রতি ১০০ টি চারার (উচ্চ ফলনশীল) মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
+                        <th style="color: #070707 ; border: 1px solid black">প্রতি ১০০ টি চারার (হাইব্রিড) মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
                     </tr>
                     </thead>
                     <tbody>
-                        <% record3.forEach(function(row){ %>
+                        <% record3.forEach(function(row,index){ %>
                             <tr>
-                                <td style="color:#f5f5f5a6"><%= row.item %></td>
-                                <td style="color:#f5f5f5a6"><%= row.doshcholti %></td>
-                                <td style="color:#f5f5f5a6"><%= row.ekshoucchocholti %></td>
-                                <td style="color:#f5f5f5a6"><%= row.ekshohybridcholti %></td>
+                                <th style="color: #0707076c ; border: 1px solid black;padding: 10px; "><%= index+1 %></td>
+                                <th style="color: #0707076c ; border: 1px solid black"><%= row.item %></td>
+                                <th style="color: #0707076c ; border: 1px solid black"><%= row.doshcholti %></td>
+                                <th style="color: #0707076c ; border: 1px solid black"><%= row.ekshoucchocholti %></td>
+                                <th style="color: #0707076c ; border: 1px solid black"><%= row.ekshohybridcholti %></td>
                             </tr>
                         <% }) %>
                     </tbody>
@@ -254,14 +264,15 @@
                     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
                         <thead>
                         <tr>
-                            <th style="color: #ffffff">আইটেমের নাম </th>
-                        <th style="color: #ffffff">প্রতি ১০ গ্রাম বীজের মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
-                        <th style="color: #ffffff">প্রতি ১০০ টি চারার (উচ্চ ফলনশীল) মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
-                        <th style="color: #ffffff">প্রতি ১০০ টি চারার (হাইব্রিড) মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
+
+                            <th style="color: #070707 ; border: 1px solid black">আইটেমের নাম </th>
+                        <th style="color: #070707 ; border: 1px solid black">প্রতি ১০ গ্রাম বীজের মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
+                        <th style="color: #070707 ; border: 1px solid black">প্রতি ১০০ টি চারার (উচ্চ ফলনশীল) মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
+                        <th style="color: #070707 ; border: 1px solid black">প্রতি ১০০ টি চারার (হাইব্রিড) মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <% record3.forEach(function(row){ %>
+                        <% record3.forEach(function(row,index){ %>
                             <tr>
                                 <td colspan="10">No data Found</td>
                             </tr>
@@ -291,7 +302,7 @@
     ================================================== -->
     <section id="home" class="s-home target-section" data-parallax="scroll" data-image-src="/landingPage/images/hero-bg4.jpg" data-natural-width=3000 data-natural-height=2000 data-position-y=center>
 
-        <div class="overlay"></div>
+        <!-- <div class="overlay"></div> -->
         <div class="shadow-overlay"></div>
 
         <div class="home-content">
@@ -299,26 +310,28 @@
           
             <div class="row home-content__main">
 
-                <h1 class="text-center">৪. গ্রীষ্মকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য</h1>
+                <h1 style="color: #070707; text-decoration: underline; font-weight: bold;" class="text-center">৪. গ্রীষ্মকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য</h1>
             
             <div class="table-responsive" id="output">
                 <%if (record4.length >0){ %>
                     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
                     <thead>
                     <tr>
-                        <th style="color: #ffffff">আইটেমের নাম </th>
-                        <th style="color: #ffffff">প্রতি ১০ গ্রাম বীজের মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
-                        <th style="color: #ffffff">প্রতি ১০০ টি চারার (উচ্চ ফলনশীল) মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
-                        <th style="color: #ffffff">প্রতি ১০০ টি চারার (হাইব্রিড) মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
+                        <th style="color: #070707; border: 1px solid black;padding: 10px;" >ক্রমিক নং</th>
+                        <th style="color: #070707 ; border: 1px solid black">আইটেমের নাম </th>
+                        <th style="color: #070707 ; border: 1px solid black">প্রতি ১০ গ্রাম বীজের মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
+                        <th style="color: #070707 ; border: 1px solid black">প্রতি ১০০ টি চারার (উচ্চ ফলনশীল) মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
+                        <th style="color: #070707 ; border: 1px solid black">প্রতি ১০০ টি চারার (হাইব্রিড) মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
                     </tr>
                     </thead>
                     <tbody>
-                        <% record4.forEach(function(row){ %>
+                        <% record4.forEach(function(row,index){ %>
                             <tr>
-                                <td style="color:#f5f5f5a6"><%= row.item %></td>
-                                <td style="color:#f5f5f5a6"><%= row.doshcholti %></td>
-                                <td style="color:#f5f5f5a6"><%= row.ekshoucchocholti %></td>
-                                <td style="color:#f5f5f5a6"><%= row.ekshohybridcholti %></td>
+                                <th style="color: #0707076c ; border: 1px solid black;padding: 10px; "><%= index+1 %></td>
+                                <th style="color: #0707076c ; border: 1px solid black"><%= row.item %></td>
+                                <th style="color: #0707076c ; border: 1px solid black"><%= row.doshcholti %></td>
+                                <th style="color: #0707076c ; border: 1px solid black"><%= row.ekshoucchocholti %></td>
+                                <th style="color: #0707076c ; border: 1px solid black"><%= row.ekshohybridcholti %></td>
                             </tr>
                         <% }) %>
                     </tbody>
@@ -327,14 +340,14 @@
                     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
                         <thead>
                         <tr>
-                            <th style="color: #ffffff">আইটেমের নাম </th>
-                        <th style="color: #ffffff">প্রতি ১০ গ্রাম বীজের মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
-                        <th style="color: #ffffff">প্রতি ১০০ টি চারার (উচ্চ ফলনশীল) মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
-                        <th style="color: #ffffff">প্রতি ১০০ টি চারার (হাইব্রিড) মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
+                            <th style="color: #070707 ; border: 1px solid black">আইটেমের নাম </th>
+                        <th style="color: #070707 ; border: 1px solid black">প্রতি ১০ গ্রাম বীজের মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
+                        <th style="color: #070707 ; border: 1px solid black">প্রতি ১০০ টি চারার (উচ্চ ফলনশীল) মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
+                        <th style="color: #070707 ; border: 1px solid black">প্রতি ১০০ টি চারার (হাইব্রিড) মূল্য(টাকায়) (চলতি অর্থবছরে)</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <% record4.forEach(function(row){ %>
+                        <% record4.forEach(function(row,index){ %>
                             <tr>
                                 <td colspan="10">No data Found</td>
                             </tr>
@@ -362,9 +375,9 @@
 
       <!-- home
     ================================================== -->
-    <section id="home" class="s-home target-section" data-parallax="scroll" data-image-src="/landingPage/images/hero-bg6.jpg" data-natural-width=3000 data-natural-height=2000 data-position-y=center>
+    <section id="home" class="s-home target-section" data-parallax="scroll" data-image-src="/landingPage/images/hero-bg12.jpg" data-natural-width=3000 data-natural-height=2000 data-position-y=center>
 
-        <div class="overlay"></div>
+        <!-- <div class="overlay"></div> -->
         <div class="shadow-overlay"></div>
 
         <div class="home-content">
@@ -372,24 +385,26 @@
           
             <div class="row home-content__main">
 
-                <h1 class="text-center">৫. বিভিন্ন ফুল ও সুদৃশ্য গাছের চারা/কলমের বিক্রয় মূল্য</h1>
+                <h1 style="color: #070707; text-decoration: underline; font-weight: bold;" class="text-center">৫. বিভিন্ন ফুল ও সুদৃশ্য গাছের চারা/কলমের বিক্রয় মূল্য</h1>
             
             <div class="table-responsive" id="output">
                 <%if (record5.length >0){ %>
                     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
                     <thead>
                     <tr>
-                        <th style="color: #ffffff">আইটেমের নাম </th>
-                        <th style="color: #ffffff">পলিব্যাগ (চলতি অর্থবছরে বিক্রয়মূল্য)</th>
-                        <th style="color: #ffffff">টবে (চলতি অর্থবছরে বিক্রয়মূল্য))</th>
+                        <th style="color: #070707; border: 1px solid black;padding: 10px;" >ক্রমিক নং</th>
+                        <th style="color: #070707 ; border: 1px solid black">আইটেমের নাম </th>
+                        <th style="color: #070707 ; border: 1px solid black">পলিব্যাগ (চলতি অর্থবছরে বিক্রয়মূল্য)</th>
+                        <th style="color: #070707 ; border: 1px solid black">টবে (চলতি অর্থবছরে বিক্রয়মূল্য))</th>
                     </tr>
                     </thead>
                     <tbody>
-                        <% record5.forEach(function(row){ %>
+                        <% record5.forEach(function(row,index){ %>
                             <tr>
-                                <td style="color:#f5f5f5a6"><%= row.item %></td>
-                                <td style="color:#f5f5f5a6"><%= row.polycholti %></td>
-                                <td style="color:#f5f5f5a6"><%= row.tobcholti %></td>
+                                <th style="color: #0707076c ; border: 1px solid black;padding: 10px; "><%= index+1 %></td>
+                                <th style="color: #0707076c ; border: 1px solid black"><%= row.item %></td>
+                                <th style="color: #0707076c ; border: 1px solid black"><%= row.polycholti %></td>
+                                <th style="color: #0707076c ; border: 1px solid black"><%= row.tobcholti %></td>
                             </tr>
                         <% }) %>
                     </tbody>
@@ -398,13 +413,13 @@
                     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
                         <thead>
                         <tr>
-                            <th style="color: #ffffff">আইটেমের নাম </th>
-                        <th style="color: #ffffff">পলিব্যাগ (চলতি অর্থবছরে বিক্রয়মূল্য)</th>
-                        <th style="color: #ffffff">টবে (চলতি অর্থবছরে বিক্রয়মূল্য))</th>
+                            <th style="color: #070707 ; border: 1px solid black">আইটেমের নাম </th>
+                        <th style="color: #070707 ; border: 1px solid black">পলিব্যাগ (চলতি অর্থবছরে বিক্রয়মূল্য)</th>
+                        <th style="color: #070707 ; border: 1px solid black">টবে (চলতি অর্থবছরে বিক্রয়মূল্য))</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <% record5.forEach(function(row){ %>
+                        <% record5.forEach(function(row,index){ %>
                             <tr>
                                 <td colspan="10">No data Found</td>
                             </tr>
@@ -432,9 +447,9 @@
 
       <!-- home
     ================================================== -->
-    <section id="home" class="s-home target-section" data-parallax="scroll" data-image-src="/landingPage/images/hero-bg7.jpg" data-natural-width=3000 data-natural-height=2000 data-position-y=center>
+    <section id="home" class="s-home target-section" data-parallax="scroll" data-image-src="/landingPage/images/hero-bg11.jpg" data-natural-width=3000 data-natural-height=2000 data-position-y=center>
 
-        <div class="overlay"></div>
+        <!-- <div class="overlay"></div> -->
         <div class="shadow-overlay"></div>
 
         <div class="home-content">
@@ -442,26 +457,28 @@
           
             <div class="row home-content__main">
 
-                <h1 class="text-center">৬. মৌসুমী ফুল ও চারার বিক্রয় মূল্য</h1>
+                <h1 style="color: #070707; text-decoration: underline; font-weight: bold;" class="text-center">৬. মৌসুমী ফুল ও চারার বিক্রয় মূল্য</h1>
             
             <div class="table-responsive" id="output">
                 <%if (record6.length >0){ %>
                     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
                     <thead>
                     <tr>
-                        <th style="color: #ffffff">আইটেমের নাম </th>
-                        <th style="color: #ffffff">পরিমাণ</th>
-                        <th style="color: #ffffff">পলিব্যাগ (চলতি অর্থবছরে বিক্রয়মূল্য)</th>
-                        <th style="color: #ffffff">বেডে (চলতি অর্থবছরে বিক্রয়মূল্য)</th>
+                        <th style="color: #070707; border: 1px solid black;padding: 10px;" >ক্রমিক নং</th>
+                        <th style="color: #070707 ; border: 1px solid black">আইটেমের নাম </th>
+                        <th style="color: #070707 ; border: 1px solid black">পরিমাণ</th>
+                        <th style="color: #070707 ; border: 1px solid black">পলিব্যাগ (চলতি অর্থবছরে বিক্রয়মূল্য)</th>
+                        <th style="color: #070707 ; border: 1px solid black">বেডে (চলতি অর্থবছরে বিক্রয়মূল্য)</th>
                     </tr>
                     </thead>
                     <tbody>
-                        <% record6.forEach(function(row){ %>
+                        <% record6.forEach(function(row,index){ %>
                             <tr>
-                                <td style="color:#f5f5f5a6"><%= row.item %></td>
-                                <td style="color:#f5f5f5a6"><%= row.poriman %></td>
-                                <td style="color:#f5f5f5a6"><%= row.polycholti %></td>
-                                <td style="color:#f5f5f5a6"><%= row.bedcholti %></td>
+                                <th style="color: #0707076c ; border: 1px solid black;padding: 10px; "><%= index+1 %></td>
+                                <th style="color: #0707076c ; border: 1px solid black"><%= row.item %></td>
+                                <th style="color: #0707076c ; border: 1px solid black"><%= row.poriman %></td>
+                                <th style="color: #0707076c ; border: 1px solid black"><%= row.polycholti %></td>
+                                <th style="color: #0707076c ; border: 1px solid black"><%= row.bedcholti %></td>
                             </tr>
                         <% }) %>
                     </tbody>
@@ -470,14 +487,14 @@
                     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
                         <thead>
                         <tr>
-                            <th style="color: #ffffff">আইটেমের নাম </th>
-                        <th style="color: #ffffff">পরিমাণ</th>
-                        <th style="color: #ffffff">পলিব্যাগ (চলতি অর্থবছরে বিক্রয়মূল্য)</th>
-                        <th style="color: #ffffff">বেডে (চলতি অর্থবছরে বিক্রয়মূল্য)</th>
+                            <th style="color: #070707 ; border: 1px solid black">আইটেমের নাম </th>
+                        <th style="color: #070707 ; border: 1px solid black">পরিমাণ</th>
+                        <th style="color: #070707 ; border: 1px solid black">পলিব্যাগ (চলতি অর্থবছরে বিক্রয়মূল্য)</th>
+                        <th style="color: #070707 ; border: 1px solid black">বেডে (চলতি অর্থবছরে বিক্রয়মূল্য)</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <% record6.forEach(function(row){ %>
+                        <% record6.forEach(function(row,index){ %>
                             <tr>
                                 <td colspan="10">No data Found</td>
                             </tr>
