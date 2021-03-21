@@ -1488,18 +1488,11 @@ module.exports.newPodobiDelete=async(req,res)=>{
 };
 module.exports.generatePdfworkerInfo = async (req, res) => {
     if (req.body.center === "all") {
-        
-        var centerNames= await center.findAll({
-            where: { id: req.body.center },
-          })
-          console.log("centerNames",centerNames)
-        var data=await workerInfo.findAll({
-            where: {year: req.body.year,month:req.body.month}
-        })
+        var data=await workerInfo.findAll()
          
         ejs.renderFile(
-            path.join(__dirname, "../views/pd/worker/workerInfo", "pdf.ejs"),
-            { records: data,centerName:centerNames, },
+            path.join(__dirname, "../views/pd/worker/workerInfo", "pdfAll.ejs"),
+            { records: data },
             (err, data) => {
               if (err) {
                 console.log("error", err);
@@ -1530,7 +1523,7 @@ module.exports.generatePdfworkerInfo = async (req, res) => {
             where: { id: req.body.center },
           })
     var data= await workerInfo.findAll({
-        where: {year: req.body.year,center_id : req.body.center,month:req.body.month}
+        where: {center_id : req.body.center}
     })
     ejs.renderFile(
         path.join(__dirname, "../views/pd/worker/workerInfo", "pdf.ejs"),
@@ -1635,10 +1628,7 @@ module.exports.workerNumFilter=async(req,res)=>{
 };
 module.exports.generatePdfworkerNum  = async (req, res) => {
     if (req.body.center === "all") {
-        var centerNames= await center.findOne({
-            where: { id: req.body.center },
-          })
-        var data=await workerInfo.findAll({where: {year: req.body.year,month: req.body.month}})
+        var data=await workerInfo.findAll()
 
             var reg=0;
             var irreg=0;
@@ -1655,8 +1645,8 @@ module.exports.generatePdfworkerNum  = async (req, res) => {
             var total;
             total = reg+irreg;
             ejs.renderFile(
-                path.join(__dirname, "../views/pd/worker/workerNum", "pdf.ejs"),
-                { records: data,centerName:centerNames,totals: total,regs: reg,irregs: irreg,dirname: __dirname },
+                path.join(__dirname, "../views/pd/worker/workerNum", "pdfAll.ejs"),
+                { records: data,totals: total,regs: reg,irregs: irreg,dirname: __dirname },
                 (err, data) => {
                   if (err) {
                     console.log("error", err);
@@ -1686,7 +1676,7 @@ module.exports.generatePdfworkerNum  = async (req, res) => {
         var centerNames= await center.findOne({
             where: { id: req.body.center },
           })
-        var data=await workerInfo.findAll({where: {center_id: req.body.center,year: req.body.year,month: req.body.month}})
+        var data=await workerInfo.findAll({where: {center_id: req.body.center}})
         var reg=0;
         var irreg=0;
         data.forEach(function(row){
@@ -2247,7 +2237,7 @@ module.exports.chak1=async(req,res)=>{
     await center.findAll()
     .then(data => {
         console.log("inside");
-        res.render('pd/employee/chak1/employeeChak1', { title: 'ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য',success:'', centers: data });
+        res.render('pd/employee/chak1/employeeChak1', { title: 'ক্যাডার/নন ক্যাডার কর্মকতা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য',success:'', centers: data });
     })
     .catch(err => {
         console.log("outside",err);
@@ -2286,7 +2276,7 @@ module.exports.chak1Filter=async(req,res)=>{
 };
 
 module.exports.chak1Form=async(req,res)=>{
-    res.render('pd/employee/chak1/employeeChak1Form', { title: 'ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য',msg:'' ,success:'',user_id: req.session.user_id});
+    res.render('pd/employee/chak1/employeeChak1Form', { title: 'ক্যাডার/নন ক্যাডার কর্মকতা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য',msg:'' ,success:'',user_id: req.session.user_id});
 };
 
 module.exports.chak1FormPost=async(req,res)=>{
@@ -2328,7 +2318,7 @@ module.exports.chak1Edit=async(req,res)=>{
     await chak1.findByPk(req.params.id)
     .then(data => {
         console.log("inside");
-        res.render('pd/employee/chak1/employeeChak1Edit', { title: 'ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য',msg:'' ,success:'',records: data});
+        res.render('pd/employee/chak1/employeeChak1Edit', { title: 'ক্যাডার/নন ক্যাডার কর্মকতা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য',msg:'' ,success:'',records: data});
     })
     .catch(err => {
         console.log("outside",err);
@@ -2380,12 +2370,49 @@ module.exports.chak1Edit=async(req,res)=>{
     
   };
 module.exports.generatePdfchak1 = async (req, res) => {
+    if (req.body.center === "all") {
+        try {
+          var data= await chak1.findAll();
+              ejs.renderFile(
+                  path.join(__dirname, "../views/pd/employee/chak1/", "pdfAll.ejs"),
+                  { records: data,dirname: __dirname },
+                  (err, data) => {
+                    if (err) {
+                      console.log("error", err);
+                      res.send(err);
+                    } else {
+                      var assesPath = path.join(__dirname, "../public/");
+                      // console.log(assesPath);
+                      assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+        
+                      var options = {
+                        height: "11.25in",
+                        width: "18.5in",
+                        header: {
+                          height: "20mm",
+                        },
+                        footer: {
+                          height: "20mm",
+                        },
+                        base: "file:///" + assesPath,
+                      };
+                      res.json({ html: data });
+                    }
+                  }
+              )
+            
+            
+          } catch (e) {
+            console.log(e);
+          }
+    }
+    else{
     try {
       var centerNames= await center.findOne({
         where: { id: req.body.center },
       })
     var data= await chak1.findAll({
-        where: { year: req.body.year,month: req.body.month, center_id: req.body.center },
+        where: {  center_id: req.body.center },
       })
         ejs.renderFile(
             path.join(__dirname, "../views/pd/employee/chak1/", "pdf.ejs"),
@@ -2419,7 +2446,7 @@ module.exports.generatePdfchak1 = async (req, res) => {
     } catch (e) {
       console.log(e);
     }
-  
+    }
   };
 //chak1 controller end
 
@@ -2533,12 +2560,49 @@ module.exports.chak2Edit=async(req,res)=>{
     });
   };
 module.exports.generatePdfchak2 = async (req, res) => {
+    if (req.body.center === "all") {
+        try {
+          var data= await chak2.findAll()
+              ejs.renderFile(
+                  path.join(__dirname, "../views/pd/employee/chak2/", "pdfAll.ejs"),
+                  { records: data,dirname: __dirname },
+                  (err, data) => {
+                    if (err) {
+                      console.log("error", err);
+                      res.send(err);
+                    } else {
+                      var assesPath = path.join(__dirname, "../public/");
+                      // console.log(assesPath);
+                      assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+        
+                      var options = {
+                        height: "11.25in",
+                        width: "18.5in",
+                        header: {
+                          height: "20mm",
+                        },
+                        footer: {
+                          height: "20mm",
+                        },
+                        base: "file:///" + assesPath,
+                      };
+                      res.json({ html: data });
+                    }
+                  }
+              )
+            
+            
+          } catch (e) {
+            console.log(e);
+          }
+    }
+    else{
     try {
       var centerNames= await center.findOne({
         where: { id: req.body.center },
       })
     var data= await chak2.findAll({
-        where: { year: req.body.year, month: req.body.month,center_id: req.body.center },
+        where: {center_id: req.body.center },
       })
         ejs.renderFile(
             path.join(__dirname, "../views/pd/employee/chak2/", "pdf.ejs"),
@@ -2572,7 +2636,7 @@ module.exports.generatePdfchak2 = async (req, res) => {
     } catch (e) {
       console.log(e);
     }
-  
+}
   };
   module.exports.chak2Delete=async(req,res)=>{
     var chak2Delete = await chak2.findByPk(req.params.id);

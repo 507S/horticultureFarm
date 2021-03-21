@@ -677,7 +677,7 @@ module.exports.generatePdfworkerNum  = async (req, res) => {
     var centerNames= await center.findOne({
       where: { id: req.session.user_id },
     })
-    var data=await workerInfo.findAll({where: {center_id: req.session.user_id,year: req.body.year,month: req.body.month},})
+    var data=await workerInfo.findAll({where: {center_id: req.session.user_id},})
       var reg = 0;
       var irreg = 0;
       data.forEach(function (row) {
@@ -1373,7 +1373,7 @@ module.exports.chak1 = async (req, res) => {
     })
     .then((data) => {
       res.render("center/employee/chak1/employeeChak1", {
-        title: "ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য",
+        title: "ক্যাডার/নন ক্যাডার কর্মকতা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য",
         success: "",
         records: data,
       });
@@ -1407,7 +1407,7 @@ module.exports.chak1Form = async (req, res) => {
 })
     .then(data => {
   res.render("center/employee/chak1/employeeChak1Form", {
-    title: "ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য",
+    title: "ক্যাডার/নন ক্যাডার কর্মকতা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য",
     msg: "",
     success: "",
     centers:data.center,
@@ -1458,7 +1458,7 @@ console.log(err);    });
 module.exports.chak1Edit=async(req,res)=>{
   await chak1.findByPk(req.params.id)
   .then(data => {
-      res.render('center/employee/chak1/employeeChak1Edit', { title: 'ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য',msg:'' ,success:'',records: data});
+      res.render('center/employee/chak1/employeeChak1Edit', { title: 'ক্যাডার/নন ক্যাডার কর্মকতা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য',msg:'' ,success:'',records: data});
   })
   .catch(err => {
       console.log("outside",err);
@@ -1513,7 +1513,7 @@ module.exports.generatePdfchak1 = async (req, res) => {
       where: { id: req.session.user_id },
     })
   var data= await chak1.findAll({
-      where: { year: req.body.year,month: req.body.month, center_id: req.session.user_id },
+      where: {  center_id: req.session.user_id },
     })
       ejs.renderFile(
           path.join(__dirname, "../views/center/employee/chak1/", "pdf.ejs"),
@@ -1707,7 +1707,7 @@ module.exports.generatePdfchak2 = async (req, res) => {
       where: { id: req.session.user_id },
     })
   var data= await chak2.findAll({
-      where: { year: req.body.year, month: req.body.month,center_id: req.session.user_id },
+      where: {center_id: req.session.user_id },
     })
       ejs.renderFile(
           path.join(__dirname, "../views/center/employee/chak2/", "pdf.ejs"),

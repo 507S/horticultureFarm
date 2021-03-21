@@ -114,9 +114,8 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
     async function exportToPdf() {
-        var year = $('#year').val();
         var center = $('#center').val();
-        const { data } = await axios.post(`/center/generatePdfworkerNum`,{year: year, center:center});
+        const { data } = await axios.post(`/center/generatePdfworkerNum`,{center:center});
         var mywindow = window.open("", "PRINT", "height=400,width=600");
         mywindow.document.write(data.html);
         mywindow.document.close(); // necessary for IE >= 10
