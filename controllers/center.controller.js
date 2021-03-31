@@ -337,7 +337,6 @@ module.exports.centerDelete = async (req, res) => {
 module.exports.topSheet = async (req, res) => {
   res.render("center/topSheet/topSheet", { title: "টপশীট", success: "" });
 };
-
 module.exports.topSheetYear = async (req, res) => {
   try {
     const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
@@ -371,8 +370,6 @@ module.exports.topSheetYear = async (req, res) => {
     console.log(e);
   }
 };
-
-
 module.exports.generatePdfTopSheet = async (req,res) => {
   try {
     const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
@@ -495,7 +492,6 @@ module.exports.workerInfoForm = async (req, res) => {
     user_id: req.session.user_id,
   });
 };
-
 module.exports.workerInfoFormPost = async (req, res) => {
   var podobi = req.body.podobi;
   var name = req.body.name;
@@ -746,7 +742,6 @@ module.exports.apa = async (req, res) => {
 
   //  records:result
 };
-
 module.exports.apaYear = async (req, res) => {
   await apa
     .findAll({
@@ -765,7 +760,6 @@ module.exports.apaYear = async (req, res) => {
       console.log(err);
     });
 };
-
 module.exports.apaForm = async (req, res) => {
   try {
     const apaCodes = await apaCode.findAll();
@@ -780,7 +774,6 @@ module.exports.apaForm = async (req, res) => {
     console.log(e);
   }
 };
-
 module.exports.apaFormPost = async (req, res) => {
   var uddessho = req.body.uddessho;
   var maan = req.body.maan;
@@ -853,7 +846,6 @@ module.exports.fetchMaan = async (req, res) => {
       console.log(err);
     });
 };
-
 module.exports.fetchWork = async (req, res) => {
   await apaCode
     .findAll({
@@ -866,7 +858,6 @@ module.exports.fetchWork = async (req, res) => {
       console.log(err);
     });
 };
-
 module.exports.fetchShuchok = async (req, res) => {
   await apaCode
     .findAll({
@@ -891,7 +882,6 @@ module.exports.fetchEkok = async (req, res) => {
       console.log(err);
     });
 };
-
 module.exports.fetchShuchokMaan = async (req, res) => {
   await apaCode
     .findAll({
@@ -967,7 +957,6 @@ module.exports.loan = async (req, res) => {
 
   //  records:result
 };
-
 module.exports.loanYear = async (req, res) => {
   await loan
     .findAll({
@@ -986,7 +975,6 @@ module.exports.loanYear = async (req, res) => {
       console.log(err);
     });
 };
-
 module.exports.loanForm = async (req, res) => {
   res.render("center/loan/loanForm", {
     title: "ঋণ বিতরণ ও আদায় এর অগ্রগতির প্রতিবেদন",
@@ -995,7 +983,6 @@ module.exports.loanForm = async (req, res) => {
     user_id: req.session.user_id,
   });
 };
-
 module.exports.loanFormPost = async (req, res) => {
   var boraddo = req.body.boraddo;
   var bitoron1 = req.body.bitoron1;
@@ -1092,7 +1079,6 @@ module.exports.specialCoconut = async (req, res) => {
 
   //  records:result
 };
-
 module.exports.specialCoconutYear = async (req, res) => {
   await specialCoconut
     .findAll({
@@ -1111,7 +1097,6 @@ module.exports.specialCoconutYear = async (req, res) => {
       console.log("outside",err);
     });
 };
-
 module.exports.specialCoconutForm = async (req, res) => {
   res.render("center/specialCoconut/specialCoconutForm", {
     title: "বিশেষ নারিকেল কর্মসূচি",
@@ -1120,7 +1105,6 @@ module.exports.specialCoconutForm = async (req, res) => {
     user_id: req.session.user_id,
   });
 };
-
 module.exports.specialCoconutFormPost = async (req, res) => {
   var center = req.body.center;
   var boraddo = req.body.boraddo;
@@ -1238,7 +1222,6 @@ module.exports.revolvingFund = async (req, res) => {
 
   //  records:result
 };
-
 module.exports.revolvingFundYear = async (req, res) => {
   await revolvingFund
     .findAll({
@@ -1258,7 +1241,6 @@ module.exports.revolvingFundYear = async (req, res) => {
 
     });
 };
-
 module.exports.revolvingFundForm = async (req, res) => {
   res.render("center/revolvingFund/revolvingFundForm", {
     title: "রিভলভিং ফান্ড",
@@ -1267,7 +1249,6 @@ module.exports.revolvingFundForm = async (req, res) => {
     user_id: req.session.user_id,
   });
 };
-
 module.exports.revolvingFundFormPost = async (req, res) => {
   var prapti = req.body.prapti;
   var presentOrtho = req.body.presentOrtho;
@@ -1385,7 +1366,6 @@ module.exports.chak1 = async (req, res) => {
 
   //  records:result
 };
-
 module.exports.chak1Year = async (req, res) => {
     await chak1.findAll({
         where: { center_id: req.session.user_id }
@@ -1400,7 +1380,6 @@ module.exports.chak1Year = async (req, res) => {
         })
 
 };
-
 module.exports.chak1Form = async (req, res) => {
   await center.findOne({
     where: { id: req.session.user_id }
@@ -1418,7 +1397,6 @@ module.exports.chak1Form = async (req, res) => {
   console.log("outside",err);
 })
 };
-
 module.exports.chak1FormPost = async (req, res) => {
   var center = req.body.center;
   var porichito = req.body.porichito;
@@ -1549,8 +1527,6 @@ module.exports.generatePdfchak1 = async (req, res) => {
   }
 
 };
-
-
 //chak1 controller end
 
 //chak2 controller
@@ -1574,7 +1550,6 @@ module.exports.chak2 = async (req, res) => {
 
   //  records:result
 };
-
 module.exports.chak2Year = async (req, res) => {
     await chak2.findAll({
         where: { center_id: req.session.user_id}
@@ -1592,8 +1567,7 @@ module.exports.chak2Year = async (req, res) => {
       console.log("outside",err);
 
     });
-}; 
-
+};
 module.exports.chak2Form = async (req, res) => {
   try {
     var podobiLists = await podobiList.findAll();
@@ -1609,7 +1583,6 @@ module.exports.chak2Form = async (req, res) => {
     console.log(e);
   }
 };
-
 module.exports.chak2FormPost = async (req, res) => {
   var name = req.body.name;
   var grade = req.body.grade;
@@ -1765,7 +1738,6 @@ module.exports.rajossho = async (req, res) => {
 
   //  records:result
 };
-
 module.exports.rajosshoYear = async (req, res) => {
   await rajossho
     .findAll({
@@ -1785,7 +1757,6 @@ module.exports.rajosshoYear = async (req, res) => {
 
     });
 };
-
 module.exports.rajosshoForm = async (req, res) => {
   try {
     var rajosshoCodes = await rajosshoCode.findAll();
@@ -1800,7 +1771,6 @@ module.exports.rajosshoForm = async (req, res) => {
     console.log(e);
   }
 };
-
 module.exports.rajosshoFormPost = async (req, res) => {
   var code = req.body.code;
   var upokhat = req.body.upokhat;
@@ -1930,7 +1900,6 @@ module.exports.rajosshoAdd = async (req, res) => {
 
     });
 };
-
 module.exports.rajosshoAddPost = async (req, res) => {
   try {
     var data = await rajossho.findByPk(req.params.id);
@@ -2176,7 +2145,6 @@ module.exports.expenseYear = async (req, res) => {
       console.log(err);
     };
 };
-
 module.exports.expenseForm = async (req, res) => {
   try {
     var expenseCodes = await expenseCode.findAll();
@@ -2191,7 +2159,6 @@ module.exports.expenseForm = async (req, res) => {
     console.log(e);
   }
 };
-
 module.exports.expenseFormPost = async (req, res) => {
   var code = req.body.code;
   var khat = req.body.khat;
@@ -2324,7 +2291,6 @@ module.exports.expenseAdd = async (req, res) => {
       console.log("outside",err);
     });
 };
-
 module.exports.expenseAddPost = async (req, res) => {
  
   try {
@@ -2581,7 +2547,6 @@ module.exports.fetchSubCategory = async (req, res) => {
       console.log(err);
     });
 };
-
 module.exports.fetchBiboron = async (req, res) => {
   await cropCategory
     .findAll({
@@ -2594,7 +2559,6 @@ module.exports.fetchBiboron = async (req, res) => {
       console.log(err);
     });
 };
-
 module.exports.fetchBreed = async (req, res) => {
   await cropCategory
     .findAll({
@@ -2615,7 +2579,6 @@ module.exports.monthlyProgress = async (req, res) => {
     success: "",
   });
 };
-
 module.exports.monthlyProgressYear = async (req, res) => {
   try {
     const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
@@ -2655,7 +2618,6 @@ module.exports.monthlyProgressYear = async (req, res) => {
     console.log(e);
   }
 };
-
 module.exports.generatePdfMonthlyProgress = async (req, res) => {
   try {
     const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
@@ -2737,7 +2699,6 @@ module.exports.generatePdfMonthlyProgress = async (req, res) => {
   }
 
 };
-
 module.exports.monthlyProgressForm = async (req, res) => {
   try {
     const categoryList = await cropCategory.findAll();
@@ -2753,7 +2714,6 @@ module.exports.monthlyProgressForm = async (req, res) => {
     console.log(e);
   }
 };
-
 module.exports.monthlyProgressFormPost = async (req, res) => {
   var category = req.body.category;
   var subCategory = req.body.subCategory;
@@ -3080,7 +3040,6 @@ module.exports.monthlyProgressFormPost = async (req, res) => {
     }
   }
 };
-
 module.exports.monthlyProgressEdit = async (req, res) => {
   try {
     const monthProgress = await monthlyProgress.findByPk(req.params.progressId);
@@ -3097,7 +3056,6 @@ module.exports.monthlyProgressEdit = async (req, res) => {
     console.log(err);
   }
 };
-
 module.exports.monthlyProgressUpdate = async (req, res) => {
   var category = req.body.category;
   var subCategory = req.body.subCategory;
@@ -3292,7 +3250,6 @@ module.exports.monthlyProgressUpdate = async (req, res) => {
       console.log("err", err);
     });
 };
-
 module.exports.monthlyProgressDelete = async (req, res) => {
   const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
   const selectedDate = req.params.selectedDate;
