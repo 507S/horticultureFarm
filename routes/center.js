@@ -10,7 +10,7 @@ const {fetchMaan,fetchWork,fetchShuchok,fetchEkok,fetchShuchokMaan,expenseAddPos
     rajosshoFormPost,expense,expenseYear,expenseForm,expenseFormPost,chak1,chak1Year,chak1Form,chak1FormPost,chak2,chak2Year,chak2Form,
     chak2FormPost,revolvingFund,revolvingFundYear,revolvingFundForm,revolvingFundFormPost,specialCoconut,specialCoconutYear,specialCoconutForm,
     specialCoconutFormPost,loan,loanYear,loanForm,loanFormPost,apa,apaYear,apaForm,apaFormPost,allcenter,centerlogin,centerloginpost,
-    centerDashboard,topSheet,topSheetYear,generatePdfTopSheet,center,centerEdit,centerEditPost,centerDelete,chak1Delete,chak1Edit,chak1EditPost,chak2Delete,chak2Edit,chak2EditPost,
+    centerDashboard,topSheet,topSheetYear,generatePdfTopSheet,topSheetBitoron,topSheetBitoronYear,generatePdfTopSheetBitoron,center,centerEdit,centerEditPost,centerDelete,chak1Delete,chak1Edit,chak1EditPost,chak2Delete,chak2Edit,chak2EditPost,
     fetchPodobiList,workerInfoDelete,workerInfoEdit,workerInfoEditPost,generatePdfworkerInfo,generatePdfworkerNum,generatePdfapa,generatePdfloan,generatePdfspecialCoconut,generatePdfrevolvingFund,generatePdfchak1,generatePdfchak2,generatePdfrajossho,
     workerInfo,workerInfoForm,workerInfoFormPost,workerNum,fetchSubCategory,fetchBiboron,fetchBreed} = require('../controllers/center.controller');
 
@@ -28,6 +28,10 @@ router.post('/signups',centersignuppost);
 router.get('/topSheet',topSheet);
 router.post('/topSheetYear',topSheetYear);
 router.get('/generatePdfTopSheet/:selectedDate',generatePdfTopSheet);
+
+router.get('/topSheetBitoron',topSheetBitoron);
+router.post('/topSheetBitoronYear',topSheetBitoronYear);
+router.get('/generatePdfTopSheetBitoron/:selectedDate',generatePdfTopSheetBitoron);
 
 router.get('/center',center);
 router.get('/centerEdit/:id',centerEdit);

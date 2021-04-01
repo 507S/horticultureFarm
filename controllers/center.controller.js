@@ -444,6 +444,117 @@ module.exports.generatePdfTopSheet = async (req,res) => {
 }
 //topSheet controller end
 
+//topSheetBitoron controller
+module.exports.topSheetBitoron = async (req, res) => {
+  res.render("center/topSheet/bitoron/topSheetBitoron", { title: "টপশীট", success: "" });
+};
+module.exports.topSheetBitoronYear = async (req, res) => {
+  try {
+    const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
+    const selectedDate = req.body.year.toLowerCase();
+    const cropCatg = await cropCategory.findAll({
+      where: { type: "subCategory" },
+    });
+    const topSheets = await monthlyProgress.findAll({
+      where: { center_id: req.session.user_id },
+    });
+
+    if (selectedDate === currentMonth) {
+      res.render(
+          "center/topSheet/bitoron/topSheetBitoronTable",
+          { records: topSheets, cropCatg: cropCatg, selectedDate:selectedDate },
+          function (err, html) {
+            res.send(html);
+          }
+      );
+    } else {
+      res.render(
+          "center/topSheet/bitoron/topSheetBitoronCustomTable",
+          { records: topSheets, cropCatg: cropCatg, selectedDate: selectedDate },
+          function (err, html) {
+            res.send(html);
+          }
+      );
+    }
+
+  } catch (e) {
+    console.log(e);
+  }
+};
+module.exports.generatePdfTopSheetBitoron = async (req,res) => {
+  try {
+    const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
+    const selectedDate = req.params.selectedDate.toLowerCase();
+    const cropCatg = await cropCategory.findAll({
+      where: { type: "subCategory" },
+    });
+    const topSheets = await monthlyProgress.findAll({
+      where: { center_id: req.session.user_id },
+    });
+
+    if (selectedDate === currentMonth) {
+
+      ejs.renderFile(
+          path.join(__dirname, "../views/center/topSheet", "pdf.ejs"),
+          { records: topSheets, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+
+    } else {
+
+      ejs.renderFile(
+          path.join(__dirname, "../views/center/topSheet", "customTablePdf.ejs"),
+          { records: topSheets, cropCatg: cropCatg, selectedDate: selectedDate , moment: res.locals.moment, dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
+//topSheetBitoron controller end
+
 
 //workerInfo controller
 module.exports.workerInfo = async (req, res) => {

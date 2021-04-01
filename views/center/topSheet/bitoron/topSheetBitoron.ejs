@@ -1,54 +1,54 @@
-<%- include('../../includes/header')-%>
+<%- include('../../../includes/header')-%>
 <style>
     .ui-datepicker-calendar {
         display: none;
     }
 </style>
-        <div id="wrapper" class="wrapper" >
-            <%- include('../../includes/topbar')-%>
-            <div class="page-wrap">
-                <%- include('../../includes/sidebar')-%>
-                <div class="main-content">
-                    <div class="container-fluid">
-                        <div class="row clearfix">
-                            <div class="col-md-8"></div>
-                            <div class="col-md-4">
-                                <div class="row">
-                                    <div class="col">
-                                        <input name="startDate" id="startDate" class="date-picker year form-control" placeholder="Date" autocomplete="off"/>
-                                    </div>
-                                    <button class="btn btn-success col" id="search">Search</button>
-                                </div>
+<div id="wrapper" class="wrapper" >
+    <%- include('../../../includes/topbar')-%>
+    <div class="page-wrap">
+        <%- include('../../../includes/sidebar')-%>
+        <div class="main-content">
+            <div class="container-fluid">
+                <div class="row clearfix">
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col">
+                                <input name="startDate" id="startDate" class="date-picker year form-control" placeholder="Date" autocomplete="off"/>
                             </div>
+                            <button class="btn btn-success col" id="search">Search</button>
                         </div>
-                        <h1 class="text-center"><%= title %></h1>
-                        <div class="row mb-2">
-                            <!-- <div class="col-md-12">
-                                <a href="/center/topSheetForm" class="btn btn-success btn-group-sm ">টপশীট</a>
-                            </div> -->
-
-                        </div>
-
-                        <div class="table-responsive" id="output"></div>
-                        <button onclick="exportToPdf()" class="btn btn-success">
-                            Download PDF
-                        </button>
-                        <div id="output"></div>
-        <!--                    <div id="loading" class="loading"><img src="{{ asset('assets/img/icon/loading.gif') }}" alt=""></div>-->
                     </div>
                 </div>
+                <h1 class="text-center"><%= title %></h1>
+                <div class="row mb-2">
+                    <!-- <div class="col-md-12">
+                        <a href="/center/topSheetForm" class="btn btn-success btn-group-sm ">টপশীট</a>
+                    </div> -->
+
+                </div>
+
+                <div class="table-responsive" id="output"></div>
+                <button onclick="exportToPdf()" class="btn btn-success">
+                    Download PDF
+                </button>
+                <div id="output"></div>
+                <!--                    <div id="loading" class="loading"><img src="{{ asset('assets/img/icon/loading.gif') }}" alt=""></div>-->
             </div>
         </div>
+    </div>
+</div>
 
 
-   
-<%- include('../../includes/footer')-%>
+
+<%- include('../../../includes/footer')-%>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
     async function exportToPdf() {
         var year = $('#startDate').val();
         var center = $('#center').val();
-        const { data } = await axios.post(`/center/generatePdftopSheet`,{year: year, center:center});
+        const { data } = await axios.post(`/center/generatePdfTopSheetBitoron`,{year: year, center:center});
         var mywindow = window.open("", "PRINT", "height=400,width=600");
         mywindow.document.write(data.html);
         mywindow.document.close(); // necessary for IE >= 10
@@ -58,19 +58,19 @@
     }
 </script>
 <script>
-        
+
     $(document).ready(function(){
-        
-      $('.dropdown a.test').on("click", function(e){
-        $(this).next('ul').toggle();
-        e.stopPropagation();
-        e.preventDefault();
-      });
+
+        $('.dropdown a.test').on("click", function(e){
+            $(this).next('ul').toggle();
+            e.stopPropagation();
+            e.preventDefault();
+        });
     });
 </script>
 
 <script type="text/javascript">
-   
+
     $("body").on("click", "#btnExport", function () {
         html2canvas($('#tblCustomers')[0], {
             onrendered: function (canvas) {
@@ -92,7 +92,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/center/topSheetYear",
+            url: "/center/topSheetBitoronYear",
             data: {year: year},
             datatype: "json",
             beforeSend: function() {
@@ -116,7 +116,7 @@
         var year = $('.year').val();
         $.ajax({
             type: "POST",
-            url: "/center/topSheetYear",
+            url: "/center/topSheetBitoronYear",
             data: {year: year},
             datatype: "json",
             beforeSend: function() {
@@ -149,6 +149,6 @@
         $('#tblCustomers').DataTable();
     } );
 
-    
+
 
 </script>
