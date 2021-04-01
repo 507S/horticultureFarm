@@ -395,6 +395,66 @@ module.exports.topSheetFilter=async(req,res)=>{
 
 //topSheet controller end
 
+//topSheetBitoron controller
+module.exports.topSheetBitoron = async (req, res) => {
+    await center.findAll()
+        .then(data => {
+            console.log("inside");
+            res.render('pd/topSheet/bitoron/topSheetBitoron', { title: 'টপশীট',success:'', centers: data });
+        })
+        .catch(err => {
+            console.log("outside",err);
+
+        })
+};
+module.exports.topSheetBitoronFilter = async (req, res) => {
+    try{
+        const selectedDate = req.body.year.toLowerCase();
+        var data = []
+        const cropCatg = await cropCategory.findAll({
+            where: {
+                type: 'subCategory'
+            }
+        })
+        if (req.body.center === "all"){
+            const topSheets = await monthlyProgress.findAll()
+            topSheets.map((monthlyProg) => {
+                const timeList = JSON.parse(monthlyProg.timeFrame)
+                timeList.map((eachTime) => {
+                    if (eachTime.time === selectedDate){
+                        data.push(monthlyProg);
+                    }
+                })
+            })
+
+            res.render('pd/topSheet/bitoron/topSheetBitoronTable', {records: data , cropCatg:cropCatg} ,function(err, html) {
+                res.send(html);
+            });
+        }else{
+            const topSheets = await monthlyProgress.findAll({
+                where: {center_id: req.body.center}
+            })
+            topSheets.map((monthlyProg) => {
+                const timeList = JSON.parse(monthlyProg.timeFrame)
+                timeList.map((eachTime) => {
+                    if (eachTime.time === selectedDate){
+                        data.push(monthlyProg);
+                    }
+                })
+            })
+            res.render('pd/topSheet/bitoron/topSheetBitoronTable', {records: data , cropCatg:cropCatg} ,function(err, html) {
+                res.send(html);
+            });
+        }
+
+    }
+    catch (e) {
+        console.log(e);
+    }
+
+};
+//topSheetBitoron controller end
+
 //center controller
 module.exports.center=async(req,res)=>{
     await center.findAll()

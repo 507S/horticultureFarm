@@ -10,7 +10,7 @@ const {apaUddessho,apaMaan,karjokrom,suchok,ekok,suchokMaan,newKhorochCode,newRa
     expenseForm,expenseFormPost,chak1,chak1Filter,chak1Form,chak1FormPost,chak2,chak2Filter,chak2Form,chak2FormPost,revolvingFund,newKhorochCodeForm,
     revolvingFundFilter,revolvingFundForm,revolvingFundFormPost,specialCoconut,specialCoconutFilter,specialCoconutForm,rajosshoEdit,rajosshoEditPost,rajosshoDelete,
     specialCoconutFormPost,loan,loanFilter,loanForm,loanFormPost,apa,apaFilter,apaForm,apaFormPost,allcenter,pdlogin,newRajosshoCodeForm,chak1Delete,chak2Delete,
-    pdloginpost,pdDashboard,topSheet,topSheetFilter,center,centerYear,newPodobiTable,newPodobiEdit,newPodobiEditPost,newPodobiDelete,newPodobi,dashImageDelete,
+    pdloginpost,pdDashboard,topSheet,topSheetFilter,topSheetBitoron,topSheetBitoronFilter,center,centerYear,newPodobiTable,newPodobiEdit,newPodobiEditPost,newPodobiDelete,newPodobi,dashImageDelete,
     charaKolomEdit,charaKolomEditPost,charaKolomDelete,winterVegEdit,winterVegEditPost,winterVegDelete,summerVegEdit,summerVegEditPost,summerVegDelete,generatePdfexpense,
     otherFlowerEdit,otherFlowerEditPost,otherFlowerDelete,seasonalFlowerEdit,seasonalFlowerEditPost,seasonalFlowerDelete,podobiListForm,cropCategoryTable,
     charaKolom,folMoshollaEdit,folMoshollaEditPost,folMoshollaDelete,newcropCategoryList,newcropCategoryListPost,newcropCategoryListEdit,chak1Edit,chak1EditPost,chak2Edit,chak2EditPost,
@@ -41,6 +41,9 @@ router.post('/signups',pdsignuppost);
 
 router.get('/topSheet',topSheet);
 router.post('/topSheetFilter',topSheetFilter);
+
+router.get('/topSheetBitoron',topSheetBitoron);
+router.post('/topSheetBitoronFilter',topSheetBitoronFilter);
 
 router.get('/center',center);
 router.post('/centerYear',centerYear);
