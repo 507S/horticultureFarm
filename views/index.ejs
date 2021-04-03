@@ -182,7 +182,8 @@
 
             <div class="col-block stats__col">
                 <select style="font-size: 2.5rem; background: #39b54a;" class="browser-default custom-select" id="biboron">
-                    <option value="all">বিবরণ বাছুন </option>
+                    <option value="0">বিবরণ বাছুন </option>
+                    <option value="all"> সকল বিবরণ </option>
                     <% biboron.forEach((row) => { %>
                         <option value="<%= row.id %>"> <%= row.name %> </option>
                     <%  }) %>
@@ -191,14 +192,17 @@
 
             <div class="col-block stats__col">
                 <select style="font-size: 2.5rem; background: #39b54a;" class="browser-default custom-select" id="breed">
-                    <option value="all">জাত বাছুন </option>
-
+                    <option value="none">জাত বাছুন </option>
                 </select>
             </div>
 
             <div class="col-block stats__col">
                 <div class="stats__counts" id="totalMojud"><%= new Number(totalProduction - totalBitoron).toLocaleString("bn-BD") %></div>
                 <h5>চারা সংরক্ষণ/মজুদ</h5>
+            </div>
+
+            <div class="col-block stats__col">
+                <button class="btn btn-success" id="search">Search</button>
             </div>
 
         </div> <!-- end about-stats -->
@@ -211,7 +215,6 @@
         <div class="about__line"></div>
 
     </section> <!-- end s-about -->
-
 
     <!-- services
     ================================================== -->
@@ -288,9 +291,6 @@
         </div> <!-- end services-list -->
 
     </section> <!-- end s-services -->
-
-
-
 
     <!-- contact
     ================================================== -->
@@ -393,7 +393,6 @@
 
     </section> <!-- end s-contact -->
 
-
     <!-- footer
     ================================================== -->
     <footer>
@@ -414,7 +413,6 @@
         </div> <!-- end footer-bottom -->
 
     </footer> <!-- end footer -->
-
 
     <!-- photoswipe background
     ================================================== -->
@@ -455,7 +453,6 @@
 
     </div> <!-- end photoSwipe background -->
 
-
     <!-- preloader
     ================================================== -->
     <div id="preloader">
@@ -477,7 +474,7 @@
     <script src="landingPage/js/plugins.js"></script>
     <script src="landingPage/js/main.js"></script>
     <script type="text/javascript">
-        $('#breed').on("change click",function () {
+        $('#search').on("change click",function () {
             var center = $('#center').val();
             var biboron = $('#biboron').val();
             var breed = $('#breed').val();
@@ -518,7 +515,7 @@
                 success: function (data) {
                     $('#breed').empty();
                     if(data){
-                        $('#breed').append('<option value="0"> Choose Breed </option>');
+                        $('#breed').append('<option value="none"> Choose Breed </option>');
                         $.each(data, function(key, value){
                             $('#breed').append('<option value="'+value.id+'">' + value.name + '</option>');
                         });
