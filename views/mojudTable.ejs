@@ -1,0 +1,74 @@
+<%if (records.length >0){ %>
+    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th>সেন্টার নাম</th>
+            <th>চারা সংরক্ষণ/মজুদ</th>
+        </tr>
+        </thead>
+        <tbody>
+                <%
+                    var startRange = "";
+                    var endRange = "";
+                    if ( moment().format("M") < 7){
+                        startRange = "jul"+"-"+moment().subtract(1, "year").format('yyyy')
+                        endRange = "jul"+"-"+moment().format('yyyy')
+                    }else{
+                        startRange = "jul"+"-"+moment().format('yyyy')
+                        endRange = "jul"+"-"+moment().add(1, "year").format('yyyy')
+                    }
+
+                    var totalProduct = 0;
+                    var totalBitoron = 0;
+                    var totalMojud = 0;
+                    var center_name = ""
+                %>
+                <%
+                    records.forEach((row) => {
+                        centerList.forEach(center => {
+                                if (row.center_id === center.id){
+                                    center_name = center.center
+                                    const productTotalParse = JSON.parse(row.productionTotal);
+                                    const bitoronParse = JSON.parse(row.bitoronTotal);
+                                    // const mojudParse = JSON.parse(row.mojud);
+
+                                    productTotalParse.forEach((prodTotal)=> {
+                                        if (prodTotal.startTime === startRange && prodTotal.endTime === endRange){
+                                            totalProduct += parseInt(prodTotal.amount)
+                                        }
+                                    })
+                                    bitoronParse.forEach((bitorTotal) => {
+                                        if (bitorTotal.startTime === startRange && bitorTotal.endTime === endRange){
+                                            totalBitoron += parseInt(bitorTotal.amount)
+                                        }
+                                    })
+                                }
+                        })
+                %>
+            <tr>
+                <td> <%= center_name %></td>
+                <td><%= new Number(totalProduct - totalBitoron).toLocaleString("bn-BD") %></td>
+            </tr>
+            <%
+                });
+            %>
+        </tbody>
+    </table>
+
+<% }else{ %>
+    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th>সেন্টার নাম</th>
+            <th>চারা সংরক্ষণ/মজুদ</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% records.forEach(function(row){ %>
+            <tr>
+                <td colspan="10">No data Found</td>
+            </tr>
+        <% }) %>
+        </tbody>
+    </table>
+<% } %>

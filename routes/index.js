@@ -251,4 +251,33 @@ router.post('/findMojud', async(req,res) => {
     res.json({title: 'Horticulture',totalProduction: totalProduct, totalBitoron: totalBitoron,totalrajossho:totalrajossho })
 })
 
+router.post('/findMojudwithCenter', async (req,res) => {
+    var monthly_progress = [];
+    const biboron = await cropcategory.findByPk(req.body.biboron);
+    const breed = await cropcategory.findByPk(req.body.breed);
+    const centerList = await center.findAll({});
+
+    monthly_progress = await monthlyProgress.findAll({
+        where:{
+            biboron : biboron.name,
+            breed : breed.name
+        }
+    });
+
+    res.render(
+        "mojudTable",
+        { records: monthly_progress,centerList },
+        function (err, html) {
+            if (err) {
+                console.log(err)
+            }else{
+                res.send(html);
+            }
+
+        }
+    );
+
+
+})
+
 module.exports = router;

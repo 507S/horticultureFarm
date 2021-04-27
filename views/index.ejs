@@ -172,12 +172,12 @@
             
 
             <div class="col-block stats__col">
-                <select style="font-size: 2.5rem; background: #39b54a;" class="browser-default custom-select" id="center">
-                    <option value="all">সব  সেন্টার</option>
-                    <% center.forEach((row) => { %>
-                        <option value="<%= row.id %>"> <%= row.center %> </option>
-                    <%  }) %>
-                  </select>
+<!--                <select style="font-size: 2.5rem; background: #39b54a;" class="browser-default custom-select" id="center">-->
+<!--                    <option value="all">সব  সেন্টার</option>-->
+<!--                    <% center.forEach((row) => { %>-->
+<!--                        <option value="<%= row.id %>"> <%= row.center %> </option>-->
+<!--                    <%  }) %>-->
+<!--                </select>-->
             </div>
 
             <div class="col-block stats__col">
@@ -197,15 +197,21 @@
             </div>
 
             <div class="col-block stats__col">
-                <div class="stats__counts" id="totalMojud"><%= new Number(totalProduction - totalBitoron).toLocaleString("bn-BD") %></div>
-                <h5>চারা সংরক্ষণ/মজুদ</h5>
+<!--                <div class="stats__counts" id="totalMojud"><%= new Number(totalProduction - totalBitoron).toLocaleString("bn-BD") %></div>-->
+<!--                <h5>চারা সংরক্ষণ/মজুদ</h5>-->
             </div>
 
-            <div class="col-block stats__col">
+        </div>
+        <div class="row">
+            <div class="text-center">
                 <button class="btn btn-success" id="search">Search</button>
             </div>
+        </div>
 
-        </div> <!-- end about-stats -->
+        <div class="row">
+            <div id="output"></div>
+        </div>
+        <!-- end about-stats -->
         <p style="text-align:center" class=" home-content__buttons">
 
         </p>
@@ -480,7 +486,7 @@
             var breed = $('#breed').val();
             $.ajax({
                 type: "POST",
-                url: "/findMojud",
+                url: "/findMojudwithCenter",
                 data: {center: center,biboron:biboron, breed:breed},
                 datatype: "json",
                 beforeSend: function() {
@@ -491,7 +497,7 @@
                 success: function (data) {
                     // $('#totalProduction').html(new Number(data.totalProduction).toLocaleString("bn-BD"));
                     // $('#totalBitoron').html(new Number(data.totalBitoron).toLocaleString("bn-BD"));
-                    $('#totalMojud').html(new Number(data.totalProduction - data.totalBitoron).toLocaleString("bn-BD"));
+                    $('#output').html(data);
                 },
                 complete: function() {
                     $('#loading').hide();
