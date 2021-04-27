@@ -183,7 +183,6 @@
             <div class="col-block stats__col">
                 <select style="font-size: 2.5rem; background: #39b54a;" class="browser-default custom-select" id="biboron">
                     <option value="0">বিবরণ বাছুন </option>
-                    <option value="all"> সকল বিবরণ </option>
                     <% biboron.forEach((row) => { %>
                         <option value="<%= row.id %>"> <%= row.name %> </option>
                     <%  }) %>
