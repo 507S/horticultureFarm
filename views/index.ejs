@@ -60,10 +60,13 @@
                 
                 <ul class="header-nav__list">
                     <li class="current"><a class="smoothscroll"  href="#home" title="home">হোম</a></li>
-                    <li><a class="smoothscroll"  href="#about" title="about">চারা কলম তালিকা</a></li>
                     <li><a class="smoothscroll"  href="#services" title="services">আমাদের সম্পর্কে</a></li>
-                    <li><a class=""  href="/center/allCenterInfo" title="contact">যোগাযোগ</a></li>
                     <li><a class=""  href="/center/charaKolomFixed" title="contact">চারা কলমের মূল্য তালিকা</a></li>
+                    <li><a class="smoothscroll"  href="#about" title="about">চারা কলমের মজুদ</a></li>
+                    
+                    <li><a class=""  href="/center/allCenterInfo" title="contact">সেন্টারের যোগাযোগ তথ্য</a></li>
+                    <li><a class="smoothscroll"  href="#contact" title="contact">প্রধান কার্যালয়ের যোগাযোগ তথ্য</a></li>
+                    
                 </ul>
 
             </div> <!-- end header-nav__content -->
@@ -75,7 +78,7 @@
             <span class="header-menu-text">মেন্যু</span>
             <span class="header-menu-icon"></span>
         </a>
-        <a href="/center/login" class="btn btn-primary mt-5" style="margin: 20px;background: #42d055;color: white;">
+        <a href="/center/login"  class=" btn btn-primary mt-5" style="position: fixed;top: 0;margin: 20px;background: #42d055;color: white;">
             Login
         </a>
 
@@ -169,17 +172,17 @@
             
 
             <div class="col-block stats__col">
-                <select style="font-size: 2.5rem; background: #39b54a;" class="browser-default custom-select" id="center">
-                    <option value="all">সব  সেন্টার</option>
-                    <% center.forEach((row) => { %>
-                        <option value="<%= row.id %>"> <%= row.center %> </option>
-                    <%  }) %>
-                  </select>
+<!--                <select style="font-size: 2.5rem; background: #39b54a;" class="browser-default custom-select" id="center">-->
+<!--                    <option value="all">সব  সেন্টার</option>-->
+<!--                    <% center.forEach((row) => { %>-->
+<!--                        <option value="<%= row.id %>"> <%= row.center %> </option>-->
+<!--                    <%  }) %>-->
+<!--                </select>-->
             </div>
 
             <div class="col-block stats__col">
                 <select style="font-size: 2.5rem; background: #39b54a;" class="browser-default custom-select" id="biboron">
-                    <option value="all">বিবরণ বাছুন </option>
+                    <option value="0">বিবরণ বাছুন </option>
                     <% biboron.forEach((row) => { %>
                         <option value="<%= row.id %>"> <%= row.name %> </option>
                     <%  }) %>
@@ -188,17 +191,26 @@
 
             <div class="col-block stats__col">
                 <select style="font-size: 2.5rem; background: #39b54a;" class="browser-default custom-select" id="breed">
-                    <option value="all">জাত বাছুন </option>
-
+                    <option value="none">জাত বাছুন </option>
                 </select>
             </div>
 
             <div class="col-block stats__col">
-                <div class="stats__counts" id="totalMojud"><%= new Number(totalProduction - totalBitoron).toLocaleString("bn-BD") %></div>
-                <h5>চারা সংরক্ষণ/মজুদ</h5>
+<!--                <div class="stats__counts" id="totalMojud"><%= new Number(totalProduction - totalBitoron).toLocaleString("bn-BD") %></div>-->
+<!--                <h5>চারা সংরক্ষণ/মজুদ</h5>-->
             </div>
 
-        </div> <!-- end about-stats -->
+        </div>
+        <div class="row">
+            <div class="text-center">
+                <button class="btn btn-success" id="search">Search</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div id="output"></div>
+        </div>
+        <!-- end about-stats -->
         <p style="text-align:center" class=" home-content__buttons">
 
         </p>
@@ -208,7 +220,6 @@
         <div class="about__line"></div>
 
     </section> <!-- end s-about -->
-
 
     <!-- services
     ================================================== -->
@@ -285,9 +296,6 @@
         </div> <!-- end services-list -->
 
     </section> <!-- end s-services -->
-
-
-
 
     <!-- contact
     ================================================== -->
@@ -390,7 +398,6 @@
 
     </section> <!-- end s-contact -->
 
-
     <!-- footer
     ================================================== -->
     <footer>
@@ -411,7 +418,6 @@
         </div> <!-- end footer-bottom -->
 
     </footer> <!-- end footer -->
-
 
     <!-- photoswipe background
     ================================================== -->
@@ -452,7 +458,6 @@
 
     </div> <!-- end photoSwipe background -->
 
-
     <!-- preloader
     ================================================== -->
     <div id="preloader">
@@ -474,13 +479,13 @@
     <script src="landingPage/js/plugins.js"></script>
     <script src="landingPage/js/main.js"></script>
     <script type="text/javascript">
-        $('#breed').on("change click",function () {
+        $('#search').on("change click",function () {
             var center = $('#center').val();
             var biboron = $('#biboron').val();
             var breed = $('#breed').val();
             $.ajax({
                 type: "POST",
-                url: "/findMojud",
+                url: "/findMojudwithCenter",
                 data: {center: center,biboron:biboron, breed:breed},
                 datatype: "json",
                 beforeSend: function() {
@@ -491,7 +496,7 @@
                 success: function (data) {
                     // $('#totalProduction').html(new Number(data.totalProduction).toLocaleString("bn-BD"));
                     // $('#totalBitoron').html(new Number(data.totalBitoron).toLocaleString("bn-BD"));
-                    $('#totalMojud').html(new Number(data.totalProduction - data.totalBitoron).toLocaleString("bn-BD"));
+                    $('#output').html(data);
                 },
                 complete: function() {
                     $('#loading').hide();
@@ -515,7 +520,7 @@
                 success: function (data) {
                     $('#breed').empty();
                     if(data){
-                        $('#breed').append('<option value="0"> Choose Breed </option>');
+                        $('#breed').append('<option value="none"> Choose Breed </option>');
                         $.each(data, function(key, value){
                             $('#breed').append('<option value="'+value.id+'">' + value.name + '</option>');
                         });

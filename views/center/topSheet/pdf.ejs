@@ -30,10 +30,9 @@
 
 <div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
     <div>
-        <h1>মাসিক প্রতিবেদন</h1>
-        <p><b>সেন্টারের নাম :</b><%= centerName.center %></p>
+        <h1>টপশীট</h1>
         <%if (records.length >0){ %>
-            <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
+            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
                 <thead>
                 <tr>
                     <th>আইটেমের নাম</th>
@@ -52,10 +51,10 @@
                         var previousMonthProduction = 0;
                         var totalProduction = 0;
                         var productionTargetSum = 0;
-        
+
                         var startRange = "";
                         var endRange = "";
-        
+
                         if (moment().format("M") < 7){
                             startRange = "jul"+"-"+moment().subtract(1, "year").format('yyyy')
                             endRange = "jul"+"-"+moment().format('yyyy')
@@ -63,22 +62,22 @@
                             startRange = "jul"+"-"+moment().format('yyyy')
                             endRange = "jul"+"-"+moment().add(1, "year").format('yyyy')
                         }
-        
+
                         records.forEach((monthProg) => {
                             if (monthProg.subCategory === row.name){
-        
+
                                 // উৎপাদন (লক্ষ্যমাত্রা) *********
-        
+
                                 const TargetProduction = JSON.parse(monthProg.productionTarget)
                                 TargetProduction.forEach(function(prodTarget){
                                     if ( moment(currentMonth).isAfter(prodTarget.startTime) &&  moment(currentMonth).isBefore(prodTarget.endTime) ){
                                         productionTargetSum += parseInt(prodTarget.amount)
                                     }
                                 })
-        
+
                                 // total lokkhomatra in this economic year
                                 totalProductionTarget += parseInt(monthProg.productionTarget)
-        
+
                                 //total purbo month porjonto production
                                 const currentProd = JSON.parse(monthProg.productionCurrent)
                                 currentProd.forEach(function(prodCurrent){
@@ -90,7 +89,6 @@
                                     }
                                 })
                             }
-        
                         })
                     %>
                     <tr>

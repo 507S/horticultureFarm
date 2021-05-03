@@ -13,10 +13,6 @@ module.exports = (sequelize, Sequelize) => {
       },
       cholti: {
         type: Sequelize.STRING
-      },
-      
-      year: {
-        type: Sequelize.STRING
       }
     });
   

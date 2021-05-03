@@ -1,0 +1,96 @@
+<%if (records.length >0){ %>
+    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+    <thead>
+    <tr>
+        <th>কোড নং</th>
+            <th>খাতের নাম</th>
+            <th>চলতি অর্থ বছরের প্রাপ্ত বরাদ্দ</th>
+            <th>জুলাই</th>
+            <th>আগস্ট</th>
+            <th>সেপ্টে</th>
+            <th>অক্টো</th>
+            <th>নভে</th>
+            <th>ডিসে</th>
+            <th>জানু</th>
+            <th>ফেব্রু</th>
+            <th>মার্চ</th>
+            <th>এপ্রিল</th>
+            <th>মে</th>
+            <th>জুন</th>
+            <th>মোট খরচ</th>
+            <th>অবশিষ্ট</th>
+            <th>মন্তব্য অতিরিক্ত খরচ বেতন</th>
+            <th>যোগ করুন</th>
+    </tr>
+    </thead>
+    <tbody>
+        <% console.log(codes) %>
+        <% codes.forEach(function(rows){ %>
+            <tr>
+                <td><%= rows.code %></td>
+                <td><%= rows.khat %></td>
+                <% console.log("code dekhi",rows.code) %>
+                    <% records.forEach(function(row){ %>
+                        <% console.log("code dekhi",rows.code,row.code) %>
+                        <% if(rows.code==row.code){ %>
+                            <% console.log("code dekhi",rows.code,row.code) %>
+                        <td><%= row.boraddo %></td>
+                        <td><%= row.july1 %></td>
+                        <td><%= row.august1 %></td>
+                        <td><%= row.sept1 %></td>
+                        <td><%= row.oct1 %></td>
+                        <td><%= row.nov1 %></td>
+                        <td><%= row.dec1 %></td>
+                        <td><%= row.jan2 %></td>
+                        <td><%= row.feb2 %></td>
+                        <td><%= row.march2 %></td>
+                        <td><%= row.apr2 %></td>
+                        <td><%= row.may2 %></td>
+                        <td><%= row.june2 %></td>
+                        <td><%= row.total %></td>
+                        <td><%= row.baki %></td>
+                        <td><%= row.comment %></td>
+                        <td><a class="btn btn-primary btn-xs" href="/center/expenseAdd/<%= row.id %>"><i class="fa fa-plus"></i></a></td>
+                        <% }else{ %>
+                        <% }) %>
+                <% }) %>
+               
+                
+                
+            </tr>
+        <% }) %>
+    </tbody>
+</table>
+<% }else{ %>
+    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th>কোড নং</th>
+            <th>খাতের নাম</th>
+            <th>চলতি অর্থ বছরের প্রাপ্ত বরাদ্দ</th>
+            <th>জুলাই</th>
+            <th>আগস্ট</th>
+            <th>সেপ্টে</th>
+            <th>অক্টো</th>
+            <th>নভে</th>
+            <th>ডিসে</th>
+            <th>জানু</th>
+            <th>ফেব্রু</th>
+            <th>মার্চ</th>
+            <th>এপ্রিল</th>
+            <th>মে</th>
+            <th>জুন</th>
+            <th>মোট খরচ</th>
+            <th>অবশিষ্ট</th>
+            <th>মন্তব্য অতিরিক্ত খরচ বেতন</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% records.forEach(function(row){ %>
+            <tr>
+                <td colspan="10">No data Found</td>
+            </tr>
+        <% }) %>
+        </tbody>
+    </table>
+<% } %>

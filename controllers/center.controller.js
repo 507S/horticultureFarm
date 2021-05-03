@@ -52,7 +52,6 @@ module.exports.charaKolomFixed = async (req, res) => {
     const otherFlowers = await otherFlower.findAll();
     const seasonalFlowers = await seasonalFlower.findAll();
     const summerVegs = await summerVeg.findAll();
-    console.log("inside");
     res.render("charaKolomFixed", {
       title: "হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য",
       success: "",
@@ -64,7 +63,6 @@ module.exports.charaKolomFixed = async (req, res) => {
       record6: seasonalFlowers,
     });
   } catch (err) {
-    console.log("outside");
     res.render("charaKolomFixed", {
       title: "হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য",
       success: "",
@@ -97,7 +95,6 @@ module.exports.centerloginpost = async (req, res) => {
               req.session.type = "center";
               req.session.user_id = data[0].id;
               const id = req.session.user_id;
-              console.log("session=", req.session.type, res.locals);
               res.redirect("/center/dashboard");
             } else {
               return res.status(200).render("center/login", {
@@ -204,7 +201,6 @@ module.exports.allCenterInfo = async (req, res) => {
   await center
     .findAll()
     .then((data) => {
-      console.log(data);
       res.render("allCenterInfo", {
         title: "সেন্টারের যোগাযোগ তথ্য",
         success: "",
@@ -212,12 +208,7 @@ module.exports.allCenterInfo = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
-      res.render("allCenterInfo", {
-        title: "সেন্টারের যোগাযোগ তথ্য",
-        success: "",
-        records: err,
-      });
+      console.log(err);
     });
 };
 
@@ -252,7 +243,6 @@ module.exports.centersignuppost = async (req, res) => {
       // var mobiles= mobile;
       // var emails=email;
       const hashedPassword = await bcrypt.hash(password, 10);
-      console.log(hashedPassword);
       try {
         const createCenter = await center.create({
           uname: uname,
@@ -281,7 +271,6 @@ module.exports.center = async (req, res) => {
       where: { id: req.session.user_id },
     })
     .then((data) => {
-      console.log("inside", data);
       res.render("center/centerInfo/center", {
         title: "সেন্টারের যোগাযোগ তথ্য",
         success: "",
@@ -290,11 +279,6 @@ module.exports.center = async (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.render("center/centerInfo/center", {
-        title: "সেন্টারের যোগাযোগ তথ্য",
-        success: "",
-        records: err,
-      });
     });
 
   //  records:result
@@ -303,7 +287,6 @@ module.exports.centerEdit = async (req, res) => {
   await center
     .findByPk(req.params.id)
     .then((data) => {
-      console.log("inside");
       res.render("center/centerInfo/centerEdit", {
         title: "সেন্টারের যোগাযোগ তথ্য ফর্ম",
         msg: "",
@@ -312,12 +295,7 @@ module.exports.centerEdit = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
-      res.render("center/centerInfo/centerEdit", {
-        title: "সেন্টারের যোগাযোগ তথ্য ফর্ম",
-        success: "",
-        records: err,
-      });
+      console.log(err);
     });
 };
 module.exports.centerEditPost = async (req, res) => {
@@ -359,7 +337,6 @@ module.exports.centerDelete = async (req, res) => {
 module.exports.topSheet = async (req, res) => {
   res.render("center/topSheet/topSheet", { title: "টপশীট", success: "" });
 };
-
 module.exports.topSheetYear = async (req, res) => {
   try {
     const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
@@ -374,7 +351,7 @@ module.exports.topSheetYear = async (req, res) => {
     if (selectedDate === currentMonth) {
       res.render(
         "center/topSheet/topSheetTable",
-        { records: topSheets, cropCatg: cropCatg },
+        { records: topSheets, cropCatg: cropCatg, selectedDate:selectedDate },
         function (err, html) {
           res.send(html);
         }
@@ -388,28 +365,32 @@ module.exports.topSheetYear = async (req, res) => {
         }
       );
     }
+
   } catch (e) {
     console.log(e);
   }
 };
-module.exports.generatePdftopSheet = async (req, res) => {
+module.exports.generatePdfTopSheet = async (req,res) => {
   try {
-    var centerNames= await center.findOne({
-      where: { id: req.session.user_id },
-    })
-  var data= await expense.findAll({
-      where: { year: req.body.year, center_id: req.session.user_id },
-    })
+    const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
+    const selectedDate = req.params.selectedDate.toLowerCase();
+    const cropCatg = await cropCategory.findAll({
+      where: { type: "subCategory" },
+    });
+    const topSheets = await monthlyProgress.findAll({
+      where: { center_id: req.session.user_id },
+    });
+
+    if (selectedDate === currentMonth) {
+
       ejs.renderFile(
-          path.join(__dirname, "../views/center/expense/", "pdf.ejs"),
-          { records: data,centerName:centerNames,dirname: __dirname },
+          path.join(__dirname, "../views/center/topSheet", "pdf.ejs"),
+          { records: topSheets, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
           (err, data) => {
             if (err) {
-              console.log("error", err);
               res.send(err);
             } else {
               var assesPath = path.join(__dirname, "../public/");
-              // console.log(assesPath);
               assesPath = assesPath.replace(new RegExp(/\\/g), "/");
 
               var options = {
@@ -427,14 +408,152 @@ module.exports.generatePdftopSheet = async (req, res) => {
             }
           }
       )
-    
-    
+
+    } else {
+
+      ejs.renderFile(
+          path.join(__dirname, "../views/center/topSheet", "customTablePdf.ejs"),
+          { records: topSheets, cropCatg: cropCatg, selectedDate: selectedDate , moment: res.locals.moment, dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+
+    }
   } catch (e) {
     console.log(e);
   }
-
-};
+}
 //topSheet controller end
+
+//topSheetBitoron controller
+module.exports.topSheetBitoron = async (req, res) => {
+  res.render("center/topSheet/bitoron/topSheetBitoron", { title: "টপশীট", success: "" });
+};
+module.exports.topSheetBitoronYear = async (req, res) => {
+  try {
+    const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
+    const selectedDate = req.body.year.toLowerCase();
+    const cropCatg = await cropCategory.findAll({
+      where: { type: "subCategory" },
+    });
+    const topSheets = await monthlyProgress.findAll({
+      where: { center_id: req.session.user_id },
+    });
+
+    if (selectedDate === currentMonth) {
+      res.render(
+          "center/topSheet/bitoron/topSheetBitoronTable",
+          { records: topSheets, cropCatg: cropCatg, selectedDate:selectedDate },
+          function (err, html) {
+            res.send(html);
+          }
+      );
+    } else {
+      res.render(
+          "center/topSheet/bitoron/topSheetBitoronCustomTable",
+          { records: topSheets, cropCatg: cropCatg, selectedDate: selectedDate },
+          function (err, html) {
+            res.send(html);
+          }
+      );
+    }
+
+  } catch (e) {
+    console.log(e);
+  }
+};
+module.exports.generatePdfTopSheetBitoron = async (req,res) => {
+  try {
+    const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
+    const selectedDate = req.params.selectedDate.toLowerCase();
+    const cropCatg = await cropCategory.findAll({
+      where: { type: "subCategory" },
+    });
+    const topSheets = await monthlyProgress.findAll({
+      where: { center_id: req.session.user_id },
+    });
+
+    if (selectedDate === currentMonth) {
+
+      ejs.renderFile(
+          path.join(__dirname, "../views/center/topSheet", "pdf.ejs"),
+          { records: topSheets, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+
+    } else {
+
+      ejs.renderFile(
+          path.join(__dirname, "../views/center/topSheet", "customTablePdf.ejs"),
+          { records: topSheets, cropCatg: cropCatg, selectedDate: selectedDate , moment: res.locals.moment, dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
+//topSheetBitoron controller end
 
 
 //workerInfo controller
@@ -451,34 +570,30 @@ module.exports.workerInfo = async (req, res) => {
       });
     })
     .catch((err) => {
-      res.render("center/worker/workerInfo/workerInfo", {
-        title: "শ্রমিকদের তথ্য",
-        success: "",
-        records: err,
-      });
+      console.log(err);
     });
 
   //  records:result
 };
 
-module.exports.workerInfoYear = async (req, res) => {
-  await workerInfo
-    .findAll({
-      where: { year: req.body.year, month: req.body.month,center_id: req.session.user_id },
-    })
-    .then((data) => {
-      res.render(
-        "center/worker/workerInfo/workerInfoTable",
-        { records: data },
-        function (err, html) {
-          res.send(html);
-        }
-      );
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
+// module.exports.workerInfoYear = async (req, res) => {
+//   await workerInfo
+//     .findAll({
+//       where: { center_id: req.session.user_id },
+//     })
+//     .then((data) => {
+//       res.render(
+//         "center/worker/workerInfo/workerInfoTable",
+//         { records: data },
+//         function (err, html) {
+//           res.send(html);
+//         }
+//       );
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
 
 module.exports.workerInfoForm = async (req, res) => {
   res.render("center/worker/workerInfo/workerInfoForm", {
@@ -488,7 +603,6 @@ module.exports.workerInfoForm = async (req, res) => {
     user_id: req.session.user_id,
   });
 };
-
 module.exports.workerInfoFormPost = async (req, res) => {
   var podobi = req.body.podobi;
   var name = req.body.name;
@@ -498,8 +612,7 @@ module.exports.workerInfoFormPost = async (req, res) => {
   var date = req.body.date;
   var nid = req.body.nid;
   var bank = req.body.bank;
-  var month = req.body.month;
-  var year = req.body.year;
+
   var user_id = req.body.user_id;
   if (podobi === "নিয়মিত") {
     var regularWorker = 1;
@@ -509,7 +622,6 @@ module.exports.workerInfoFormPost = async (req, res) => {
     var regularWorker = 0;
     var irregularWorker = 1;
   }
-  console.log("regularWorker,irregularWorker", regularWorker, irregularWorker);
   await workerInfo
     .create({
       podobi: podobi,
@@ -520,10 +632,8 @@ module.exports.workerInfoFormPost = async (req, res) => {
       date: date,
       nid: nid,
       bank: bank,
-      month: month,
       regularWorker: regularWorker,
       irregularWorker: irregularWorker,
-      year: year,
       center_id: user_id,
     })
     .then((data) => {
@@ -531,13 +641,11 @@ module.exports.workerInfoFormPost = async (req, res) => {
       res.redirect("/center/workerInfoForm");
     })
     .catch((err) => {
-      res.render("errorpage", err);
-    });
+console.log(err);    });
 };
 module.exports.workerInfoEdit=async(req,res)=>{
   await workerInfo.findByPk(req.params.id)
   .then(data => {
-      console.log("inside");
       res.render('center/worker/workerInfo/workerInfoEdit', { title: 'শ্রমিকদের তথ্য',msg:'' ,success:'',records: data});
   })
   .catch(err => {
@@ -555,8 +663,6 @@ module.exports.workerInfoEditPost=async(req,res)=>{
   var presentDate = req.body.presentDate;
   var pastWorkstation = req.body.pastWorkstation;
   var comment = req.body.comment;
-  var month = req.body.month;
-  var year = req.body.year;
   var user_id = req.body.user_id;
   await workerInfo.update({ 
     center: center,
@@ -569,8 +675,6 @@ module.exports.workerInfoEditPost=async(req,res)=>{
     presentDate: presentDate,
     pastWorkstation: pastWorkstation,
     comment: comment,
-    month: month,
-    year: year,
   },
   {
       where: {id: req.params.id}
@@ -598,7 +702,7 @@ module.exports.generatePdfworkerInfo = async (req, res) => {
     })
    var data= await workerInfo
     .findAll({
-      where: { year: req.body.year, month: req.body.month,center_id: req.session.user_id },
+      where: {center_id: req.session.user_id },
     })
       ejs.renderFile(
           path.join(__dirname, "../views/center/worker/workerInfo", "pdf.ejs"),
@@ -638,22 +742,14 @@ module.exports.generatePdfworkerInfo = async (req, res) => {
 
 //workerNum controller
 module.exports.workerNum = async (req, res) => {
-  res.render("center/worker/workerNum/workerNum", {
-    title: "শ্রমিকদের সংখ্যা",
-    success: "",
-  });
-};
-module.exports.workerNumYear = async (req, res) => {
   await workerInfo
     .findAll({
       where: {
         center_id: req.session.user_id,
-        year: req.body.year,
-        month: req.body.month,
+
       },
     })
     .then((data) => {
-      console.log("inside");
       var reg = 0;
       var irreg = 0;
       data.forEach(function (row) {
@@ -668,7 +764,7 @@ module.exports.workerNumYear = async (req, res) => {
       });
       var total;
       total = reg + irreg;
-      res.render("center/worker/workerNum/workerNumTable", {
+      res.render("center/worker/workerNum/workerNum", {
         title: "শ্রমিকদের সংখ্যা",
         success: "",
         totals: total,
@@ -678,12 +774,7 @@ module.exports.workerNumYear = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
-      res.render("center/worker/workerNum/workerNumYear", {
-        title: "শ্রমিকদের সংখ্যা",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
     });
 
   //  records:result
@@ -693,7 +784,7 @@ module.exports.generatePdfworkerNum  = async (req, res) => {
     var centerNames= await center.findOne({
       where: { id: req.session.user_id },
     })
-    var data=await workerInfo.findAll({where: {center_id: req.session.user_id,year: req.body.year,month: req.body.month},})
+    var data=await workerInfo.findAll({where: {center_id: req.session.user_id},})
       var reg = 0;
       var irreg = 0;
       data.forEach(function (row) {
@@ -750,7 +841,6 @@ module.exports.apa = async (req, res) => {
       where: { center_id: req.session.user_id },
     })
     .then((data) => {
-      console.log("inside");
       res.render("center/apa/apa", {
         title: "এপিএ",
         success: "",
@@ -758,17 +848,11 @@ module.exports.apa = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
-      res.render("center/apa/apa", {
-        title: "এপিএ",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
     });
 
   //  records:result
 };
-
 module.exports.apaYear = async (req, res) => {
   await apa
     .findAll({
@@ -784,14 +868,9 @@ module.exports.apaYear = async (req, res) => {
       );
     })
     .catch((err) => {
-      res.render("center/apa/apaYear", {
-        title: "এপিএ",
-        success: "",
-        records: err,
-      });
+      console.log(err);
     });
 };
-
 module.exports.apaForm = async (req, res) => {
   try {
     const apaCodes = await apaCode.findAll();
@@ -806,7 +885,6 @@ module.exports.apaForm = async (req, res) => {
     console.log(e);
   }
 };
-
 module.exports.apaFormPost = async (req, res) => {
   var uddessho = req.body.uddessho;
   var maan = req.body.maan;
@@ -829,16 +907,7 @@ module.exports.apaFormPost = async (req, res) => {
   var total = totals.toFixed(2);
   var percentages = (total / best) * 100;
   var percentage = percentages.toFixed(2);
-  console.log(
-    "best,firstThree,secondThree,thirdThree,fourthThree,total,percentage",
-    best,
-    firstThree,
-    secondThree,
-    thirdThree,
-    fourthThree,
-    total,
-    percentage
-  );
+
   const uddesshoName = await apaCode.findByPk(uddessho);
   const maanName = await apaCode.findByPk(maan);
   const workName = await apaCode.findByPk(work);
@@ -877,7 +946,6 @@ module.exports.apaFormPost = async (req, res) => {
     });
 };
 module.exports.fetchMaan = async (req, res) => {
-  console.log("parent id", req.body.uddessho);
   await apaCode
     .findAll({
       where: { parent_id: req.body.uddessho },
@@ -889,7 +957,6 @@ module.exports.fetchMaan = async (req, res) => {
       console.log(err);
     });
 };
-
 module.exports.fetchWork = async (req, res) => {
   await apaCode
     .findAll({
@@ -902,7 +969,6 @@ module.exports.fetchWork = async (req, res) => {
       console.log(err);
     });
 };
-
 module.exports.fetchShuchok = async (req, res) => {
   await apaCode
     .findAll({
@@ -927,7 +993,6 @@ module.exports.fetchEkok = async (req, res) => {
       console.log(err);
     });
 };
-
 module.exports.fetchShuchokMaan = async (req, res) => {
   await apaCode
     .findAll({
@@ -991,7 +1056,6 @@ module.exports.loan = async (req, res) => {
       where: { center_id: req.session.user_id },
     })
     .then((data) => {
-      console.log("inside");
       res.render("center/loan/loan", {
         title: "ঋণ বিতরণ ও আদায় এর অগ্রগতির প্রতিবেদন",
         success: "",
@@ -999,17 +1063,11 @@ module.exports.loan = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
-      res.render("center/loan/loan", {
-        title: "ঋণ বিতরণ ও আদায় এর অগ্রগতির প্রতিবেদন",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
     });
 
   //  records:result
 };
-
 module.exports.loanYear = async (req, res) => {
   await loan
     .findAll({
@@ -1025,14 +1083,9 @@ module.exports.loanYear = async (req, res) => {
       );
     })
     .catch((err) => {
-      res.render("center/loan/loanYear", {
-        title: "ঋণ বিতরণ ও আদায় এর অগ্রগতির প্রতিবেদন",
-        success: "",
-        records: err,
-      });
+      console.log(err);
     });
 };
-
 module.exports.loanForm = async (req, res) => {
   res.render("center/loan/loanForm", {
     title: "ঋণ বিতরণ ও আদায় এর অগ্রগতির প্রতিবেদন",
@@ -1041,7 +1094,6 @@ module.exports.loanForm = async (req, res) => {
     user_id: req.session.user_id,
   });
 };
-
 module.exports.loanFormPost = async (req, res) => {
   var boraddo = req.body.boraddo;
   var bitoron1 = req.body.bitoron1;
@@ -1126,7 +1178,6 @@ module.exports.specialCoconut = async (req, res) => {
       where: { center_id: req.session.user_id },
     })
     .then((data) => {
-      console.log("inside");
       res.render("center/specialCoconut/specialCoconut", {
         title: "বিশেষ নারিকেল কর্মসূচি",
         success: "",
@@ -1134,17 +1185,11 @@ module.exports.specialCoconut = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
-      res.render("center/specialCoconut/specialCoconut", {
-        title: "বিশেষ নারিকেল কর্মসূচি",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
     });
 
   //  records:result
 };
-
 module.exports.specialCoconutYear = async (req, res) => {
   await specialCoconut
     .findAll({
@@ -1160,14 +1205,9 @@ module.exports.specialCoconutYear = async (req, res) => {
       );
     })
     .catch((err) => {
-      res.render("center/specialCoconut/specialCoconutYear", {
-        title: "বিশেষ নারিকেল কর্মসূচি",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
     });
 };
-
 module.exports.specialCoconutForm = async (req, res) => {
   res.render("center/specialCoconut/specialCoconutForm", {
     title: "বিশেষ নারিকেল কর্মসূচি",
@@ -1176,7 +1216,6 @@ module.exports.specialCoconutForm = async (req, res) => {
     user_id: req.session.user_id,
   });
 };
-
 module.exports.specialCoconutFormPost = async (req, res) => {
   var center = req.body.center;
   var boraddo = req.body.boraddo;
@@ -1281,7 +1320,6 @@ module.exports.revolvingFund = async (req, res) => {
       where: { center_id: req.session.user_id },
     })
     .then((data) => {
-      console.log("inside");
       res.render("center/revolvingFund/revolvingFund", {
         title: "রিভলভিং ফান্ড",
         success: "",
@@ -1289,17 +1327,12 @@ module.exports.revolvingFund = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
-      res.render("center/revolvingFund/revolvingFund", {
-        title: "রিভলভিং ফান্ড",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
+
     });
 
   //  records:result
 };
-
 module.exports.revolvingFundYear = async (req, res) => {
   await revolvingFund
     .findAll({
@@ -1315,14 +1348,10 @@ module.exports.revolvingFundYear = async (req, res) => {
       );
     })
     .catch((err) => {
-      res.render("center/revolvingFund/revolvingFundYear", {
-        title: "রিভলভিং ফান্ড",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
+
     });
 };
-
 module.exports.revolvingFundForm = async (req, res) => {
   res.render("center/revolvingFund/revolvingFundForm", {
     title: "রিভলভিং ফান্ড",
@@ -1331,7 +1360,6 @@ module.exports.revolvingFundForm = async (req, res) => {
     user_id: req.session.user_id,
   });
 };
-
 module.exports.revolvingFundFormPost = async (req, res) => {
   var prapti = req.body.prapti;
   var presentOrtho = req.body.presentOrtho;
@@ -1436,50 +1464,50 @@ module.exports.chak1 = async (req, res) => {
       where: { center_id: req.session.user_id },
     })
     .then((data) => {
-      console.log("inside", data);
       res.render("center/employee/chak1/employeeChak1", {
-        title: "ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য",
+        title: "ক্যাডার/নন ক্যাডার কর্মকতা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য",
         success: "",
         records: data,
       });
     })
     .catch((err) => {
-      console.log("outside");
-      res.render("center/employee/chak1/employeeChak1", {
-        title: "ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
+
     });
 
   //  records:result
 };
-
 module.exports.chak1Year = async (req, res) => {
     await chak1.findAll({
-        where: { year: req.body.year, month: req.body.month,center_id: req.session.user_id }
+        where: { center_id: req.session.user_id }
     })
         .then(data => {
-            console.log("inside2", data);
             res.render('center/employee/chak1/employeeChak1Table', { records: data }, function (err, html) {
                 res.send(html);
             });
         })
         .catch(err => {
-            res.render('center/employee/chak1/employeeChak1Year', { title: 'ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য', success: '', records: err });
+          console.log("outside",err);
         })
 
 };
-
 module.exports.chak1Form = async (req, res) => {
+  await center.findOne({
+    where: { id: req.session.user_id }
+})
+    .then(data => {
   res.render("center/employee/chak1/employeeChak1Form", {
-    title: "ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য",
+    title: "ক্যাডার/নন ক্যাডার কর্মকতা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য",
     msg: "",
     success: "",
+    centers:data.center,
     user_id: req.session.user_id,
   });
+})
+.catch(err => {
+  console.log("outside",err);
+})
 };
-
 module.exports.chak1FormPost = async (req, res) => {
   var center = req.body.center;
   var porichito = req.body.porichito;
@@ -1491,8 +1519,7 @@ module.exports.chak1FormPost = async (req, res) => {
   var presentDate = req.body.presentDate;
   var pastWorkstation = req.body.pastWorkstation;
   var comment = req.body.comment;
-  var month = req.body.month;
-  var year = req.body.year;
+
   var user_id = req.body.user_id;
 
   await chak1
@@ -1507,8 +1534,7 @@ module.exports.chak1FormPost = async (req, res) => {
       presentDate: presentDate,
       pastWorkstation: pastWorkstation,
       comment: comment,
-      month: month,
-      year: year,
+
       center_id: user_id,
     })
     .then((data) => {
@@ -1516,14 +1542,12 @@ module.exports.chak1FormPost = async (req, res) => {
       res.redirect("/center/chak1Form");
     })
     .catch((err) => {
-      res.render("errorpage", err);
-    });
+console.log(err);    });
 };
 module.exports.chak1Edit=async(req,res)=>{
   await chak1.findByPk(req.params.id)
   .then(data => {
-      console.log("inside");
-      res.render('center/employee/chak1/employeeChak1Edit', { title: 'ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য',msg:'' ,success:'',records: data});
+      res.render('center/employee/chak1/employeeChak1Edit', { title: 'ক্যাডার/নন ক্যাডার কর্মকতা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য',msg:'' ,success:'',records: data});
   })
   .catch(err => {
       console.log("outside",err);
@@ -1540,8 +1564,6 @@ module.exports.chak1EditPost=async(req,res)=>{
   var presentDate = req.body.presentDate;
   var pastWorkstation = req.body.pastWorkstation;
   var comment = req.body.comment;
-  var month = req.body.month;
-  var year = req.body.year;
   var user_id = req.body.user_id;
   await chak1.update({ 
     center: center,
@@ -1554,8 +1576,6 @@ module.exports.chak1EditPost=async(req,res)=>{
     presentDate: presentDate,
     pastWorkstation: pastWorkstation,
     comment: comment,
-    month: month,
-    year: year,
   },
   {
       where: {id: req.params.id}
@@ -1582,7 +1602,7 @@ module.exports.generatePdfchak1 = async (req, res) => {
       where: { id: req.session.user_id },
     })
   var data= await chak1.findAll({
-      where: { year: req.body.year,month: req.body.month, center_id: req.session.user_id },
+      where: {  center_id: req.session.user_id },
     })
       ejs.renderFile(
           path.join(__dirname, "../views/center/employee/chak1/", "pdf.ejs"),
@@ -1618,8 +1638,6 @@ module.exports.generatePdfchak1 = async (req, res) => {
   }
 
 };
-
-
 //chak1 controller end
 
 //chak2 controller
@@ -1629,7 +1647,6 @@ module.exports.chak2 = async (req, res) => {
       where: { center_id: req.session.user_id },
     })
     .then((data) => {
-      console.log("inside");
       res.render("center/employee/chak2/employeeChak2", {
         title:
           "হরটিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা",
@@ -1638,21 +1655,15 @@ module.exports.chak2 = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
-      res.render("center/employee/chak2/employeeChak2", {
-        title:
-          "হরটিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
+
     });
 
   //  records:result
 };
-
 module.exports.chak2Year = async (req, res) => {
     await chak2.findAll({
-        where: { year: req.body.year, month: req.body.month ,center_id: req.session.user_id}
+        where: { center_id: req.session.user_id}
     })
     .then((data) => {
       res.render(
@@ -1664,15 +1675,10 @@ module.exports.chak2Year = async (req, res) => {
       );
     })
     .catch((err) => {
-      res.render("center/employee/chak2/employeeChak2Year", {
-        title:
-          "হরটিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
+
     });
 };
-
 module.exports.chak2Form = async (req, res) => {
   try {
     var podobiLists = await podobiList.findAll();
@@ -1688,16 +1694,14 @@ module.exports.chak2Form = async (req, res) => {
     console.log(e);
   }
 };
-
 module.exports.chak2FormPost = async (req, res) => {
   var name = req.body.name;
   var grade = req.body.grade;
   var pod = req.body.pod;
   var working = req.body.working;
-  var shunno = req.body.shunno;
+  var shunno = parseInt(pod)-parseInt(working);
   var comment = req.body.comment;
-  var month = req.body.month;
-  var year = req.body.year;
+
   var user_id = req.body.user_id;
 
   await chak2
@@ -1708,8 +1712,7 @@ module.exports.chak2FormPost = async (req, res) => {
       working: working,
       shunno: shunno,
       comment: comment,
-      month: month,
-      year: year,
+
       center_id: user_id,
     })
     .then((data) => {
@@ -1717,17 +1720,16 @@ module.exports.chak2FormPost = async (req, res) => {
       res.redirect("/center/chak2Form");
     })
     .catch((err) => {
-      res.render("errorpage", err);
-    });
+console.log(err);    });
 };
 module.exports.fetchPodobiList = async (req, res) => {
-  console.log("upokhat", req.body.podobi);
+
   await podobiList
     .findOne({
-      where: { id: req.body.podobi },
+      where: { podobi: req.body.podobi },
     })
     .then((data) => {
-      console.log("data", data.grade);
+    
       var grade = data.grade;
       res.send(grade);
     })
@@ -1738,7 +1740,6 @@ module.exports.fetchPodobiList = async (req, res) => {
 module.exports.chak2Edit=async(req,res)=>{
   await chak2.findByPk(req.params.id)
   .then(data => {
-      console.log("inside");
       res.render('center/employee/chak2/employeeChak2Edit', { title: 'হরটিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা',msg:'' ,success:'',records: data});
   })
   .catch(err => {
@@ -1750,7 +1751,7 @@ module.exports.chak2EditPost=async(req,res)=>{
   var grade = req.body.grade;
   var pod = req.body.pod;
   var working = req.body.working;
-  var shunno = req.body.shunno;
+  var shunno = parseInt(pod)-parseInt(working);
   var comment = req.body.comment;
   var month = req.body.month;
   var year = req.body.year;
@@ -1790,7 +1791,7 @@ module.exports.generatePdfchak2 = async (req, res) => {
       where: { id: req.session.user_id },
     })
   var data= await chak2.findAll({
-      where: { year: req.body.year, month: req.body.month,center_id: req.session.user_id },
+      where: {center_id: req.session.user_id },
     })
       ejs.renderFile(
           path.join(__dirname, "../views/center/employee/chak2/", "pdf.ejs"),
@@ -1835,7 +1836,6 @@ module.exports.rajossho = async (req, res) => {
       where: { center_id: req.session.user_id },
     })
     .then((data) => {
-      console.log("inside");
       res.render("center/rajossho/rajossho", {
         title: "মাসিক রাজস্ব অর্থ প্রাপ্তির হিসাব",
         success: "",
@@ -1843,17 +1843,12 @@ module.exports.rajossho = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
-      res.render("center/rajossho/rajossho", {
-        title: "মাসিক রাজস্ব অর্থ প্রাপ্তির হিসাব",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
+
     });
 
   //  records:result
 };
-
 module.exports.rajosshoYear = async (req, res) => {
   await rajossho
     .findAll({
@@ -1869,14 +1864,10 @@ module.exports.rajosshoYear = async (req, res) => {
       );
     })
     .catch((err) => {
-      res.render("center/rajossho/rajosshoYear", {
-        title: "মাসিক রাজস্ব অর্থ প্রাপ্তির হিসাব",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
+
     });
 };
-
 module.exports.rajosshoForm = async (req, res) => {
   try {
     var rajosshoCodes = await rajosshoCode.findAll();
@@ -1891,7 +1882,6 @@ module.exports.rajosshoForm = async (req, res) => {
     console.log(e);
   }
 };
-
 module.exports.rajosshoFormPost = async (req, res) => {
   var code = req.body.code;
   var upokhat = req.body.upokhat;
@@ -1948,21 +1938,6 @@ module.exports.rajosshoFormPost = async (req, res) => {
   if (june2 == null) {
     june2 = 0;
   }
-  console.log(
-    "july1,august1,sept1,oct1,nov1,dec1,jan2,feb2,march2,apr2,may2,june2",
-    july1,
-    august1,
-    sept1,
-    oct1,
-    nov1,
-    dec1,
-    jan2,
-    feb2,
-    march2,
-    apr2,
-    may2,
-    june2
-  );
   var july1 = parseInt(july1);
   var august1 = parseInt(august1);
   var sept1 = parseInt(sept1);
@@ -1988,22 +1963,6 @@ module.exports.rajosshoFormPost = async (req, res) => {
     apr2 +
     may2 +
     june2;
-  console.log(
-    "july1,august1,sept1,oct1,nov1,dec1,jan2,feb2,march2,apr2,may2,june2,total",
-    july1,
-    august1,
-    sept1,
-    oct1,
-    nov1,
-    dec1,
-    jan2,
-    feb2,
-    march2,
-    apr2,
-    may2,
-    june2,
-    total
-  );
 
   var year = req.body.year;
   var user_id = req.body.user_id;
@@ -2040,7 +1999,6 @@ module.exports.rajosshoAdd = async (req, res) => {
   await rajossho
     .findByPk(req.params.id)
     .then((data) => {
-      console.log("inside");
       res.render("center/rajossho/rajosshoAdd", {
         title: "মাসিক রাজস্ব অর্থ প্রাপ্তি",
         msg: "",
@@ -2049,17 +2007,11 @@ module.exports.rajosshoAdd = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
-      res.render("center/rajossho/rajossho", {
-        title: "মাসিক রাজস্ব অর্থ প্রাপ্তির",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
+
     });
 };
-
 module.exports.rajosshoAddPost = async (req, res) => {
-  console.log("idddsss", req.params.id);
   try {
     var data = await rajossho.findByPk(req.params.id);
     const m = res.locals.moment();
@@ -2188,10 +2140,8 @@ module.exports.rajosshoAddPost = async (req, res) => {
         }
       );
     } else if (months == 10) {
-      console.log("data.nov1", data.nov1);
       nov1 = income + parseInt(data.nov1);
       total = income + currentTotal;
-      console.log("dekhi to vai", nov1);
       var varib = await rajossho.update(
         {
           nov1: nov1,
@@ -2220,13 +2170,11 @@ module.exports.rajosshoAddPost = async (req, res) => {
   }
 };
 module.exports.fetchRajosshoCode = async (req, res) => {
-  console.log("upokhat", req.body.upokhat);
   await rajosshoCode
     .findOne({
       where: { id: req.body.upokhat },
     })
     .then((data) => {
-      console.log("data", data.code);
       var code = data.code;
       res.send(code);
     })
@@ -2239,7 +2187,6 @@ module.exports.generatePdfrajossho= async (req, res) => {
     var centerNames= await center.findOne({
       where: { id: req.session.user_id },
     });
-    console.log("centerNames",centerNames)
   var data= await rajossho.findAll({
       where: { year: req.body.year, center_id: req.session.user_id },
     })
@@ -2281,49 +2228,34 @@ module.exports.generatePdfrajossho= async (req, res) => {
 
 //expense controller
 module.exports.expense = async (req, res) => {
-  await expense
-    .findAll({
-      where: { center_id: req.session.user_id },
-    })
-    .then((data) => {
-      console.log("inside");
-      res.render("center/expense/expense", {
-        title: "খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী",
-        success: "",
-        records: data,
-      });
-    })
-    .catch((err) => {
-      console.log("outside");
-      res.render("center/expense/expense", {
-        title: "খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী",
-        success: "",
-        records: err,
-      });
-    });
-
-  //  records:result
+  var codess=await expenseCode.findAll();
+  var data=await expense.findAll({where: { center_id: req.session.user_id },});
+    try {
+      console.log("expense");
+      res.render("center/expense/expense", {title: "খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী",success: "",records: data,codes:codess})
+    }
+    catch {
+      console.log(err);
+    };
 };
-
 module.exports.expenseYear = async (req, res) => {
-  await expense
-    .findAll({
-      where: { year: req.body.year, center_id: req.session.user_id },
-    })
-    .then((data) => {
+  
+    try {
+      var codess=await expenseCode.findAll();
+  var data=await expense.findAll({where: { year: req.body.year, center_id: req.session.user_id }});
+      console.log("expenseYear");
       res.render(
         "center/expense/expenseTable",
-        { records: data },
+        { records: data,codes:codess },
         function (err, html) {
           res.send(html);
         }
       );
-    })
-    .catch((err) => {
+    }
+    catch (err) {
       console.log(err);
-    });
+    };
 };
-
 module.exports.expenseForm = async (req, res) => {
   try {
     var expenseCodes = await expenseCode.findAll();
@@ -2338,7 +2270,6 @@ module.exports.expenseForm = async (req, res) => {
     console.log(e);
   }
 };
-
 module.exports.expenseFormPost = async (req, res) => {
   var code = req.body.code;
   var khat = req.body.khat;
@@ -2396,21 +2327,6 @@ module.exports.expenseFormPost = async (req, res) => {
   if (june2 == null) {
     june2 = 0;
   }
-  console.log(
-    "july1,august1,sept1,oct1,nov1,dec1,jan2,feb2,march2,apr2,may2,june2",
-    july1,
-    august1,
-    sept1,
-    oct1,
-    nov1,
-    dec1,
-    jan2,
-    feb2,
-    march2,
-    apr2,
-    may2,
-    june2
-  );
   var boraddo = parseInt(boraddo);
   var july1 = parseInt(july1);
   var august1 = parseInt(august1);
@@ -2438,23 +2354,7 @@ module.exports.expenseFormPost = async (req, res) => {
     may2 +
     june2;
   var baki = boraddo - total;
-  console.log(
-    "july1,august1,sept1,oct1,nov1,dec1,jan2,feb2,march2,apr2,may2,june2,total",
-    july1,
-    august1,
-    sept1,
-    oct1,
-    nov1,
-    dec1,
-    jan2,
-    feb2,
-    march2,
-    apr2,
-    may2,
-    june2,
-    total
-  );
-
+ 
   await expense
     .create({
       code: code,
@@ -2490,7 +2390,7 @@ module.exports.expenseAdd = async (req, res) => {
   await expense
     .findByPk(req.params.id)
     .then((data) => {
-      console.log("inside");
+
       res.render("center/expense/expenseAdd", {
         title: "খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী",
         msg: "",
@@ -2499,17 +2399,11 @@ module.exports.expenseAdd = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside");
-      res.render("center/expense/expense", {
-        title: "খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী",
-        success: "",
-        records: err,
-      });
+      console.log("outside",err);
     });
 };
-
 module.exports.expenseAddPost = async (req, res) => {
-  console.log("idddsss", req.params.id);
+ 
   try {
     var data = await expense.findByPk(req.params.id);
     const m = res.locals.moment();
@@ -2658,11 +2552,11 @@ module.exports.expenseAddPost = async (req, res) => {
         }
       );
     } else if (months == 10) {
-      console.log("data.nov1", data.nov1);
+     
       nov1 = khoroch + parseInt(data.nov1);
       total = khoroch + currentTotal;
       baki = currentbaki - khoroch;
-      console.log("dekhi to vai", nov1);
+    
       var varib = await expense.update(
         {
           nov1: nov1,
@@ -2699,7 +2593,7 @@ module.exports.fetchExpenseCode = async (req, res) => {
       where: { id: req.body.khat },
     })
     .then((data) => {
-      console.log("data", data.code);
+    
       var code = data.code;
       res.send(code);
     })
@@ -2720,7 +2614,7 @@ module.exports.generatePdfexpense = async (req, res) => {
           { records: data,centerName:centerNames,dirname: __dirname },
           (err, data) => {
             if (err) {
-              console.log("error", err);
+        
               res.send(err);
             } else {
               var assesPath = path.join(__dirname, "../public/");
@@ -2752,7 +2646,7 @@ module.exports.generatePdfexpense = async (req, res) => {
 //expense controller end
 
 module.exports.fetchSubCategory = async (req, res) => {
-  console.log("parent id", req.body.category);
+  
   await cropCategory
     .findAll({
       where: { parent_id: req.body.category },
@@ -2764,7 +2658,6 @@ module.exports.fetchSubCategory = async (req, res) => {
       console.log(err);
     });
 };
-
 module.exports.fetchBiboron = async (req, res) => {
   await cropCategory
     .findAll({
@@ -2777,7 +2670,6 @@ module.exports.fetchBiboron = async (req, res) => {
       console.log(err);
     });
 };
-
 module.exports.fetchBreed = async (req, res) => {
   await cropCategory
     .findAll({
@@ -2797,17 +2689,7 @@ module.exports.monthlyProgress = async (req, res) => {
     title: "মাসিক প্রতিবেদন",
     success: "",
   });
-  // await monthlyProgress.findAll({
-  //     where: {center_id: req.session.user_id}
-  // })
-  // .then(data => {
-  //     res.render('center/monthlyProgress/monthlyProgress', { title: 'মাসিক প্রতিবেদন',success:'', records: data });
-  // })
-  // .catch(err => {
-  //     res.render('center/monthlyProgress/monthlyProgress', { title: 'মাসিক প্রতিবেদন',success:'', records: err });
-  // })
 };
-
 module.exports.monthlyProgressYear = async (req, res) => {
   try {
     const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
@@ -2847,7 +2729,6 @@ module.exports.monthlyProgressYear = async (req, res) => {
     console.log(e);
   }
 };
-
 module.exports.generatePdfMonthlyProgress = async (req, res) => {
   try {
     const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
@@ -2929,7 +2810,6 @@ module.exports.generatePdfMonthlyProgress = async (req, res) => {
   }
 
 };
-
 module.exports.monthlyProgressForm = async (req, res) => {
   try {
     const categoryList = await cropCategory.findAll();
@@ -2945,7 +2825,6 @@ module.exports.monthlyProgressForm = async (req, res) => {
     console.log(e);
   }
 };
-
 module.exports.monthlyProgressFormPost = async (req, res) => {
   var category = req.body.category;
   var subCategory = req.body.subCategory;
@@ -3272,7 +3151,6 @@ module.exports.monthlyProgressFormPost = async (req, res) => {
     }
   }
 };
-
 module.exports.monthlyProgressEdit = async (req, res) => {
   try {
     const monthProgress = await monthlyProgress.findByPk(req.params.progressId);
@@ -3289,7 +3167,6 @@ module.exports.monthlyProgressEdit = async (req, res) => {
     console.log(err);
   }
 };
-
 module.exports.monthlyProgressUpdate = async (req, res) => {
   var category = req.body.category;
   var subCategory = req.body.subCategory;
@@ -3484,7 +3361,6 @@ module.exports.monthlyProgressUpdate = async (req, res) => {
       console.log("err", err);
     });
 };
-
 module.exports.monthlyProgressDelete = async (req, res) => {
   const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
   const selectedDate = req.params.selectedDate;

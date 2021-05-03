@@ -29,18 +29,14 @@ module.exports = (sequelize, Sequelize) => {
       bank: {
         type: Sequelize.STRING
       },
-      month: {
-        type: Sequelize.STRING
-      },
+      
       regularWorker: {
         type: Sequelize.INTEGER
       },
       irregularWorker: {
         type: Sequelize.INTEGER
       },
-      year: {
-        type: Sequelize.STRING
-      },
+     
       center_id: {
         type: Sequelize.INTEGER
       }

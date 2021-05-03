@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ক্যাডার/নন ক্যাডার কর্মকতা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য</title>
+
+    <style>
+        .flex-container {
+            display: flex;
+
+            justify-content: center
+        }
+        .table, td, th {
+            border: 1px solid black;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .center {
+            text-align: center;
+        }
+        .inline-block-child {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+<div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
+    <div>
+        <h1>ক্যাডার/নন ক্যাডার কর্মকতা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য</h1>
+        <p><b>সেন্টার :</b>সকল সেন্টারের তথ্য</p>
+        <%if (records.length >0){ %>
+            <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
+            <thead>
+            <tr>
+                <th>হর্টিকালচার সেন্টারের নাম</th>
+                <th>পরিচিতি নং</th>
+                <th>কর্মকর্তার নাম ও মোবাইল নং</th>
+                <th>নিজ জেলা</th>
+                <th>পদবী</th>
+                <th>জন্ম তারিখ</th>
+                <th>চাকুরীতে প্রথম যোগদানের তারিখ</th>
+                <th>বর্তমান কর্মস্থলে যোগদানের তারিখ</th>
+                <th>পূর্ববর্তী কর্মস্থল ও যোগদানের তারিখ</th>
+                <th>মন্তব্য</th>
+            </tr>
+            </thead>
+            <tbody>
+                <% records.forEach(function(row){ %>
+                    <tr>
+                        <td><%= row.center %></td>
+                        <td><%= row.porichito %></td>
+                        <td><%= row.kormokorta %></td>
+                        <td><%= row.nijDistrict %></td>
+                        <td><%= row.podobi %></td>
+                        <td><%= row.birthDate %></td>
+                        <td><%= row.firstdate %></td>
+                        <td><%= row.presentDate %></td>
+                        <td><%= row.pastWorkstation %></td>
+                        <td><%= row.comment %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+        <% }else{ %>
+            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+                <thead>
+                <tr>
+                    <th>হর্টিকালচার সেন্টারের নাম</th>
+                    <th>পরিচিতি নং</th>
+                    <th>কর্মকর্তার নাম ও মোবাইল নং</th>
+                    <th>নিজ জেলা</th>
+                    <th>পদবী</th>
+                    <th>জন্ম তারিখ</th>
+                    <th>চাকুরীতে প্রথম যোগদানের তারিখ</th>
+                    <th>বর্তমান কর্মস্থলে যোগদানের তারিখ</th>
+                    <th>পূর্ববর্তী কর্মস্থল ও যোগদানের তারিখ</th>
+                    <th>মন্তব্য</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% records.forEach(function(row){ %>
+                    <tr>
+                        <td colspan="10">No data Found</td>
+                    </tr>
+                <% }) %>
+                </tbody>
+            </table>
+        <% } %>
+    </div>
+</div>
+
+</body>
+</html>

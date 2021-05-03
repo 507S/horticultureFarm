@@ -298,7 +298,7 @@ module.exports.suchokMaan = async(req,res) => {
 //signUp controller
 module.exports.pdsignup=async(req,res)=>{
     res.render('pd/signup', { title: 'Horticulture Wing Center Management Software',msg:'' });
-    res.send("log");
+      
 };
 module.exports.pdsignuppost=async(req,res)=>{
     try {
@@ -341,8 +341,8 @@ module.exports.topSheet=async(req,res)=>{
         res.render('pd/topSheet/topSheet', { title: 'টপশীট',success:'', centers: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/topSheet/topSheet', { title: 'টপশীট',success:'', records: err });
+        console.log("outside",err);
+
     })
 };
 
@@ -395,6 +395,66 @@ module.exports.topSheetFilter=async(req,res)=>{
 
 //topSheet controller end
 
+//topSheetBitoron controller
+module.exports.topSheetBitoron = async (req, res) => {
+    await center.findAll()
+        .then(data => {
+            console.log("inside");
+            res.render('pd/topSheet/bitoron/topSheetBitoron', { title: 'টপশীট',success:'', centers: data });
+        })
+        .catch(err => {
+            console.log("outside",err);
+
+        })
+};
+module.exports.topSheetBitoronFilter = async (req, res) => {
+    try{
+        const selectedDate = req.body.year.toLowerCase();
+        var data = []
+        const cropCatg = await cropCategory.findAll({
+            where: {
+                type: 'subCategory'
+            }
+        })
+        if (req.body.center === "all"){
+            const topSheets = await monthlyProgress.findAll()
+            topSheets.map((monthlyProg) => {
+                const timeList = JSON.parse(monthlyProg.timeFrame)
+                timeList.map((eachTime) => {
+                    if (eachTime.time === selectedDate){
+                        data.push(monthlyProg);
+                    }
+                })
+            })
+
+            res.render('pd/topSheet/bitoron/topSheetBitoronTable', {records: data , cropCatg:cropCatg} ,function(err, html) {
+                res.send(html);
+            });
+        }else{
+            const topSheets = await monthlyProgress.findAll({
+                where: {center_id: req.body.center}
+            })
+            topSheets.map((monthlyProg) => {
+                const timeList = JSON.parse(monthlyProg.timeFrame)
+                timeList.map((eachTime) => {
+                    if (eachTime.time === selectedDate){
+                        data.push(monthlyProg);
+                    }
+                })
+            })
+            res.render('pd/topSheet/bitoron/topSheetBitoronTable', {records: data , cropCatg:cropCatg} ,function(err, html) {
+                res.send(html);
+            });
+        }
+
+    }
+    catch (e) {
+        console.log(e);
+    }
+
+};
+//topSheetBitoron controller end
+
 //center controller
 module.exports.center=async(req,res)=>{
     await center.findAll()
@@ -403,8 +463,8 @@ module.exports.center=async(req,res)=>{
         res.render('pd/centerInfo/center', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: data });
     })
     .catch(err => {
-        console.log(err);
-        res.render('pd/centerInfo/center', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: err });
+        console.log("outside",err);
+
     })
      
     //  records:result
@@ -419,7 +479,8 @@ module.exports.centerYear=async(req,res)=>{
         });
     })
     .catch(err => {
-        res.render('pd/centerInfo/centerYear', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: err });
+        console.log("outside",err);
+
     })
 
 };
@@ -430,8 +491,8 @@ module.exports.centerEdit=async(req,res)=>{
         res.render('pd/centerInfo/centerEdit', { title: 'সেন্টারের যোগাযোগ তথ্য ফর্ম',msg:'' ,success:'',records: data});
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/centerInfo/centerEdit', { title: 'সেন্টারের যোগাযোগ তথ্য ফর্ম',success:'', records: err });
+        console.log("outside",err);
+
     })
 };
 module.exports.centerEditPost=async(req,res)=>{
@@ -474,8 +535,8 @@ module.exports.centerPasswordEdit=async(req,res)=>{
         res.render('pd/centerInfo/centerPasswordEdit', { title: 'সেন্টারের যোগাযোগ তথ্য ফর্ম',msg:'' ,success:'',records: data});
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/centerInfo/centerPasswordEdit', { title: 'সেন্টারের যোগাযোগ তথ্য ফর্ম',success:'', records: err });
+        console.log("outside",err);
+
     })
 };
 module.exports.centerPasswordEditPost=async(req,res)=>{
@@ -503,8 +564,8 @@ module.exports.adminInfo=async(req,res)=>{
         res.render('pd/adminInfo/adminInfo', { title: 'সেন্ট্রাল এডমিন তথ্য',success:'', records: data });
     })
     .catch(err => {
-        console.log(err);
-        res.render('pd/adminInfo/adminInfo', { title: 'সেন্ট্রাল এডমিন তথ্য ফর্ম',success:'', records: err });
+        console.log("outside",err);
+
     })
      
     //  records:result
@@ -517,8 +578,8 @@ module.exports.adminInfoEdit=async(req,res)=>{
         res.render('pd/adminInfo/adminInfoEdit', { title: 'সেন্ট্রাল এডমিন তথ্য ফর্ম',msg:'' ,success:'',records: data});
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/adminInfo/adminInfoEdit', { title: 'সেন্ট্রাল এডমিন তথ্য ফর্ম',success:'', records: err });
+        console.log("outside",err);
+
     })
 };
 module.exports.adminInfoEditPost=async(req,res)=>{
@@ -546,26 +607,11 @@ module.exports.charaKolom=async(req,res)=>{
         res.render('pd/charaKolomPrice/charaKolom/charaKolom', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য',success:'', records: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/charaKolomPrice/charaKolom/charaKolom', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য',success:'', records: err });
+        console.log("outside",err);
+
     })
      
     //  records:result
-
-};
-
-module.exports.charaKolomYear=async(req,res)=>{
-    await charaKolom.findAll({
-        where: {year: req.body.year}
-    })
-    .then(data => {
-        res.render('pd/charaKolomPrice/charaKolom/charaKolomTable', {records: data} ,function(err, html) {
-            res.send(html);
-        });
-    })
-    .catch(err => {
-        res.render('pd/charaKolomPrice/charaKolom/charaKolomYear', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য',success:'', records: err });
-    })
 
 };
 
@@ -608,8 +654,8 @@ module.exports.charaKolomEdit=async(req,res)=>{
         res.render('pd/charaKolomPrice/charaKolom/charaKolomEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/charaKolomPrice/charaKolom/charaKolomEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: err });
+        console.log("outside",err);
+
     })
 };
 module.exports.charaKolomEditPost=async(req,res)=>{
@@ -640,6 +686,43 @@ module.exports.charaKolomDelete=async(req,res)=>{
     }
     
 };
+module.exports.generatePdfcharaKolom = async (req, res) => {
+    try {
+    var data= await charaKolom.findAll()
+        ejs.renderFile(
+            path.join(__dirname, "../views/pd/charaKolomPrice/charaKolom/", "pdf.ejs"),
+            { records: data,dirname: __dirname },
+            (err, data) => {
+              if (err) {
+                console.log("error", err);
+                res.send(err);
+              } else {
+                var assesPath = path.join(__dirname, "../public/");
+                // console.log(assesPath);
+                assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+  
+                var options = {
+                  height: "11.25in",
+                  width: "18.5in",
+                  header: {
+                    height: "20mm",
+                  },
+                  footer: {
+                    height: "20mm",
+                  },
+                  base: "file:///" + assesPath,
+                };
+                res.json({ html: data });
+              }
+            }
+        )
+      
+      
+    } catch (e) {
+      console.log(e);
+    }
+  
+  };
 //charaKolom controller end
 
 //folMosholla controller
@@ -650,26 +733,11 @@ module.exports.folMosholla=async(req,res)=>{
         res.render('pd/charaKolomPrice/folMosholla/folMosholla', { title: 'হরটিকালচার সেন্টারের ফল/মসলা ও শাক-সবজি বিক্রয় মূল্য',success:'', records: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/charaKolomPrice/folMosholla/folMosholla', { title: 'হরটিকালচার সেন্টারের ফল/মসলা ও শাক-সবজি বিক্রয় মূল্য',success:'', records: err });
+        console.log("outside",err);
+
     })
      
     //  records:result
-
-};
-
-module.exports.folMoshollaYear=async(req,res)=>{
-    await folMosholla.findAll({
-        where: {year: req.body.year}
-    })
-    .then(data => {
-        res.render('pd/charaKolomPrice/folMosholla/folMoshollaTable', {records: data} ,function(err, html) {
-            res.send(html);
-        });
-    })
-    .catch(err => {
-        res.render('pd/charaKolomPrice/folMosholla/folMoshollaYear', { title: 'হরটিকালচার সেন্টারের ফল/মসলা ও শাক-সবজি বিক্রয় মূল্য',success:'', records: err });
-    })
 
 };
 
@@ -713,8 +781,8 @@ module.exports.folMoshollaEdit=async(req,res)=>{
         res.render('pd/charaKolomPrice/folMosholla/folMoshollaEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/charaKolomPrice/folMosholla/folMoshollaEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: err });
+        console.log("outside",err);
+
     })
 };
 module.exports.folMoshollaEditPost=async(req,res)=>{
@@ -746,6 +814,42 @@ module.exports.folMoshollaDelete=async(req,res)=>{
     }
     
 };
+module.exports.generatePdffolMosholla = async (req, res) => {
+    try {
+    var data= await folMosholla.findAll()
+        ejs.renderFile(
+            path.join(__dirname, "../views/pd/charaKolomPrice/folMosholla/", "pdf.ejs"),
+            { records: data,dirname: __dirname },
+            (err, data) => {
+              if (err) {
+                console.log("error", err);
+                res.send(err);
+              } else {
+                var assesPath = path.join(__dirname, "../public/");
+                assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+  
+                var options = {
+                  height: "11.25in",
+                  width: "18.5in",
+                  header: {
+                    height: "20mm",
+                  },
+                  footer: {
+                    height: "20mm",
+                  },
+                  base: "file:///" + assesPath,
+                };
+                res.json({ html: data });
+              }
+            }
+        )
+      
+      
+    } catch (e) {
+      console.log(e);
+    }
+  
+  };
 //folMosholla controller end
 
 //otherFlower controller
@@ -756,26 +860,11 @@ module.exports.otherFlower=async(req,res)=>{
         res.render('pd/charaKolomPrice/otherFlower/otherFlower', { title: 'বিভিন্ন ফুল ও সুদৃশ্য গাছের চারা/কলমের বিক্রয় মূল্য',success:'', records: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/charaKolomPrice/otherFlower/otherFlower', { title: 'বিভিন্ন ফুল ও সুদৃশ্য গাছের চারা/কলমের বিক্রয় মূল্য',success:'', records: err });
+        console.log("outside",err);
+
     })
      
     //  records:result
-
-};
-
-module.exports.otherFlowerYear=async(req,res)=>{
-    await otherFlower.findAll({
-        where: {year: req.body.year}
-    })
-    .then(data => {
-        res.render('pd/charaKolomPrice/otherFlower/otherFlowerTable', {records: data} ,function(err, html) {
-            res.send(html);
-        });
-    })
-    .catch(err => {
-        res.render('pd/charaKolomPrice/otherFlower/otherFlowerYear', { title: 'বিভিন্ন ফুল ও সুদৃশ্য গাছের চারা/কলমের বিক্রয় মূল্য',success:'', records: err });
-    })
 
 };
 
@@ -810,7 +899,6 @@ module.exports.otherFlowerFormPost=async(req,res)=>{
             res.redirect('/pd/otherFlowerForm');
         }).catch(err => {
             console.log(err);
-            res.render('errorpage',err);
         });
   
 };
@@ -821,8 +909,8 @@ module.exports.otherFlowerEdit=async(req,res)=>{
         res.render('pd/charaKolomPrice/otherFlower/otherFlowerEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/charaKolomPrice/otherFlower/otherFlowerEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: err });
+        console.log("outside",err);
+
     })
 };
 module.exports.otherFlowerEditPost=async(req,res)=>{
@@ -839,7 +927,7 @@ module.exports.otherFlowerEditPost=async(req,res)=>{
     }).then(data => {
         res.redirect('/pd/otherFlower');
     }).catch(err => {
-        res.render('errorpage',err);
+        console.log('errorpage',err);
     });
 };
 module.exports.otherFlowerDelete=async(req,res)=>{
@@ -849,10 +937,46 @@ module.exports.otherFlowerDelete=async(req,res)=>{
         res.redirect("/pd/otherFlower");
     }
     catch{
-        res.render('errorpage',err);
+        console.log('errorpage',err);
     }
     
 };
+module.exports.generatePdfotherFlower = async (req, res) => {
+    try {
+    var data= await folMosholla.findAll()
+        ejs.renderFile(
+            path.join(__dirname, "../views/pd/charaKolomPrice/folMosholla/", "pdf.ejs"),
+            { records: data,dirname: __dirname },
+            (err, data) => {
+              if (err) {
+                console.log("error", err);
+                res.send(err);
+              } else {
+                var assesPath = path.join(__dirname, "../public/");
+                assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+  
+                var options = {
+                  height: "11.25in",
+                  width: "18.5in",
+                  header: {
+                    height: "20mm",
+                  },
+                  footer: {
+                    height: "20mm",
+                  },
+                  base: "file:///" + assesPath,
+                };
+                res.json({ html: data });
+              }
+            }
+        )
+      
+      
+    } catch (e) {
+      console.log(e);
+    }
+  
+  };
 //otherFlower controller end
 
 //seasonalFlower controller
@@ -863,29 +987,13 @@ module.exports.seasonalFlower=async(req,res)=>{
         res.render('pd/charaKolomPrice/seasonalFlower/seasonalFlower', { title: 'মৌসুমী ফুল ও চারার বিক্রয় মূল্য',success:'', records: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/charaKolomPrice/seasonalFlower/seasonalFlower', { title: 'মৌসুমী ফুল ও চারার বিক্রয় মূল্য',success:'', records: err });
+        console.log("outside",err);
+
     })
      
     //  records:result
 
 };
-
-module.exports.seasonalFlowerYear=async(req,res)=>{
-    await seasonalFlower.findAll({
-        where: {year: req.body.year}
-    })
-    .then(data => {
-        res.render('pd/charaKolomPrice/seasonalFlower/seasonalFlowerTable', {records: data} ,function(err, html) {
-            res.send(html);
-        });
-    })
-    .catch(err => {
-        res.render('pd/charaKolomPrice/seasonalFlower/seasonalFlowerYear', { title: 'মৌসুমী ফুল ও চারার বিক্রয় মূল্য',success:'', records: err });
-    })
-
-};
-
 module.exports.seasonalFlowerForm=async(req,res)=>{
     await cropCategory.findAll({
         where: {type:"biboron"}
@@ -897,7 +1005,6 @@ module.exports.seasonalFlowerForm=async(req,res)=>{
         console.log(err);
     })
 };
-
 module.exports.seasonalFlowerFormPost=async(req,res)=>{
     var item= req.body.item;
     var poriman= req.body.poriman;
@@ -916,7 +1023,7 @@ module.exports.seasonalFlowerFormPost=async(req,res)=>{
             req.flash("message", "Successfully added");
             res.redirect('/pd/seasonalFlowerForm');
         }).catch(err => {
-            res.render('errorpage',err);
+            console.log('errorpage',err);
         });
   
 };
@@ -927,8 +1034,8 @@ module.exports.seasonalFlowerEdit=async(req,res)=>{
         res.render('pd/charaKolomPrice/seasonalFlower/seasonalFlowerEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/charaKolomPrice/seasonalFlower/seasonalFlowerEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: err });
+        console.log("outside",err);
+
     })
 };
 module.exports.seasonalFlowerEditPost=async(req,res)=>{
@@ -947,7 +1054,7 @@ module.exports.seasonalFlowerEditPost=async(req,res)=>{
     }).then(data => {
         res.redirect('/pd/seasonalFlower');
     }).catch(err => {
-        res.render('errorpage',err);
+        console.log('errorpage',err);
     });
 };
 module.exports.seasonalFlowerDelete=async(req,res)=>{
@@ -957,10 +1064,46 @@ module.exports.seasonalFlowerDelete=async(req,res)=>{
         res.redirect("/pd/seasonalFlower");
     }
     catch{
-        res.render('errorpage',err);
+        console.log('errorpage',err);
     }
     
 };
+module.exports.generatePdfseasonalFlower = async (req, res) => {
+    try {
+    var data= await seasonalFlower.findAll()
+        ejs.renderFile(
+            path.join(__dirname, "../views/pd/charaKolomPrice/seasonalFlower/", "pdf.ejs"),
+            { records: data,dirname: __dirname },
+            (err, data) => {
+              if (err) {
+                console.log("error", err);
+                res.send(err);
+              } else {
+                var assesPath = path.join(__dirname, "../public/");
+                assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+  
+                var options = {
+                  height: "11.25in",
+                  width: "18.5in",
+                  header: {
+                    height: "20mm",
+                  },
+                  footer: {
+                    height: "20mm",
+                  },
+                  base: "file:///" + assesPath,
+                };
+                res.json({ html: data });
+              }
+            }
+        )
+      
+      
+    } catch (e) {
+      console.log(e);
+    }
+  
+  };
 //seasonalFlower controller end
 
 //summerVeg controller
@@ -971,28 +1114,11 @@ module.exports.summerVeg=async(req,res)=>{
         res.render('pd/charaKolomPrice/summerVeg/summerVeg', { title: 'গ্রীষ্মকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য',success:'', records: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/charaKolomPrice/summerVeg/summerVeg', { title: 'গ্রীষ্মকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য',success:'', records: err });
+        console.log("outside",err);
+
     })
      
     //  records:result
-
-};
-
-module.exports.summerVegYear=async(req,res)=>{
-    await summerVeg.findAll({
-        where: {year: req.body.year}
-    })
-    .then(data => {
-        console.log("inside",data);
-
-        res.render('pd/charaKolomPrice/summerVeg/summerVegTable', {records: data} ,function(err, html) {
-            res.send(html);
-        });
-    })
-    .catch(err => {
-        res.render('pd/charaKolomPrice/summerVeg/summerVegYear', { title: 'গ্রীষ্মকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য',success:'', records: err });
-    })
 
 };
 
@@ -1026,7 +1152,7 @@ module.exports.summerVegFormPost=async(req,res)=>{
             req.flash("message", "Successfully added");
             res.redirect('/pd/summerVegForm');
         }).catch(err => {
-            res.render('errorpage',err);
+            console.log('errorpage',err);
         });
   
 };
@@ -1037,8 +1163,8 @@ module.exports.summerVegEdit=async(req,res)=>{
         res.render('pd/charaKolomPrice/summerVeg/summerVegEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/charaKolomPrice/summerVeg/summerVegEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: err });
+        console.log("outside",err);
+
     })
 };
 module.exports.summerVegEditPost=async(req,res)=>{
@@ -1058,7 +1184,7 @@ module.exports.summerVegEditPost=async(req,res)=>{
     }).then(data => {
         res.redirect('/pd/summerVeg');
     }).catch(err => {
-        res.render('errorpage',err);
+        console.log('errorpage',err);
     });
 };
 module.exports.summerVegDelete=async(req,res)=>{
@@ -1068,10 +1194,46 @@ module.exports.summerVegDelete=async(req,res)=>{
         res.redirect("/pd/summerVeg");
     }
     catch{
-        res.render('errorpage',err);
+        console.log('errorpage',err);
     }
     
 };
+module.exports.generatePdfsummerVeg = async (req, res) => {
+    try {
+    var data= await summerVeg.findAll()
+        ejs.renderFile(
+            path.join(__dirname, "../views/pd/charaKolomPrice/summerVeg/", "pdf.ejs"),
+            { records: data,dirname: __dirname },
+            (err, data) => {
+              if (err) {
+                console.log("error", err);
+                res.send(err);
+              } else {
+                var assesPath = path.join(__dirname, "../public/");
+                assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+  
+                var options = {
+                  height: "11.25in",
+                  width: "18.5in",
+                  header: {
+                    height: "20mm",
+                  },
+                  footer: {
+                    height: "20mm",
+                  },
+                  base: "file:///" + assesPath,
+                };
+                res.json({ html: data });
+              }
+            }
+        )
+      
+      
+    } catch (e) {
+      console.log(e);
+    }
+  
+  };
 //summerVeg controller end
 
 //winterVeg controller
@@ -1083,27 +1245,11 @@ module.exports.winterVeg=async(req,res)=>{
         res.render('pd/charaKolomPrice/winterVeg/winterVeg', { title: 'শীতকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য',success:'', records: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/charaKolomPrice/winterVeg/winterVeg', { title: 'শীতকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য',success:'', records: err });
+        console.log("outside",err);
+
     })
      
     //  records:result
-
-};
-
-module.exports.winterVegYear=async(req,res)=>{
-    await winterVeg.findAll({
-        where: {year: req.body.year}
-    })
-    .then(data => {
-        console.log("inside",data);
-        res.render('pd/charaKolomPrice/winterVeg/winterVegTable', {records: data} ,function(err, html) {
-            res.send(html);
-        });
-    })
-    .catch(err => {
-        res.render('pd/charaKolomPrice/winterVeg/winterVegYear', { title: 'শীতকালীন সবজি ও অন্যান্য বীজের/চারার বিক্রয় মূল্য',success:'', records: err });
-    })
 
 };
 
@@ -1137,7 +1283,7 @@ module.exports.winterVegFormPost=async(req,res)=>{
             req.flash("message", "Successfully added");
             res.redirect('/pd/winterVegForm');
         }).catch(err => {
-            res.render('errorpage',err);
+            console.log('errorpage',err);
         });
   
 };
@@ -1148,8 +1294,8 @@ module.exports.winterVegEdit=async(req,res)=>{
         res.render('pd/charaKolomPrice/winterVeg/winterVegEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/charaKolomPrice/winterVeg/winterVegEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: err });
+        console.log("outside",err);
+
     })
 };
 module.exports.winterVegEditPost=async(req,res)=>{
@@ -1169,7 +1315,7 @@ module.exports.winterVegEditPost=async(req,res)=>{
     }).then(data => {
         res.redirect('/pd/winterVeg');
     }).catch(err => {
-        res.render('errorpage',err);
+        console.log('errorpage',err);
     });
 };
 module.exports.winterVegDelete=async(req,res)=>{
@@ -1179,10 +1325,46 @@ module.exports.winterVegDelete=async(req,res)=>{
         res.redirect("/pd/winterVeg");
     }
     catch{
-        res.render('errorpage',err);
+        console.log('errorpage',err);
     }
     
 };
+module.exports.generatePdfwinterVeg = async (req, res) => {
+    try {
+    var data= await winterVeg.findAll()
+        ejs.renderFile(
+            path.join(__dirname, "../views/pd/charaKolomPrice/winterVeg/", "pdf.ejs"),
+            { records: data,dirname: __dirname },
+            (err, data) => {
+              if (err) {
+                console.log("error", err);
+                res.send(err);
+              } else {
+                var assesPath = path.join(__dirname, "../public/");
+                assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+  
+                var options = {
+                  height: "11.25in",
+                  width: "18.5in",
+                  header: {
+                    height: "20mm",
+                  },
+                  footer: {
+                    height: "20mm",
+                  },
+                  base: "file:///" + assesPath,
+                };
+                res.json({ html: data });
+              }
+            }
+        )
+      
+      
+    } catch (e) {
+      console.log(e);
+    }
+  
+  };
 //winterVeg controller end
 
 //workerInfo controller
@@ -1194,8 +1376,8 @@ module.exports.workerInfo=async(req,res)=>{
         res.render('pd/worker/workerInfo/workerInfo', { title: 'শ্রমিকদের তথ্য',success:'', centers: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/worker/workerInfo/workerInfo', { title: 'শ্রমিকদের তথ্য',success:'', records: err });
+        console.log("outside",err);
+
     })
      
     //  records:result
@@ -1205,9 +1387,7 @@ module.exports.workerInfo=async(req,res)=>{
 module.exports.workerInfoFilter=async(req,res)=>{
     if (req.body.center === "all") {
         console.log("resss")
-        await workerInfo.findAll({
-            where: {year: req.body.year,month:req.body.month}
-        })
+        await workerInfo.findAll()
         .then(data => {
             res.render('pd/worker/workerInfo/workerInfoTable', {records: data} ,function(err, html) {
                 res.send(html);
@@ -1219,7 +1399,7 @@ module.exports.workerInfoFilter=async(req,res)=>{
     }
     else{
     await workerInfo.findAll({
-        where: {year: req.body.year,center_id : req.body.center,month:req.body.month}
+        where: {center_id : req.body.center}
     })
     .then(data => {
         res.render('pd/worker/workerInfo/workerInfoTable', {records: data} ,function(err, html) {
@@ -1257,6 +1437,59 @@ module.exports.workerInfoFormPost=async(req,res)=>{
         });
   
 };
+module.exports.workerInfoEdit=async(req,res)=>{
+    await workerInfo.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('pd/worker/workerInfo/workerInfoEdit', { title: 'শ্রমিকদের তথ্য',msg:'' ,success:'',records: data});
+    })
+    .catch(err => {
+        console.log("outside",err);
+    })
+  };
+  module.exports.workerInfoEditPost=async(req,res)=>{
+    var center = req.body.center;
+    var porichito = req.body.porichito;
+    var kormokorta = req.body.kormokorta;
+    var nijDistrict = req.body.nijDistrict;
+    var podobi = req.body.podobi;
+    var birthDate = req.body.birthDate;
+    var firstdate = req.body.firstdate;
+    var presentDate = req.body.presentDate;
+    var pastWorkstation = req.body.pastWorkstation;
+    var comment = req.body.comment;
+    var user_id = req.body.user_id;
+    await workerInfo.update({ 
+      center: center,
+      porichito: porichito,
+      kormokorta: kormokorta,
+      nijDistrict: nijDistrict,
+      podobi: podobi,
+      birthDate: birthDate,
+      firstdate: firstdate,
+      presentDate: presentDate,
+      pastWorkstation: pastWorkstation,
+      comment: comment,
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        res.redirect('/pd/workerInfo');
+    }).catch(err => {
+        res.render('errorpage',err);
+    });
+  };
+  module.exports.workerInfoDelete=async(req,res)=>{
+    var workerInfoDelete = await workerInfo.findByPk(req.params.id);
+    try {
+      workerInfoDelete.destroy();
+        res.redirect("/pd/workerInfo");
+    }
+    catch{
+        res.render('errorpage',err);
+    }
+    
+  };
 module.exports.newPodobiTable=async(req,res)=>{
     await podobiList.findAll()
     .then(data => {
@@ -1264,8 +1497,8 @@ module.exports.newPodobiTable=async(req,res)=>{
         res.render('pd/newPodobi/podobiList', { title: 'কর্মকর্তা কর্মচারীদের পদবী ও গ্রেডের তালিকা',success:'', records: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/newPodobi/podobiList', { title: 'কর্মকর্তা কর্মচারীদের পদবী ও গ্রেডের তালিকা',success:'', records: err });
+        console.log("outside",err);
+
     })
      
     //  records:result
@@ -1283,8 +1516,8 @@ module.exports.newPodobiEdit=async(req,res)=>{
         res.render('pd/newPodobi/podobiListEdit', { title: 'কর্মকর্তা কর্মচারীদের পদবী ও গ্রেডের তালিকা',msg:'' ,success:'',records: data});
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/newPodobi/podobiListEdit', { title: 'কর্মকর্তা কর্মচারীদের পদবী ও গ্রেডের তালিকা',success:'', records: err });
+        console.log("outside",err);
+
     })
 };
 module.exports.newPodobiEditPost=async(req,res)=>{
@@ -1315,18 +1548,11 @@ module.exports.newPodobiDelete=async(req,res)=>{
 };
 module.exports.generatePdfworkerInfo = async (req, res) => {
     if (req.body.center === "all") {
-        
-        var centerNames= await center.findAll({
-            where: { id: req.body.center },
-          })
-          console.log("centerNames",centerNames)
-        var data=await workerInfo.findAll({
-            where: {year: req.body.year,month:req.body.month}
-        })
+        var data=await workerInfo.findAll()
          
         ejs.renderFile(
-            path.join(__dirname, "../views/pd/worker/workerInfo", "pdf.ejs"),
-            { records: data,centerName:centerNames, },
+            path.join(__dirname, "../views/pd/worker/workerInfo", "pdfAll.ejs"),
+            { records: data },
             (err, data) => {
               if (err) {
                 console.log("error", err);
@@ -1357,7 +1583,7 @@ module.exports.generatePdfworkerInfo = async (req, res) => {
             where: { id: req.body.center },
           })
     var data= await workerInfo.findAll({
-        where: {year: req.body.year,center_id : req.body.center,month:req.body.month}
+        where: {center_id : req.body.center}
     })
     ejs.renderFile(
         path.join(__dirname, "../views/pd/worker/workerInfo", "pdf.ejs"),
@@ -1399,8 +1625,8 @@ module.exports.workerNum=async(req,res)=>{
         res.render('pd/worker/workerNum/workerNum', { title: 'শ্রমিকদের সংখ্যা',success:'', centers: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/worker/workerNum/workerNum', { title: 'শ্রমিকদের সংখ্যা',success:'', records: err });
+        console.log("outside",err);
+
     })
      
     //  records:result
@@ -1410,9 +1636,7 @@ module.exports.workerNum=async(req,res)=>{
 module.exports.workerNumFilter=async(req,res)=>{
     if (req.body.center === "all") {
         console.log("resss")
-        await workerInfo.findAll({
-            where: {year: req.body.year,month: req.body.month}
-        })
+        await workerInfo.findAll()
         .then(data => {
             console.log("inside");
             var reg=0;
@@ -1437,7 +1661,7 @@ module.exports.workerNumFilter=async(req,res)=>{
     }
     else{
     await workerInfo.findAll({
-        where: {center_id: req.body.center,year: req.body.year,month: req.body.month}
+        where: {center_id: req.body.center}
     })
     .then(data => {
         console.log("inside");
@@ -1464,10 +1688,7 @@ module.exports.workerNumFilter=async(req,res)=>{
 };
 module.exports.generatePdfworkerNum  = async (req, res) => {
     if (req.body.center === "all") {
-        var centerNames= await center.findOne({
-            where: { id: req.body.center },
-          })
-        var data=await workerInfo.findAll({where: {year: req.body.year,month: req.body.month}})
+        var data=await workerInfo.findAll()
 
             var reg=0;
             var irreg=0;
@@ -1484,8 +1705,8 @@ module.exports.generatePdfworkerNum  = async (req, res) => {
             var total;
             total = reg+irreg;
             ejs.renderFile(
-                path.join(__dirname, "../views/pd/worker/workerNum", "pdf.ejs"),
-                { records: data,centerName:centerNames,totals: total,regs: reg,irregs: irreg,dirname: __dirname },
+                path.join(__dirname, "../views/pd/worker/workerNum", "pdfAll.ejs"),
+                { records: data,totals: total,regs: reg,irregs: irreg,dirname: __dirname },
                 (err, data) => {
                   if (err) {
                     console.log("error", err);
@@ -1515,7 +1736,7 @@ module.exports.generatePdfworkerNum  = async (req, res) => {
         var centerNames= await center.findOne({
             where: { id: req.body.center },
           })
-        var data=await workerInfo.findAll({where: {center_id: req.body.center,year: req.body.year,month: req.body.month}})
+        var data=await workerInfo.findAll({where: {center_id: req.body.center}})
         var reg=0;
         var irreg=0;
         data.forEach(function(row){
@@ -1567,14 +1788,11 @@ module.exports.generatePdfworkerNum  = async (req, res) => {
 module.exports.apa=async(req,res)=>{
     await center.findAll()
     .then(data => {
-        console.log("inside");
-        console.log("PDdashboard",res.locals.type,);
-        console.log("apdadata chai",data);
         res.render('pd/apa/apa', { title: 'এপিএ',success:'', centers: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/apa/apa', { title: 'এপিএ',success:'', records: err });
+        console.log("outside",err);
+
     })
      
     //  records:result
@@ -1710,8 +1928,8 @@ module.exports.loan=async(req,res)=>{
         res.render('pd/loan/loan', { title: 'ঋণ বিতরণ ও আদায় এর অগ্রগতির প্রতিবেদন',success:'', centers: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/loan/loan', { title: 'ঋণ বিতরণ ও আদায় এর অগ্রগতির প্রতিবেদন',success:'', records: err });
+        console.log("outside",err);
+
     })
      
     //  records:result
@@ -1821,8 +2039,8 @@ module.exports.specialCoconut=async(req,res)=>{
         res.render('pd/specialCoconut/specialCoconut', { title: 'বিশেষ নারিকেল কর্মসূচি',success:'', centers: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/specialCoconut/specialCoconut', { title: 'বিশেষ নারিকেল কর্মসূচি',success:'', records: err });
+        console.log("outside",err);
+
     })
      
     //  records:result
@@ -1952,8 +2170,8 @@ module.exports.revolvingFund=async(req,res)=>{
         res.render('pd/revolvingFund/revolvingFund', { title: 'রিভলভিং ফান্ড',success:'', centers: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/revolvingFund/revolvingFund', { title: 'রিভলভিং ফান্ড',success:'', records: err });
+        console.log("outside",err);
+
     })
      
     //  records:result
@@ -2079,11 +2297,11 @@ module.exports.chak1=async(req,res)=>{
     await center.findAll()
     .then(data => {
         console.log("inside");
-        res.render('pd/employee/chak1/employeeChak1', { title: 'ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য',success:'', centers: data });
+        res.render('pd/employee/chak1/employeeChak1', { title: 'ক্যাডার/নন ক্যাডার কর্মকতা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য',success:'', centers: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/employee/chak1/employeeChak1', { title: 'ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য',success:'', records: err });
+        console.log("outside",err);
+
     })
      
     //  records:result
@@ -2092,9 +2310,7 @@ module.exports.chak1=async(req,res)=>{
 
 module.exports.chak1Filter=async(req,res)=>{
     if (req.body.center === "all") {
-        await chak1.findAll({
-            where: {year: req.body.year,month:req.body.month}
-        })
+        await chak1.findAll()
         .then(data => {
             res.render('pd/employee/chak1/employeeChak1Table', {records: data} ,function(err, html) {
                 res.send(html);
@@ -2106,7 +2322,7 @@ module.exports.chak1Filter=async(req,res)=>{
     }
     else{
     await chak1.findAll({
-        where: {year: req.body.year,center_id : req.body.center,month:req.body.month}
+        where: {center_id : req.body.center}
     })
     .then(data => {
         res.render('pd/employee/chak1/employeeChak1Table', {records: data} ,function(err, html) {
@@ -2120,7 +2336,7 @@ module.exports.chak1Filter=async(req,res)=>{
 };
 
 module.exports.chak1Form=async(req,res)=>{
-    res.render('pd/employee/chak1/employeeChak1Form', { title: 'ক্যাডার/নন ক্যাডার কর্মকর্তাদের নাম ও পদবী সহ শূন্য পদের তথ্য',msg:'' ,success:'',user_id: req.session.user_id});
+    res.render('pd/employee/chak1/employeeChak1Form', { title: 'ক্যাডার/নন ক্যাডার কর্মকতা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য',msg:'' ,success:'',user_id: req.session.user_id});
 };
 
 module.exports.chak1FormPost=async(req,res)=>{
@@ -2158,13 +2374,105 @@ module.exports.chak1FormPost=async(req,res)=>{
         });
   
 };
+module.exports.chak1Edit=async(req,res)=>{
+    await chak1.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('pd/employee/chak1/employeeChak1Edit', { title: 'ক্যাডার/নন ক্যাডার কর্মকতা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য',msg:'' ,success:'',records: data});
+    })
+    .catch(err => {
+        console.log("outside",err);
+    })
+  };
+  module.exports.chak1EditPost=async(req,res)=>{
+    var center = req.body.center;
+    var porichito = req.body.porichito;
+    var kormokorta = req.body.kormokorta;
+    var nijDistrict = req.body.nijDistrict;
+    var podobi = req.body.podobi;
+    var birthDate = req.body.birthDate;
+    var firstdate = req.body.firstdate;
+    var presentDate = req.body.presentDate;
+    var pastWorkstation = req.body.pastWorkstation;
+    var comment = req.body.comment;
+
+    var user_id = req.body.user_id;
+    await chak1.update({ 
+      center: center,
+      porichito: porichito,
+      kormokorta: kormokorta,
+      nijDistrict: nijDistrict,
+      podobi: podobi,
+      birthDate: birthDate,
+      firstdate: firstdate,
+      presentDate: presentDate,
+      pastWorkstation: pastWorkstation,
+      comment: comment,
+
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        res.redirect('/pd/chak1');
+    }).catch(err => {
+        res.render('errorpage',err);
+    });
+  };
+  module.exports.chak1Delete=async(req,res)=>{
+    var chak1Delete = await chak1.findByPk(req.params.id);
+    try {
+      chak1Delete.destroy();
+        res.redirect("/pd/chak1");
+    }
+    catch{
+        res.render('errorpage',err);
+    }
+    
+  };
 module.exports.generatePdfchak1 = async (req, res) => {
+    if (req.body.center === "all") {
+        try {
+          var data= await chak1.findAll();
+              ejs.renderFile(
+                  path.join(__dirname, "../views/pd/employee/chak1/", "pdfAll.ejs"),
+                  { records: data,dirname: __dirname },
+                  (err, data) => {
+                    if (err) {
+                      console.log("error", err);
+                      res.send(err);
+                    } else {
+                      var assesPath = path.join(__dirname, "../public/");
+                      // console.log(assesPath);
+                      assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+        
+                      var options = {
+                        height: "11.25in",
+                        width: "18.5in",
+                        header: {
+                          height: "20mm",
+                        },
+                        footer: {
+                          height: "20mm",
+                        },
+                        base: "file:///" + assesPath,
+                      };
+                      res.json({ html: data });
+                    }
+                  }
+              )
+            
+            
+          } catch (e) {
+            console.log(e);
+          }
+    }
+    else{
     try {
       var centerNames= await center.findOne({
         where: { id: req.body.center },
       })
     var data= await chak1.findAll({
-        where: { year: req.body.year,month: req.body.month, center_id: req.body.center },
+        where: {  center_id: req.body.center },
       })
         ejs.renderFile(
             path.join(__dirname, "../views/pd/employee/chak1/", "pdf.ejs"),
@@ -2198,7 +2506,7 @@ module.exports.generatePdfchak1 = async (req, res) => {
     } catch (e) {
       console.log(e);
     }
-  
+    }
   };
 //chak1 controller end
 
@@ -2210,8 +2518,8 @@ module.exports.chak2=async(req,res)=>{
         res.render('pd/employee/chak2/employeeChak2', { title: 'হরটিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা',success:'', centers: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/employee/chak2/employeeChak2', { title: 'হরটিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা',success:'', records: err });
+        console.log("outside",err);
+
     })
      
     //  records:result
@@ -2220,9 +2528,7 @@ module.exports.chak2=async(req,res)=>{
 
 module.exports.chak2Filter=async(req,res)=>{
     if (req.body.center === "all") {
-        await chak2.findAll({
-            where: {year: req.body.year,month:req.body.month}
-        })
+        await chak2.findAll()
         .then(data => {
             res.render('pd/employee/chak2/employeeChak2Table', {records: data} ,function(err, html) {
                 res.send(html);
@@ -2234,7 +2540,7 @@ module.exports.chak2Filter=async(req,res)=>{
     }
     else{
     await chak2.findAll({
-        where: {year: req.body.year,center_id : req.body.center,month:req.body.month}
+        where: {center_id : req.body.center}
     })
     .then(data => {
         res.render('pd/employee/chak2/employeeChak2Table', {records: data} ,function(err, html) {
@@ -2256,7 +2562,7 @@ module.exports.chak2FormPost=async(req,res)=>{
     var grade= req.body.grade;
     var pod= req.body.pod;
     var working= req.body.working;
-    var shunno= req.body.shunno;
+    var shunno = parseInt(pod)-parseInt(working);
     var comment= req.body.comment;
     var year =req.body.year;
     var user_id =req.body.user_id;
@@ -2278,13 +2584,85 @@ module.exports.chak2FormPost=async(req,res)=>{
         });
   
 };
+
+module.exports.chak2Edit=async(req,res)=>{
+    await chak2.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside");
+        res.render('pd/employee/chak2/employeeChak2Edit', { title: 'হরটিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা',msg:'' ,success:'',records: data});
+    })
+    .catch(err => {
+        console.log("outside",err);
+    })
+  };
+  module.exports.chak2EditPost=async(req,res)=>{
+    var name = req.body.name;
+    var grade = req.body.grade;
+    var pod = req.body.pod;
+    var working = req.body.working;
+    var shunno = parseInt(pod)-parseInt(working);
+    var comment = req.body.comment;
+    var user_id = req.body.user_id;
+    await chak2.update({ 
+      name: name,
+      grade: grade,
+      pod: pod,
+      working: working,
+      shunno: shunno,
+      comment: comment,
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        res.redirect('/pd/chak2');
+    }).catch(err => {
+        res.render('errorpage',err);
+    });
+  };
 module.exports.generatePdfchak2 = async (req, res) => {
+    if (req.body.center === "all") {
+        try {
+          var data= await chak2.findAll()
+              ejs.renderFile(
+                  path.join(__dirname, "../views/pd/employee/chak2/", "pdfAll.ejs"),
+                  { records: data,dirname: __dirname },
+                  (err, data) => {
+                    if (err) {
+                      console.log("error", err);
+                      res.send(err);
+                    } else {
+                      var assesPath = path.join(__dirname, "../public/");
+                      // console.log(assesPath);
+                      assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+        
+                      var options = {
+                        height: "11.25in",
+                        width: "18.5in",
+                        header: {
+                          height: "20mm",
+                        },
+                        footer: {
+                          height: "20mm",
+                        },
+                        base: "file:///" + assesPath,
+                      };
+                      res.json({ html: data });
+                    }
+                  }
+              )
+            
+            
+          } catch (e) {
+            console.log(e);
+          }
+    }
+    else{
     try {
       var centerNames= await center.findOne({
         where: { id: req.body.center },
       })
     var data= await chak2.findAll({
-        where: { year: req.body.year, month: req.body.month,center_id: req.body.center },
+        where: {center_id: req.body.center },
       })
         ejs.renderFile(
             path.join(__dirname, "../views/pd/employee/chak2/", "pdf.ejs"),
@@ -2318,7 +2696,18 @@ module.exports.generatePdfchak2 = async (req, res) => {
     } catch (e) {
       console.log(e);
     }
-  
+}
+  };
+  module.exports.chak2Delete=async(req,res)=>{
+    var chak2Delete = await chak2.findByPk(req.params.id);
+    try {
+      chak2Delete.destroy();
+        res.redirect("/pd/chak2");
+    }
+    catch{
+        res.render('errorpage',err);
+    }
+    
   };
 //chak2 controller end
 
@@ -2330,8 +2719,8 @@ module.exports.rajossho=async(req,res)=>{
         res.render('pd/rajossho/rajossho', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির হিসাব',success:'', centers: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/rajossho/rajossho', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির হিসাব',success:'', records: err });
+        console.log("outside",err);
+
     })
      
     //  records:result
@@ -2409,8 +2798,8 @@ module.exports.rajosshoEdit=async(req,res)=>{
         res.render('pd/rajossho/rajosshoEdit', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির হিসাব ফর্ম',msg:'' ,success:'',records: data});
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/rajossho/rajosshoEdit', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির হিসাব ফর্ম',success:'', records: err });
+        console.log("outside",err);
+
     })
 };
 module.exports.rajosshoEditPost=async(req,res)=>{
@@ -2520,8 +2909,8 @@ module.exports.newRajosshoCodeTable=async(req,res)=>{
         res.render('pd/rajossho/newRajosshoCodeTable', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির কোডসমূহ',success:'', records: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/rajossho/newRajosshoCodeTable', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির কোডসমূহ',success:'', records: err });
+        console.log("outside",err);
+
     })
      
     //  records:result
@@ -2537,8 +2926,8 @@ module.exports.newRajosshoCodeTableEdit=async(req,res)=>{
         res.render('pd/rajossho/newRajosshoCodeTableEdit', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির কোডসমূহ',msg:'' ,success:'',records: data});
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/rajossho/newRajosshoCodeTableEdit', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির কোডসমূহ',success:'', records: err });
+        console.log("outside",err);
+
     })
 };
 module.exports.newRajosshoCodeTableEditPost=async(req,res)=>{
@@ -2620,8 +3009,8 @@ module.exports.expense=async(req,res)=>{
         res.render('pd/expense/expense', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী',success:'', centers: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/expense/expense', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী',success:'', records: err });
+        console.log("outside",err);
+
     })
      
     //  records:result
@@ -2629,18 +3018,38 @@ module.exports.expense=async(req,res)=>{
 };
 
 module.exports.expenseFilter=async(req,res)=>{
-    await expense.findAll({
-        where: {year: req.body.year,center_id : req.body.center}
-    })
-    .then(data => {
-        res.render('pd/expense/expenseTable', {records: data} ,function(err, html) {
-            res.send(html);
-        });
-    })
-    .catch(err => {
-        console.log(err);
-    })
-
+    if (req.body.center === "all") {
+        try {
+        var codess=await expenseCode.findAll();
+        var data=await expense.findAll()
+        res.render(
+            'pd/expense/expenseTableAll',
+            { records: data,codes:codess },
+            function (err, html) {
+              res.send(html);
+            }
+          );
+        }
+        catch(err) {
+            console.log(err);
+        }
+    }
+    else{
+        try {
+            var codess=await expenseCode.findAll();
+            var data=await expense.findAll({where: {year: req.body.year,center_id : req.body.center}});
+            res.render(
+                'pd/expense/expenseTable',
+                { records: data,codes:codess },
+                function (err, html) {
+                  res.send(html);
+                }
+              );
+            }
+            catch(err) {
+                console.log(err);
+            }
+};
 };
 
 module.exports.expenseForm=async(req,res)=>{
@@ -2705,8 +3114,8 @@ module.exports.expenseEdit=async(req,res)=>{
         res.render('pd/expense/expenseEdit', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী ফর্ম',msg:'' ,success:'',records: data});
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/expense/expenseEdit', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণীর কোডসমূহ ফর্ম',success:'', records: err });
+        console.log("outside",err);
+
     })
 };
 module.exports.expenseEditPost=async(req,res)=>{
@@ -2820,8 +3229,8 @@ module.exports.newKhorochTable=async(req,res)=>{
         res.render('pd/expense/newKhorochCodeTable', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণীর কোডসমূহ',success:'', records: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/expense/newKhorochCodeTable', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণীর কোডসমূহ',success:'', records: err });
+        console.log("outside",err);
+
     })
      
     //  records:result
@@ -2837,8 +3246,8 @@ module.exports.newKhorochTableEdit=async(req,res)=>{
         res.render('pd/expense/newKhorochCodeTableEdit', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণীর কোডসমূহ',msg:'' ,success:'',records: data});
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/expense/newKhorochCodeTableEdit', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণীর কোডসমূহ',success:'', records: err });
+        console.log("outside",err);
+
     })
 };
 module.exports.newKhorochTableEditPost=async(req,res)=>{
@@ -3498,8 +3907,8 @@ module.exports.newcropCategoryList=async(req,res)=>{
         res.render('pd/cropCategoryList/cropCategoryList', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির কোডসমূহ',success:'', mainCategorys: mainCategory,subCategorys:subCategory,biborons:biboron,jaats:jaat});
     }
     catch{
-        console.log("outside");
-        res.render('pd/cropCategoryList/cropCategoryList', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির কোডসমূহ',success:'', mainCategorys: err });
+        console.log("outside",err);
+
     }
      
     //  records:result
@@ -3512,8 +3921,8 @@ module.exports.newcropCategoryListEdit=async(req,res)=>{
         res.render('pd/cropCategoryList/cropCategoryListEdit', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির কোডসমূহ',msg:'' ,success:'',records: data});
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/cropCategoryList/cropCategoryListEdit', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির কোডসমূহ',success:'', records: err });
+        console.log("outside",err);
+
     })
 };
 module.exports.newcropCategoryListPost=async(req,res)=>{
@@ -3532,20 +3941,6 @@ module.exports.newcropCategoryListPost=async(req,res)=>{
     });
 };
 
-// dashImage controller
-// module.exports.dashImage=async(req,res)=>{
-//     await dashImage.findAll()
-//     .then(data => {
-//         console.log("inside");
-//         res.render('pd/dashImage/dashImage', { title: 'সৌর আলো ফাঁদ বিতরণ তথ্য',success:'', records: data });
-//     })
-//     .catch(err => {
-//         console.log(err);
-//     })
-     
-//     //  records:result
-
-// };
 module.exports.dashImageForm=async(req,res)=>{
     res.render('pd/dashImage/dashImageForm', { title: 'সৌর আলো ফাঁদ বিতরণ তথ্য',msg:'' ,success:'',user_id: req.session.user_id});
 };

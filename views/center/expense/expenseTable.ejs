@@ -1,5 +1,5 @@
 <%if (records.length >0){ %>
-    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+    <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
     <thead>
     <tr>
         <th>কোড নং</th>
@@ -20,7 +20,7 @@
             <th>মোট খরচ</th>
             <th>অবশিষ্ট</th>
             <th>মন্তব্য অতিরিক্ত খরচ বেতন</th>
-            <th>যোগ করুন</th>
+            <th>পরিবর্তন/মুছুন</th>
     </tr>
     </thead>
     <tbody>
@@ -44,11 +44,11 @@
                 <td><%= row.total %></td>
                 <td><%= row.baki %></td>
                 <td><%= row.comment %></td>
-                
+                <td><a class="btn btn-primary btn-xs" href="/center/expenseEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger btn-xs" href="/center/expenseDelete/<%= row.id %>"><i class="fa fa-trash"></i></a>
+                </td>
                 
                
-                <td><a class="btn btn-primary btn-xs" href="/center/expenseAdd/<%= row.id %>"><i class="fa fa-plus"></i></a>
-                </td>
             </tr>
         <% }) %>
     </tbody>
@@ -75,7 +75,6 @@
             <th>মোট খরচ</th>
             <th>অবশিষ্ট</th>
             <th>মন্তব্য অতিরিক্ত খরচ বেতন</th>
-            <th>যোগ করুন</th>
         </tr>
         </thead>
         <tbody>

@@ -1,4 +1,5 @@
 <%if (records.length >0){ %>
+    <input type="hidden" id="selectedDate" value="<%= selectedDate %>">
     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
     <thead>
     <tr>
@@ -69,6 +70,9 @@
         <% }) %>
     </tbody>
 </table>
+    <button onclick="exportToPdf()" class="btn btn-success">
+        Download PDF
+    </button>
 <% }else{ %>
     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
         <thead>
@@ -90,3 +94,18 @@
         </tbody>
     </table>
 <% } %>
+<script>
+    async function exportToPdf() {
+        const selectedDate = $("#selectedDate").val();
+        const { data } = await axios({
+            url: `/center/generatePdfTopSheet/${selectedDate}`,
+            method: "GET",
+        });
+        var mywindow = window.open("", "PRINT", "height=400,width=600");
+        mywindow.document.write(data.html);
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10*/
+        mywindow.print();
+        return true;
+    }
+</script>

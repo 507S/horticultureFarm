@@ -9,20 +9,6 @@
                         <div class="col-md-10">
                             <h1 class="text-center"><%= title %></h1>
                         </div>
-                        <div class="col-md-2">
-                            <label for="year">Choose a year:</label>
-
-                            <select id="year" name="year">
-                                <option value="">Choose year</option>
-                                <option value="2017">২০১৭-১৮</option>
-                                <option value="2018">২০১৮-১৯</option>
-                                <option value="2019">২০১৯-২০</option>
-                                <option value="2020" selected>২০২০-২১</option>
-                                <option value="2021">২০২১-২২</option>
-                                <option value="2022">২০২২-২৩</option>
-                                <option value="2023">২০২৩-২৪</option>
-                            </select>
-                        </div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-md-12">
@@ -32,15 +18,59 @@
                     </div>
 
                      <div class="table-responsive" id="output">
-
+                        <%if (records.length >0){ %>
+                            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+                            <thead>
+                            <tr>
+                                <th>ক্রমিক নং</th>
+                                <th>আইটেমের নাম</th>
+                                <th>পরিমাণ (সংখ্যা/কেজি/লিটার)</th>
+                                <th>চলতি অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
+                                <th>পরিবর্তন/মুছুন</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <% records.forEach(function(row,index){ %>
+                                    <tr>
+                                        <td><%= index+1 %></td>
+                                        <td><%= row.item %></td>
+                                        <td><%= row.amount %></td>
+                                        <td><%= row.cholti %></td>
+                                        
+                                        
+                                       
+                                        <td><a class="btn btn-primary btn-xs" href="/pd/folMoshollaEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                                            <a class="btn btn-danger btn-xs" href="/pd/folMoshollaDelete/<%= row.id %>"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                        <% }else{ %>
+                            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+                                <thead>
+                                <tr>
+                                    <th>আইটেমের নাম</th>
+                                <th>পরিমাণ (সংখ্যা/কেজি/লিটার)</th>
+                                <th>চলতি অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% records.forEach(function(row){ %>
+                                    <tr>
+                                        <td colspan="10">No data Found</td>
+                                    </tr>
+                                <% }) %>
+                                </tbody>
+                            </table>
+                        <% } %>
                     </div>
 
                     <button onclick="exportToPdf()" class="btn btn-success">
                         Download PDF
                     </button>
-                   <div id="output"></div>
+                   <!-- <div id="output"></div> -->
                     
-<!--                    <div id="loading" class="loading"><img src="{{ asset('assets/img/icon/loading.gif') }}" alt=""></div>-->
                 </div>
             </div>
         </div>
@@ -50,9 +80,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         async function exportToPdf() {
-            var year = $('#startDate').val();
-            var center = $('#center').val();
-            const { data } = await axios.post(`/pd/generatePdffolMosholla`,{year: year, center:center});
+            const { data } = await axios.post(`/pd/generatePdffolMosholla`);
             var mywindow = window.open("", "PRINT", "height=400,width=600");
             mywindow.document.write(data.html);
             mywindow.document.close(); // necessary for IE >= 10
@@ -90,53 +118,7 @@
             });
         });
     
-        $("#wrapper").load( "no url rn",function() {
-            
-            var year = $('#year').val();
-            $.ajax({
-                type: "POST",
-                url: "/pd/folMoshollaYear",
-                data: {year: year},
-                datatype: "json",
-                beforeSend: function() {
-                    // setting a timeout
-                    $('#loading').show();
-                    $('#output').hide();
-    
-                },
-                success: function (data) {
-                    $('#output').html(data);
-                    $('#tblCustomers').DataTable();
-                },
-                complete: function() {
-                    $('#loading').hide();
-                    $('#output').show();
-                }
-            });
-        });
-    
-        $('#year').on("change",function () {
-            var year = $('#year').val();
-            $.ajax({
-                type: "POST",
-                url: "/pd/folMoshollaYear",
-                data: {year: year},
-                datatype: "json",
-                beforeSend: function() {
-                    // setting a timeout
-                    $('#loading').show();
-                    $('#output').hide();
-                },
-                success: function (data) {
-                    $('#output').html(data);
-                    $('#tblCustomers').DataTable();
-                },
-                complete: function() {
-                    $('#loading').hide();
-                    $('#output').show();
-                }
-            });
-        });
+        
     
         $(document).ready(function() {
             $('#tblCustomers').DataTable();
