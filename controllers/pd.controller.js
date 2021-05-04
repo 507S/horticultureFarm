@@ -338,7 +338,7 @@ module.exports.topSheet=async(req,res)=>{
     await center.findAll()
     .then(data => {
         console.log("inside");
-        res.render('pd/topSheet/topSheet', { title: 'টপশীট',success:'', centers: data });
+        res.render('pd/topSheet/topSheet', { title: 'টপশীট (উৎপাদন)',success:'', centers: data });
     })
     .catch(err => {
         console.log("outside",err);
@@ -400,7 +400,7 @@ module.exports.topSheetBitoron = async (req, res) => {
     await center.findAll()
         .then(data => {
             console.log("inside");
-            res.render('pd/topSheet/bitoron/topSheetBitoron', { title: 'টপশীট',success:'', centers: data });
+            res.render('pd/topSheet/bitoron/topSheetBitoron', { title: 'টপশীট (বিতরণ)',success:'', centers: data });
         })
         .catch(err => {
             console.log("outside",err);

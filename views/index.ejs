@@ -520,7 +520,7 @@
                 success: function (data) {
                     $('#breed').empty();
                     if(data){
-                        $('#breed').append('<option value="none"> Choose Breed </option>');
+                        $('#breed').append('<option value="none"> জাত বাছুন </option>');
                         $.each(data, function(key, value){
                             $('#breed').append('<option value="'+value.id+'">' + value.name + '</option>');
                         });
