@@ -18,7 +18,7 @@ const {apaUddessho,apaMaan,karjokrom,suchok,ekok,suchokMaan,newKhorochCode,newRa
     winterVegFormPost,summerVeg,summerVegForm,summerVegFormPost,otherFlower,otherFlowerForm,otherFlowerFormPost,generatePdfworkerInfo,generatePdfworkerNum,generatePdfapa,generatePdfloan,generatePdfspecialCoconut,generatePdfrevolvingFund,generatePdfchak1,generatePdfchak2,generatePdfrajossho,
     seasonalFlower,seasonalFlowerForm,seasonalFlowerFormPost,workerInfo,workerInfoFilter,workerInfoForm,apaCategoryTable,uploaddashImage,workerInfoDelete,
     generatePdfcharaKolom,generatePdffolMosholla,generatePdfwinterVeg,generatePdfsummerVeg,generatePdfotherFlower,generatePdfseasonalFlower,
-    workerInfoFormPost,workerNum,workerNumFilter,monthlyProgressEdit,monthlyProgressUpdate,monthlyProgressDelete,generatePdfMonthlyProgress} = require('../controllers/pd.controller');
+    workerInfoFormPost,workerNum,workerNumFilter,monthlyProgressEdit,monthlyProgressUpdate,monthlyProgressDelete,generatePdfMonthlyProgress,generatePdfTopSheet,generatePdfTopSheetBitoron} = require('../controllers/pd.controller');
 
 
 router.get('/',allcenter);
@@ -41,9 +41,11 @@ router.post('/signups',pdsignuppost);
 
 router.get('/topSheet',topSheet);
 router.post('/topSheetFilter',topSheetFilter);
+router.post('/generatePdfTopSheet',generatePdfTopSheet);
 
 router.get('/topSheetBitoron',topSheetBitoron);
 router.post('/topSheetBitoronFilter',topSheetBitoronFilter);
+router.post('/generatePdfTopSheetBitoron',generatePdfTopSheetBitoron);
 
 router.get('/center',center);
 router.post('/centerYear',centerYear);

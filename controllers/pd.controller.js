@@ -345,7 +345,6 @@ module.exports.topSheet=async(req,res)=>{
 
     })
 };
-
 module.exports.topSheetFilter=async(req,res)=>{
     try{
         const selectedDate = req.body.year.toLowerCase();
@@ -364,7 +363,9 @@ module.exports.topSheetFilter=async(req,res)=>{
                         data.push(monthlyProg);
                     }
                 })
-            })
+            });
+
+            console.log("topsheet 1",topSheets.length)
 
             res.render('pd/topSheet/topSheetTable', {records: data , cropCatg:cropCatg} ,function(err, html) {
                 res.send(html);
@@ -391,6 +392,96 @@ module.exports.topSheetFilter=async(req,res)=>{
         console.log(e);
     }
 
+};
+module.exports.generatePdfTopSheet = async (req,res) => {
+    try{
+        const selectedDate = req.body.year.toLowerCase();
+        var data = []
+        const cropCatg = await cropCategory.findAll({
+            where: {
+                type: 'subCategory'
+            }
+        })
+        if (req.body.center === "all"){
+            const topSheets = await monthlyProgress.findAll()
+            topSheets.map((monthlyProg) => {
+                const timeList = JSON.parse(monthlyProg.timeFrame)
+                timeList.map((eachTime) => {
+                    if (eachTime.time === selectedDate){
+                        data.push(monthlyProg);
+                    }
+                })
+            })
+            console.log("topsheet 2",topSheets.length)
+
+            ejs.renderFile(
+                path.join(__dirname, "../views/pd/topSheet", "pdf.ejs"),
+                { records: topSheets, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
+                (err, data) => {
+                    if (err) {
+                        res.send(err);
+                    } else {
+                        var assesPath = path.join(__dirname, "../public/");
+                        assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+                        var options = {
+                            height: "11.25in",
+                            width: "18.5in",
+                            header: {
+                                height: "20mm",
+                            },
+                            footer: {
+                                height: "20mm",
+                            },
+                            base: "file:///" + assesPath,
+                        };
+                        res.json({ html: data });
+                    }
+                }
+            )
+        }else{
+            const topSheets = await monthlyProgress.findAll({
+                where: {center_id: req.body.center}
+            })
+            topSheets.map((monthlyProg) => {
+                const timeList = JSON.parse(monthlyProg.timeFrame)
+                timeList.map((eachTime) => {
+                    if (eachTime.time === selectedDate){
+                        data.push(monthlyProg);
+                    }
+                })
+            })
+            ejs.renderFile(
+                path.join(__dirname, "../views/pd/topSheet", "pdf.ejs"),
+                { records: topSheets, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
+                (err, data) => {
+                    if (err) {
+                        res.send(err);
+                    } else {
+                        var assesPath = path.join(__dirname, "../public/");
+                        assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+                        var options = {
+                            height: "11.25in",
+                            width: "18.5in",
+                            header: {
+                                height: "20mm",
+                            },
+                            footer: {
+                                height: "20mm",
+                            },
+                            base: "file:///" + assesPath,
+                        };
+                        res.json({ html: data });
+                    }
+                }
+            )
+        }
+
+    }
+    catch (e) {
+        console.log(e);
+    }
 };
 
 //topSheet controller end
@@ -453,6 +544,95 @@ module.exports.topSheetBitoronFilter = async (req, res) => {
     }
 
 };
+module.exports.generatePdfTopSheetBitoron = async (req,res) => {
+    try{
+        const selectedDate = req.body.year.toLowerCase();
+        var data = []
+        const cropCatg = await cropCategory.findAll({
+            where: {
+                type: 'subCategory'
+            }
+        })
+        if (req.body.center === "all"){
+            const topSheets = await monthlyProgress.findAll()
+            topSheets.map((monthlyProg) => {
+                const timeList = JSON.parse(monthlyProg.timeFrame)
+                timeList.map((eachTime) => {
+                    if (eachTime.time === selectedDate){
+                        data.push(monthlyProg);
+                    }
+                })
+            })
+
+            ejs.renderFile(
+                path.join(__dirname, "../views/pd/topSheet", "pdf.ejs"),
+                { records: topSheets, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
+                (err, data) => {
+                    if (err) {
+                        res.send(err);
+                    } else {
+                        var assesPath = path.join(__dirname, "../public/");
+                        assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+                        var options = {
+                            height: "11.25in",
+                            width: "18.5in",
+                            header: {
+                                height: "20mm",
+                            },
+                            footer: {
+                                height: "20mm",
+                            },
+                            base: "file:///" + assesPath,
+                        };
+                        res.json({ html: data });
+                    }
+                }
+            )
+        }else{
+            const topSheets = await monthlyProgress.findAll({
+                where: {center_id: req.body.center}
+            })
+            topSheets.map((monthlyProg) => {
+                const timeList = JSON.parse(monthlyProg.timeFrame)
+                timeList.map((eachTime) => {
+                    if (eachTime.time === selectedDate){
+                        data.push(monthlyProg);
+                    }
+                })
+            })
+            ejs.renderFile(
+                path.join(__dirname, "../views/pd/topSheet", "pdf.ejs"),
+                { records: topSheets, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
+                (err, data) => {
+                    if (err) {
+                        res.send(err);
+                    } else {
+                        var assesPath = path.join(__dirname, "../public/");
+                        assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+                        var options = {
+                            height: "11.25in",
+                            width: "18.5in",
+                            header: {
+                                height: "20mm",
+                            },
+                            footer: {
+                                height: "20mm",
+                            },
+                            base: "file:///" + assesPath,
+                        };
+                        res.json({ html: data });
+                    }
+                }
+            )
+        }
+
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
 //topSheetBitoron controller end
 
 //center controller
