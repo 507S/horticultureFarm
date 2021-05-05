@@ -496,7 +496,7 @@ module.exports.generatePdfTopSheetBitoron = async (req,res) => {
 
       ejs.renderFile(
           path.join(__dirname, "../views/center/topSheet/bitoron", "pdf.ejs"),
-          { records: topSheets, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
+          { records: topSheets, cropCatg: cropCatg,selectedDate:selectedDate, moment: res.locals.moment, dirname: __dirname },
           (err, data) => {
             if (err) {
               res.send(err);

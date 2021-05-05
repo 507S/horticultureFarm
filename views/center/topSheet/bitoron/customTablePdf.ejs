@@ -37,17 +37,20 @@
                 <thead>
                 <tr>
                     <th>আইটেমের নাম</th>
-                    <th>গত মাস পর্যন্ত বিতরণ  (সংখ্যা/প্যাকেট)</th>
-                    <th>চলতি মাসে বিতরণ (সংখ্যা/প্যাকেট)</th>
-                    <th>আলোচ্য মাস পর্যন্ত মোট বিতরণ  (সংখ্যা/প্যাকেট)</th>
+                    <th>গত মাস পর্যন্ত বিতরণ (সংখ্যা/প্যাকেট)</th>
+                    <th>চলতি মাসে বিতরণ(সংখ্যা/প্যাকেট)</th>
+                    <th>আলোচ্য মাস পর্যন্ত মোট বিতরণ (সংখ্যা/প্যাকেট)</th>
                 </tr>
                 </thead>
                 <tbody>
                 <% cropCatg.forEach(function(row,index){ %>
                     <%
                         const currentMonth = moment().format("MMM-YYYY").toLowerCase();
+                        var totalProductionTarget = 0;
                         var currentBitoronSum = 0;
                         var previousMonthBitoron = 0;
+                        var totalProduction = 0;
+                        var productionTargetSum = 0;
 
                         var startRange = "";
                         var endRange = "";
@@ -63,7 +66,7 @@
                         records.forEach((monthProg) => {
                             if (monthProg.subCategory === row.name){
 
-                                // ********** উৎপাদন (লক্ষ্যমাত্রা) *********
+                                // উৎপাদন (লক্ষ্যমাত্রা) *********
 
                                 // const TargetProduction = JSON.parse(monthProg.productionTarget)
                                 // TargetProduction.forEach(function(prodTarget){
@@ -72,21 +75,20 @@
                                 //     }
                                 // })
 
-                                // ********** total lokkhomatra in this economic year *****************
+                                // total lokkhomatra in this economic year
                                 // totalProductionTarget += parseInt(monthProg.productionTarget)
 
-                                // **************** total purbo month porjonto production *******************
+                                //total purbo month porjonto production
                                 const currentBitoron = JSON.parse(monthProg.bitoronCurrentMonth)
                                 currentBitoron.forEach(function(bitoronCurrent){
-                                    if ( bitoronCurrent.time === moment().format("MMM-YYYY").toLowerCase() ) {
+                                    if ( bitoronCurrent.time === selectedDate ) {
                                         currentBitoronSum += parseInt(bitoronCurrent.amount)
                                     }
-                                    else if ( moment( bitoronCurrent.time ).isAfter(startRange) &&  moment( bitoronCurrent.time ).isBefore(endRange) ){
+                                    else if ( moment( bitoronCurrent.time ).isBefore(selectedDate) && moment( bitoronCurrent.time ).isAfter(startRange) &&  moment( prodCurrent.time ).isBefore(endRange) ){
                                         previousMonthBitoron += parseInt(bitoronCurrent.amount)
                                     }
                                 })
                             }
-
                         })
                     %>
                     <tr>
@@ -105,9 +107,8 @@
                 <thead>
                 <tr>
                     <th>আইটেমের নাম</th>
-                    <th>লক্ষ্যমাত্রা (সংখ্যা/প্যাকেট)</th>
-                    <th>গত মাস পর্যন্ত বিতরণ  (সংখ্যা/প্যাকেট)</th>
-                    <th>চলতি মাসে বিতরণ (সংখ্যা/প্যাকেট)</th>
+                    <th>গত মাস পর্যন্ত বিতরণ (সংখ্যা/প্যাকেট)</th>
+                    <th>চলতি মাসে বিতরণ(সংখ্যা/প্যাকেট)</th>
                     <th>আলোচ্য মাস পর্যন্ত মোট বিতরণ (সংখ্যা/প্যাকেট)</th>
                     <th>পরিবর্তন/মুছুন</th>
                 </tr>
