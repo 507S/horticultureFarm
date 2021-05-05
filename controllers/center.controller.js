@@ -495,8 +495,8 @@ module.exports.generatePdfTopSheetBitoron = async (req,res) => {
     if (selectedDate === currentMonth) {
 
       ejs.renderFile(
-          path.join(__dirname, "../views/center/topSheet", "pdf.ejs"),
-          { records: topSheets, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
+          path.join(__dirname, "../views/center/topSheet/bitoron", "pdf.ejs"),
+          { records: topSheets, cropCatg: cropCatg,selectedDate:selectedDate, moment: res.locals.moment, dirname: __dirname },
           (err, data) => {
             if (err) {
               res.send(err);
@@ -523,7 +523,7 @@ module.exports.generatePdfTopSheetBitoron = async (req,res) => {
     } else {
 
       ejs.renderFile(
-          path.join(__dirname, "../views/center/topSheet", "customTablePdf.ejs"),
+          path.join(__dirname, "../views/center/topSheet/bitoron", "customTablePdf.ejs"),
           { records: topSheets, cropCatg: cropCatg, selectedDate: selectedDate , moment: res.locals.moment, dirname: __dirname },
           (err, data) => {
             if (err) {
