@@ -2055,6 +2055,42 @@ module.exports.apaCategoryTable=async(req,res)=>{
     //  records:result
 
 };
+module.exports.apaCodeEdit=async(req,res)=>{
+    await apaCode.findByPk(req.params.id)
+    .then(data => {
+        console.log("inside",data);
+        res.render('pd/apa/apaCodeEdit', { title: 'হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য ফর্ম',success:'', records: data });
+    })
+    .catch(err => {
+        console.log("outside",err);
+
+    })
+};
+module.exports.apaCodeEditPost=async(req,res)=>{
+    var name= req.body.name;
+    await apaCode.update({ 
+        name:name
+
+    },
+    {
+        where: {id: req.params.id}
+    }).then(data => {
+        res.redirect('/pd/apaCategoryTable');
+    }).catch(err => {
+        console.log('errorpage',err);
+    });
+};
+module.exports.apaCodeDelete=async(req,res)=>{
+    var apaCodeDelete = await apaCode.findByPk(req.params.id);
+    try {
+        apaCodeDelete.destroy();
+        res.redirect("/pd/apaCategoryTable");
+    }
+    catch{
+        console.log('errorpage',err);
+    }
+    
+};
 module.exports.generatePdfapa = async (req, res) => {
     try {
       var centerNames= await center.findOne({
@@ -4095,30 +4131,39 @@ module.exports.newcropCategoryList=async(req,res)=>{
 
 };
 module.exports.newcropCategoryListEdit=async(req,res)=>{
-    await cropCategory.findByPk(req.params.id)
-    .then(data => {
-        console.log("inside");
-        res.render('pd/cropCategoryList/cropCategoryListEdit', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির কোডসমূহ',msg:'' ,success:'',records: data});
-    })
-    .catch(err => {
+    try {
+        data=await cropCategory.findByPk(req.params.id)
+        console.log("inside",data);
+        res.render('pd/cropCategoryTable/cropCategoryTableEdit', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির কোডসমূহ',msg:'' ,success:'',records: data});
+    }
+    catch(err) {
         console.log("outside",err);
 
-    })
+    }
 };
 module.exports.newcropCategoryListPost=async(req,res)=>{
-    var code = req.body.code;
-    var upokhat= req.body.upokhat;
+    var name = req.body.name;
     await cropCategory.update({ 
-        code:code,
-        upokhat:upokhat
+        name:name,
     },
     {
         where: {id: req.params.id}
     }).then(data => {
-        res.redirect('/pd/cropCategoryListEdit');
+        res.redirect('/pd/cropCategoryTable');
     }).catch(err => {
         res.render('errorpage',err);
     });
+};
+module.exports.newcropCategoryListDelete=async(req,res)=>{
+    var newcropCategoryListDelete = await cropCategory.findByPk(req.params.id);
+    try {
+        newcropCategoryListDelete.destroy();
+        res.redirect("/pd/cropCategoryTable");
+    }
+    catch{
+        console.log('errorpage',err);
+    }
+    
 };
 
 module.exports.dashImageForm=async(req,res)=>{
