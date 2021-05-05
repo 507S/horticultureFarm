@@ -416,7 +416,7 @@ module.exports.generatePdfTopSheet = async (req,res) => {
 
             ejs.renderFile(
                 path.join(__dirname, "../views/pd/topSheet", "pdf.ejs"),
-                { records: topSheets, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
+                { records: data, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
                 (err, data) => {
                     if (err) {
                         res.send(err);
@@ -453,7 +453,7 @@ module.exports.generatePdfTopSheet = async (req,res) => {
             })
             ejs.renderFile(
                 path.join(__dirname, "../views/pd/topSheet", "pdf.ejs"),
-                { records: topSheets, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
+                { records: data, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
                 (err, data) => {
                     if (err) {
                         res.send(err);
@@ -565,8 +565,8 @@ module.exports.generatePdfTopSheetBitoron = async (req,res) => {
             })
 
             ejs.renderFile(
-                path.join(__dirname, "../views/pd/topSheet", "pdf.ejs"),
-                { records: topSheets, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
+                path.join(__dirname, "../views/pd/topSheet/bitoron", "pdf.ejs"),
+                { records: data, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
                 (err, data) => {
                     if (err) {
                         res.send(err);
@@ -602,8 +602,8 @@ module.exports.generatePdfTopSheetBitoron = async (req,res) => {
                 })
             })
             ejs.renderFile(
-                path.join(__dirname, "../views/pd/topSheet", "pdf.ejs"),
-                { records: topSheets, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
+                path.join(__dirname, "../views/pd/topSheet/bitoron", "pdf.ejs"),
+                { records: data, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
                 (err, data) => {
                     if (err) {
                         res.send(err);
