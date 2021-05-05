@@ -16,8 +16,8 @@ const {apaUddessho,apaMaan,karjokrom,suchok,ekok,suchokMaan,newKhorochCode,newRa
     charaKolom,folMoshollaEdit,folMoshollaEditPost,folMoshollaDelete,newcropCategoryList,newcropCategoryListPost,newcropCategoryListEdit,chak1Edit,chak1EditPost,chak2Edit,chak2EditPost,
     charaKolomForm,charaKolomFormPost,folMosholla,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegForm,dashImageForm,dashImageFormPost,
     winterVegFormPost,summerVeg,summerVegForm,summerVegFormPost,otherFlower,otherFlowerForm,otherFlowerFormPost,generatePdfworkerInfo,generatePdfworkerNum,generatePdfapa,generatePdfloan,generatePdfspecialCoconut,generatePdfrevolvingFund,generatePdfchak1,generatePdfchak2,generatePdfrajossho,
-    seasonalFlower,seasonalFlowerForm,seasonalFlowerFormPost,workerInfo,workerInfoFilter,workerInfoForm,apaCategoryTable,uploaddashImage,workerInfoDelete,
-    generatePdfcharaKolom,generatePdffolMosholla,generatePdfwinterVeg,generatePdfsummerVeg,generatePdfotherFlower,generatePdfseasonalFlower,
+    seasonalFlower,seasonalFlowerForm,seasonalFlowerFormPost,workerInfo,workerInfoFilter,workerInfoForm,apaCategoryTable,uploaddashImage,workerInfoDelete,apaCodeEditPost,apaCodeEdit,apaCodeDelete,
+    generatePdfcharaKolom,generatePdffolMosholla,generatePdfwinterVeg,generatePdfsummerVeg,generatePdfotherFlower,generatePdfseasonalFlower,newcropCategoryListDelete,
     workerInfoFormPost,workerNum,workerNumFilter,monthlyProgressEdit,monthlyProgressUpdate,monthlyProgressDelete,generatePdfMonthlyProgress,generatePdfTopSheet,generatePdfTopSheetBitoron} = require('../controllers/pd.controller');
 
 
@@ -136,6 +136,9 @@ router.post('/ekok',ekok);
 router.post('/suchokMaan',suchokMaan);
 router.get('/apaCategoryTable',apaCategoryTable);
 router.post('/generatePdfapa',generatePdfapa);
+router.post('/apaCodeEditPost/:id',apaCodeEditPost);
+router.get('/apaCodeEdit/:id',apaCodeEdit);
+router.get('/apaCodeDelete/:id',apaCodeDelete)
 
 router.get('/loan',loan);
 router.post('/loanFilter',loanFilter);
@@ -215,5 +218,5 @@ router.get('/cropCategoryTable',cropCategoryTable);
 router.get('/newcropCategoryList',newcropCategoryList);
 router.post('/newcropCategoryListPost/:id',newcropCategoryListPost);
 router.get('/newcropCategoryListEdit/:id',newcropCategoryListEdit);
-
+router.get('/newcropCategoryListDelete/:id',newcropCategoryListDelete)
 module.exports = router;

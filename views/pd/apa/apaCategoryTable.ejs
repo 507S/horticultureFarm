@@ -48,7 +48,9 @@
                                         <% apaCodes.forEach((row) => {
                                         if (row.type === 'apaUddessho'){
                                         %>
-                                            <span style="margin-right: 2px"> <%= row.name %> </span> |
+                                            <span style="margin-right: 2px"> <%= row.name %> </span>
+                                            <a class="fa fa-edit" href="/pd/apaCodeEdit/<%= row.id %>"></a>
+                                            <a class="fa fa-trash" href="/pd/apaCodeDelete/<%= row.id %>"></a> |
                                         <%
                                         }
                                         })
@@ -90,7 +92,9 @@
                                         <% apaCodes.forEach((row) => {
                                         if (row.type === 'apaMaan'){
                                         %>
-                                            <span style="margin-right: 2px"> <%= row.name %> </span> |
+                                            <span style="margin-right: 2px"> <%= row.name %> </span>
+                                            <a  href="/pd/apaCodeEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                                            <a  href="/pd/apaCodeDelete/<%= row.id %>"><i class="fa fa-trash"></i></a> |
                                         <%
                                         }
                                         })
@@ -132,7 +136,9 @@
                                         <% apaCodes.forEach((row) => {
                                         if (row.type === 'karjokrom'){
                                         %>
-                                            <span style="margin-right: 2px"> <%= row.name %> </span> |
+                                            <span style="margin-right: 2px"> <%= row.name %> </span>
+                                            <a  href="/pd/apaCodeEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                                            <a  href="/pd/apaCodeDelete/<%= row.id %>"><i class="fa fa-trash"></i></a> |
                                         <%
                                         }
                                         })
@@ -175,7 +181,9 @@
                                         <% apaCodes.forEach((row) => {
                                         if (row.type === 'suchok'){
                                         %>
-                                            <span style="margin-right: 2px"> <%= row.name %> </span> |
+                                            <span style="margin-right: 2px"> <%= row.name %> </span>
+                                            <a  href="/pd/apaCodeEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                                            <a  href="/pd/apaCodeDelete/<%= row.id %>"><i class="fa fa-trash"></i></a> |
                                         <%
                                         }
                                         })
@@ -217,7 +225,9 @@
                                         <% apaCodes.forEach((row) => {
                                         if (row.type === 'ekok'){
                                         %>
-                                            <span style="margin-right: 2px"> <%= row.name %> </span> |
+                                            <span style="margin-right: 2px"> <%= row.name %> </span>
+                                            <a  href="/pd/apaCodeEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                                            <a  href="/pd/apaCodeDelete/<%= row.id %>"><i class="fa fa-trash"></i></a> |
                                         <%
                                         }
                                         })
@@ -259,7 +269,9 @@
                                         <% apaCodes.forEach((row) => {
                                         if (row.type === 'suchokMaan'){
                                         %>
-                                            <span style="margin-right: 2px"> <%= row.name %> </span> |
+                                            <span style="margin-right: 2px"> <%= row.name %> </span>
+                                            <a  href="/pd/apaCodeEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                                            <a  href="/pd/apaCodeDelete/<%= row.id %>"><i class="fa fa-trash"></i></a> |
                                         <%
                                         }
                                         })

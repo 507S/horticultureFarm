@@ -28,7 +28,9 @@
                                         <% crop.forEach((row) => {
                                         if (row.type === 'mainCategory'){
                                         %>
-                                            <span style="margin-right: 2px"> <%= row.name %> </span> |
+                                            <span style="margin-right: 2px"> <%= row.name %> </span>
+                                            <a  href="/pd/newcropCategoryListEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                                            <a  href="/pd/newcropCategoryListDelete/<%= row.id %>"><i class="fa fa-trash"></i></a> |
                                         <%
                                         }
                                         })
@@ -70,7 +72,9 @@
                                         <% crop.forEach((row) => {
                                         if (row.type === 'subCategory'){
                                         %>
-                                            <span style="margin-right: 2px"> <%= row.name %> </span> |
+                                            <span style="margin-right: 2px"> <%= row.name %> </span>
+                                            <a  href="/pd/newcropCategoryListEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                                            <a  href="/pd/newcropCategoryListDelete/<%= row.id %>"><i class="fa fa-trash"></i></a> |
                                         <%
                                         }
                                         })
@@ -154,7 +158,9 @@
                                         <% crop.forEach((row) => {
                                         if (row.type === 'jat'){
                                         %>
-                                            <span  style="margin-right: 2px"> <%= row.name %> </span> |
+                                            <span  style="margin-right: 2px"> <%= row.name %> </span>
+                                            <a  href="/pd/newcropCategoryListEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                                            <a  href="/pd/newcropCategoryListDelete/<%= row.id %>"><i class="fa fa-trash"></i></a> |
                                         <%
                                         }
                                         })
