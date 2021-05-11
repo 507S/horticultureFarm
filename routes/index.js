@@ -7,7 +7,7 @@ const { fn, col, cast } = db.sequelize;
 const monthlyProgress = db.monthlyProgress;
 const rajossho = db.rajossho;
 const center  = db.center;
-const cropcategory  = db.cropcategory;
+const cropCategory  = db.cropcategory;
 
 
 const path = require("path");
@@ -19,12 +19,12 @@ var fs = require('fs');
 router.get('/', async function(req, res, next) {
   try{
         const centerinfo = await center.findAll();
-        const biboronList = await cropcategory.findAll({
+        const biboronList = await cropCategory.findAll({
             where: {
                 type: 'biboron'
             }
         });
-        const jaatList = await cropcategory.findAll({
+        const jaatList = await cropCategory.findAll({
               where: {
                   type: 'jat'
               }
@@ -138,8 +138,8 @@ router.post('/centerData', async (req,res) => {
 
 router.post('/findMojud', async(req,res) => {
     var monthly_progress = [];
-    const biboron = await cropcategory.findByPk(req.body.biboron);
-    const breed = await cropcategory.findByPk(req.body.breed);
+    const biboron = await cropCategory.findByPk(req.body.biboron);
+    const breed = await cropCategory.findByPk(req.body.breed);
 
     if ( req.body.center === "all" && req.body.biboron === "all") {
         monthly_progress = await monthlyProgress.findAll();
@@ -252,30 +252,52 @@ router.post('/findMojud', async(req,res) => {
 })
 
 router.post('/findMojudwithCenter', async (req,res) => {
-    var monthly_progress = [];
-    const biboron = await cropcategory.findByPk(req.body.biboron);
-    const breed = await cropcategory.findByPk(req.body.breed);
-    const centerList = await center.findAll({});
+    try{
+        const monthly_progress = await monthlyProgress.findAll({
+            where:{
+                biboronId : req.body.biboron,
+                breedId : req.body.breed
+            },
+            include: [
+                {
+                    model: center
+                },
+                {
+                    model: cropCategory,
+                    as: "cropCategory"
+                },
+                {
+                    model: cropCategory,
+                    as: "cropSubCategory"
+                },
+                {
+                    model: cropCategory,
+                    as: "cropBiboron"
+                },
+                {
+                    model: cropCategory,
+                    as: "cropBreed"
+                }
+            ]
+        });
 
-    monthly_progress = await monthlyProgress.findAll({
-        where:{
-            biboron : biboron.name,
-            breed : breed.name
-        }
-    });
+        res.render(
+            "mojudTable",
+            { records: monthly_progress },
+            function (err, html) {
+                if (err) {
+                    console.log(err)
+                }else{
+                    res.send(html);
+                }
 
-    res.render(
-        "mojudTable",
-        { records: monthly_progress,centerList },
-        function (err, html) {
-            if (err) {
-                console.log(err)
-            }else{
-                res.send(html);
             }
+        );
+    }
+    catch (e) {
+        console.log(e)
+    }
 
-        }
-    );
 
 
 })

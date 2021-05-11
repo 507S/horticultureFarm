@@ -24,29 +24,24 @@
                     var center_name = ""
                 %>
                 <%
-                    records.forEach((row) => {
-                        centerList.forEach(center => {
-                                if (row.center_id === center.id){
-                                    center_name = center.center
-                                    const productTotalParse = JSON.parse(row.productionTotal);
-                                    const bitoronParse = JSON.parse(row.bitoronTotal);
-                                    // const mojudParse = JSON.parse(row.mojud);
+                records.forEach((row) => {
+                    const productTotalParse = JSON.parse(row.productionTotal);
+                    const bitoronParse = JSON.parse(row.bitoronTotal);
+                    // const mojudParse = JSON.parse(row.mojud);
 
-                                    productTotalParse.forEach((prodTotal)=> {
-                                        if (prodTotal.startTime === startRange && prodTotal.endTime === endRange){
-                                            totalProduct += parseInt(prodTotal.amount)
-                                        }
-                                    })
-                                    bitoronParse.forEach((bitorTotal) => {
-                                        if (bitorTotal.startTime === startRange && bitorTotal.endTime === endRange){
-                                            totalBitoron += parseInt(bitorTotal.amount)
-                                        }
-                                    })
-                                }
-                        })
+                    productTotalParse.forEach((prodTotal)=> {
+                        if (prodTotal.startTime === startRange && prodTotal.endTime === endRange){
+                            totalProduct += parseInt(prodTotal.amount)
+                        }
+                    })
+                    bitoronParse.forEach((bitorTotal) => {
+                        if (bitorTotal.startTime === startRange && bitorTotal.endTime === endRange){
+                            totalBitoron += parseInt(bitorTotal.amount)
+                        }
+                    })
                 %>
             <tr>
-                <td> <%= center_name %></td>
+                <td> <%= row.center.center %></td>
                 <td><%= new Number(totalProduct - totalBitoron).toLocaleString("bn-BD") %></td>
             </tr>
             <%

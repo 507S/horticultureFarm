@@ -29,10 +29,7 @@ db.seasonalFlower = require("./seasonalFlower.model.js")(sequelize, Sequelize);
 db.summerVeg = require("./summerVeg.model.js")(sequelize, Sequelize);
 db.winterVeg = require("./winterVeg.model.js")(sequelize, Sequelize);
 db.workerInfo = require("./workerInfo.model.js")(sequelize, Sequelize);
-db.irregularWorker = require("./irregularWorker.model.js")(
-  sequelize,
-  Sequelize
-);
+db.irregularWorker = require("./irregularWorker.model.js")( sequelize, Sequelize );
 db.apa = require("./apa.model.js")(sequelize, Sequelize);
 db.apaCode = require("./apaCode.model.js")(sequelize, Sequelize);
 db.loan = require("./loan.model.js")(sequelize, Sequelize);
@@ -44,12 +41,27 @@ db.rajossho = require("./rajossho.model.js")(sequelize, Sequelize);
 db.rajosshoCode = require("./rajosshoCode.model.js")(sequelize, Sequelize);
 db.expenseCode = require("./expenseCode.model.js")(sequelize, Sequelize);
 db.expense = require("./expense.model.js")(sequelize, Sequelize);
-db.monthlyProgress = require("./monthlyProgress.model.js")(
-  sequelize,
-  Sequelize
-);
+db.monthlyProgress = require("./monthlyProgress.model.js")(sequelize,Sequelize);
 db.cropcategory = require("./cropcategory")(sequelize, Sequelize);
 db.podobiList = require("./podobiList.model.js")(sequelize, Sequelize);
 db.dashImage = require("./dashImage.model.js")(sequelize, Sequelize);
+
+
+
+
+
+
+db.cropcategory.hasMany(db.monthlyProgress,{ foreignKey: 'categoryId' }, {onDelete: 'CASCADE'});
+// db.monthlyProgress.belongsTo(db.cropcategory);
+db.monthlyProgress.belongsTo(db.cropcategory, { as:'cropCategory', foreignKey: 'categoryId'});
+db.cropcategory.hasMany(db.monthlyProgress,{ foreignKey: 'subCategoryId' }, {onDelete: 'CASCADE'});
+db.monthlyProgress.belongsTo(db.cropcategory, { as:'cropSubCategory', foreignKey: 'subCategoryId'});
+db.cropcategory.hasMany(db.monthlyProgress,{ foreignKey: 'biboronId' }, {onDelete: 'CASCADE'});
+db.monthlyProgress.belongsTo(db.cropcategory, { as:'cropBiboron', foreignKey: 'biboronId'});
+db.cropcategory.hasMany(db.monthlyProgress,{ foreignKey: 'breedId' }, {onDelete: 'CASCADE'});
+db.monthlyProgress.belongsTo(db.cropcategory, { as:'cropBreed', foreignKey: 'breedId'});
+
+db.center.hasMany(db.monthlyProgress,{ foreignKey: 'centerId' }, {onDelete: 'CASCADE'});
+db.monthlyProgress.belongsTo(db.center);
 
 module.exports = db;
