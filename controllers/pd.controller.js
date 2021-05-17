@@ -372,7 +372,7 @@ module.exports.topSheetFilter=async(req,res)=>{
             });
         }else{
             const topSheets = await monthlyProgress.findAll({
-                where: {center_id: req.body.center}
+                where: {centerId: req.body.center}
             })
             topSheets.map((monthlyProg) => {
                 const timeList = JSON.parse(monthlyProg.timeFrame)
@@ -412,11 +412,10 @@ module.exports.generatePdfTopSheet = async (req,res) => {
                     }
                 })
             })
-            console.log("topsheet 2",topSheets.length)
 
             ejs.renderFile(
                 path.join(__dirname, "../views/pd/topSheet", "pdf.ejs"),
-                { records: data, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
+                { records: data,selectedDate:selectedDate, cropCatg: cropCatg,centerName: "সকল সেন্টার", moment: res.locals.moment, dirname: __dirname },
                 (err, data) => {
                     if (err) {
                         res.send(err);
@@ -441,8 +440,9 @@ module.exports.generatePdfTopSheet = async (req,res) => {
             )
         }else{
             const topSheets = await monthlyProgress.findAll({
-                where: {center_id: req.body.center}
+                where: {centerId: req.body.center}
             })
+            const centerInfo = await center.findByPk(req.body.center)
             topSheets.map((monthlyProg) => {
                 const timeList = JSON.parse(monthlyProg.timeFrame)
                 timeList.map((eachTime) => {
@@ -453,7 +453,7 @@ module.exports.generatePdfTopSheet = async (req,res) => {
             })
             ejs.renderFile(
                 path.join(__dirname, "../views/pd/topSheet", "pdf.ejs"),
-                { records: data, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
+                { records: data,selectedDate:selectedDate, cropCatg: cropCatg,centerName: centerInfo.center, moment: res.locals.moment, dirname: __dirname },
                 (err, data) => {
                     if (err) {
                         res.send(err);
@@ -523,7 +523,7 @@ module.exports.topSheetBitoronFilter = async (req, res) => {
             });
         }else{
             const topSheets = await monthlyProgress.findAll({
-                where: {center_id: req.body.center}
+                where: {centerId: req.body.center}
             })
             topSheets.map((monthlyProg) => {
                 const timeList = JSON.parse(monthlyProg.timeFrame)
@@ -566,7 +566,7 @@ module.exports.generatePdfTopSheetBitoron = async (req,res) => {
 
             ejs.renderFile(
                 path.join(__dirname, "../views/pd/topSheet/bitoron", "pdf.ejs"),
-                { records: data, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
+                { records: data,selectedDate:selectedDate, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
                 (err, data) => {
                     if (err) {
                         res.send(err);
@@ -591,7 +591,7 @@ module.exports.generatePdfTopSheetBitoron = async (req,res) => {
             )
         }else{
             const topSheets = await monthlyProgress.findAll({
-                where: {center_id: req.body.center}
+                where: {centerId: req.body.center}
             })
             topSheets.map((monthlyProg) => {
                 const timeList = JSON.parse(monthlyProg.timeFrame)
@@ -603,7 +603,7 @@ module.exports.generatePdfTopSheetBitoron = async (req,res) => {
             })
             ejs.renderFile(
                 path.join(__dirname, "../views/pd/topSheet/bitoron", "pdf.ejs"),
-                { records: data, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
+                { records: data,selectedDate:selectedDate, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
                 (err, data) => {
                     if (err) {
                         res.send(err);
@@ -3509,8 +3509,7 @@ module.exports.monthlyProgress=async(req,res)=>{
         res.render('pd/monthlyProgress/monthlyProgress', { title: 'মাসিক প্রতিবেদন',success:'', centers: data });
     })
     .catch(err => {
-        console.log("outside");
-        res.render('pd/monthlyProgress/monthlyProgress', { title: 'মাসিক প্রতিবেদন',success:'', records: err });
+        console.log(err);
     })
      
     //  records:result
@@ -3540,7 +3539,7 @@ module.exports.monthlyProgressFilter=async(req,res)=>{
                 res.send(html);
             });
         }else{
-            const monthlyProgressList = await monthlyProgress.findAll({ where: {center_id : req.body.center, pd_id: req.session.user_id} });
+            const monthlyProgressList = await monthlyProgress.findAll({ where: {centerId : req.body.center, pd_id: req.session.user_id} });
 
             monthlyProgressList.map((monthlyProg) => {
                 const timeList = JSON.parse(monthlyProg.timeFrame)
@@ -3612,7 +3611,7 @@ module.exports.generatePdfMonthlyProgress = async (req, res) => {
 
         }
         else{
-            const monthlyProgressList = await monthlyProgress.findAll({ where: {center_id : req.body.center, pd_id: req.session.user_id} });
+            const monthlyProgressList = await monthlyProgress.findAll({ where: {centerId : req.body.center, pd_id: req.session.user_id} });
             const centerInfo = await center.findByPk(req.body.center)
 
             monthlyProgressList.map((monthlyProg) => {

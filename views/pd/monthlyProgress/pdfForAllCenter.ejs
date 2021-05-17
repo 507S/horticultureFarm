@@ -24,14 +24,42 @@
         .inline-block-child {
             display: inline-block;
         }
+        .row{
+            display: flex;
+            width: 100%;
+        }
+        .row > * {
+            width: 33%;
+        }
+        .info{
+            display: flex;
+            width: 100%;
+        }
+        .info > * {
+            width: 50%;
+        }
     </style>
 </head>
 <body>
 
 <div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
     <div>
+        <div class="row">
+            <div class="box">
+                <img src="https://picsum.photos/200/300" alt="">
+            </div>
+            <div class="box">
+                <h4>Horticulture Wing Center Dhaka</h4>
+            </div>
+            <div class="box">
+                <img src="https://picsum.photos/200/300" alt="">
+            </div>
+        </div>
+        <div class="info">
+            <div><p><b>সেন্টারের নাম :</b><%= centerName %></p></div>
+            <div><p><b>প্রতিবেদনের তারিখ : </b><%= moment(selectedDate).locale("bn").format("MM/YYYY") %></p></div>
+        </div>
         <h1>মাসিক প্রতিবেদন</h1>
-        <p><b>সেন্টারের নাম :</b><%= centerName %></p>
         <%if (cropCatg.length >0){ %>
             <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
                 <thead>

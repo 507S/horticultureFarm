@@ -283,7 +283,7 @@ router.post('/findMojudwithCenter', async (req,res) => {
 
         res.render(
             "mojudTable",
-            { records: monthly_progress },
+            { records: monthly_progress,selectedDate: res.locals.moment().format("MMM-YYYY").toLowerCase() },
             function (err, html) {
                 if (err) {
                     console.log(err)
