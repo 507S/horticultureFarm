@@ -53,7 +53,7 @@ module.exports.charaKolomFixed = async (req, res) => {
     const seasonalFlowers = await seasonalFlower.findAll();
     const summerVegs = await summerVeg.findAll();
     res.render("charaKolomFixed", {
-      title: "হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য",
+      title: "হর্টিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য",
       success: "",
       record1: charaKoloms,
       record2: folMoshollas,
@@ -64,7 +64,7 @@ module.exports.charaKolomFixed = async (req, res) => {
     });
   } catch (err) {
     res.render("charaKolomFixed", {
-      title: "হরটিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য",
+      title: "হর্টিকালচার সেন্টারের চারা/কলমের বিক্রয়মূল্য",
       success: "",
       record1: err,
       record2: err,
@@ -891,6 +891,7 @@ module.exports.apaFormPost = async (req, res) => {
   var work = req.body.work;
   var shuchok = req.body.shuchok;
   var ekok = req.body.ekok;
+  var gonona = req.body.gonona;
   var shuchokMaan = req.body.shuchokMaan;
   var best = parseFloat(req.body.best);
   var otiUttam = req.body.otiUttam;
@@ -923,6 +924,7 @@ module.exports.apaFormPost = async (req, res) => {
       shuchok: shuchokName.name,
       ekok: ekokName.name,
       shuchokMaan: shuchokMaanName.name,
+      gonona:gonona,
       best: best,
       otiUttam: otiUttam,
       uttam: uttam,
@@ -1649,7 +1651,7 @@ module.exports.chak2 = async (req, res) => {
     .then((data) => {
       res.render("center/employee/chak2/employeeChak2", {
         title:
-          "হরটিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা",
+          "হর্টিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা",
         success: "",
         records: data,
       });
@@ -1684,7 +1686,7 @@ module.exports.chak2Form = async (req, res) => {
     var podobiLists = await podobiList.findAll();
     res.render("center/employee/chak2/employeeChak2Form", {
       title:
-        "হরটিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা",
+        "হর্টিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা",
       msg: "",
       success: "",
       user_id: req.session.user_id,
@@ -1740,7 +1742,7 @@ module.exports.fetchPodobiList = async (req, res) => {
 module.exports.chak2Edit=async(req,res)=>{
   await chak2.findByPk(req.params.id)
   .then(data => {
-      res.render('center/employee/chak2/employeeChak2Edit', { title: 'হরটিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা',msg:'' ,success:'',records: data});
+      res.render('center/employee/chak2/employeeChak2Edit', { title: 'হর্টিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা',msg:'' ,success:'',records: data});
   })
   .catch(err => {
       console.log("outside",err);

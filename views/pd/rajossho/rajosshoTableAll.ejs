@@ -4,7 +4,6 @@
     <tr>
         <th>ক্রমিক নং</th>
             <th>সেন্টারের নাম</th>
-            <th>চলতি অর্থ বছরের প্রাপ্ত বরাদ্দ</th>
             <th>জুলাই</th>
             <th>আগস্ট</th>
             <th>সেপ্টে</th>
@@ -17,12 +16,10 @@
              <th>এপ্রিল</th>
             <th>মে</th>
             <th>জুন</th>
-            <th>মোট খরচ</th>
-            <th>অবশিষ্ট</th>
+            <th>সর্বমোট</th>
     </tr>
     </thead>
     <tbody>
-        <% var subboraddo=0 %> 
         <% var subjuly1=0 %> 
         <% var subaugust1=0 %> 
         <% var subsept1=0 %> 
@@ -36,12 +33,10 @@
         <% var submay2=0 %> 
         <% var subjune2=0 %> 
         <% var subtotal=0 %> 
-        <% var subbaki=0 %> 
         <% centers.forEach(function(center,index){ %>
             <tr>
             <td><%=index+1%></td>
             <td><%=center.center %></td>
-                <% var boraddo=0;%>
                 <% var july1=0;%>
                 <% var august1=0;%>
                 <% var sept1=0;%>
@@ -55,10 +50,8 @@
                 <% var may2=0;%>
                 <% var june2=0;%>
                 <% var total=0;%>
-                <% var baki=0;%>
                <% records.forEach(function(row){ %>
                     <% if (center.id === row.center_id){%>
-                            <%  boraddo+=row.boraddo %>
                             <%  july1+=row.july1 %>
                             <%  august1+=row.august1 %>
                             <%  sept1+=row.sept1 %>
@@ -72,12 +65,10 @@
                             <%  may2+=row.may2 %>
                             <%  june2+=row.june2 %> %>
                             <%  total+=row.total %>
-                            <%  baki+=row.baki %>
 
                     <%}}) %>
 
-                <td><%= boraddo %></td>
-                <% subboraddo+=boraddo %> 
+               
                 <td><%= july1 %></td>
                 <% subjuly1+=july1 %> 
                 <td><%= august1 %></td>
@@ -104,13 +95,11 @@
                 <% subjune2+=june2 %> 
                 <td><%= total %></td>
                 <% subtotal+=total %> 
-                <td><%= baki %></td>
-                <% subbaki+=baki %> 
+             
             </tr>
             <% }) %>
             <tr>
                 <td colspan="2">মোটঃ সকল সেন্টারের তথ্য</td>
-                <td><%= subboraddo %></td>
                 <td><%= subjuly1 %></td>
                 <td><%= subaugust1 %></td>
                 <td><%= subsept1 %></td>
@@ -124,7 +113,6 @@
                 <td><%= submay2 %></td>
                 <td><%= subjune2 %></td>
                 <td><%= subtotal %></td>
-                <td><%= subbaki %></td>
     
     
             </tr>
@@ -134,8 +122,8 @@
     <table class="table table-bordered table-striped" >
         <thead>
         <tr>
+            <th>ক্রমিক নং</th>
             <th>সেন্টারের নাম</th>
-            <th>চলতি অর্থ বছরের প্রাপ্ত বরাদ্দ</th>
             <th>জুলাই</th>
             <th>আগস্ট</th>
             <th>সেপ্টে</th>
@@ -145,11 +133,10 @@
             <th>জানু</th>
             <th>ফেব্রু</th>
             <th>মার্চ</th>
-            <th>এপ্রিল</th>
+             <th>এপ্রিল</th>
             <th>মে</th>
             <th>জুন</th>
-            <th>মোট খরচ</th>
-            <th>অবশিষ্ট</th>
+            <th>সর্বমোট</th>
         </tr>
         </thead>
         <tbody>

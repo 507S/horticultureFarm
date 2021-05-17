@@ -32,62 +32,102 @@
     <div>
         <h1>শ্রমিকের তথ্য</h1>
         <p><b>সেন্টার :</b>সকল সেন্টারের তথ্য</p>
-        <%if (records.length >0){ %>
-            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-            <thead>
-            <tr>
-                <th>ক্রমিক নং</th>
-                <th>পদবী</th>
-                <th>নাম</th>
-                <th>পিতার নাম</th>
-                <th>ঠিকানা</th>
-                <th>মোবাইল নং</th>
-                <th>যোগদানের তারিখ</th>
-                <th>এনআইডি নং</th>
-                <th>ব্যাংক একাউন্ট নং</th>
-            </tr>
-            </thead>
-            <tbody>
-                <% records.forEach(function(row,index){ %>
-                    <tr>
-                        <td><%= index+1 %></td>
-                        <td><%= row.podobi %></td>
-                        <td><%= row.name %></td>
-                        <td><%= row.fname %></td>
-                        <td><%= row.address %></td>
-                        <td><%= row.mobile %></td>
-                        <td><%= row.date %></td>
-                        <td><%= row.nid %></td>
-                        <td><%= row.bank %></td>
-                        
-                    </tr>
-                <% }) %>
-            </tbody>
-        </table>
-        <% }else{ %>
-            <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
+        <%if (centers.length >0){ %>
+            <style>
+                table, th, td {
+                  border: 1px solid black;
+                  border-collapse: collapse;
+                }
+                th, td {
+                  padding: 5px;
+                  text-align: left;    
+                }
+                </style>
+            <table class="table table-bordered table-striped" >
                 <thead>
-                <tr>
-                    <th>ক্রমিক নং</th>
-                <th>পদবী</th>
-                <th>নাম</th>
-                <th>পিতার নাম</th>
-                <th>ঠিকানা</th>
-                <th>মোবাইল নং</th>
-                <th>যোগদানের তারিখ</th>
-                <th>এনআইডি নং</th>
-                <th>ব্যাংক একাউন্ট নং</th>
-                </tr>
-                </thead>
-                <tbody>
-                <% records.forEach(function(row){ %>
                     <tr>
-                        <td colspan="10">No data Found</td>
+                        <th>ক্রমিক নং</th>
+                        <th>সেন্টারের নাম</th>
+                        <th>পদবী</th>
+                        <th>নাম</th>
+                        <th>পিতার নাম</th>
+                        <th>ঠিকানা</th>
+                        <th>মোবাইল নং</th>
+                        <th>যোগদানের তারিখ</th>
+                        <th>এনআইডি নং</th>
+                        <th>ব্যাংক একাউন্ট নং</th>
                     </tr>
-                <% }) %>
-                </tbody>
-            </table>
-        <% } %>
+                    </thead>
+                    <tbody>
+                        <% centers.forEach(function(center,index){ %>
+                            <% var indexes=0%>
+                            <% var centerIndex=0;%>
+                            <% workerinfos.forEach(function(row){ %>
+                                <% if (center.id === row.center_id){%>
+                                    <%  centerIndex +=1;%>
+                                <%}}) %>  
+                                <% workerinfos.forEach(function(row){ %>
+                                    <% if (center.id === row.center_id){%>
+                                        <% if (indexes === 0){%>
+                                        <tr>
+                                            <td rowspan="<%=centerIndex%>"><%=index+1%></td>
+                                            <td rowspan="<%=centerIndex%>"><%=center.center %></td>
+                                        <td><%= row.podobi %></td>
+                                        <td><%= row.name %></td>
+                                        <td><%= row.fname %></td>
+                                        <td><%= row.address %></td>
+                                        <td><%= row.mobile %></td>
+                                        <td><%= row.date %></td>                                              
+                                        <td><%= row.nid %></td>
+                                        <td><%= row.bank %></td>
+                                  
+                                    </tr>  
+                                    <% indexes+=1%>
+                
+                                        <%}else{%>
+                                            <tr>
+                                            <td><%= row.podobi %></td>
+                                            <td><%= row.name %></td>
+                                            <td><%= row.fname %></td>
+                                            <td><%= row.address %></td>
+                                            <td><%= row.mobile %></td>
+                                            <td><%= row.date %></td>                                              
+                                            <td><%= row.nid %></td>
+                                            <td><%= row.bank %></td>
+                                         
+                                        </tr>  
+                                        <%} %>
+                                    <%}}) %>
+                                
+                        <% }) %>
+                    </tbody>
+                </table>
+                <% }else{ %>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>ক্রমিক নং</th>
+                            <th>সেন্টারের নাম</th>
+                
+                        <th>পদবী</th>
+                        <th>নাম</th>
+                        <th>পিতার নাম</th>
+                        <th>ঠিকানা</th>
+                        <th>মোবাইল নং</th>
+                        <th>যোগদানের তারিখ</th>
+                        <th>এনআইডি নং</th>
+                        <th>ব্যাংক একাউন্ট নং</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% centers.forEach(function(center){ %>
+                            <tr>
+                                <td colspan="10">No data Found</td>
+                            </tr>
+                        <% }) %>
+                        </tbody>
+                    </table>
+                <% } %>
     </div>
 </div>
 
