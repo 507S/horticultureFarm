@@ -1,0 +1,71 @@
+<%if (podobiLists.length >0){ %>
+    <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
+    <thead>
+    <tr>
+        <th>ক্রমিক নং</th>
+        <th>পদের নাম</th>
+        <th>গ্রেড</th>
+        <th>মঞ্জুরীকৃত পদ</th>
+        <th>কর্মরত</th>
+        <th>শুন্যপদ</th>
+    </tr>
+    </thead>
+    <tbody>
+        <% var subpod=0 %> 
+        <% var subworking=0 %> 
+        <% var subshunno=0 %> 
+        <% podobiLists.forEach(function(podobiList,index){ %>
+            <tr>
+                <td><%=index+1%></td>
+                <td><%=podobiList.podobi %></td>
+                <td><%=podobiList.grade %></td>
+                <% var pod=0;%>
+                <% var working=0;%>
+                <% var shunno=0;%>
+               <% chak2s.forEach(function(row){ %>
+                    <% if (podobiList.grade === row.grade){%>
+                            <%  pod+=Number(row.pod) %>
+                            <%  working+=Number(row.working) %>
+                        <%shunno = pod-working;%>
+                    <%}}) %>
+
+                <td><%= pod %></td>
+                <% subpod+=pod %> 
+                <td><%= working %></td>
+                <% subworking+=working %> 
+                <td><%= shunno %></td>
+                <% subshunno+=shunno %> 
+            </tr> 
+        <% }) %>
+        <tr>
+            <td colspan="3">মোটঃ সকল সেন্টারের তথ্য</td>
+            <td><%= subpod %></td>
+            <td><%= subworking %></td>
+            <td><%= subshunno %></td>
+
+
+        </tr>
+            
+    </tbody>
+</table>
+<% }else{ %>
+    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th>পদের নাম</th>
+        <th>গ্রেড</th>
+        <th>মঞ্জুরীকৃত পদ</th>
+        <th>কর্মরত</th>
+        <th>শুন্যপদ</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <% podobiLists.forEach(function(row){ %>
+            <tr>
+                <td colspan="10">No data Found</td>
+            </tr>
+        <% }) %>
+        </tbody>
+    </table>
+<% } %>

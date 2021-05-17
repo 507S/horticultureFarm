@@ -33,30 +33,61 @@
         <h1>শ্রমিকের সংখ্যা</h1>
         <p><b>সেন্টার :</b>সকল সেন্টারের তথ্য</p>
 
-        <%if (records.length >0){ %>
+        <%if (centers.length >0){ %>
             <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
             <thead>
             <tr>
+                <th>ক্রমিক নং</th>
+                <th>সেন্টারের নাম</th>
                 <th>নিয়মিত শ্রমিকের সংখ্যা</th>
                 <th>অনিয়মিত শ্রমিকের সংখ্যা</th>
                 <th>মোট</th>
             </tr>
             </thead>
             <tbody>
+                <% var subreg=0 %> 
+                <% var subirreg=0 %> 
+                <% var subtotal=0 %> 
+                <% centers.forEach(function(center,index){ %>
                     <tr>
-                        <td><%= regs %></td>
-                        <td><%= irregs %></td>
-                        <td><%= totals %></td>
-                        
-                        
-                       
-                    </tr>
+                        <td><%=index+1%></td>
+                        <td><%=center.center %></td>
+                        <% var reg=0;%>
+                        <% var irreg=0;%>
+                        <% var total=0;%>
+                       <% workerinfos.forEach(function(row){ %>
+                            <% if (center.id === row.center_id){%>
+                                <%  if(row.regularWorker !== 0){%>
+                                    <%  reg+=1} %>
+                                <%if(row.irregularWorker !== 0){%>
+                                    <%  irreg+=1} %>
+                                <%total = reg+irreg;%>
+                            <%}}) %>
+        
+                        <td><%= reg %></td>
+                        <% subreg+=reg %> 
+                        <td><%= irreg %></td>
+                        <% subirreg+=irreg %> 
+                        <td><%= total %></td>
+                        <% subtotal+=total %> 
+                    </tr> 
+                <% }) %>
+                <tr>
+                    <td colspan="2">মোটঃ সকল সেন্টারের তথ্য</td>
+                    <td><%= subreg %></td>
+                    <td><%= subirreg %></td>
+                    <td><%= subtotal %></td>
+        
+        
+                </tr>
+                    
             </tbody>
         </table>
         <% }else{ %>
             <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
                 <thead>
                 <tr>
+                    <th>সেন্টারের নাম</th>
                     <th>নিয়মিত শ্রমিকের সংখ্যা</th>
                     <th>অনিয়মিত শ্রমিকের সংখ্যা</th>
                     <th>মোট</th>
@@ -64,7 +95,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <% records.forEach(function(row){ %>
+                <% centers.forEach(function(row){ %>
                     <tr>
                         <td colspan="10">No data Found</td>
                     </tr>

@@ -1,0 +1,99 @@
+<%if (centers.length >0){ %>
+    <style>
+        table, th, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+        }
+        th, td {
+          padding: 5px;
+          text-align: left;    
+        }
+        </style>
+    <table class="table table-bordered table-striped" >
+    <thead>
+    <tr>
+        <th>ক্রমিক নং</th>
+        <th>হর্টিকালচার সেন্টারের নাম</th>
+        <th>পরিচিতি নং</th>
+        <th>কর্মকর্তার নাম ও মোবাইল নং</th>
+        <th>নিজ জেলা</th>
+        <th>পদবী</th>
+        <th>জন্ম তারিখ</th>
+        <th>চাকুরীতে প্রথম যোগদানের তারিখ</th>
+        <th>বর্তমান কর্মস্থলে যোগদানের তারিখ</th>
+        <th>পূর্ববর্তী কর্মস্থল ও যোগদানের তারিখ</th>
+        <th>মন্তব্য</th>
+    </tr>
+    </thead>
+    <tbody>
+        <% centers.forEach(function(center,index){ %>
+            <% var indexes=0%>
+            <% var centerIndex=0;%>
+            <% chak1s.forEach(function(row){ %>
+                <% if (center.id === row.center_id){%>
+                    <%  centerIndex +=1;%>
+                <%}}) %>  
+                <% chak1s.forEach(function(row){ %>
+                    <% if (center.id === row.center_id){%>
+                        <% if (indexes === 0){%>
+                        <tr>
+                            <td rowspan="<%=centerIndex%>"><%=index+1%></td>
+                            <td rowspan="<%=centerIndex%>"><%=center.center %></td>
+                            <td><%= row.porichito %></td>
+                            <td><%= row.kormokorta %></td>
+                            <td><%= row.nijDistrict %></td>
+                            <td><%= row.podobi %></td>
+                            <td><%= row.birthDate %></td>
+                            <td><%= row.firstdate %></td>
+                            <td><%= row.presentDate %></td>
+                            <td><%= row.pastWorkstation %></td>
+                            <td><%= row.comment %></td>
+                          
+                        </td>
+                    </tr>  
+                    <% indexes+=1%>
+
+                        <%}else{%>
+                            <tr>
+                                <td><%= row.porichito %></td>
+                                <td><%= row.kormokorta %></td>
+                                <td><%= row.nijDistrict %></td>
+                                <td><%= row.podobi %></td>
+                                <td><%= row.birthDate %></td>
+                                <td><%= row.firstdate %></td>
+                                <td><%= row.presentDate %></td>
+                                <td><%= row.pastWorkstation %></td>
+                                <td><%= row.comment %></td>
+                              
+                        </tr>  
+                        <%} %>
+                    <%}}) %>
+                
+        <% }) %>
+    </tbody>
+</table>
+<% }else{ %>
+    <table class="table table-bordered table-striped" >
+        <thead>
+        <tr>
+            <th>হর্টিকালচার সেন্টারের নাম</th>
+            <th>পরিচিতি নং</th>
+            <th>কর্মকর্তার নাম ও মোবাইল নং</th>
+            <th>নিজ জেলা</th>
+            <th>পদবী</th>
+            <th>জন্ম তারিখ</th>
+            <th>চাকুরীতে প্রথম যোগদানের তারিখ</th>
+            <th>বর্তমান কর্মস্থলে যোগদানের তারিখ</th>
+            <th>পূর্ববর্তী কর্মস্থল ও যোগদানের তারিখ</th>
+            <th>মন্তব্য</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% records.forEach(function(row){ %>
+            <tr>
+                <td colspan="10">No data Found</td>
+            </tr>
+        <% }) %>
+        </tbody>
+    </table>
+<% } %>

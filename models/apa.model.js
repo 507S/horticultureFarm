@@ -20,6 +20,9 @@ module.exports = (sequelize, Sequelize) => {
       ekok: {
         type: Sequelize.STRING
       },
+      gonona: {
+        type: Sequelize.STRING
+      },
       shuchokMaan: {
         type: Sequelize.STRING
       },

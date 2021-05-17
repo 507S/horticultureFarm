@@ -14,7 +14,7 @@ const {apaUddessho,apaMaan,karjokrom,suchok,ekok,suchokMaan,newKhorochCode,newRa
     charaKolomEdit,charaKolomEditPost,charaKolomDelete,winterVegEdit,winterVegEditPost,winterVegDelete,summerVegEdit,summerVegEditPost,summerVegDelete,generatePdfexpense,
     otherFlowerEdit,otherFlowerEditPost,otherFlowerDelete,seasonalFlowerEdit,seasonalFlowerEditPost,seasonalFlowerDelete,podobiListForm,cropCategoryTable,
     charaKolom,folMoshollaEdit,folMoshollaEditPost,folMoshollaDelete,newcropCategoryList,newcropCategoryListPost,newcropCategoryListEdit,chak1Edit,chak1EditPost,chak2Edit,chak2EditPost,
-    charaKolomForm,charaKolomFormPost,folMosholla,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegForm,dashImageForm,dashImageFormPost,
+    charaKolomForm,charaKolomFormPost,folMosholla,folMoshollaForm,folMoshollaFormPost,winterVeg,winterVegForm,dashImageForm,dashImageFormPost,gonona,
     winterVegFormPost,summerVeg,summerVegForm,summerVegFormPost,otherFlower,otherFlowerForm,otherFlowerFormPost,generatePdfworkerInfo,generatePdfworkerNum,generatePdfapa,generatePdfloan,generatePdfspecialCoconut,generatePdfrevolvingFund,generatePdfchak1,generatePdfchak2,generatePdfrajossho,
     seasonalFlower,seasonalFlowerForm,seasonalFlowerFormPost,workerInfo,workerInfoFilter,workerInfoForm,apaCategoryTable,uploaddashImage,workerInfoDelete,apaCodeEditPost,apaCodeEdit,apaCodeDelete,
     generatePdfcharaKolom,generatePdffolMosholla,generatePdfwinterVeg,generatePdfsummerVeg,generatePdfotherFlower,generatePdfseasonalFlower,newcropCategoryListDelete,
@@ -133,6 +133,7 @@ router.post('/apaMaan',apaMaan);
 router.post('/karjokrom',karjokrom);
 router.post('/suchok',suchok);
 router.post('/ekok',ekok);
+router.post('/gonona',gonona);
 router.post('/suchokMaan',suchokMaan);
 router.get('/apaCategoryTable',apaCategoryTable);
 router.post('/generatePdfapa',generatePdfapa);
