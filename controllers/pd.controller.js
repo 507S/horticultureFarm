@@ -566,7 +566,7 @@ module.exports.generatePdfTopSheetBitoron = async (req,res) => {
 
             ejs.renderFile(
                 path.join(__dirname, "../views/pd/topSheet/bitoron", "pdf.ejs"),
-                { records: data,selectedDate:selectedDate, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
+                { records: data,selectedDate:selectedDate, cropCatg: cropCatg,centerName: "সকল সেন্টার", moment: res.locals.moment, dirname: __dirname },
                 (err, data) => {
                     if (err) {
                         res.send(err);
@@ -593,6 +593,7 @@ module.exports.generatePdfTopSheetBitoron = async (req,res) => {
             const topSheets = await monthlyProgress.findAll({
                 where: {centerId: req.body.center}
             })
+            const centerInfo = await center.findByPk(req.body.center)
             topSheets.map((monthlyProg) => {
                 const timeList = JSON.parse(monthlyProg.timeFrame)
                 timeList.map((eachTime) => {
@@ -603,7 +604,7 @@ module.exports.generatePdfTopSheetBitoron = async (req,res) => {
             })
             ejs.renderFile(
                 path.join(__dirname, "../views/pd/topSheet/bitoron", "pdf.ejs"),
-                { records: data,selectedDate:selectedDate, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
+                { records: data,selectedDate:selectedDate, cropCatg: cropCatg,centerName: centerInfo.center, moment: res.locals.moment, dirname: __dirname },
                 (err, data) => {
                     if (err) {
                         res.send(err);

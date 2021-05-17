@@ -24,14 +24,24 @@
         .inline-block-child {
             display: inline-block;
         }
+        .row{
+            display: flex;
+            width: 100%;
+        }
+        .row > * {
+            width: 50%;
+        }
     </style>
 </head>
 <body>
 
 <div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
     <div>
+        <div class="row">
+            <div><p><b>সেন্টারের নাম :</b><%= centerName %></p></div>
+            <div><p><b>প্রতিবেদনের তারিখ : </b><%= moment(selectedDate).locale("bn").format("MM/YYYY") %></p></div>
+        </div>
         <h1>মাসিক টপশীট (উৎপাদন)</h1>
-        <div><p><b>প্রতিবেদনের তারিখ : </b><%= moment(selectedDate).locale("bn").format("MM/YYYY") %></p></div>
         <%if (records.length >0){ %>
             <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
                 <thead>
