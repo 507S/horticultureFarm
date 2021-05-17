@@ -129,7 +129,7 @@ module.exports.centerDashboard = async (req, res) => {
   attributes: ['id', 'title', 'image', 'createdAt', 'updatedAt']})
     const monthly_progress = await monthlyProgress.findAll({
       where: {
-        center_id: req.session.user_id,
+        centerId: req.session.user_id,
       },
     });
     const rajosshos = await rajossho.findAll({
@@ -345,7 +345,7 @@ module.exports.topSheetYear = async (req, res) => {
       where: { type: "subCategory" },
     });
     const topSheets = await monthlyProgress.findAll({
-      where: { center_id: req.session.user_id },
+      where: { centerId: req.session.user_id },
     });
 
     if (selectedDate === currentMonth) {
@@ -378,7 +378,7 @@ module.exports.generatePdfTopSheet = async (req,res) => {
       where: { type: "subCategory" },
     });
     const topSheets = await monthlyProgress.findAll({
-      where: { center_id: req.session.user_id },
+      where: { centerId: req.session.user_id },
     });
 
     if (selectedDate === currentMonth) {
@@ -456,7 +456,7 @@ module.exports.topSheetBitoronYear = async (req, res) => {
       where: { type: "subCategory" },
     });
     const topSheets = await monthlyProgress.findAll({
-      where: { center_id: req.session.user_id },
+      where: { centerId: req.session.user_id },
     });
 
     if (selectedDate === currentMonth) {
@@ -489,7 +489,7 @@ module.exports.generatePdfTopSheetBitoron = async (req,res) => {
       where: { type: "subCategory" },
     });
     const topSheets = await monthlyProgress.findAll({
-      where: { center_id: req.session.user_id },
+      where: { centerId: req.session.user_id },
     });
 
     if (selectedDate === currentMonth) {
@@ -2697,7 +2697,28 @@ module.exports.monthlyProgressYear = async (req, res) => {
 
     var data = [];
     const allMonthlyProgress = await monthlyProgress.findAll({
-      where: { center_id: req.session.user_id },
+      where: { centerId: req.session.user_id },
+      include: [
+        {
+          model: center
+        },
+        {
+          model: cropCategory,
+          as: "cropCategory"
+        },
+        {
+          model: cropCategory,
+          as: "cropSubCategory"
+        },
+        {
+          model: cropCategory,
+          as: "cropBiboron"
+        },
+        {
+          model: cropCategory,
+          as: "cropBreed"
+        }
+      ]
     });
     allMonthlyProgress.map((monthlyProg, key) => {
       const timeList = JSON.parse(monthlyProg.timeFrame);
@@ -2736,7 +2757,7 @@ module.exports.generatePdfMonthlyProgress = async (req, res) => {
 
     var data = [];
     const allMonthlyProgress = await monthlyProgress.findAll({
-      where: { center_id: req.session.user_id },
+      where: { centerId: req.session.user_id },
     });
     allMonthlyProgress.map((monthlyProg, key) => {
       const timeList = JSON.parse(monthlyProg.timeFrame);
@@ -2853,7 +2874,7 @@ module.exports.monthlyProgressFormPost = async (req, res) => {
       subCategory: subCategoryName.name,
       biboron: biboronName.name,
       breed: breedName.name,
-      center_id: user_id,
+      centerId: user_id,
     },
   });
 
@@ -2948,7 +2969,11 @@ module.exports.monthlyProgressFormPost = async (req, res) => {
         deadWriteup: JSON.stringify(currentDeadWriteup),
         comment: JSON.stringify(currentComment),
         timeFrame: JSON.stringify(time),
-        center_id: user_id,
+        categoryId: category,
+        subCategoryId: subCategory,
+        biboronId: biboron,
+        breedId: breed,
+        centerId: user_id,
         pd_id: centerInfo.pd_id,
       })
       .then((data) => {

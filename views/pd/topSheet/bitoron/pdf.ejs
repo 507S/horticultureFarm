@@ -24,12 +24,23 @@
         .inline-block-child {
             display: inline-block;
         }
+        .row{
+            display: flex;
+            width: 100%;
+        }
+        .row > * {
+            width: 50%;
+        }
     </style>
 </head>
 <body>
 
 <div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
     <div>
+        <div class="row">
+            <div><p><b>সেন্টারের নাম :</b><%= centerName %></p></div>
+            <div><p><b>প্রতিবেদনের তারিখ : </b><%= moment(selectedDate).locale("bn").format("MM/YYYY") %></p></div>
+        </div>
         <h1>মাসিক টপশীট (বিতরণ)</h1>
         <%if (records.length >0){ %>
             <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
@@ -37,7 +48,7 @@
                 <tr>
                     <th>আইটেমের নাম</th>
                     <th>গত মাস পর্যন্ত উৎপাদন (সংখ্যা/প্যাকেট)</th>
-                    <th>চলতি মাসে উতপাদন(সংখ্যা/প্যাকেট)</th>
+                    <th>চলতি মাসে উৎপাদন(সংখ্যা/প্যাকেট)</th>
                     <th>আলোচ্য মাস পর্যন্ত মোট উৎপাদন (সংখ্যা/প্যাকেট)</th>
                 </tr>
                 </thead>
@@ -107,7 +118,7 @@
                 <tr>
                     <th> আইটেমের নাম </th>
                     <th> গত মাস পর্যন্ত উৎপাদন (সংখ্যা/প্যাকেট)</th>
-                    <th>চলতি মাসে উতপাদন(সংখ্যা/প্যাকেট)</th>
+                    <th>চলতি মাসে উৎপাদন(সংখ্যা/প্যাকেট)</th>
                     <th>আলোচ্য মাস পর্যন্ত মোট উৎপাদন (সংখ্যা/প্যাকেট)</th>
                     <th>পরিবর্তন/মুছুন</th>
                 </tr>

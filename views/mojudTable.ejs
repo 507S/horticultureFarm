@@ -7,47 +7,103 @@
         </tr>
         </thead>
         <tbody>
-                <%
-                    var startRange = "";
-                    var endRange = "";
-                    if ( moment().format("M") < 7){
-                        startRange = "jul"+"-"+moment().subtract(1, "year").format('yyyy')
-                        endRange = "jul"+"-"+moment().format('yyyy')
-                    }else{
-                        startRange = "jul"+"-"+moment().format('yyyy')
-                        endRange = "jul"+"-"+moment().add(1, "year").format('yyyy')
-                    }
 
-                    var totalProduct = 0;
-                    var totalBitoron = 0;
-                    var totalMojud = 0;
-                    var center_name = ""
-                %>
-                <%
-                    records.forEach((row) => {
-                        centerList.forEach(center => {
-                                if (row.center_id === center.id){
-                                    center_name = center.center
-                                    const productTotalParse = JSON.parse(row.productionTotal);
-                                    const bitoronParse = JSON.parse(row.bitoronTotal);
-                                    // const mojudParse = JSON.parse(row.mojud);
+                <% records.forEach((row) => {  %>
+                    <%
+                        const currentMonth = selectedDate
+                        var startRange = "";
+                        var endRange = "";
 
-                                    productTotalParse.forEach((prodTotal)=> {
-                                        if (prodTotal.startTime === startRange && prodTotal.endTime === endRange){
-                                            totalProduct += parseInt(prodTotal.amount)
-                                        }
-                                    })
-                                    bitoronParse.forEach((bitorTotal) => {
-                                        if (bitorTotal.startTime === startRange && bitorTotal.endTime === endRange){
-                                            totalBitoron += parseInt(bitorTotal.amount)
-                                        }
-                                    })
-                                }
+                        var prevEconomicStart = "";
+                        var prevEconomicEnd = "";
+
+                        if (moment().format("M") < 7){
+                            startRange = "jul"+"-"+moment().subtract(1, "year").format('yyyy')
+                            endRange = "jul"+"-"+moment().format('yyyy')
+                        }else{
+                            startRange = "jul"+"-"+moment().format('yyyy')
+                            endRange = "jul"+"-"+moment().add(1, "year").format('yyyy')
+                        }
+
+
+                        // Previous Economic year
+
+                        if (moment().format("M") < 7){
+                            prevEconomicStart = "jul"+"-"+moment().subtract(2, "year").format('yyyy')
+                            prevEconomicEnd = "jul"+"-"+moment().subtract(1, "year").format('yyyy')
+                        }else{
+                            prevEconomicStart = "jul"+"-"+moment().subtract(1, "year").format('yyyy')
+                            prevEconomicEnd = "jul"+"-"+moment().format('yyyy')
+                        }
+
+                        // current production (  উৎপাদন  )*******
+                        var currentProductionSum = 0;
+                        var previousMonthProduction = 0;
+                        const currentProd = JSON.parse(row.productionCurrent)
+                        currentProd.forEach(function(prodCurrent){
+                            if ( prodCurrent.time === selectedDate ) {
+                                currentProductionSum += parseInt(prodCurrent.amount)
+                            }
+                            else if ( moment( prodCurrent.time ).isBefore(selectedDate) && moment( prodCurrent.time ).isSameOrAfter(startRange) &&  moment( prodCurrent.time ).isSameOrBefore(endRange) ){
+                                previousMonthProduction += parseInt(prodCurrent.amount)
+                            }
                         })
-                %>
+
+
+                        //ডিএই চালানে প্রাপ্তি (চলতি মাস) *********
+                        var daePraptiSum = 0;
+                        const currentDaePrapti = JSON.parse(row.daePrapti)
+                        currentDaePrapti.forEach(function(daePraptiCurrent){
+                            if ( daePraptiCurrent.time === selectedDate ) {
+                                daePraptiSum += parseInt(daePraptiCurrent.amount)
+                            }
+                        })
+
+                        // পূর্ব বছরের জের *********
+                        var prevYearJer = 0;
+                        currentDaePrapti.forEach(function(daePraptiCurrent){
+                            if ( moment( daePraptiCurrent.time ).isAfter(prevEconomicStart) &&  moment( daePraptiCurrent.time ).isBefore(prevEconomicEnd) ) {
+                                prevYearJer += parseInt(daePraptiCurrent.amount)
+                            }
+                        })
+
+                        //  বিতরণ ********
+                        var currentBitoronSum = 0;
+                        var previousMonthBitoronSum = 0;
+                        const currBitoron = JSON.parse(row.bitoronCurrentMonth)
+                        currBitoron.forEach(function(BitoCurrent){
+                            if ( BitoCurrent.time === selectedDate ) {
+                                currentBitoronSum += parseInt(BitoCurrent.amount)
+                            }
+                            else if ( moment( BitoCurrent.time ).isBefore(selectedDate) && moment( BitoCurrent.time ).isAfter(startRange) &&  moment( BitoCurrent.time ).isBefore(endRange) ){
+                                previousMonthBitoronSum += parseInt(BitoCurrent.amount)
+                            }
+                        })
+
+
+                        // ডিএই চালানে প্রদান *******
+                        var currentDaeProdanSum = 0;
+                        const currDaeProdan = JSON.parse(row.daeProdan)
+                        currDaeProdan.forEach(function(DaeProdanCurrent){
+                            if ( DaeProdanCurrent.time === selectedDate ) {
+                                currentDaeProdanSum += parseInt(DaeProdanCurrent.amount)
+                            }
+                        })
+
+                        // মৃত/বিনষ্ট ********
+                        var currentMritoSum = 0;
+                        const currMrito = JSON.parse(row.deadWriteup)
+                        currMrito.forEach(function(MritoCurrent){
+                            if ( MritoCurrent.time === selectedDate ) {
+                                currentMritoSum += parseInt(MritoCurrent.amount)
+                            }
+                        })
+
+
+                    %>
             <tr>
-                <td> <%= center_name %></td>
-                <td><%= new Number(totalProduct - totalBitoron).toLocaleString("bn-BD") %></td>
+                <td> <%= row.center.center %></td>
+                <td><%= new Number((currentProductionSum + previousMonthProduction + daePraptiSum + prevYearJer) - (currentBitoronSum + previousMonthBitoronSum + currentDaeProdanSum + currentMritoSum)).toLocaleString("bn-BD") %></td>
             </tr>
             <%
                 });

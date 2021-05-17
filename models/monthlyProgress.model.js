@@ -1,3 +1,6 @@
+var Center = require("./center.model");
+var Cropcategory = require("./cropcategory")
+
 module.exports = (sequelize, Sequelize) => {
     const monthlyProgress = sequelize.define("monthlyprogress", {
       id: {
@@ -51,8 +54,40 @@ module.exports = (sequelize, Sequelize) => {
       timeFrame: {
         type: Sequelize.TEXT('long')
       },
-      center_id: {
-        type: Sequelize.INTEGER
+      categoryId:{
+        type: Sequelize.INTEGER,
+        reference:{
+          model: Cropcategory,
+          key: 'id'
+        }
+      },
+      subCategoryId:{
+        type: Sequelize.INTEGER,
+        reference:{
+          model: Cropcategory,
+          key: 'id'
+        }
+      },
+      biboronId:{
+        type: Sequelize.INTEGER,
+        reference:{
+          model: Cropcategory,
+          key: 'id'
+        }
+      },
+      breedId:{
+        type: Sequelize.INTEGER,
+        reference:{
+          model: Cropcategory,
+          key: 'id'
+        }
+      },
+      centerId: {
+        type: Sequelize.INTEGER,
+        reference:{
+          model: Center,
+          key: 'id'
+        }
       },
       pd_id: {
         type: Sequelize.INTEGER
