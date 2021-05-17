@@ -225,8 +225,8 @@
                         <td><%= new Number(totalBitoronSum).toLocaleString("bn-BD") %></td>
                         <td><%= new Number(currentDaeProdanSum).toLocaleString("bn-BD") %></td>
                         <td><%= new Number(currentMritoSum).toLocaleString("bn-BD") %></td>
-                        <td><%= new Number(currentDaeProdanSum + currentMritoSum).toLocaleString("bn-BD") %></td>
-                        <td><%= new Number((totalProductionSum ) - (totalBitoronSum )).toLocaleString("bn-BD") %></td>
+                        <td><%= new Number(totalBitoronSum + currentDaeProdanSum + currentMritoSum).toLocaleString("bn-BD") %></td>
+                        <td><%= new Number((totalProductionSum + daePraptiSum + prevYearJer) - (totalBitoronSum + currentDaeProdanSum + currentMritoSum)).toLocaleString("bn-BD") %></td>
                         <td><%= montobboSum %></td>
                     </tr>
                 <% }) %>
