@@ -52,49 +52,49 @@
                 <% var total=0;%>
                <% records.forEach(function(row){ %>
                     <% if (center.id === row.center_id){%>
-                            <%  july1+=row.july1 %>
-                            <%  august1+=row.august1 %>
-                            <%  sept1+=row.sept1 %>
-                            <%  oct1+=row.oct1 %>
-                            <%  nov1+=row.nov1 %> %>
-                            <%  dec1+=row.dec1 %>
-                            <%  jan2+=row.jan2 %>
-                            <%  feb2+=row.feb2 %> %>
-                            <%  march2+=row.march2 %>
-                            <%  apr2+=row.apr2 %>
-                            <%  may2+=row.may2 %>
-                            <%  june2+=row.june2 %> %>
-                            <%  total+=row.total %>
+                            <%  july1+=parseInt(row.july1) %>
+                            <%  august1+=parseInt(row.august1) %>
+                            <%  sept1+=parseInt(row.sept1) %>
+                            <%  oct1+=parseInt(row.oct1) %>
+                            <%  nov1+=parseInt(row.nov1) %> %>
+                            <%  dec1+=parseInt(row.dec1) %>
+                            <%  jan2+=parseInt(row.jan2) %>
+                            <%  feb2+=parseInt(row.feb2) %> %>
+                            <%  march2+=parseInt(row.march2) %>
+                            <%  apr2+=parseInt(row.apr2) %>
+                            <%  may2+=parseInt(row.may2) %>
+                            <%  june2+=parseInt(row.june2) %> %>
+                            <%  total+=parseInt(row.total) %>
 
                     <%}}) %>
 
                
                 <td><%= july1 %></td>
-                <% subjuly1+=july1 %> 
+                <% subjuly1+=parseInt(july1) %> 
                 <td><%= august1 %></td>
-                <% subaugust1+=august1 %> 
+                <% subaugust1+=parseInt(august1) %> 
                 <td><%= sept1 %></td>
-                <% subsept1+=sept1 %> 
+                <% subsept1+=parseInt(sept1) %> 
                 <td><%= oct1 %></td>
-                <% suboct1+=oct1 %> 
+                <% suboct1+=parseInt(oct1) %> 
                 <td><%= nov1 %></td>
-                <% subnov1+=nov1 %> 
+                <% subnov1+=parseInt(nov1) %> 
                 <td><%= dec1 %></td>
-                <% subdec1+=dec1 %> 
+                <% subdec1+=parseInt(dec1) %> 
                 <td><%= jan2 %></td>
-                <% subjan2+=jan2 %> 
+                <% subjan2+=parseInt(jan2) %> 
                 <td><%= feb2 %></td>
-                <% subfeb2+=feb2 %> 
+                <% subfeb2+=parseInt(feb2) %> 
                 <td><%= march2 %></td>
-                <% submarch2+=march2 %> 
+                <% submarch2+=parseInt(march2) %> 
                 <td><%= apr2 %></td>
-                <% subapr2+=apr2 %> 
+                <% subapr2+=parseInt(apr2) %> 
                 <td><%= may2 %></td>
-                <% submay2+=may2 %> 
+                <% submay2+=parseInt(may2) %> 
                 <td><%= june2 %></td>
-                <% subjune2+=june2 %> 
+                <% subjune2+=parseInt(june2) %> 
                 <td><%= total %></td>
-                <% subtotal+=total %> 
+                <% subtotal+=parseInt(total) %> 
              
             </tr>
             <% }) %>
