@@ -648,7 +648,6 @@ module.exports.generatePdfTopSheetBitoron = async (req,res) => {
 module.exports.center=async(req,res)=>{
     await center.findAll()
     .then(data => {
-        console.log("inside",data);
         res.render('pd/centerInfo/center', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: data });
     })
     .catch(err => {
@@ -676,7 +675,6 @@ module.exports.centerYear=async(req,res)=>{
 module.exports.centerEdit=async(req,res)=>{
     await center.findByPk(req.params.id)
     .then(data => {
-        console.log("inside");
         res.render('pd/centerInfo/centerEdit', { title: 'সেন্টারের যোগাযোগ তথ্য ফর্ম',msg:'' ,success:'',records: data});
     })
     .catch(err => {
@@ -705,7 +703,7 @@ module.exports.centerEditPost=async(req,res)=>{
     }).catch(err => {
         res.render('errorpage',err);
     });
-};
+}; 
 module.exports.centerDelete=async(req,res)=>{
     var centerDelete = await center.findByPk(req.params.id);
     try {
@@ -720,7 +718,6 @@ module.exports.centerDelete=async(req,res)=>{
 module.exports.centerPasswordEdit=async(req,res)=>{
     await center.findByPk(req.params.id)
     .then(data => {
-        console.log("inside");
         res.render('pd/centerInfo/centerPasswordEdit', { title: 'সেন্টারের যোগাযোগ তথ্য ফর্ম',msg:'' ,success:'',records: data});
     })
     .catch(err => {
@@ -739,12 +736,49 @@ module.exports.centerPasswordEditPost=async(req,res)=>{
     {
         where: {id: req.params.id}
     }).then(data => {
-        console.log("data",data);
         res.redirect('/pd/center');
     }).catch(err => {
         console.log(err);
     });
 };
+module.exports.generatePdfcenter= async (req, res) => {
+    try {
+        console.log("chinso amake?")
+      var data= await center.findAll()
+        ejs.renderFile(
+            path.join(__dirname, "../views/pd/centerInfo/", "pdf.ejs"),
+            { records: data,dirname: __dirname },
+            (err, data) => {
+              if (err) {
+                console.log("error", err);
+                res.send(err);
+              } else {
+                var assesPath = path.join(__dirname, "../public/");
+                // console.log(assesPath);
+                assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+  
+                var options = {
+                  height: "11.25in",
+                  width: "18.5in",
+                  header: {
+                    height: "20mm",
+                  },
+                  footer: {
+                    height: "20mm",
+                  },
+                  base: "file:///" + assesPath,
+                };
+                res.json({ html: data });
+              }
+            }
+        )
+      
+      
+    } catch (e) {
+      console.log(e);
+    }
+
+  };
 //adminInfo controller
 module.exports.adminInfo=async(req,res)=>{
     await pd.findAll()

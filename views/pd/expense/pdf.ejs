@@ -48,7 +48,7 @@
                     <th>জানু</th>
                     <th>ফেব্রু</th>
                     <th>মার্চ</th>
-                    <th>এপ্রিল</th>
+                     <th>এপ্রিল</th>
                     <th>মে</th>
                     <th>জুন</th>
                     <th>মোট খরচ</th>
@@ -57,7 +57,67 @@
             </tr>
             </thead>
             <tbody>
+                <% var subboraddo=0 %> 
+                <% var subjuly1=0 %> 
+                <% var subaugust1=0 %> 
+                <% var subsept1=0 %> 
+                <% var suboct1=0 %> 
+                <% var subnov1=0 %> 
+                <% var subdec1=0 %> 
+                <% var subjan2=0 %> 
+                <% var subfeb2=0 %> 
+                <% var submarch2=0 %> 
+                <% var subapr2=0 %> 
+                <% var submay2=0 %> 
+                <% var subjune2=0 %> 
+                <% var subtotal=0 %> 
+                <% var subbaki=0 %> 
                 <% records.forEach(function(row){ %>
+                    <% var boraddo=0;%>
+                    <% var july1=0;%>
+                    <% var august1=0;%>
+                    <% var sept1=0;%>
+                    <% var oct1=0;%>
+                    <% var nov1=0;%>
+                    <% var dec1=0;%>
+                    <% var jan2=0;%>
+                    <% var feb2=0;%>
+                    <% var march2=0;%>
+                    <% var apr2=0;%>
+                    <% var may2=0;%>
+                    <% var june2=0;%>
+                    <% var total=0;%>
+                    <% var baki=0;%>
+                                <%  boraddo+=parseInt(row.boraddo) %>
+                                <%  july1+=parseInt(row.july1) %>
+                                <%  august1+=parseInt(row.august1) %>
+                                <%  sept1+=parseInt(row.sept1) %>
+                                <%  oct1+=parseInt(row.oct1) %>
+                                <%  nov1+=parseInt(row.nov1)  %>
+                                <%  dec1+=parseInt(row.dec1) %>
+                                <%  jan2+=parseInt(row.jan2) %>
+                                <%  feb2+=parseInt(row.feb2)  %>
+                                <%  march2+=parseInt(row.march2) %>
+                                <%  apr2+=parseInt(row.apr2) %>
+                                <%  may2+=parseInt(row.may2) %>
+                                <%  june2+=parseInt(row.june2)  %>
+                                <%  total+=parseInt(row.total) %>
+                                <%  baki+=parseInt(row.baki) %>
+                                <% subboraddo+=parseInt(boraddo) %> 
+                                <% subjuly1+=parseInt(july1) %> 
+                                <% subaugust1+=parseInt(august1) %> 
+                                <% subsept1+=parseInt(sept1) %> 
+                                <% suboct1+=parseInt(oct1) %> 
+                                <% subnov1+=parseInt(nov1) %> 
+                                <% subdec1+=parseInt(dec1) %> 
+                                <% subjan2+=parseInt(jan2) %> 
+                                <% subfeb2+=parseInt(feb2) %> 
+                                <% submarch2+=parseInt(march2) %> 
+                                <% subapr2+=parseInt(apr2) %> 
+                                <% submay2+=parseInt(may2) %> 
+                                <% subjune2+=parseInt(june2) %> 
+                                <% subtotal+=parseInt(total) %> 
+                                <% subbaki+=parseInt(baki) %> 
                     <tr>
                         <td><%= row.code %></td>
                         <td><%= row.khat %></td>
@@ -77,10 +137,32 @@
                         <td><%= row.total %></td>
                         <td><%= row.baki %></td>
                         <td><%= row.comment %></td>
+                       
                         
                        
                     </tr>
                 <% }) %>
+                <tr>
+                    <td colspan="2">মোটঃ </td>
+                    <td><%= subboraddo %></td>
+                    <td><%= subjuly1 %></td>
+                    <td><%= subaugust1 %></td>
+                    <td><%= subsept1 %></td>
+                    <td><%= suboct1 %></td>
+                    <td><%= subnov1 %></td>
+                    <td><%= subdec1 %></td>
+                    <td><%= subjan2 %></td>
+                    <td><%= subfeb2 %></td>
+                    <td><%= submarch2 %></td>
+                    <td><%= subapr2 %></td>
+                    <td><%= submay2 %></td>
+                    <td><%= subjune2 %></td>
+                    <td><%= subtotal %></td>
+                    <td><%= subbaki %></td>
+                    <td></td>
+        
+        
+                </tr>
             </tbody>
         </table>
         <% }else{ %>
