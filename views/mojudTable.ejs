@@ -44,9 +44,9 @@
                             if ( prodCurrent.time === selectedDate ) {
                                 currentProductionSum += parseInt(prodCurrent.amount)
                             }
-                            else if ( moment( prodCurrent.time ).isBefore(selectedDate) && moment( prodCurrent.time ).isSameOrAfter(startRange) &&  moment( prodCurrent.time ).isSameOrBefore(endRange) ){
-                                previousMonthProduction += parseInt(prodCurrent.amount)
-                            }
+                            // else if ( moment( prodCurrent.time ).isBefore(selectedDate) && moment( prodCurrent.time ).isSameOrAfter(startRange) &&  moment( prodCurrent.time ).isSameOrBefore(endRange) ){
+                            //     previousMonthProduction += parseInt(prodCurrent.amount)
+                            // }
                         })
 
 
@@ -75,9 +75,9 @@
                             if ( BitoCurrent.time === selectedDate ) {
                                 currentBitoronSum += parseInt(BitoCurrent.amount)
                             }
-                            else if ( moment( BitoCurrent.time ).isBefore(selectedDate) && moment( BitoCurrent.time ).isAfter(startRange) &&  moment( BitoCurrent.time ).isBefore(endRange) ){
-                                previousMonthBitoronSum += parseInt(BitoCurrent.amount)
-                            }
+                            // else if ( moment( BitoCurrent.time ).isBefore(selectedDate) && moment( BitoCurrent.time ).isAfter(startRange) &&  moment( BitoCurrent.time ).isBefore(endRange) ){
+                            //     previousMonthBitoronSum += parseInt(BitoCurrent.amount)
+                            // }
                         })
 
 

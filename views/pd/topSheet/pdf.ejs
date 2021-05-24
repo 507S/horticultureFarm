@@ -24,6 +24,13 @@
         .inline-block-child {
             display: inline-block;
         }
+        .header{
+            display: flex;
+            width: 100%;
+        }
+        .header > * {
+            width: 33%;
+        }
         .row{
             display: flex;
             width: 100%;
@@ -37,11 +44,22 @@
 
 <div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
     <div>
+        <div class="header">
+            <div>
+                <img src="/images/dae.jpg" width="100" alt="dae">
+            </div>
+            <div>
+                <h3>হর্টিকালচার উইং</h3>
+            </div>
+            <div>
+                <img src="/images/bd.png" width="100" alt="bd">
+            </div>
+        </div>
+        <h1>মাসিক টপশীট (উৎপাদন)</h1>
         <div class="row">
             <div><p><b>সেন্টারের নাম :</b><%= centerName %></p></div>
             <div><p><b>প্রতিবেদনের তারিখ : </b><%= moment(selectedDate).locale("bn").format("MM/YYYY") %></p></div>
         </div>
-        <h1>মাসিক টপশীট (উৎপাদন)</h1>
         <%if (records.length >0){ %>
             <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
                 <thead>

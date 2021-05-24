@@ -380,12 +380,13 @@ module.exports.generatePdfTopSheet = async (req,res) => {
     const topSheets = await monthlyProgress.findAll({
       where: { centerId: req.session.user_id },
     });
+    const centerInfo = await center.findByPk(req.session.user_id);
 
     if (selectedDate === currentMonth) {
 
       ejs.renderFile(
           path.join(__dirname, "../views/center/topSheet", "pdf.ejs"),
-          { records: topSheets, cropCatg: cropCatg, moment: res.locals.moment, dirname: __dirname },
+          { records: topSheets, cropCatg: cropCatg, centerName: centerInfo.center, selectedDate: selectedDate , moment: res.locals.moment, dirname: __dirname },
           (err, data) => {
             if (err) {
               res.send(err);
@@ -413,7 +414,7 @@ module.exports.generatePdfTopSheet = async (req,res) => {
 
       ejs.renderFile(
           path.join(__dirname, "../views/center/topSheet", "customTablePdf.ejs"),
-          { records: topSheets, cropCatg: cropCatg, selectedDate: selectedDate , moment: res.locals.moment, dirname: __dirname },
+          { records: topSheets, cropCatg: cropCatg, centerName: centerInfo.center, selectedDate: selectedDate , moment: res.locals.moment, dirname: __dirname },
           (err, data) => {
             if (err) {
               res.send(err);
@@ -491,12 +492,13 @@ module.exports.generatePdfTopSheetBitoron = async (req,res) => {
     const topSheets = await monthlyProgress.findAll({
       where: { centerId: req.session.user_id },
     });
+    const centerInfo = await center.findByPk(req.session.user_id);
 
     if (selectedDate === currentMonth) {
 
       ejs.renderFile(
           path.join(__dirname, "../views/center/topSheet/bitoron", "pdf.ejs"),
-          { records: topSheets, cropCatg: cropCatg,selectedDate:selectedDate, moment: res.locals.moment, dirname: __dirname },
+          { records: topSheets, cropCatg: cropCatg, centerName: centerInfo.center, selectedDate:selectedDate, moment: res.locals.moment, dirname: __dirname },
           (err, data) => {
             if (err) {
               res.send(err);
@@ -524,7 +526,7 @@ module.exports.generatePdfTopSheetBitoron = async (req,res) => {
 
       ejs.renderFile(
           path.join(__dirname, "../views/center/topSheet/bitoron", "customTablePdf.ejs"),
-          { records: topSheets, cropCatg: cropCatg, selectedDate: selectedDate , moment: res.locals.moment, dirname: __dirname },
+          { records: topSheets, cropCatg: cropCatg, centerName: centerInfo.center, selectedDate: selectedDate , moment: res.locals.moment, dirname: __dirname },
           (err, data) => {
             if (err) {
               res.send(err);
@@ -2761,6 +2763,8 @@ module.exports.generatePdfMonthlyProgress = async (req, res) => {
     const allMonthlyProgress = await monthlyProgress.findAll({
       where: { centerId: req.session.user_id },
     });
+    const centerInfo = await center.findByPk(req.session.user_id);
+
     allMonthlyProgress.map((monthlyProg, key) => {
       const timeList = JSON.parse(monthlyProg.timeFrame);
       timeList.map((eachTime, index) => {
@@ -2773,7 +2777,7 @@ module.exports.generatePdfMonthlyProgress = async (req, res) => {
     if (selectedDate === currentMonth) {
       ejs.renderFile(
           path.join(__dirname, "../views/center/monthlyProgress/", "pdf.ejs"),
-          { records: data, selectedDate: currentMonth, moment: res.locals.moment, dirname: __dirname },
+          { records: data, selectedDate: currentMonth, centerName: centerInfo.center, moment: res.locals.moment, dirname: __dirname },
           (err, data) => {
             if (err) {
               console.log("error", err);
@@ -2802,7 +2806,7 @@ module.exports.generatePdfMonthlyProgress = async (req, res) => {
     else {
       ejs.renderFile(
           path.join(__dirname, "../views/center/monthlyProgress/", "pdf.ejs"),
-          { records: data, selectedDate: selectedDate, moment: res.locals.moment, dirname: __dirname },
+          { records: data, selectedDate: selectedDate, centerName: centerInfo.center, moment: res.locals.moment, dirname: __dirname },
           (err, data) => {
             if (err) {
               console.log("error", err);
