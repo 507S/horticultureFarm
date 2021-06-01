@@ -8,6 +8,9 @@ module.exports = (sequelize, Sequelize) => {
       center: {
         type: Sequelize.STRING
       },
+      serialNum: {
+        type: Sequelize.INTEGER
+      },
       kormokorta: {
         type: Sequelize.STRING
       },

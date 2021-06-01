@@ -112,28 +112,6 @@ module.exports.pdloginpost=async(req,res)=>{
                   err.message || "Some error occurred while retrieving tutorials."
               });
             });
-        // center.findAll({ where: {uname: uname} })
-        // .then(data => {
-        //     if(data.length > 0){
-        //         bcrypt.compareSync(password , center.password, function(err, result) {
-        //             if(result== true){
-        //                 res.redirect('/center/dashboard');
-        //             }
-        //             else{
-        //                 res.redirect('/center/dashboard');
-        //             }
-        //         });
-        //     }else{
-        //         return res.status(200).render('center/login', { title: 'Horticulture Wing Center Management Software',msg:'Please provide a username and password' });
-        //     }
-        // })
-        // .catch(err => {
-        //   res.status(500).send({
-        //     message:
-        //       err.message || "Some error occurred while retrieving tutorials."
-        //   });
-        // });
-
         
     }
     catch(error){
@@ -646,7 +624,11 @@ module.exports.generatePdfTopSheetBitoron = async (req,res) => {
 
 //center controller
 module.exports.center=async(req,res)=>{
-    await center.findAll()
+    await center.findAll({order: [
+        ['serialNum', 'ASC'],
+    ],
+    attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']})
+    
     .then(data => {
         res.render('pd/centerInfo/center', { title: 'সেন্টারের যোগাযোগ তথ্য',success:'', records: data });
     })
@@ -684,12 +666,14 @@ module.exports.centerEdit=async(req,res)=>{
 };
 module.exports.centerEditPost=async(req,res)=>{
     var centers = req.body.center;
+    var serialNum = req.body.serialNum;
     var kormokorta= req.body.kormokorta;
     var podobi = req.body.podobi;
     var mobile= req.body.mobile;
     var email = req.body.email;
 
     await center.update({ 
+        serialNum:serialNum,
         center:centers,
         kormokorta:kormokorta,
         podobi:podobi,
@@ -743,8 +727,10 @@ module.exports.centerPasswordEditPost=async(req,res)=>{
 };
 module.exports.generatePdfcenter= async (req, res) => {
     try {
-        console.log("chinso amake?")
-      var data= await center.findAll()
+      var data= await center.findAll({order: [
+        ['serialNum', 'ASC'],
+    ],
+    attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']})
         ejs.renderFile(
             path.join(__dirname, "../views/pd/centerInfo/", "pdf.ejs"),
             { records: data,dirname: __dirname },

@@ -248,6 +248,7 @@ module.exports.centersignuppost = async (req, res) => {
           uname: uname,
           password: hashedPassword,
           center: centers,
+          serialNum:0,
           pd_id: 1,
         });
         res.render("center/signup", {

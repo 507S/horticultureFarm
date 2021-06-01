@@ -18,6 +18,7 @@
                             <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
                             <thead>
                             <tr>
+                                <th>serialNum</th>
                                 <th>সেন্টারের নাম</th>
                                 <th>সেন্টারের ইউজার নাম</th>
                                 <th>কর্মকর্তার নাম</th>
@@ -31,6 +32,7 @@
                             <tbody>
                                 <% records.forEach(function(row){ %>
                                     <tr>
+                                        <td><%= row.serialNum %></td>
                                         <td><%= row.center %></td>
                                         <td><%= row.uname %></td>
                                         <td><%= row.kormokorta %></td>
