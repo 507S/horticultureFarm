@@ -1,4 +1,5 @@
 const db=require('../models');
+var convertToBanglaNumber = require('engnumber-to-banglanumber')
 const center = db.center;
 const pd = db.pd;
 const charaKolom = db.charaKolom;
@@ -1595,7 +1596,10 @@ module.exports.workerInfo=async(req,res)=>{
 
 module.exports.workerInfoFilter=async(req,res)=>{
     if (req.body.center === "all") {
-        var centers =await center.findAll();
+        var centers =await center.findAll({order: [
+            ['serialNum', 'ASC'],
+        ],
+        attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']});
         var workerinfos=await workerInfo.findAll();
         try{
             res.render('pd/worker/workerInfo/workerInfoTableAll', { title: 'শ্রমিকদের সংখ্যা',success:'', centers:centers,workerinfos: workerinfos });
@@ -1755,7 +1759,10 @@ module.exports.newPodobiDelete=async(req,res)=>{
 };
 module.exports.generatePdfworkerInfo = async (req, res) => {
     if (req.body.center === "all") {
-        var centers =await center.findAll();
+        var centers =await center.findAll({order: [
+            ['serialNum', 'ASC'],
+        ],
+        attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']});
         var workerinfos=await workerInfo.findAll();
         ejs.renderFile(
             path.join(__dirname, "../views/pd/worker/workerInfo", "pdfAll.ejs"),
