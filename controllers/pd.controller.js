@@ -1849,7 +1849,10 @@ module.exports.workerNum=async(req,res)=>{
 
 module.exports.workerNumFilter=async(req,res)=>{
     if (req.body.center === "all") {
-        var centers =await center.findAll();
+        var centers =await center.findAll({order: [
+            ['serialNum', 'ASC'],
+        ],
+        attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']});
         var workerinfos=await workerInfo.findAll();
         try{
             res.render('pd/worker/workerNum/workerNumTableAll', { title: 'শ্রমিকদের সংখ্যা',success:'', centers:centers,workerinfos: workerinfos });
@@ -1887,7 +1890,10 @@ module.exports.workerNumFilter=async(req,res)=>{
 };
 module.exports.generatePdfworkerNum  = async (req, res) => {
     if (req.body.center === "all") {
-        var centers =await center.findAll();
+        var centers =await center.findAll({order: [
+            ['serialNum', 'ASC'],
+        ],
+        attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']});
         var workerinfos=await workerInfo.findAll();
             ejs.renderFile(
                 path.join(__dirname, "../views/pd/worker/workerNum", "pdfAll.ejs"),
@@ -2531,8 +2537,10 @@ module.exports.chak1=async(req,res)=>{
 
 module.exports.chak1Filter=async(req,res)=>{
     if (req.body.center === "all") {
-        var centers =await center.findAll();
-        var chak1s=await chak1.findAll();
+        var centers =await center.findAll({order: [
+            ['serialNum', 'ASC'],
+        ],
+        attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']});        var chak1s=await chak1.findAll();
         try{
             res.render('pd/employee/chak1/employeeChak1TableAll', { title: 'শ্রমিকদের সংখ্যা',success:'', centers:centers,chak1s: chak1s });
         }
@@ -2652,8 +2660,10 @@ module.exports.chak1Edit=async(req,res)=>{
 module.exports.generatePdfchak1 = async (req, res) => {
     if (req.body.center === "all") {
         try {
-            var centers =await center.findAll();
-            var chak1s=await chak1.findAll();;
+            var centers =await center.findAll({order: [
+                ['serialNum', 'ASC'],
+            ],
+            attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']});            var chak1s=await chak1.findAll();;
               ejs.renderFile(
                   path.join(__dirname, "../views/pd/employee/chak1/", "pdfAll.ejs"),
                   { centers: centers,chak1s:chak1s,dirname: __dirname },
@@ -2951,8 +2961,10 @@ module.exports.rajossho=async(req,res)=>{
 module.exports.rajosshoFilter=async(req,res)=>{
     if(req.body.center=== "all"){
         try {
-            var centers=await center.findAll();
-            var data=await rajossho.findAll({where: {year: req.body.year}});
+            var centers =await center.findAll({order: [
+                ['serialNum', 'ASC'],
+            ],
+            attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']});            var data=await rajossho.findAll({where: {year: req.body.year}});
             res.render(
                 'pd/rajossho/rajosshoTableAll',
                 { records: data,centers:centers },
@@ -3196,8 +3208,10 @@ module.exports.newRajosshoCodeTableDelete=async(req,res)=>{
 module.exports.generatePdfrajossho= async (req, res) => {
     if (req.body.center === "all") {
         try {
-            var centers=await center.findAll();
-            var data=await rajossho.findAll({where: {year: req.body.year}});
+            var centers =await center.findAll({order: [
+                ['serialNum', 'ASC'],
+            ],
+            attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']});            var data=await rajossho.findAll({where: {year: req.body.year}});
               ejs.renderFile(
                   path.join(__dirname, "../views/pd/rajossho/", "pdfAll.ejs"),
                   { records: data,centers:centers,dirname: __dirname },
@@ -3297,8 +3311,10 @@ module.exports.expense=async(req,res)=>{
 module.exports.expenseFilter=async(req,res)=>{
     if (req.body.center === "all") {
         try {
-        var centers=await center.findAll();
-        var data=await expense.findAll({where: {year: req.body.year}});
+            var centers =await center.findAll({order: [
+                ['serialNum', 'ASC'],
+            ],
+            attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']});        var data=await expense.findAll({where: {year: req.body.year}});
         res.render(
             'pd/expense/expenseTableAll',
             { records: data,centers:centers },
@@ -3556,8 +3572,10 @@ module.exports.newKhorochTableDelete=async(req,res)=>{
 module.exports.generatePdfexpense = async (req, res) => {
     if (req.body.center === "all") {
         try {
-            var centers=await center.findAll();
-            var data=await expense.findAll({where: {year: req.body.year}});
+            var centers =await center.findAll({order: [
+                ['serialNum', 'ASC'],
+            ],
+            attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']});            var data=await expense.findAll({where: {year: req.body.year}});
               ejs.renderFile(
                   path.join(__dirname, "../views/pd/expense/", "pdfAll.ejs"),
                   { records: data,centers:centers,dirname: __dirname },

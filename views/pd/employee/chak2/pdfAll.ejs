@@ -1,37 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>হর্টিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা</title>
 
     <style>
-        .flex-container {
-            display: flex;
+      .flex-container {
+        display: flex;
 
-            justify-content: center
-        }
-        .table, td, th {
-            border: 1px solid black;
-        }
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .center {
-            text-align: center;
-        }
-        .inline-block-child {
-            display: inline-block;
-        }
+        justify-content: center;
+      }
+      .table,
+      td,
+      th {
+        border: 1px solid black;
+      }
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .center {
+        text-align: center;
+      }
+      .inline-block-child {
+        display: inline-block;
+      }
     </style>
-</head>
-<body>
-
-<div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
-    <div>
-        <h1>হর্টিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা</h1>
-        <p><b>সেন্টার :</b>সকল সেন্টারের তথ্য</p>
+  </head>
+  <body>
+    <div
+      style="
+        margin-top: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        background-color: #ffffffa6;
+      "
+      class="center"
+    >
+      <div>
+        <div
+          style="
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+          "
+        >
+          <div
+            style="height: 80px; width: 80px; max-height: 80px; max-width: 80px"
+          >
+            <img
+              src="/landingPage/images/daelogo.png"
+              alt="DAE"
+              style="height: 100%; width: 100%; object-fit: contain"
+            />
+          </div>
+          <div>
+            <h1>গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</h1>
+            <h2>কৃষি সম্প্রসারণ অধিদপ্তর</h2>
+            <h3>উপপরিচালকের কার্যালয়</h3>
+            <h3>খামারবাড়ী ঢাকা-১২১৫</h3>
+            <h2>হর্টিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা</h2>
+          </div>
+          <div
+            style="height: 80px; width: 80px; max-height: 80px; max-width: 80px"
+          >
+            <img
+              src="/landingPage/images/mujib.png"
+              alt="Homepage"
+              style="height: 100%; width: 100%; object-fit: contain"
+            />
+          </div>
+        </div>
+        <div
+          style="
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+          "
+        >
+          <p>স্মারক নংঃ</p>
+          <p>তারিখঃ <%= new Date().toLocaleDateString();%></p>
+        </div>
         <%if (podobiLists.length >0){ %>
             <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
             <thead>
