@@ -1497,21 +1497,23 @@ module.exports.chak1Year = async (req, res) => {
 
 };
 module.exports.chak1Form = async (req, res) => {
-  await center.findOne({
+  var podobiLists = await podobiList.findAll();
+  var data= await center.findOne({
     where: { id: req.session.user_id }
 })
-    .then(data => {
+    try {
   res.render("center/employee/chak1/employeeChak1Form", {
     title: "ক্যাডার/নন ক্যাডার কর্মকতা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য",
     msg: "",
     success: "",
     centers:data.center,
     user_id: req.session.user_id,
+    podobiLists:podobiLists,
   });
-})
-.catch(err => {
+}
+catch {
   console.log("outside",err);
-})
+}
 };
 module.exports.chak1FormPost = async (req, res) => {
   var center = req.body.center;
@@ -1734,7 +1736,6 @@ module.exports.fetchPodobiList = async (req, res) => {
       where: { podobi: req.body.podobi },
     })
     .then((data) => {
-    
       var grade = data.grade;
       res.send(grade);
     })
