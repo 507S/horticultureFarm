@@ -127,7 +127,10 @@ module.exports.pdDashboard = async(req,res) => {
         ],
         attributes: ['id', 'title', 'image', 'createdAt', 'updatedAt']})
         const crop = await cropCategory.findAll();
-        const centerinfo = await center.findAll();
+        const centerinfo =  await center.findAll({order: [
+        ['serialNum', 'ASC'],
+    ],
+    attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']});
         const monthly_progress = await monthlyProgress.findAll();
         const rajosshos = await rajossho.findAll();
         const apaCodes = await apaCode.findAll();
@@ -322,7 +325,10 @@ module.exports.pdsignuppost=async(req,res)=>{
 
 //topSheet controller
 module.exports.topSheet=async(req,res)=>{
-    await center.findAll()
+     await center.findAll({order: [
+        ['serialNum', 'ASC'],
+    ],
+    attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']})
     .then(data => {
         console.log("inside");
         res.render('pd/topSheet/topSheet', { title: 'টপশীট (উৎপাদন)',success:'', centers: data });
@@ -475,7 +481,10 @@ module.exports.generatePdfTopSheet = async (req,res) => {
 
 //topSheetBitoron controller
 module.exports.topSheetBitoron = async (req, res) => {
-    await center.findAll()
+     await center.findAll({order: [
+        ['serialNum', 'ASC'],
+    ],
+    attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']})
         .then(data => {
             console.log("inside");
             res.render('pd/topSheet/bitoron/topSheetBitoron', { title: 'টপশীট (বিতরণ)',success:'', centers: data });
@@ -643,7 +652,10 @@ module.exports.center=async(req,res)=>{
 };
 
 module.exports.centerYear=async(req,res)=>{
-    await center.findAll()
+     await center.findAll({order: [
+        ['serialNum', 'ASC'],
+    ],
+    attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']})
     .then(data => {
         res.render('pd/centerInfo/centerTable', {records: data} ,function(err, html) {
             res.send(html);
@@ -1580,7 +1592,10 @@ module.exports.generatePdfwinterVeg = async (req, res) => {
 //workerInfo controller
 
 module.exports.workerInfo=async(req,res)=>{
-    await center.findAll()
+     await center.findAll({order: [
+        ['serialNum', 'ASC'],
+    ],
+    attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']})
     .then(data => {
         console.log("inside");
         res.render('pd/worker/workerInfo/workerInfo', { title: 'শ্রমিকদের তথ্য',success:'', centers: data });
@@ -1833,7 +1848,10 @@ module.exports.generatePdfworkerInfo = async (req, res) => {
 //workerInfo controller
 
 module.exports.workerNum=async(req,res)=>{
-    await center.findAll()
+     await center.findAll({order: [
+        ['serialNum', 'ASC'],
+    ],
+    attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']})
     .then(data => {
         console.log("inside");
         res.render('pd/worker/workerNum/workerNum', { title: 'শ্রমিকদের সংখ্যা',success:'', centers: data });
@@ -1977,7 +1995,10 @@ module.exports.generatePdfworkerNum  = async (req, res) => {
 
 //apa controller
 module.exports.apa=async(req,res)=>{
-    await center.findAll()
+     await center.findAll({order: [
+        ['serialNum', 'ASC'],
+    ],
+    attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']})
     .then(data => {
         res.render('pd/apa/apa', { title: 'এপিএ',success:'', centers: data });
     })
@@ -2150,7 +2171,10 @@ module.exports.generatePdfapa = async (req, res) => {
 //loan controller
 
 module.exports.loan=async(req,res)=>{
-    await center.findAll()
+     await center.findAll({order: [
+        ['serialNum', 'ASC'],
+    ],
+    attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']})
     .then(data => {
         res.render('pd/loan/loan', { title: 'ঋণ বিতরণ ও আদায় এর অগ্রগতির প্রতিবেদন',success:'', centers: data });
     })
@@ -2260,7 +2284,10 @@ module.exports.generatePdfloan = async (req, res) => {
 //specialCoconut controller
 
 module.exports.specialCoconut=async(req,res)=>{
-    await center.findAll()
+     await center.findAll({order: [
+        ['serialNum', 'ASC'],
+    ],
+    attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']})
     .then(data => {
         console.log("inside");
         res.render('pd/specialCoconut/specialCoconut', { title: 'বিশেষ নারিকেল কর্মসূচি',success:'', centers: data });
@@ -2391,7 +2418,10 @@ module.exports.generatePdfspecialCoconut = async (req, res) => {
 
 //revolvingFund controller
 module.exports.revolvingFund=async(req,res)=>{
-    await center.findAll()
+     await center.findAll({order: [
+        ['serialNum', 'ASC'],
+    ],
+    attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']})
     .then(data => {
         console.log("inside");
         res.render('pd/revolvingFund/revolvingFund', { title: 'রিভলভিং ফান্ড',success:'', centers: data });
@@ -2521,7 +2551,10 @@ module.exports.generatePdfrevolvingFund = async (req, res) => {
 
 //specialCoconut controller
 module.exports.chak1=async(req,res)=>{
-    await center.findAll()
+     await center.findAll({order: [
+        ['serialNum', 'ASC'],
+    ],
+    attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']})
     .then(data => {
         console.log("inside");
         res.render('pd/employee/chak1/employeeChak1', { title: 'ক্যাডার/নন ক্যাডার কর্মকতা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য',success:'', centers: data });
@@ -2743,7 +2776,10 @@ module.exports.generatePdfchak1 = async (req, res) => {
 
 //chak2 controller
 module.exports.chak2=async(req,res)=>{
-    await center.findAll()
+     await center.findAll({order: [
+        ['serialNum', 'ASC'],
+    ],
+    attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']})
     .then(data => {
         console.log("inside");
         res.render('pd/employee/chak2/employeeChak2', { title: 'হর্টিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা',success:'', centers: data });
@@ -2944,7 +2980,10 @@ module.exports.generatePdfchak2 = async (req, res) => {
 
 //rajossho controller
 module.exports.rajossho=async(req,res)=>{
-    await center.findAll()
+     await center.findAll({order: [
+        ['serialNum', 'ASC'],
+    ],
+    attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']})
     .then(data => {
         console.log("inside");
         res.render('pd/rajossho/rajossho', { title: 'মাসিক রাজস্ব অর্থ প্রাপ্তির হিসাব',success:'', centers: data });
@@ -3294,7 +3333,10 @@ module.exports.generatePdfrajossho= async (req, res) => {
 
 //expense controller
 module.exports.expense=async(req,res)=>{
-    await center.findAll()
+     await center.findAll({order: [
+        ['serialNum', 'ASC'],
+    ],
+    attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']})
     .then(data => {
         console.log("inside");
         res.render('pd/expense/expense', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী',success:'', centers: data });
@@ -3656,7 +3698,10 @@ module.exports.generatePdfexpense = async (req, res) => {
 //monthlyProgress controller
 
 module.exports.monthlyProgress=async(req,res)=>{
-    await center.findAll()
+     await center.findAll({order: [
+        ['serialNum', 'ASC'],
+    ],
+    attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']})
     .then(data => {
         console.log("inside");
         res.render('pd/monthlyProgress/monthlyProgress', { title: 'মাসিক প্রতিবেদন',success:'', centers: data });
