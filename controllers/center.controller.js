@@ -198,8 +198,10 @@ module.exports.centerDashboard = async (req, res) => {
   }
 };
 module.exports.allCenterInfo = async (req, res) => {
-  await center
-    .findAll()
+  await center.findAll({order: [
+    ['serialNum', 'ASC'],
+],
+attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']})
     .then((data) => {
       res.render("allCenterInfo", {
         title: "সেন্টারের যোগাযোগ তথ্য",
