@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();
 // const { Router } = require("express");
 const db = require("../models")
-var center = db.center;
+var cc = db.center;
 
 router.use(async function (req, res, next) {
     console.log(req.session.type === "center")
     if (req.session.type === "center") {
-        const c = await center.findByPk(req.session.user_id)
+        const c = await cc.findByPk(req.session.user_id)
         console.log(c)
         console.log(c.dataValues.center)
         res.locals.user_name = c.dataValues.center
