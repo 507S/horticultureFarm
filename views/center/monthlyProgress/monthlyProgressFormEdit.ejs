@@ -1,15 +1,15 @@
 <%- include('../../includes/header')-%>
 <style>
-    .ui-datepicker-calendar {
-        display: none;
-    }
+  .ui-datepicker-calendar {
+    display: none;
+  }
 </style>
 <div class="wrapper">
-    <%- include('../../includes/topbar')-%>
-    <div class="page-wrap">
-        <%- include('../../includes/sidebar')-%>
+  <%- include('../../includes/topbar')-%>
+  <div class="page-wrap">
+    <%- include('../../includes/sidebar')-%>
 
-        <%
+    <%
             // উৎপাদন (লক্ষ্যমাত্রা) *********
             var productionTargetSum = 0;
             const TargetProduction = JSON.parse(monthProgress.productionTarget)
@@ -84,316 +84,266 @@
 
         %>
 
-        <div class="main-content">
-            <div class="container-fluid">
-                <h4 class="text-right"><b>Month & Year : </b><span> <%= moment(editDate).locale("bn").format("MMM-YYYY")   %></span></h4>
-                <div class="row clearfix">
+    <div class="main-content">
+      <div class="container-fluid">
+        <h4 class="text-right"><b>Month & Year : </b><span> <%= moment(editDate).locale("bn").format("MMM-YYYY")   %></span></h4>
+        <div class="row clearfix">
 
-                    <div id="signupbox" style="margin-top:50px" class="mainbox col-md-12 col-md-offset-12 col-sm-12 col-sm-offset-12">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <div class="panel-title text-center"><h2> মাসিক প্রতিবেদন ফর্ম </h2></div>
-                                <p><%
-                                    if(success !=''){ %>
-                                        <%= success %>
-                                    <% } %>
-                                </p>
-                            </div>
-                            <div class="panel-body" >
-                                <form action="/center/monthlyProgressUpdate/<%=monthProgress.id%>" id="FieldTrialForm" class="form-horizontal" method="post"  role="form">
-                                    <div id="signupalert" style="display:none" class="alert alert-danger">
-                                        <p>Error:</p>
-                                        <span></span>
-                                    </div>
-
-                                    <div class="form-row">
-                                        <div class="col">
-                                            <label for="category" class="col control-label">ক্যাটাগরি নাম</label>
-                                            <select name="category" id="category" class="form-control">
-                                                <option value="">Choose Category</option>
-                                                <% categoryList.forEach(function(row){ %>
-                                                    <% if(row.name === monthProgress.category) { %>
-                                                        <option value=<%= row.id %> selected ><%= row.name %></option>
-                                                    <% }%>
-                                                    <% if (row.parent_id === null) {%>
-                                                        <option value=<%= row.id %>><%= row.name %></option>
-                                                    <% } %>
-                                                <% }) %>
-                                            </select>
-                                            <!--                                            <input type="text" class="form-control" name="category" placeholder="ক্যাটাগরি নাম">-->
-                                        </div>
-                                        <div class="col">
-                                            <label for="subCategory" class="col control-label">সাব-ক্যাটাগরি নাম</label>
-                                            <!--                                            <input type="text" class="form-control" name="subCategory" placeholder="সাব-ক্যাটাগরি নাম">-->
-                                            <select name="subCategory" id="subCategory" class="form-control">
-                                                <option value="" selected="true" disabled="true">Choose সাব-ক্যাটাগরি</option>
-                                                <% categoryList.forEach(function(row){ %>
-                                                    <% if(row.name === monthProgress.subCategory) { %>
-                                                        <option value=<%= row.id %> selected ><%= row.name %></option>
-                                                    <% }%>
-                                                <% }) %>
-                                            </select>
-                                        </div>
-                                        <div class="col">
-                                            <label for="biboron" class="col control-label">বিবরণ</label>
-                                            <!--                                            <input type="text" class="form-control" name="biboron" placeholder="বিবরণ">-->
-                                            <select name="biboron" id="biboron" class="form-control">
-                                                <option value="">Choose Biboron</option>
-                                                <% categoryList.forEach(function(row){ %>
-                                                    <% if(row.name === monthProgress.biboron) { %>
-                                                        <option value=<%= row.id %> selected ><%= row.name %></option>
-                                                    <% }%>
-                                                <% }) %>
-                                            </select>
-                                        </div>
-                                        <div class="col">
-                                            <label for="breed" class="col control-label">জাত</label>
-                                            <!--                                            <input type="text" class="form-control" name="breed" placeholder="জাত">-->
-                                            <select name="breed" id="breed" class="form-control">
-                                                <option value="">Choose Breed</option>
-                                                <% categoryList.forEach(function(row){ %>
-                                                    <% if(row.name === monthProgress.breed) { %>
-                                                        <option value=<%= row.id %> selected ><%= row.name %></option>
-                                                    <% }%>
-                                                <% }) %>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-row mt-3">
-                                        <div class="col">
-                                            <label for="productionTarget" class="col-md-3 control-label">উৎপাদন (লক্ষ্যমাত্রা)</label>
-                                            <input type="number" class="form-control" name="productionTarget" placeholder="উৎপাদন (লক্ষ্যমাত্রা)" value="<%= productionTargetSum %>">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-row mt-3">
-                                        <div class="col">
-                                            <label for="productionCurrent" class="col control-label">উৎপাদন (চলতি মাস)</label>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <input type="number" class="form-control" name="productionCurrent" placeholder="<%= currentProductionSum %>">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <label for="daePrapti" class="col control-label">ডিএই চালানে প্রাপ্তি (চলতি মাস)</label>
-                                            <div class="row">
-
-                                                <div class="col-12">
-                                                    <input type="number" class="form-control" name="daePrapti" placeholder="<%= daePraptiSum %>">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <label for="bitotonCurrentMonth" class="col control-label">বিতরণ (চলতি মাস)</label>
-                                            <div class="row">
-                                                <div class="col-0">
-<!--                                                    <input readonly class="form-control" type="text" value=" + ">-->
-                                                </div>
-                                                <div class="col-12">
-                                                    <input type="number" class="form-control" name="bitotonCurrentMonth" placeholder="<%= currentBitoronSum %>">
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="col">
-                                            <label for="daeProdan" class="col control-label">ডিএই চালানে প্রদান (চলতি মাস)</label>
-                                            <div class="row">
-
-                                                <div class="col-9">
-                                                    <input type="number" class="form-control" name="daeProdan" placeholder="<%= currentDaeProdanSum %>">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-row mt-3">
-
-                                        <div class="col">
-                                            <label for="deadWriteup" class="col control-label">মৃত/বিনষ্ট রাইটআপ (চলতি মাস)</label>
-                                            <div class="row">
-
-                                                <div class="col-12">
-                                                    <input type="number" class="form-control" name="deadWriteup" placeholder="<%= currentMritoSum %>">
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col">
-                                            <label for="comment" class="col-md-3 control-label">মন্তব্য</label>
-                                            <input type="text" class="form-control" name="comment" placeholder="মন্তব্য" value="<%= montobboSum %>" >
-                                        </div>
-
-                                    </div>
-
-                                    <div class="form-row mt-3">
-                                        <div class="col">
-
-                                            <input type="hidden" name="editDate" readonly class="date-picker form-control" id="startDate" value="<%= editDate %>" />
-                                        </div>
-
-                                    </div>
-
-                                    <div class="form-group">
-                                        <!-- Button -->
-                                        <div class="col-md-offset-3 col-md-9">
-                                            <input type="submit" name="submit" value="submit" class="btn btn-primary">
-                                        </div>
-                                    </div>
-
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+          <div id="signupbox" style="margin-top:50px" class="mainbox col-md-12 col-md-offset-12 col-sm-12 col-sm-offset-12">
+            <div class="panel panel-info">
+              <div class="panel-heading">
+                <div class="panel-title text-center">
+                  <h2> মাসিক প্রতিবেদন ফর্ম </h2>
                 </div>
+                <p><%
+                                    if(success !=''){ %>
+                  <%= success %>
+                  <% } %>
+                </p>
+              </div>
+              <div class="panel-body">
+                <form action="/center/monthlyProgressUpdate/<%=monthProgress.id%>" id="FieldTrialForm" class="form-horizontal" method="post" role="form">
+                  <div id="signupalert" style="display:none" class="alert alert-danger">
+                    <p>Error:</p>
+                    <span></span>
+                  </div>
+
+
+
+                  <div class="form-row mt-3">
+                    <div class="col">
+                      <label for="productionCurrent" class="col control-label">উৎপাদন (চলতি মাস)</label>
+                      <div class="row">
+                        <div class="col-12">
+                          <input type="number" class="form-control" name="productionCurrent" placeholder="<%= currentProductionSum %>">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <label for="daePrapti" class="col control-label">ডিএই চালানে প্রাপ্তি (চলতি মাস)</label>
+                      <div class="row">
+
+                        <div class="col-12">
+                          <input type="number" class="form-control" name="daePrapti" placeholder="<%= daePraptiSum %>">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <label for="bitotonCurrentMonth" class="col control-label">বিতরণ (চলতি মাস)</label>
+                      <div class="row">
+                        <div class="col-0">
+                          <!--                                                    <input readonly class="form-control" type="text" value=" + ">-->
+                        </div>
+                        <div class="col-12">
+                          <input type="number" class="form-control" name="bitotonCurrentMonth" placeholder="<%= currentBitoronSum %>">
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="col">
+                      <label for="daeProdan" class="col control-label">ডিএই চালানে প্রদান (চলতি মাস)</label>
+                      <div class="row">
+
+                        <div class="col-9">
+                          <input type="number" class="form-control" name="daeProdan" placeholder="<%= currentDaeProdanSum %>">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-row mt-3">
+
+                    <div class="col">
+                      <label for="deadWriteup" class="col control-label">মৃত/বিনষ্ট রাইটআপ (চলতি মাস)</label>
+                      <div class="row">
+
+                        <div class="col-12">
+                          <input type="number" class="form-control" name="deadWriteup" placeholder="<%= currentMritoSum %>">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col">
+                      <label for="comment" class="col-md-3 control-label">মন্তব্য</label>
+                      <input type="text" class="form-control" name="comment" placeholder="মন্তব্য" value="<%= montobboSum %>">
+                    </div>
+
+                  </div>
+
+                  <div class="form-row mt-3">
+                    <div class="col">
+
+                      <input type="hidden" name="editDate" readonly class="date-picker form-control" id="startDate" value="<%= editDate %>" />
+                    </div>
+
+                  </div>
+
+                  <div class="form-group">
+                    <!-- Button -->
+                    <div class="col-md-offset-3 col-md-9">
+                      <input type="submit" name="submit" value="submit" class="btn btn-primary">
+                    </div>
+                  </div>
+
+                </form>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 <%- include('../../includes/footer')-%>
 <script type="text/javascript">
-    $('.date-picker').datepicker( {
-        changeMonth: true,
-        changeYear: true,
-        showButtonPanel: true,
-        dateFormat: 'M-yy',
-        onClose: function(dateText, inst) {
-            $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+  $('.date-picker').datepicker({
+    changeMonth: true,
+    changeYear: true,
+    showButtonPanel: true,
+    dateFormat: 'M-yy',
+    onClose: function(dateText, inst) {
+      $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+    }
+  });
+
+  $('#category').on("change", function() {
+    var category = $('#category').val();
+    // alert(category)
+    $.ajax({
+      type: "POST",
+      url: "/center/fetchSubCategory",
+      data: {
+        category: category
+      },
+      datatype: "json",
+      beforeSend: function() {
+        // setting a timeout
+        $('#subCategory').empty();
+        $('#biboron').empty();
+        $('#breed').empty();
+      },
+      success: function(data) {
+        $('#subCategory').empty();
+        if (data) {
+          $('#subCategory').append('<option value="0"> Choose সাব-ক্যাটাগরি </option>');
+          $.each(data, function(key, value) {
+            $('#subCategory').append('<option value="' + value.id + '">' + value.name + '</option>');
+          });
+        } else {
+          $('#subCategory').empty();
         }
+      },
+      complete: function() {
+        $('#loading').hide();
+        $('#output').show();
+      }
+    });
+  });
+
+  $('#subCategory').on("change click load", function() {
+    var subCategory = $('#subCategory').val();
+    $.ajax({
+      type: "POST",
+      url: "/center/fetchBiboron",
+      data: {
+        subCategory: subCategory
+      },
+      datatype: "json",
+      beforeSend: function() {
+        // setting a timeout
+        $('#biboron').empty();
+        $('#breed').empty();
+      },
+      success: function(data) {
+        $('#biboron').empty();
+        if (data) {
+          $('#biboron').append('<option value="0"> Choose Biboron </option>');
+          $.each(data, function(key, value) {
+            $('#biboron').append('<option value="' + value.id + '">' + value.name + '</option>');
+          });
+        } else {
+          $('#biboron').empty();
+        }
+      },
+      complete: function() {
+        $('#loading').hide();
+        $('#output').show();
+      }
+    });
+  });
+
+  $('#biboron').on("change click", function() {
+    var biboron = $('#biboron').val();
+    $.ajax({
+      type: "POST",
+      url: "/center/fetchBreed",
+      data: {
+        biboron: biboron
+      },
+      datatype: "json",
+      beforeSend: function() {
+        // setting a timeout
+        $('#loading').show();
+        $('#output').hide();
+      },
+      success: function(data) {
+        $('#breed').empty();
+        if (data) {
+          $('#breed').append('<option value="0"> Choose Breed </option>');
+          $.each(data, function(key, value) {
+            $('#breed').append('<option value="' + value.id + '">' + value.name + '</option>');
+          });
+        } else {
+          $('#breed').empty();
+        }
+      },
+      complete: function() {
+        $('#loading').hide();
+        $('#output').show();
+      }
+    });
+  });
+
+  $(document).ready(function() {
+    // var q = parseFloat(<?php echo $row['price']; ?>);
+    var q = json_encode(categoryList);
+    alert(q)
+    $("p").click(function() {
+      $(this).hide();
     });
 
-    $('#category').on("change",function () {
-        var category = $('#category').val();
-        // alert(category)
-        $.ajax({
-            type: "POST",
-            url: "/center/fetchSubCategory",
-            data: {category: category},
-            datatype: "json",
-            beforeSend: function() {
-                // setting a timeout
-                $('#subCategory').empty();
-                $('#biboron').empty();
-                $('#breed').empty();
-            },
-            success: function (data) {
-                $('#subCategory').empty();
-                if(data){
-                    $('#subCategory').append('<option value="0"> Choose সাব-ক্যাটাগরি </option>');
-                    $.each(data, function(key, value){
-                        $('#subCategory').append('<option value="'+value.id+'">' + value.name + '</option>');
-                    });
-                }else {
-                    $('#subCategory').empty();
-                }
-            },
-            complete: function() {
-                $('#loading').hide();
-                $('#output').show();
-            }
-        });
-    });
-
-    $('#subCategory').on("change click load",function () {
-        var subCategory = $('#subCategory').val();
-        $.ajax({
-            type: "POST",
-            url: "/center/fetchBiboron",
-            data: {subCategory: subCategory},
-            datatype: "json",
-            beforeSend: function() {
-                // setting a timeout
-                $('#biboron').empty();
-                $('#breed').empty();
-            },
-            success: function (data) {
-                $('#biboron').empty();
-                if(data){
-                    $('#biboron').append('<option value="0"> Choose Biboron </option>');
-                    $.each(data, function(key, value){
-                        $('#biboron').append('<option value="'+value.id+'">' + value.name + '</option>');
-                    });
-                }else {
-                    $('#biboron').empty();
-                }
-            },
-            complete: function() {
-                $('#loading').hide();
-                $('#output').show();
-            }
-        });
-    });
-
-    $('#biboron').on("change click",function () {
-        var biboron = $('#biboron').val();
-        $.ajax({
-            type: "POST",
-            url: "/center/fetchBreed",
-            data: {biboron: biboron},
-            datatype: "json",
-            beforeSend: function() {
-                // setting a timeout
-                $('#loading').show();
-                $('#output').hide();
-            },
-            success: function (data) {
-                $('#breed').empty();
-                if(data){
-                    $('#breed').append('<option value="0"> Choose Breed </option>');
-                    $.each(data, function(key, value){
-                        $('#breed').append('<option value="'+value.id+'">' + value.name + '</option>');
-                    });
-                }else {
-                    $('#breed').empty();
-                }
-            },
-            complete: function() {
-                $('#loading').hide();
-                $('#output').show();
-            }
-        });
-    });
-
-    $(document).ready(function(){
-        // var q = parseFloat(<?php echo $row['price']; ?>);
-        var q = json_encode(categoryList);
-        alert(q)
-        $("p").click(function(){
-            $(this).hide();
-        });
-
-        $('#category').on("change",function () {
-            var category = $('#category').val();
-            alert(category)
-            $.ajax({
-                type: "GET",
-                url: "/center/fetchSubCategory",
-                data: {category: category},
-                datatype: "json",
-                beforeSend: function() {
-                    // setting a timeout
-                    $('#loading').show();
-                    $('#output').hide();
-                },
-                success: function (data) {
-                    $('#subCategory').empty();
-                    if(data){
-                        $.each(data, function(key, value){
-                            $('#subCategory').append('<option value="'+value.id+'">' + value.name + '</option>');
-                        });
-                    }else {
-                        $('#subCategory').empty();
-                    }
-                },
-                complete: function() {
-                    $('#loading').hide();
-                    $('#output').show();
-                }
+    $('#category').on("change", function() {
+      var category = $('#category').val();
+      alert(category)
+      $.ajax({
+        type: "GET",
+        url: "/center/fetchSubCategory",
+        data: {
+          category: category
+        },
+        datatype: "json",
+        beforeSend: function() {
+          // setting a timeout
+          $('#loading').show();
+          $('#output').hide();
+        },
+        success: function(data) {
+          $('#subCategory').empty();
+          if (data) {
+            $.each(data, function(key, value) {
+              $('#subCategory').append('<option value="' + value.id + '">' + value.name + '</option>');
             });
-        });
-
-
+          } else {
+            $('#subCategory').empty();
+          }
+        },
+        complete: function() {
+          $('#loading').hide();
+          $('#output').show();
+        }
+      });
     });
 
+
+  });
 </script>
