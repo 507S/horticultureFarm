@@ -75,6 +75,7 @@ var center = db.center
 app.use(async function (req, res, next) {
   if (req.session.type === "center") {
     const c = await center.findByPk(req.session.user_id)
+    console.log(c)
     res.locals.user_name = c.center
   }
   else {
