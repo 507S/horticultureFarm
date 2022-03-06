@@ -39,7 +39,7 @@ app.use(function (req, res, next) {
   res.locals.user_id = req.session.user_id;
   res.locals.moment = require("moment");
   if (req.session.type === "center") {
-    const c = center.findByPk(id: req.session.user_id)
+    const c = center.findByPk(req.session.user_id)
     res.locals.user_name = c.center
   }
   else {
