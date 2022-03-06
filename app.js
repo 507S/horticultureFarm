@@ -71,19 +71,8 @@ db.sequelize
   })
   .catch((error) => console.log(error.message));
 
-var center = db.center
-app.use(async function (req, res, next) {
-  if (req.session.type === "center") {
-    const c = await center.findByPk(req.session.user_id)
-    console.log(c)
-    res.locals.user_name = c.dataValues.center
-  }
-  else {
-    res.locals.user_name = "Horticulture Wing Bd"
-  }
-  // console.log(req.session)
-  next();
-});
+
+
 
 const port = process.env.PORT || 8000;
 app.listen(port, function () {
