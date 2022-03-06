@@ -108,7 +108,66 @@
                     <span></span>
                   </div>
 
+                  <div class="form-row invisible">
+                    <div class="col">
+                      <label for="category" class="col control-label">ক্যাটাগরি নাম</label>
+                      <select name="category" id="category" class="form-control">
+                        <option value="">Choose Category</option>
+                        <% categoryList.forEach(function(row){ %>
+                        <% if(row.name === monthProgress.category) { %>
+                        <option value=<%= row.id %> selected><%= row.name %></option>
+                        <% }%>
+                        <% if (row.parent_id === null) {%>
+                        <option value=<%= row.id %>><%= row.name %></option>
+                        <% } %>
+                        <% }) %>
+                      </select>
+                      <!--                                            <input type="text" class="form-control" name="category" placeholder="ক্যাটাগরি নাম">-->
+                    </div>
+                    <div class="col">
+                      <label for="subCategory" class="col control-label">সাব-ক্যাটাগরি নাম</label>
+                      <!--                                            <input type="text" class="form-control" name="subCategory" placeholder="সাব-ক্যাটাগরি নাম">-->
+                      <select name="subCategory" id="subCategory" class="form-control">
+                        <option value="" selected="true" disabled="true">Choose সাব-ক্যাটাগরি</option>
+                        <% categoryList.forEach(function(row){ %>
+                        <% if(row.name === monthProgress.subCategory) { %>
+                        <option value=<%= row.id %> selected><%= row.name %></option>
+                        <% }%>
+                        <% }) %>
+                      </select>
+                    </div>
+                    <div class="col">
+                      <label for="biboron" class="col control-label">বিবরণ</label>
+                      <!--                                            <input type="text" class="form-control" name="biboron" placeholder="বিবরণ">-->
+                      <select name="biboron" id="biboron" class="form-control">
+                        <option value="">Choose Biboron</option>
+                        <% categoryList.forEach(function(row){ %>
+                        <% if(row.name === monthProgress.biboron) { %>
+                        <option value=<%= row.id %> selected><%= row.name %></option>
+                        <% }%>
+                        <% }) %>
+                      </select>
+                    </div>
+                    <div class="col">
+                      <label for="breed" class="col control-label">জাত</label>
+                      <!--                                            <input type="text" class="form-control" name="breed" placeholder="জাত">-->
+                      <select name="breed" id="breed" class="form-control">
+                        <option value="">Choose Breed</option>
+                        <% categoryList.forEach(function(row){ %>
+                        <% if(row.name === monthProgress.breed) { %>
+                        <option value=<%= row.id %> selected><%= row.name %></option>
+                        <% }%>
+                        <% }) %>
+                      </select>
+                    </div>
+                  </div>
 
+                  <div class="form-row mt-3 invisible">
+                    <div class="col">
+                      <label for="productionTarget" class="col-md-3 control-label">উৎপাদন (লক্ষ্যমাত্রা)</label>
+                      <input type="number" class="form-control" name="productionTarget" placeholder="উৎপাদন (লক্ষ্যমাত্রা)" value="<%= productionTargetSum %>">
+                    </div>
+                  </div>
 
                   <div class="form-row mt-3">
                     <div class="col">
