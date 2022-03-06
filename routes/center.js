@@ -15,7 +15,7 @@ router.use(async function (req, res, next) {
     else {
         res.locals.user_name = "Horticulture Wing Bd"
     }
-    // console.log(req.session)
+    console.log(res.locals.user_name)
     next();
 });
 const { fetchMaan, fetchWork, fetchShuchok, fetchEkok, fetchShuchokMaan, expenseAddPost, expenseAdd, fetchExpenseCode, rajosshoAdd, rajosshoAddPost, allCenterInfo,
