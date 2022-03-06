@@ -38,7 +38,7 @@ app.use(function (req, res, next) {
   res.locals.type = req.session.type;
   res.locals.user_id = req.session.user_id;
   res.locals.moment = require("moment");
-  console.log(req.session)
+  // console.log(req.session)
   next();
 });
 
