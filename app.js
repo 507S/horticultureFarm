@@ -38,9 +38,9 @@ app.use(function (req, res, next) {
   res.locals.type = req.session.type;
   res.locals.user_id = req.session.user_id;
   res.locals.moment = require("moment");
-  if (res.session.type === "center") {
+  if (req.session.type === "center") {
     const c = center.findOne({
-      where: { id: req.locals.user_id },
+      where: { id: req.session.user_id },
     })
     res.locals.user_name = c.center
   }
