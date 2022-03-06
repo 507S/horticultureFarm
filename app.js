@@ -12,7 +12,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var centerRouter = require("./routes/center");
 var pdRouter = require("./routes/pd");
-
+const center = require("./models/center.model");
 dotenv.config();
 var app = express();
 
@@ -38,6 +38,15 @@ app.use(function (req, res, next) {
   res.locals.type = req.session.type;
   res.locals.user_id = req.session.user_id;
   res.locals.moment = require("moment");
+  if (locals.type === "center") {
+    const c = center.findOne({
+      where: { id: req.locals.user_id },
+    })
+    res.locals.user_id = c.center
+  }
+  else {
+    res.locals.user_id = "Horticulture Wing Bd"
+  }
   // console.log(req.session)
   next();
 });
