@@ -12,7 +12,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var centerRouter = require("./routes/center");
 var pdRouter = require("./routes/pd");
-const center = require("./models/center.model");
+
 dotenv.config();
 var app = express();
 
@@ -38,14 +38,6 @@ app.use(async function (req, res, next) {
   res.locals.type = req.session.type;
   res.locals.user_id = req.session.user_id;
   res.locals.moment = require("moment");
-  if (req.session.type === "center") {
-    const c = await center.findByPk(req.session.user_id)
-    res.locals.user_name = c.center
-  }
-  else {
-    res.locals.user_name = "Horticulture Wing Bd"
-  }
-  // console.log(req.session)
   next();
 });
 
@@ -78,6 +70,19 @@ db.sequelize
     console.log("Drop and re-sync db.");
   })
   .catch((error) => console.log(error.message));
+
+var center = db.center
+app.use(async function (req, res, next) {
+  if (req.session.type === "center") {
+    const c = await center.findByPk(req.session.user_id)
+    res.locals.user_name = c.center
+  }
+  else {
+    res.locals.user_name = "Horticulture Wing Bd"
+  }
+  // console.log(req.session)
+  next();
+});
 
 const port = process.env.PORT || 8000;
 app.listen(port, function () {
