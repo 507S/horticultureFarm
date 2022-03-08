@@ -75,7 +75,7 @@
           <p><b>সেন্টারের নাম :</b><%= centerName %></p>
         </div>
         <div>
-          <p><b>প্রতিবেদনের তারিখ : </b><%= moment(selectedDate).locale("bn").format("MM/YYYY") %></p>
+          <p><b>প্রতিবেদনের তারিখ : </b><%= moment(selectedDate).locale("bn").format("DD MMM, YYYY") %></p>
         </div>
       </div>
       <%if (records.length >0){ %>
