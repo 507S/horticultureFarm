@@ -18,10 +18,9 @@
     "engnumber-to-banglanumber": "^1.0.1",
     "express": "^4.16.4",
     "express-flash": "0.0.2",
-    "express-pdf": "^1.2.2",
     "express-session": "^1.17.1",
     "fs": "0.0.1-security",
-    "html-pdf": "^2.2.0",
+    "html-pdf": "^3.0.1",
     "http-errors": "^1.6.3",
     "jsonwebtoken": "^8.5.1",
     "local-storage": "^2.0.0",
@@ -34,7 +33,6 @@
     "passport": "^0.4.1",
     "passport-google-oauth": "^2.0.0",
     "path": "^0.12.7",
-    "pdf-creator-node": "^1.4.2",
     "sequelize": "^6.3.5"
   }
 }

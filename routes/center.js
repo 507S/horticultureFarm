@@ -5,17 +5,13 @@ const db = require("../models")
 var cc = db.center;
 
 router.use(async function (req, res, next) {
-    console.log(req.session.type === "center")
     if (req.session.type === "center") {
         const c = await cc.findByPk(req.session.user_id)
-        console.log(c)
-        console.log(c.dataValues.center)
         res.locals.user_name = c.dataValues.center
     }
     else {
         res.locals.user_name = "Horticulture Wing Bd"
     }
-    console.log(res.locals.user_name)
     next();
 });
 const { fetchMaan, fetchWork, fetchShuchok, fetchEkok, fetchShuchokMaan, expenseAddPost, expenseAdd, fetchExpenseCode, rajosshoAdd, rajosshoAddPost, allCenterInfo,

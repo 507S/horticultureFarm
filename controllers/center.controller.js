@@ -1,6 +1,7 @@
 const db = require("../models");
 const Op = db.Sequelize.Op;
 const { fn, col, cast } = db.sequelize;
+const moment = require("moment")
 const fs = require("fs");
 const path = require("path");
 
@@ -123,10 +124,12 @@ module.exports.centerloginpost = async (req, res) => {
 
 module.exports.centerDashboard = async (req, res) => {
   try {
-    const dashImage = await dashImages.findAll({order: [
-      ['createdAt', 'DESC'],
-  ],
-  attributes: ['id', 'title', 'image', 'createdAt', 'updatedAt']})
+    const dashImage = await dashImages.findAll({
+      order: [
+        ['createdAt', 'DESC'],
+      ],
+      attributes: ['id', 'title', 'image', 'createdAt', 'updatedAt']
+    })
     const monthly_progress = await monthlyProgress.findAll({
       where: {
         centerId: req.session.user_id,
@@ -188,7 +191,7 @@ module.exports.centerDashboard = async (req, res) => {
     res.render("center/dashboard", {
       title: "Horticulture Wing Center Management Software",
       msg: "Welcome",
-      dashImage:dashImage,
+      dashImage: dashImage,
       totalrajossho: totalrajossho,
       totalProduction: totalProduct,
       totalBitoron: totalBitoron,
@@ -198,10 +201,12 @@ module.exports.centerDashboard = async (req, res) => {
   }
 };
 module.exports.allCenterInfo = async (req, res) => {
-  await center.findAll({order: [
-    ['serialNum', 'ASC'],
-],
-attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname','password','pd_id','createdAt', 'updatedAt']})
+  await center.findAll({
+    order: [
+      ['serialNum', 'ASC'],
+    ],
+    attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname', 'password', 'pd_id', 'createdAt', 'updatedAt']
+  })
     .then((data) => {
       res.render("allCenterInfo", {
         title: "সেন্টারের যোগাযোগ তথ্য",
@@ -250,7 +255,7 @@ module.exports.centersignuppost = async (req, res) => {
           uname: uname,
           password: hashedPassword,
           center: centers,
-          serialNum:0,
+          serialNum: 0,
           pd_id: 1,
         });
         res.render("center/signup", {
@@ -354,7 +359,7 @@ module.exports.topSheetYear = async (req, res) => {
     if (selectedDate === currentMonth) {
       res.render(
         "center/topSheet/topSheetTable",
-        { records: topSheets, cropCatg: cropCatg, selectedDate:selectedDate },
+        { records: topSheets, cropCatg: cropCatg, selectedDate: selectedDate },
         function (err, html) {
           res.send(html);
         }
@@ -373,7 +378,7 @@ module.exports.topSheetYear = async (req, res) => {
     console.log(e);
   }
 };
-module.exports.generatePdfTopSheet = async (req,res) => {
+module.exports.generatePdfTopSheet = async (req, res) => {
   try {
     const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
     const selectedDate = req.params.selectedDate.toLowerCase();
@@ -388,57 +393,57 @@ module.exports.generatePdfTopSheet = async (req,res) => {
     if (selectedDate === currentMonth) {
 
       ejs.renderFile(
-          path.join(__dirname, "../views/center/topSheet", "pdf.ejs"),
-          { records: topSheets, cropCatg: cropCatg, centerName: centerInfo.center, selectedDate: selectedDate , moment: res.locals.moment, dirname: __dirname },
-          (err, data) => {
-            if (err) {
-              res.send(err);
-            } else {
-              var assesPath = path.join(__dirname, "../public/");
-              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+        path.join(__dirname, "../views/center/topSheet", "pdf.ejs"),
+        { records: topSheets, cropCatg: cropCatg, centerName: centerInfo.center, selectedDate: selectedDate, moment: res.locals.moment, dirname: __dirname },
+        (err, data) => {
+          if (err) {
+            res.send(err);
+          } else {
+            var assesPath = path.join(__dirname, "../public/");
+            assesPath = assesPath.replace(new RegExp(/\\/g), "/");
 
-              var options = {
-                height: "11.25in",
-                width: "18.5in",
-                header: {
-                  height: "20mm",
-                },
-                footer: {
-                  height: "20mm",
-                },
-                base: "file:///" + assesPath,
-              };
-              res.json({ html: data });
-            }
+            var options = {
+              height: "11.25in",
+              width: "18.5in",
+              header: {
+                height: "20mm",
+              },
+              footer: {
+                height: "20mm",
+              },
+              base: "file:///" + assesPath,
+            };
+            res.json({ html: data });
           }
+        }
       )
 
     } else {
 
       ejs.renderFile(
-          path.join(__dirname, "../views/center/topSheet", "customTablePdf.ejs"),
-          { records: topSheets, cropCatg: cropCatg, centerName: centerInfo.center, selectedDate: selectedDate , moment: res.locals.moment, dirname: __dirname },
-          (err, data) => {
-            if (err) {
-              res.send(err);
-            } else {
-              var assesPath = path.join(__dirname, "../public/");
-              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+        path.join(__dirname, "../views/center/topSheet", "customTablePdf.ejs"),
+        { records: topSheets, cropCatg: cropCatg, centerName: centerInfo.center, selectedDate: selectedDate, moment: res.locals.moment, dirname: __dirname },
+        (err, data) => {
+          if (err) {
+            res.send(err);
+          } else {
+            var assesPath = path.join(__dirname, "../public/");
+            assesPath = assesPath.replace(new RegExp(/\\/g), "/");
 
-              var options = {
-                height: "11.25in",
-                width: "18.5in",
-                header: {
-                  height: "20mm",
-                },
-                footer: {
-                  height: "20mm",
-                },
-                base: "file:///" + assesPath,
-              };
-              res.json({ html: data });
-            }
+            var options = {
+              height: "11.25in",
+              width: "18.5in",
+              header: {
+                height: "20mm",
+              },
+              footer: {
+                height: "20mm",
+              },
+              base: "file:///" + assesPath,
+            };
+            res.json({ html: data });
           }
+        }
       )
 
     }
@@ -465,19 +470,19 @@ module.exports.topSheetBitoronYear = async (req, res) => {
 
     if (selectedDate === currentMonth) {
       res.render(
-          "center/topSheet/bitoron/topSheetBitoronTable",
-          { records: topSheets, cropCatg: cropCatg, selectedDate:selectedDate },
-          function (err, html) {
-            res.send(html);
-          }
+        "center/topSheet/bitoron/topSheetBitoronTable",
+        { records: topSheets, cropCatg: cropCatg, selectedDate: selectedDate },
+        function (err, html) {
+          res.send(html);
+        }
       );
     } else {
       res.render(
-          "center/topSheet/bitoron/topSheetBitoronCustomTable",
-          { records: topSheets, cropCatg: cropCatg, selectedDate: selectedDate },
-          function (err, html) {
-            res.send(html);
-          }
+        "center/topSheet/bitoron/topSheetBitoronCustomTable",
+        { records: topSheets, cropCatg: cropCatg, selectedDate: selectedDate },
+        function (err, html) {
+          res.send(html);
+        }
       );
     }
 
@@ -485,7 +490,7 @@ module.exports.topSheetBitoronYear = async (req, res) => {
     console.log(e);
   }
 };
-module.exports.generatePdfTopSheetBitoron = async (req,res) => {
+module.exports.generatePdfTopSheetBitoron = async (req, res) => {
   try {
     const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
     const selectedDate = req.params.selectedDate.toLowerCase();
@@ -500,57 +505,57 @@ module.exports.generatePdfTopSheetBitoron = async (req,res) => {
     if (selectedDate === currentMonth) {
 
       ejs.renderFile(
-          path.join(__dirname, "../views/center/topSheet/bitoron", "pdf.ejs"),
-          { records: topSheets, cropCatg: cropCatg, centerName: centerInfo.center, selectedDate:selectedDate, moment: res.locals.moment, dirname: __dirname },
-          (err, data) => {
-            if (err) {
-              res.send(err);
-            } else {
-              var assesPath = path.join(__dirname, "../public/");
-              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+        path.join(__dirname, "../views/center/topSheet/bitoron", "pdf.ejs"),
+        { records: topSheets, cropCatg: cropCatg, centerName: centerInfo.center, selectedDate: selectedDate, moment: res.locals.moment, dirname: __dirname },
+        (err, data) => {
+          if (err) {
+            res.send(err);
+          } else {
+            var assesPath = path.join(__dirname, "../public/");
+            assesPath = assesPath.replace(new RegExp(/\\/g), "/");
 
-              var options = {
-                height: "11.25in",
-                width: "18.5in",
-                header: {
-                  height: "20mm",
-                },
-                footer: {
-                  height: "20mm",
-                },
-                base: "file:///" + assesPath,
-              };
-              res.json({ html: data });
-            }
+            var options = {
+              height: "11.25in",
+              width: "18.5in",
+              header: {
+                height: "20mm",
+              },
+              footer: {
+                height: "20mm",
+              },
+              base: "file:///" + assesPath,
+            };
+            res.json({ html: data });
           }
+        }
       )
 
     } else {
 
       ejs.renderFile(
-          path.join(__dirname, "../views/center/topSheet/bitoron", "customTablePdf.ejs"),
-          { records: topSheets, cropCatg: cropCatg, centerName: centerInfo.center, selectedDate: selectedDate , moment: res.locals.moment, dirname: __dirname },
-          (err, data) => {
-            if (err) {
-              res.send(err);
-            } else {
-              var assesPath = path.join(__dirname, "../public/");
-              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+        path.join(__dirname, "../views/center/topSheet/bitoron", "customTablePdf.ejs"),
+        { records: topSheets, cropCatg: cropCatg, centerName: centerInfo.center, selectedDate: selectedDate, moment: res.locals.moment, dirname: __dirname },
+        (err, data) => {
+          if (err) {
+            res.send(err);
+          } else {
+            var assesPath = path.join(__dirname, "../public/");
+            assesPath = assesPath.replace(new RegExp(/\\/g), "/");
 
-              var options = {
-                height: "11.25in",
-                width: "18.5in",
-                header: {
-                  height: "20mm",
-                },
-                footer: {
-                  height: "20mm",
-                },
-                base: "file:///" + assesPath,
-              };
-              res.json({ html: data });
-            }
+            var options = {
+              height: "11.25in",
+              width: "18.5in",
+              header: {
+                height: "20mm",
+              },
+              footer: {
+                height: "20mm",
+              },
+              base: "file:///" + assesPath,
+            };
+            res.json({ html: data });
           }
+        }
       )
 
     }
@@ -646,18 +651,19 @@ module.exports.workerInfoFormPost = async (req, res) => {
       res.redirect("/center/workerInfoForm");
     })
     .catch((err) => {
-console.log(err);    });
+      console.log(err);
+    });
 };
-module.exports.workerInfoEdit=async(req,res)=>{
+module.exports.workerInfoEdit = async (req, res) => {
   await workerInfo.findByPk(req.params.id)
-  .then(data => {
-      res.render('center/worker/workerInfo/workerInfoEdit', { title: 'শ্রমিকদের তথ্য',msg:'' ,success:'',records: data});
-  })
-  .catch(err => {
-      console.log("outside",err);
-  })
+    .then(data => {
+      res.render('center/worker/workerInfo/workerInfoEdit', { title: 'শ্রমিকদের তথ্য', msg: '', success: '', records: data });
+    })
+    .catch(err => {
+      console.log("outside", err);
+    })
 };
-module.exports.workerInfoEditPost=async(req,res)=>{
+module.exports.workerInfoEditPost = async (req, res) => {
   var center = req.body.center;
   var porichito = req.body.porichito;
   var kormokorta = req.body.kormokorta;
@@ -669,7 +675,7 @@ module.exports.workerInfoEditPost=async(req,res)=>{
   var pastWorkstation = req.body.pastWorkstation;
   var comment = req.body.comment;
   var user_id = req.body.user_id;
-  await workerInfo.update({ 
+  await workerInfo.update({
     center: center,
     porichito: porichito,
     kormokorta: kormokorta,
@@ -681,68 +687,68 @@ module.exports.workerInfoEditPost=async(req,res)=>{
     pastWorkstation: pastWorkstation,
     comment: comment,
   },
-  {
-      where: {id: req.params.id}
-  }).then(data => {
+    {
+      where: { id: req.params.id }
+    }).then(data => {
       res.redirect('/center/workerInfo');
-  }).catch(err => {
-      res.render('errorpage',err);
-  });
+    }).catch(err => {
+      res.render('errorpage', err);
+    });
 };
-module.exports.workerInfoDelete=async(req,res)=>{
+module.exports.workerInfoDelete = async (req, res) => {
   var workerInfoDelete = await workerInfo.findByPk(req.params.id);
   try {
     workerInfoDelete.destroy();
-      res.redirect("/center/workerInfo");
+    res.redirect("/center/workerInfo");
   }
-  catch{
-      res.render('errorpage',err);
+  catch {
+    res.render('errorpage', err);
   }
-  
+
 };
 module.exports.generatePdfworkerInfo = async (req, res) => {
   try {
-    var centerNames= await center.findOne({
+    var centerNames = await center.findOne({
       where: { id: req.session.user_id },
     })
-   var data= await workerInfo
-    .findAll({
-      where: {center_id: req.session.user_id },
-    })
-      ejs.renderFile(
-          path.join(__dirname, "../views/center/worker/workerInfo", "pdf.ejs"),
-          { records: data,centerName:centerNames, },
-          (err, data) => {
-            if (err) {
-              console.log("error", err);
-              res.send(err);
-            } else {
-              var assesPath = path.join(__dirname, "../public/");
-              // console.log(assesPath);
-              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+    var data = await workerInfo
+      .findAll({
+        where: { center_id: req.session.user_id },
+      })
+    ejs.renderFile(
+      path.join(__dirname, "../views/center/worker/workerInfo", "pdf.ejs"),
+      { records: data, centerName: centerNames, },
+      (err, data) => {
+        if (err) {
+          console.log("error", err);
+          res.send(err);
+        } else {
+          var assesPath = path.join(__dirname, "../public/");
+          // console.log(assesPath);
+          assesPath = assesPath.replace(new RegExp(/\\/g), "/");
 
-              var options = {
-                height: "11.25in",
-                width: "18.5in",
-                header: {
-                  height: "20mm",
-                },
-                footer: {
-                  height: "20mm",
-                },
-                base: "file:///" + assesPath,
-              };
-              res.json({ html: data });
-            }
-          }
-      )
-    
-    
+          var options = {
+            height: "11.25in",
+            width: "18.5in",
+            header: {
+              height: "20mm",
+            },
+            footer: {
+              height: "20mm",
+            },
+            base: "file:///" + assesPath,
+          };
+          res.json({ html: data });
+        }
+      }
+    )
+
+
   } catch (e) {
     console.log(e);
   }
 
-};                                        
+};
 //workerInfo controller end
 
 //workerNum controller
@@ -779,59 +785,59 @@ module.exports.workerNum = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside",err);
+      console.log("outside", err);
     });
 
   //  records:result
 };
-module.exports.generatePdfworkerNum  = async (req, res) => {
+module.exports.generatePdfworkerNum = async (req, res) => {
   try {
-    var centerNames= await center.findOne({
+    var centerNames = await center.findOne({
       where: { id: req.session.user_id },
     })
-    var data=await workerInfo.findAll({where: {center_id: req.session.user_id},})
-      var reg = 0;
-      var irreg = 0;
-      data.forEach(function (row) {
-        if (row.regularWorker !== 0) {
-          reg += 1;
-        }
-      });
-      data.forEach(function (row) {
-        if (row.irregularWorker !== 0) {
-          irreg += 1;
-        }
-      });
-      var total = reg + irreg; 
-      ejs.renderFile(
-          path.join(__dirname, "../views/center/worker/workerNum", "pdf.ejs"),
-          { records: data,centerName:centerNames,totals: total,regs: reg,irregs: irreg,dirname: __dirname },
-          (err, data) => {
-            if (err) {
-              console.log("error", err);
-              res.send(err);
-            } else {
-              var assesPath = path.join(__dirname, "../public/");
-              // console.log(assesPath);
-              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+    var data = await workerInfo.findAll({ where: { center_id: req.session.user_id }, })
+    var reg = 0;
+    var irreg = 0;
+    data.forEach(function (row) {
+      if (row.regularWorker !== 0) {
+        reg += 1;
+      }
+    });
+    data.forEach(function (row) {
+      if (row.irregularWorker !== 0) {
+        irreg += 1;
+      }
+    });
+    var total = reg + irreg;
+    ejs.renderFile(
+      path.join(__dirname, "../views/center/worker/workerNum", "pdf.ejs"),
+      { records: data, centerName: centerNames, totals: total, regs: reg, irregs: irreg, dirname: __dirname },
+      (err, data) => {
+        if (err) {
+          console.log("error", err);
+          res.send(err);
+        } else {
+          var assesPath = path.join(__dirname, "../public/");
+          // console.log(assesPath);
+          assesPath = assesPath.replace(new RegExp(/\\/g), "/");
 
-              var options = {
-                height: "11.25in",
-                width: "18.5in",
-                header: {
-                  height: "20mm",
-                },
-                footer: {
-                  height: "20mm",
-                },
-                base: "file:///" + assesPath,
-              };
-              res.json({ html: data });
-            }
-          }
-      )
-    
-    
+          var options = {
+            height: "11.25in",
+            width: "18.5in",
+            header: {
+              height: "20mm",
+            },
+            footer: {
+              height: "20mm",
+            },
+            base: "file:///" + assesPath,
+          };
+          res.json({ html: data });
+        }
+      }
+    )
+
+
   } catch (e) {
     console.log(e);
   }
@@ -853,7 +859,7 @@ module.exports.apa = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside",err);
+      console.log("outside", err);
     });
 
   //  records:result
@@ -929,7 +935,7 @@ module.exports.apaFormPost = async (req, res) => {
       shuchok: shuchokName.name,
       ekok: ekokName.name,
       shuchokMaan: shuchokMaanName.name,
-      gonona:gonona,
+      gonona: gonona,
       best: best,
       otiUttam: otiUttam,
       uttam: uttam,
@@ -1014,41 +1020,41 @@ module.exports.fetchShuchokMaan = async (req, res) => {
 };
 module.exports.generatePdfapa = async (req, res) => {
   try {
-    var centerNames= await center.findOne({
+    var centerNames = await center.findOne({
       where: { id: req.session.user_id },
     })
-  var data= await apa.findAll({
+    var data = await apa.findAll({
       where: { year: req.body.year, center_id: req.session.user_id },
     })
-      ejs.renderFile(
-          path.join(__dirname, "../views/center/apa/", "pdf.ejs"),
-          { records: data,centerName:centerNames,dirname: __dirname },
-          (err, data) => {
-            if (err) {
-              console.log("error", err);
-              res.send(err);
-            } else {
-              var assesPath = path.join(__dirname, "../public/");
-              // console.log(assesPath);
-              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+    ejs.renderFile(
+      path.join(__dirname, "../views/center/apa/", "pdf.ejs"),
+      { records: data, centerName: centerNames, dirname: __dirname },
+      (err, data) => {
+        if (err) {
+          console.log("error", err);
+          res.send(err);
+        } else {
+          var assesPath = path.join(__dirname, "../public/");
+          // console.log(assesPath);
+          assesPath = assesPath.replace(new RegExp(/\\/g), "/");
 
-              var options = {
-                height: "11.25in",
-                width: "18.5in",
-                header: {
-                  height: "20mm",
-                },
-                footer: {
-                  height: "20mm",
-                },
-                base: "file:///" + assesPath,
-              };
-              res.json({ html: data });
-            }
-          }
-      )
-    
-    
+          var options = {
+            height: "11.25in",
+            width: "18.5in",
+            header: {
+              height: "20mm",
+            },
+            footer: {
+              height: "20mm",
+            },
+            base: "file:///" + assesPath,
+          };
+          res.json({ html: data });
+        }
+      }
+    )
+
+
   } catch (e) {
     console.log(e);
   }
@@ -1070,7 +1076,7 @@ module.exports.loan = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside",err);
+      console.log("outside", err);
     });
 
   //  records:result
@@ -1136,41 +1142,41 @@ module.exports.loanFormPost = async (req, res) => {
 };
 module.exports.generatePdfloan = async (req, res) => {
   try {
-    var centerNames= await center.findOne({
+    var centerNames = await center.findOne({
       where: { id: req.session.user_id },
     })
-  var data= await loan.findAll({
+    var data = await loan.findAll({
       where: { year: req.body.year, center_id: req.session.user_id },
     })
-      ejs.renderFile(
-          path.join(__dirname, "../views/center/loan/", "pdf.ejs"),
-          { records: data,centerName:centerNames,dirname: __dirname },
-          (err, data) => {
-            if (err) {
-              console.log("error", err);
-              res.send(err);
-            } else {
-              var assesPath = path.join(__dirname, "../public/");
-              // console.log(assesPath);
-              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+    ejs.renderFile(
+      path.join(__dirname, "../views/center/loan/", "pdf.ejs"),
+      { records: data, centerName: centerNames, dirname: __dirname },
+      (err, data) => {
+        if (err) {
+          console.log("error", err);
+          res.send(err);
+        } else {
+          var assesPath = path.join(__dirname, "../public/");
+          // console.log(assesPath);
+          assesPath = assesPath.replace(new RegExp(/\\/g), "/");
 
-              var options = {
-                height: "11.25in",
-                width: "18.5in",
-                header: {
-                  height: "20mm",
-                },
-                footer: {
-                  height: "20mm",
-                },
-                base: "file:///" + assesPath,
-              };
-              res.json({ html: data });
-            }
-          }
-      )
-    
-    
+          var options = {
+            height: "11.25in",
+            width: "18.5in",
+            header: {
+              height: "20mm",
+            },
+            footer: {
+              height: "20mm",
+            },
+            base: "file:///" + assesPath,
+          };
+          res.json({ html: data });
+        }
+      }
+    )
+
+
   } catch (e) {
     console.log(e);
   }
@@ -1192,7 +1198,7 @@ module.exports.specialCoconut = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside",err);
+      console.log("outside", err);
     });
 
   //  records:result
@@ -1212,7 +1218,7 @@ module.exports.specialCoconutYear = async (req, res) => {
       );
     })
     .catch((err) => {
-      console.log("outside",err);
+      console.log("outside", err);
     });
 };
 module.exports.specialCoconutForm = async (req, res) => {
@@ -1278,41 +1284,41 @@ module.exports.specialCoconutFormPost = async (req, res) => {
 };
 module.exports.generatePdfspecialCoconut = async (req, res) => {
   try {
-    var centerNames= await center.findOne({
+    var centerNames = await center.findOne({
       where: { id: req.session.user_id },
     })
-  var data= await specialCoconut.findAll({
+    var data = await specialCoconut.findAll({
       where: { year: req.body.year, center_id: req.session.user_id },
     })
-      ejs.renderFile(
-          path.join(__dirname, "../views/center/specialCoconut/", "pdf.ejs"),
-          { records: data,centerName:centerNames,dirname: __dirname },
-          (err, data) => {
-            if (err) {
-              console.log("error", err);
-              res.send(err);
-            } else {
-              var assesPath = path.join(__dirname, "../public/");
-              // console.log(assesPath);
-              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+    ejs.renderFile(
+      path.join(__dirname, "../views/center/specialCoconut/", "pdf.ejs"),
+      { records: data, centerName: centerNames, dirname: __dirname },
+      (err, data) => {
+        if (err) {
+          console.log("error", err);
+          res.send(err);
+        } else {
+          var assesPath = path.join(__dirname, "../public/");
+          // console.log(assesPath);
+          assesPath = assesPath.replace(new RegExp(/\\/g), "/");
 
-              var options = {
-                height: "11.25in",
-                width: "18.5in",
-                header: {
-                  height: "20mm",
-                },
-                footer: {
-                  height: "20mm",
-                },
-                base: "file:///" + assesPath,
-              };
-              res.json({ html: data });
-            }
-          }
-      )
-    
-    
+          var options = {
+            height: "11.25in",
+            width: "18.5in",
+            header: {
+              height: "20mm",
+            },
+            footer: {
+              height: "20mm",
+            },
+            base: "file:///" + assesPath,
+          };
+          res.json({ html: data });
+        }
+      }
+    )
+
+
   } catch (e) {
     console.log(e);
   }
@@ -1334,7 +1340,7 @@ module.exports.revolvingFund = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside",err);
+      console.log("outside", err);
 
     });
 
@@ -1355,7 +1361,7 @@ module.exports.revolvingFundYear = async (req, res) => {
       );
     })
     .catch((err) => {
-      console.log("outside",err);
+      console.log("outside", err);
 
     });
 };
@@ -1422,41 +1428,41 @@ module.exports.revolvingFundFormPost = async (req, res) => {
 };
 module.exports.generatePdfrevolvingFund = async (req, res) => {
   try {
-    var centerNames= await center.findOne({
+    var centerNames = await center.findOne({
       where: { id: req.session.user_id },
     })
-  var data= await revolvingFund.findAll({
+    var data = await revolvingFund.findAll({
       where: { year: req.body.year, center_id: req.session.user_id },
     })
-      ejs.renderFile(
-          path.join(__dirname, "../views/center/revolvingFund/", "pdf.ejs"),
-          { records: data,centerName:centerNames,dirname: __dirname },
-          (err, data) => {
-            if (err) {
-              console.log("error", err);
-              res.send(err);
-            } else {
-              var assesPath = path.join(__dirname, "../public/");
-              // console.log(assesPath);
-              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+    ejs.renderFile(
+      path.join(__dirname, "../views/center/revolvingFund/", "pdf.ejs"),
+      { records: data, centerName: centerNames, dirname: __dirname },
+      (err, data) => {
+        if (err) {
+          console.log("error", err);
+          res.send(err);
+        } else {
+          var assesPath = path.join(__dirname, "../public/");
+          // console.log(assesPath);
+          assesPath = assesPath.replace(new RegExp(/\\/g), "/");
 
-              var options = {
-                height: "11.25in",
-                width: "18.5in",
-                header: {
-                  height: "20mm",
-                },
-                footer: {
-                  height: "20mm",
-                },
-                base: "file:///" + assesPath,
-              };
-              res.json({ html: data });
-            }
-          }
-      )
-    
-    
+          var options = {
+            height: "11.25in",
+            width: "18.5in",
+            header: {
+              height: "20mm",
+            },
+            footer: {
+              height: "20mm",
+            },
+            base: "file:///" + assesPath,
+          };
+          res.json({ html: data });
+        }
+      }
+    )
+
+
   } catch (e) {
     console.log(e);
   }
@@ -1478,44 +1484,44 @@ module.exports.chak1 = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside",err);
+      console.log("outside", err);
 
     });
 
   //  records:result
 };
 module.exports.chak1Year = async (req, res) => {
-    await chak1.findAll({
-        where: { center_id: req.session.user_id }
+  await chak1.findAll({
+    where: { center_id: req.session.user_id }
+  })
+    .then(data => {
+      res.render('center/employee/chak1/employeeChak1Table', { records: data }, function (err, html) {
+        res.send(html);
+      });
     })
-        .then(data => {
-            res.render('center/employee/chak1/employeeChak1Table', { records: data }, function (err, html) {
-                res.send(html);
-            });
-        })
-        .catch(err => {
-          console.log("outside",err);
-        })
+    .catch(err => {
+      console.log("outside", err);
+    })
 
 };
 module.exports.chak1Form = async (req, res) => {
   var podobiLists = await podobiList.findAll();
-  var data= await center.findOne({
+  var data = await center.findOne({
     where: { id: req.session.user_id }
-})
-    try {
-  res.render("center/employee/chak1/employeeChak1Form", {
-    title: "ক্যাডার/নন ক্যাডার কর্মকতা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য",
-    msg: "",
-    success: "",
-    centers:data.center,
-    user_id: req.session.user_id,
-    podobiLists:podobiLists,
-  });
-}
-catch {
-  console.log("outside",err);
-}
+  })
+  try {
+    res.render("center/employee/chak1/employeeChak1Form", {
+      title: "ক্যাডার/নন ক্যাডার কর্মকতা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য",
+      msg: "",
+      success: "",
+      centers: data.center,
+      user_id: req.session.user_id,
+      podobiLists: podobiLists,
+    });
+  }
+  catch {
+    console.log("outside", err);
+  }
 };
 module.exports.chak1FormPost = async (req, res) => {
   var center = req.body.center;
@@ -1551,18 +1557,19 @@ module.exports.chak1FormPost = async (req, res) => {
       res.redirect("/center/chak1Form");
     })
     .catch((err) => {
-console.log(err);    });
+      console.log(err);
+    });
 };
-module.exports.chak1Edit=async(req,res)=>{
+module.exports.chak1Edit = async (req, res) => {
   await chak1.findByPk(req.params.id)
-  .then(data => {
-      res.render('center/employee/chak1/employeeChak1Edit', { title: 'ক্যাডার/নন ক্যাডার কর্মকতা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য',msg:'' ,success:'',records: data});
-  })
-  .catch(err => {
-      console.log("outside",err);
-  })
+    .then(data => {
+      res.render('center/employee/chak1/employeeChak1Edit', { title: 'ক্যাডার/নন ক্যাডার কর্মকতা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য', msg: '', success: '', records: data });
+    })
+    .catch(err => {
+      console.log("outside", err);
+    })
 };
-module.exports.chak1EditPost=async(req,res)=>{
+module.exports.chak1EditPost = async (req, res) => {
   var center = req.body.center;
   var porichito = req.body.porichito;
   var kormokorta = req.body.kormokorta;
@@ -1574,7 +1581,7 @@ module.exports.chak1EditPost=async(req,res)=>{
   var pastWorkstation = req.body.pastWorkstation;
   var comment = req.body.comment;
   var user_id = req.body.user_id;
-  await chak1.update({ 
+  await chak1.update({
     center: center,
     porichito: porichito,
     kormokorta: kormokorta,
@@ -1586,62 +1593,62 @@ module.exports.chak1EditPost=async(req,res)=>{
     pastWorkstation: pastWorkstation,
     comment: comment,
   },
-  {
-      where: {id: req.params.id}
-  }).then(data => {
+    {
+      where: { id: req.params.id }
+    }).then(data => {
       res.redirect('/center/chak1');
-  }).catch(err => {
-      res.render('errorpage',err);
-  });
+    }).catch(err => {
+      res.render('errorpage', err);
+    });
 };
-module.exports.chak1Delete=async(req,res)=>{
+module.exports.chak1Delete = async (req, res) => {
   var chak1Delete = await chak1.findByPk(req.params.id);
   try {
     chak1Delete.destroy();
-      res.redirect("/center/chak1");
+    res.redirect("/center/chak1");
   }
-  catch{
-      res.render('errorpage',err);
+  catch {
+    res.render('errorpage', err);
   }
-  
+
 };
 module.exports.generatePdfchak1 = async (req, res) => {
   try {
-    var centerNames= await center.findOne({
+    var centerNames = await center.findOne({
       where: { id: req.session.user_id },
     })
-  var data= await chak1.findAll({
-      where: {  center_id: req.session.user_id },
+    var data = await chak1.findAll({
+      where: { center_id: req.session.user_id },
     })
-      ejs.renderFile(
-          path.join(__dirname, "../views/center/employee/chak1/", "pdf.ejs"),
-          { records: data,centerName:centerNames,dirname: __dirname },
-          (err, data) => {
-            if (err) {
-              console.log("error", err);
-              res.send(err);
-            } else {
-              var assesPath = path.join(__dirname, "../public/");
-              // console.log(assesPath);
-              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+    ejs.renderFile(
+      path.join(__dirname, "../views/center/employee/chak1/", "pdf.ejs"),
+      { records: data, centerName: centerNames, dirname: __dirname },
+      (err, data) => {
+        if (err) {
+          console.log("error", err);
+          res.send(err);
+        } else {
+          var assesPath = path.join(__dirname, "../public/");
+          // console.log(assesPath);
+          assesPath = assesPath.replace(new RegExp(/\\/g), "/");
 
-              var options = {
-                height: "11.25in",
-                width: "18.5in",
-                header: {
-                  height: "20mm",
-                },
-                footer: {
-                  height: "20mm",
-                },
-                base: "file:///" + assesPath,
-              };
-              res.json({ html: data });
-            }
-          }
-      )
-    
-    
+          var options = {
+            height: "11.25in",
+            width: "18.5in",
+            header: {
+              height: "20mm",
+            },
+            footer: {
+              height: "20mm",
+            },
+            base: "file:///" + assesPath,
+          };
+          res.json({ html: data });
+        }
+      }
+    )
+
+
   } catch (e) {
     console.log(e);
   }
@@ -1664,16 +1671,16 @@ module.exports.chak2 = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside",err);
+      console.log("outside", err);
 
     });
 
   //  records:result
 };
 module.exports.chak2Year = async (req, res) => {
-    await chak2.findAll({
-        where: { center_id: req.session.user_id}
-    })
+  await chak2.findAll({
+    where: { center_id: req.session.user_id }
+  })
     .then((data) => {
       res.render(
         "center/employee/chak2/employeeChak2Table",
@@ -1684,7 +1691,7 @@ module.exports.chak2Year = async (req, res) => {
       );
     })
     .catch((err) => {
-      console.log("outside",err);
+      console.log("outside", err);
 
     });
 };
@@ -1708,7 +1715,7 @@ module.exports.chak2FormPost = async (req, res) => {
   var grade = req.body.grade;
   var pod = req.body.pod;
   var working = req.body.working;
-  var shunno = parseInt(pod)-parseInt(working);
+  var shunno = parseInt(pod) - parseInt(working);
   var comment = req.body.comment;
 
   var user_id = req.body.user_id;
@@ -1729,7 +1736,8 @@ module.exports.chak2FormPost = async (req, res) => {
       res.redirect("/center/chak2Form");
     })
     .catch((err) => {
-console.log(err);    });
+      console.log(err);
+    });
 };
 module.exports.fetchPodobiList = async (req, res) => {
 
@@ -1745,26 +1753,26 @@ module.exports.fetchPodobiList = async (req, res) => {
       console.log(err);
     });
 };
-module.exports.chak2Edit=async(req,res)=>{
+module.exports.chak2Edit = async (req, res) => {
   await chak2.findByPk(req.params.id)
-  .then(data => {
-      res.render('center/employee/chak2/employeeChak2Edit', { title: 'হর্টিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা',msg:'' ,success:'',records: data});
-  })
-  .catch(err => {
-      console.log("outside",err);
-  })
+    .then(data => {
+      res.render('center/employee/chak2/employeeChak2Edit', { title: 'হর্টিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা', msg: '', success: '', records: data });
+    })
+    .catch(err => {
+      console.log("outside", err);
+    })
 };
-module.exports.chak2EditPost=async(req,res)=>{
+module.exports.chak2EditPost = async (req, res) => {
   var name = req.body.name;
   var grade = req.body.grade;
   var pod = req.body.pod;
   var working = req.body.working;
-  var shunno = parseInt(pod)-parseInt(working);
+  var shunno = parseInt(pod) - parseInt(working);
   var comment = req.body.comment;
   var month = req.body.month;
   var year = req.body.year;
   var user_id = req.body.user_id;
-  await chak2.update({ 
+  await chak2.update({
     name: name,
     grade: grade,
     pod: pod,
@@ -1774,62 +1782,62 @@ module.exports.chak2EditPost=async(req,res)=>{
     month: month,
     year: year,
   },
-  {
-      where: {id: req.params.id}
-  }).then(data => {
+    {
+      where: { id: req.params.id }
+    }).then(data => {
       res.redirect('/center/chak2');
-  }).catch(err => {
-      res.render('errorpage',err);
-  });
+    }).catch(err => {
+      res.render('errorpage', err);
+    });
 };
-module.exports.chak2Delete=async(req,res)=>{
+module.exports.chak2Delete = async (req, res) => {
   var chak2Delete = await chak2.findByPk(req.params.id);
   try {
     chak2Delete.destroy();
-      res.redirect("/center/chak2");
+    res.redirect("/center/chak2");
   }
-  catch{
-      res.render('errorpage',err);
+  catch {
+    res.render('errorpage', err);
   }
-  
+
 };
 module.exports.generatePdfchak2 = async (req, res) => {
   try {
-    var centerNames= await center.findOne({
+    var centerNames = await center.findOne({
       where: { id: req.session.user_id },
     })
-  var data= await chak2.findAll({
-      where: {center_id: req.session.user_id },
+    var data = await chak2.findAll({
+      where: { center_id: req.session.user_id },
     })
-      ejs.renderFile(
-          path.join(__dirname, "../views/center/employee/chak2/", "pdf.ejs"),
-          { records: data,centerName:centerNames,dirname: __dirname },
-          (err, data) => {
-            if (err) {
-              console.log("error", err);
-              res.send(err);
-            } else {
-              var assesPath = path.join(__dirname, "../public/");
-              // console.log(assesPath);
-              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+    ejs.renderFile(
+      path.join(__dirname, "../views/center/employee/chak2/", "pdf.ejs"),
+      { records: data, centerName: centerNames, dirname: __dirname },
+      (err, data) => {
+        if (err) {
+          console.log("error", err);
+          res.send(err);
+        } else {
+          var assesPath = path.join(__dirname, "../public/");
+          // console.log(assesPath);
+          assesPath = assesPath.replace(new RegExp(/\\/g), "/");
 
-              var options = {
-                height: "11.25in",
-                width: "18.5in",
-                header: {
-                  height: "20mm",
-                },
-                footer: {
-                  height: "20mm",
-                },
-                base: "file:///" + assesPath,
-              };
-              res.json({ html: data });
-            }
-          }
-      )
-    
-    
+          var options = {
+            height: "11.25in",
+            width: "18.5in",
+            header: {
+              height: "20mm",
+            },
+            footer: {
+              height: "20mm",
+            },
+            base: "file:///" + assesPath,
+          };
+          res.json({ html: data });
+        }
+      }
+    )
+
+
   } catch (e) {
     console.log(e);
   }
@@ -1851,7 +1859,7 @@ module.exports.rajossho = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside",err);
+      console.log("outside", err);
 
     });
 
@@ -1872,7 +1880,7 @@ module.exports.rajosshoYear = async (req, res) => {
       );
     })
     .catch((err) => {
-      console.log("outside",err);
+      console.log("outside", err);
 
     });
 };
@@ -2015,7 +2023,7 @@ module.exports.rajosshoAdd = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside",err);
+      console.log("outside", err);
 
     });
 };
@@ -2190,43 +2198,43 @@ module.exports.fetchRajosshoCode = async (req, res) => {
       console.log(err);
     });
 };
-module.exports.generatePdfrajossho= async (req, res) => {
+module.exports.generatePdfrajossho = async (req, res) => {
   try {
-    var centerNames= await center.findOne({
+    var centerNames = await center.findOne({
       where: { id: req.session.user_id },
     });
-  var data= await rajossho.findAll({
+    var data = await rajossho.findAll({
       where: { year: req.body.year, center_id: req.session.user_id },
     })
-      ejs.renderFile(
-          path.join(__dirname, "../views/center/rajossho/", "pdf.ejs"),
-          { records: data,centerName:centerNames,dirname: __dirname },
-          (err, data) => {
-            if (err) {
-              console.log("error", err);
-              res.send(err);
-            } else {
-              var assesPath = path.join(__dirname, "../public/");
-              // console.log(assesPath);
-              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+    ejs.renderFile(
+      path.join(__dirname, "../views/center/rajossho/", "pdf.ejs"),
+      { records: data, centerName: centerNames, dirname: __dirname },
+      (err, data) => {
+        if (err) {
+          console.log("error", err);
+          res.send(err);
+        } else {
+          var assesPath = path.join(__dirname, "../public/");
+          // console.log(assesPath);
+          assesPath = assesPath.replace(new RegExp(/\\/g), "/");
 
-              var options = {
-                height: "11.25in",
-                width: "18.5in",
-                header: {
-                  height: "20mm",
-                },
-                footer: {
-                  height: "20mm",
-                },
-                base: "file:///" + assesPath,
-              };
-              res.json({ html: data });
-            }
-          }
-      )
-    
-    
+          var options = {
+            height: "11.25in",
+            width: "18.5in",
+            header: {
+              height: "20mm",
+            },
+            footer: {
+              height: "20mm",
+            },
+            base: "file:///" + assesPath,
+          };
+          res.json({ html: data });
+        }
+      }
+    )
+
+
   } catch (e) {
     console.log(e);
   }
@@ -2236,33 +2244,33 @@ module.exports.generatePdfrajossho= async (req, res) => {
 
 //expense controller
 module.exports.expense = async (req, res) => {
-  var codess=await expenseCode.findAll();
-  var data=await expense.findAll({where: { center_id: req.session.user_id },});
-    try {
-      console.log("expense");
-      res.render("center/expense/expense", {title: "খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী",success: "",records: data,codes:codess})
-    }
-    catch {
-      console.log(err);
-    };
+  var codess = await expenseCode.findAll();
+  var data = await expense.findAll({ where: { center_id: req.session.user_id }, });
+  try {
+    console.log("expense");
+    res.render("center/expense/expense", { title: "খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী", success: "", records: data, codes: codess })
+  }
+  catch {
+    console.log(err);
+  };
 };
 module.exports.expenseYear = async (req, res) => {
-  
-    try {
-      var codess=await expenseCode.findAll();
-  var data=await expense.findAll({where: { year: req.body.year, center_id: req.session.user_id }});
-      console.log("expenseYear");
-      res.render(
-        "center/expense/expenseTable",
-        { records: data,codes:codess },
-        function (err, html) {
-          res.send(html);
-        }
-      );
-    }
-    catch (err) {
-      console.log(err);
-    };
+
+  try {
+    var codess = await expenseCode.findAll();
+    var data = await expense.findAll({ where: { year: req.body.year, center_id: req.session.user_id } });
+    console.log("expenseYear");
+    res.render(
+      "center/expense/expenseTable",
+      { records: data, codes: codess },
+      function (err, html) {
+        res.send(html);
+      }
+    );
+  }
+  catch (err) {
+    console.log(err);
+  };
 };
 module.exports.expenseForm = async (req, res) => {
   try {
@@ -2362,7 +2370,7 @@ module.exports.expenseFormPost = async (req, res) => {
     may2 +
     june2;
   var baki = boraddo - total;
- 
+
   await expense
     .create({
       code: code,
@@ -2407,11 +2415,11 @@ module.exports.expenseAdd = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("outside",err);
+      console.log("outside", err);
     });
 };
 module.exports.expenseAddPost = async (req, res) => {
- 
+
   try {
     var data = await expense.findByPk(req.params.id);
     const m = res.locals.moment();
@@ -2560,11 +2568,11 @@ module.exports.expenseAddPost = async (req, res) => {
         }
       );
     } else if (months == 10) {
-     
+
       nov1 = khoroch + parseInt(data.nov1);
       total = khoroch + currentTotal;
       baki = currentbaki - khoroch;
-    
+
       var varib = await expense.update(
         {
           nov1: nov1,
@@ -2601,7 +2609,7 @@ module.exports.fetchExpenseCode = async (req, res) => {
       where: { id: req.body.khat },
     })
     .then((data) => {
-    
+
       var code = data.code;
       res.send(code);
     })
@@ -2611,41 +2619,41 @@ module.exports.fetchExpenseCode = async (req, res) => {
 };
 module.exports.generatePdfexpense = async (req, res) => {
   try {
-    var centerNames= await center.findOne({
+    var centerNames = await center.findOne({
       where: { id: req.session.user_id },
     })
-  var data= await expense.findAll({
+    var data = await expense.findAll({
       where: { year: req.body.year, center_id: req.session.user_id },
     })
-      ejs.renderFile(
-          path.join(__dirname, "../views/center/expense/", "pdf.ejs"),
-          { records: data,centerName:centerNames,dirname: __dirname },
-          (err, data) => {
-            if (err) {
-        
-              res.send(err);
-            } else {
-              var assesPath = path.join(__dirname, "../public/");
-              // console.log(assesPath);
-              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+    ejs.renderFile(
+      path.join(__dirname, "../views/center/expense/", "pdf.ejs"),
+      { records: data, centerName: centerNames, dirname: __dirname },
+      (err, data) => {
+        if (err) {
 
-              var options = {
-                height: "11.25in",
-                width: "18.5in",
-                header: {
-                  height: "20mm",
-                },
-                footer: {
-                  height: "20mm",
-                },
-                base: "file:///" + assesPath,
-              };
-              res.json({ html: data });
-            }
-          }
-      )
-    
-    
+          res.send(err);
+        } else {
+          var assesPath = path.join(__dirname, "../public/");
+          // console.log(assesPath);
+          assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+          var options = {
+            height: "11.25in",
+            width: "18.5in",
+            header: {
+              height: "20mm",
+            },
+            footer: {
+              height: "20mm",
+            },
+            base: "file:///" + assesPath,
+          };
+          res.json({ html: data });
+        }
+      }
+    )
+
+
   } catch (e) {
     console.log(e);
   }
@@ -2654,7 +2662,7 @@ module.exports.generatePdfexpense = async (req, res) => {
 //expense controller end
 
 module.exports.fetchSubCategory = async (req, res) => {
-  
+
   await cropCategory
     .findAll({
       where: { parent_id: req.body.category },
@@ -2728,13 +2736,11 @@ module.exports.monthlyProgressYear = async (req, res) => {
         }
       ]
     });
-    allMonthlyProgress.map((monthlyProg, key) => {
+    allMonthlyProgress.map((monthlyProg) => {
       const timeList = JSON.parse(monthlyProg.timeFrame);
-      timeList.map((eachTime, index) => {
-        if (eachTime.time === selectedDate) {
-          data.push(monthlyProg);
-        }
-      });
+      if (moment(moment(selectedDate, "MMM-YYYY").format()).isSameOrAfter(moment(timeList[0].time, "MMM-YYYY").format())) {
+        data.push(monthlyProg);
+      }
     });
 
     if (selectedDate === currentMonth) {
@@ -2769,71 +2775,69 @@ module.exports.generatePdfMonthlyProgress = async (req, res) => {
     });
     const centerInfo = await center.findByPk(req.session.user_id);
 
-    allMonthlyProgress.map((monthlyProg, key) => {
+    allMonthlyProgress.map((monthlyProg) => {
       const timeList = JSON.parse(monthlyProg.timeFrame);
-      timeList.map((eachTime, index) => {
-        if (eachTime.time === selectedDate) {
-          data.push(monthlyProg);
-        }
-      });
+      if (moment(moment(selectedDate, "MMM-YYYY").format()).isSameOrAfter(moment(timeList[0].time, "MMM-YYYY").format())) {
+        data.push(monthlyProg);
+      }
     });
 
     if (selectedDate === currentMonth) {
       ejs.renderFile(
-          path.join(__dirname, "../views/center/monthlyProgress/", "pdf.ejs"),
-          { records: data, selectedDate: currentMonth, centerName: centerInfo.center, moment: res.locals.moment, dirname: __dirname },
-          (err, data) => {
-            if (err) {
-              console.log("error", err);
-              res.send(err);
-            } else {
-              var assesPath = path.join(__dirname, "../public/");
-              // console.log(assesPath);
-              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+        path.join(__dirname, "../views/center/monthlyProgress/", "pdf.ejs"),
+        { records: data, selectedDate: currentMonth, centerName: centerInfo.center, moment: res.locals.moment, dirname: __dirname },
+        (err, data) => {
+          if (err) {
+            console.log("error", err);
+            res.send(err);
+          } else {
+            var assesPath = path.join(__dirname, "../public/");
+            // console.log(assesPath);
+            assesPath = assesPath.replace(new RegExp(/\\/g), "/");
 
-              var options = {
-                height: "11.25in",
-                width: "18.5in",
-                header: {
-                  height: "20mm",
-                },
-                footer: {
-                  height: "20mm",
-                },
-                base: "file:///" + assesPath,
-              };
-              res.json({ html: data });
-            }
+            var options = {
+              height: "11.25in",
+              width: "18.5in",
+              header: {
+                height: "20mm",
+              },
+              footer: {
+                height: "20mm",
+              },
+              base: "file:///" + assesPath,
+            };
+            res.json({ html: data });
           }
+        }
       )
     }
     else {
       ejs.renderFile(
-          path.join(__dirname, "../views/center/monthlyProgress/", "pdf.ejs"),
-          { records: data, selectedDate: selectedDate, centerName: centerInfo.center, moment: res.locals.moment, dirname: __dirname },
-          (err, data) => {
-            if (err) {
-              console.log("error", err);
-              res.send(err);
-            } else {
-              var assesPath = path.join(__dirname, "../public/");
-              // console.log(assesPath);
-              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+        path.join(__dirname, "../views/center/monthlyProgress/", "pdf.ejs"),
+        { records: data, selectedDate: selectedDate, centerName: centerInfo.center, moment: res.locals.moment, dirname: __dirname },
+        (err, data) => {
+          if (err) {
+            console.log("error", err);
+            res.send(err);
+          } else {
+            var assesPath = path.join(__dirname, "../public/");
+            // console.log(assesPath);
+            assesPath = assesPath.replace(new RegExp(/\\/g), "/");
 
-              var options = {
-                height: "11.25in",
-                width: "18.5in",
-                header: {
-                  height: "20mm",
-                },
-                footer: {
-                  height: "20mm",
-                },
-                base: "file:///" + assesPath,
-              };
-              res.json({ html: data });
-            }
+            var options = {
+              height: "11.25in",
+              width: "18.5in",
+              header: {
+                height: "20mm",
+              },
+              footer: {
+                height: "20mm",
+              },
+              base: "file:///" + assesPath,
+            };
+            res.json({ html: data });
           }
+        }
       )
     }
   } catch (e) {
