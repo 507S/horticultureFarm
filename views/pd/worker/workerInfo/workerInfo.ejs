@@ -74,7 +74,7 @@
         <button onclick="exportToPdf()" class="btn btn-success">
           Download PDF
         </button>
-        <button onclick="exportToExcel('tblexportData', 'নিয়মিত শ্রমিকদের তথ্য')" class="btn btn-success">Export Table Data To Excel File</button>
+        <button onclick="exportToExcel('tblexportData', 'worker-info')" class="btn btn-success">Export Table Data To Excel File</button>
 
 
         <div id="output"></div>
@@ -107,11 +107,11 @@
   }
 </script>
 <script type="text/javascript">
-  function exportToExcel(tableID, filename = '') {
+  async function exportToExcel(tableID, filename = '') {
     try {
       console.log(tableID)
       var elt = document.getElementById(tableID);
-      var wb = XLSX.utils.table_to_book(elt, {
+      var wb = await XLSX.utils.table_to_book(elt, {
         sheet: "sheet1"
       });
       // return dl ?
@@ -121,7 +121,7 @@
       //     type: 'base64'
       //   })
       // : 
-      XLSX.writeFile(wb, filename || ('MySheetName.' + 'xlsx'));
+      await XLSX.writeFile(wb, filename + '.xlsx', );
     } catch (error) {
       console.log(error)
     }
