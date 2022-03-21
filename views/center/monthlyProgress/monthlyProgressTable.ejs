@@ -1,34 +1,34 @@
 <%if (records.length >0){ %>
-    <input type="hidden" id="selectedDate" value="<%= selectedDate %>">
-    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-        <thead>
-        <tr>
-            <th>ক্যাটাগরি নাম</th>
-            <th>সাব-ক্যাটাগরি নাম</th>
-            <th>বিবরণ</th>
-            <th>জাত</th>
-            <th>উৎপাদন (লক্ষ্যমাত্রা)</th>
-            <th>উৎপাদন (চলতি মাস)</th>
-            <th>উৎপাদন (পূর্বমাস পর্যন্ত)</th>
-            <th>মোট উৎপাদন (চলতি+পূর্ব মাস)</th>
-            <th>ডিএই চালানে প্রাপ্তি</th>
-            <th>পূর্ব বছরের জের </th>
-            <th>সর্বমোট (মোট+ডিএই চালানে প্রাপ্তি+পূর্ব বছরের জের)</th>
-            <th>বিতরণ (চলতি মাস)</th>
-            <th>বিতরণ (পূর্বমাস পর্যন্ত)</th>
-            <th>বিতরণ মোট (চলতি+পূর্ব মাস)</th>
-            <th>ডিএই চালানে প্রদান</th>
-            <th>মৃত/বিনষ্ট রাইটআপ</th>
-            <th>সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ)</th>
-            <th>নীট মজুদ</th>
-            <th>মন্তব্য</th>
-            <th>যোগ</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% records.forEach(function(row){ %>
+<input type="hidden" id="selectedDate" value="<%= selectedDate %>">
+<table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+  <thead>
+    <tr>
+      <th>ক্যাটাগরি নাম</th>
+      <th>সাব-ক্যাটাগরি নাম</th>
+      <th>বিবরণ</th>
+      <th>জাত</th>
+      <th>উৎপাদন (লক্ষ্যমাত্রা)</th>
+      <th>উৎপাদন (চলতি মাস)</th>
+      <th>উৎপাদন (পূর্বমাস পর্যন্ত)</th>
+      <th>মোট উৎপাদন (চলতি+পূর্ব মাস)</th>
+      <th>ডিএই চালানে প্রাপ্তি</th>
+      <th>পূর্ব বছরের জের </th>
+      <th>সর্বমোট (মোট+ডিএই চালানে প্রাপ্তি+পূর্ব বছরের জের)</th>
+      <th>বিতরণ (চলতি মাস)</th>
+      <th>বিতরণ (পূর্বমাস পর্যন্ত)</th>
+      <th>বিতরণ মোট (চলতি+পূর্ব মাস)</th>
+      <th>ডিএই চালানে প্রদান</th>
+      <th>মৃত/বিনষ্ট রাইটআপ</th>
+      <th>সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ)</th>
+      <th>নীট মজুদ</th>
+      <th>মন্তব্য</th>
+      <th>যোগ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% records.forEach(function(row){ %>
 
-            <%
+    <%
                 const currentMonth = selectedDate
                 var startRange = "";
                 var endRange = "";
@@ -163,83 +163,85 @@
 
             %>
 
-            <tr>
-                <td> <%= row.cropCategory.name %></td>
-                <td><%= row.cropSubCategory.name %></td>
-                <td><%= row.cropBiboron.name %></td>
-                <td><%= row.cropBreed.name %></td>
-                <td><%= new Number(productionTargetSum).toLocaleString("bn-BD") %></td> <!--  উৎপাদন (লক্ষ্যমাত্রা) -->
-                <td><%= new Number(currentProductionSum).toLocaleString("bn-BD") %></td> <!--   উৎপাদন (চলতি মাস) -->
-                <td> <%= new Number(previousMonthProduction).toLocaleString("bn-BD") %> </td> <!--  উৎপাদন (পূর্বমাস পর্যন্ত) -->
-                <td> <%= new Number(currentProductionSum + previousMonthProduction).toLocaleString("bn-BD") %> </td> <!--  মোট উৎপাদন (চলতি+পূর্ব মাস) -->
-                <td> <%= new Number(daePraptiSum).toLocaleString("bn-BD") %> </td> <!-- ডিএই চালানে প্রাপ্তি -->
-                <td> <%= new Number(prevYearJer).toLocaleString("bn-BD") %> </td> <!--  পূর্ব বছরের জের -->
-                <td> <%= new Number(currentProductionSum + previousMonthProduction + daePraptiSum + prevYearJer).toLocaleString("bn-BD") %> </td> <!-- সর্বমোট (মোট+ডিএই চালানে প্রাপ্তি+পূর্ব বছরের জের -->
-                <td><%= new Number(currentBitoronSum).toLocaleString("bn-BD") %></td> <!-- বিতরণ (চলতি মাস) -->
-                <td><%= new Number(previousMonthBitoronSum).toLocaleString("bn-BD") %></td> <!--  বিতরণ (পূর্বমাস পর্যন্ত) -->
-                <td><%= new Number(currentBitoronSum + previousMonthBitoronSum).toLocaleString("bn-BD") %></td> <!-- বিতরণ মোট (চলতি+পূর্ব মাস) -->
-                <td><%= new Number(currentDaeProdanSum).toLocaleString("bn-BD") %></td> <!-- ডিএই চালানে প্রদান -->
-                <td><%= new Number(currentMritoSum).toLocaleString("bn-BD") %></td> <!-- মৃত/বিনষ্ট রাইটআপ -->
-                <td><%= new Number(currentBitoronSum + previousMonthBitoronSum + currentDaeProdanSum + currentMritoSum).toLocaleString("bn-BD") %></td> <!--  সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ) -->
-                <td><%= new Number((currentProductionSum + previousMonthProduction + daePraptiSum + prevYearJer) - (currentBitoronSum + previousMonthBitoronSum + currentDaeProdanSum + currentMritoSum)).toLocaleString("bn-BD") %></td> <!--  নীট মজুদ -->
-                <td><%= montobboSum %></td>  <!-- মন্তব্য  -->
-                <td>
-                    <a class="btn btn-primary btn-xs" href="/center/monthlyProgressEdit/<%= row.id %>/<%= selectedDate %>"><i class="fa fa-plus"></i></a>
-                    <a class="btn btn-danger btn-xs" href="/center/monthlyProgressDelete/<%= row.id %>/<%= selectedDate %>"><i class="fa fa-trash"></i></a>
-                </td>
-            </tr>
-        <% }) %>
-        </tbody>
-    </table>
-    <button onclick="exportToPdf()" class="btn btn-success">
-        Download PDF
-    </button>
+    <tr>
+      <td> <%= row.cropCategory.name %></td>
+      <td><%= row.cropSubCategory.name %></td>
+      <td><%= row.cropBiboron.name %></td>
+      <td><%= row.cropBreed.name %></td>
+      <td><%= new Number(productionTargetSum).toLocaleString("bn-BD") %></td> <!--  উৎপাদন (লক্ষ্যমাত্রা) -->
+      <td><%= new Number(currentProductionSum).toLocaleString("bn-BD") %></td> <!--   উৎপাদন (চলতি মাস) -->
+      <td> <%= new Number(previousMonthProduction).toLocaleString("bn-BD") %> </td> <!--  উৎপাদন (পূর্বমাস পর্যন্ত) -->
+      <td> <%= new Number(currentProductionSum + previousMonthProduction).toLocaleString("bn-BD") %> </td> <!--  মোট উৎপাদন (চলতি+পূর্ব মাস) -->
+      <td> <%= new Number(daePraptiSum).toLocaleString("bn-BD") %> </td> <!-- ডিএই চালানে প্রাপ্তি -->
+      <td> <%= new Number(prevYearJer).toLocaleString("bn-BD") %> </td> <!--  পূর্ব বছরের জের -->
+      <td> <%= new Number(currentProductionSum + previousMonthProduction + daePraptiSum + prevYearJer).toLocaleString("bn-BD") %> </td> <!-- সর্বমোট (মোট+ডিএই চালানে প্রাপ্তি+পূর্ব বছরের জের -->
+      <td><%= new Number(currentBitoronSum).toLocaleString("bn-BD") %></td> <!-- বিতরণ (চলতি মাস) -->
+      <td><%= new Number(previousMonthBitoronSum).toLocaleString("bn-BD") %></td> <!--  বিতরণ (পূর্বমাস পর্যন্ত) -->
+      <td><%= new Number(currentBitoronSum + previousMonthBitoronSum).toLocaleString("bn-BD") %></td> <!-- বিতরণ মোট (চলতি+পূর্ব মাস) -->
+      <td><%= new Number(currentDaeProdanSum).toLocaleString("bn-BD") %></td> <!-- ডিএই চালানে প্রদান -->
+      <td><%= new Number(currentMritoSum).toLocaleString("bn-BD") %></td> <!-- মৃত/বিনষ্ট রাইটআপ -->
+      <td><%= new Number(currentBitoronSum + previousMonthBitoronSum + currentDaeProdanSum + currentMritoSum).toLocaleString("bn-BD") %></td> <!--  সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ) -->
+      <td><%= new Number((currentProductionSum + previousMonthProduction + daePraptiSum + prevYearJer) - (currentBitoronSum + previousMonthBitoronSum + currentDaeProdanSum + currentMritoSum)).toLocaleString("bn-BD") %></td> <!--  নীট মজুদ -->
+      <td><%= montobboSum %></td> <!-- মন্তব্য  -->
+      <td>
+        <a class="btn btn-primary btn-xs" href="/center/monthlyProgressEdit/<%= row.id %>/<%= selectedDate %>"><i class="fa fa-plus"></i></a>
+        <!-- <a class="btn btn-danger btn-xs" href="/center/monthlyProgressDelete/<%= row.id %>/<%= selectedDate %>"><i class="fa fa-trash"></i></a> -->
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+<button onclick="exportToPdf()" class="btn btn-success">
+  Download PDF
+</button>
 <% }else{ %>
-    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-        <thead>
-        <tr>
-            <th>ক্যাটাগরি নাম</th>
-            <th>সাব-ক্যাটাগরি নাম</th>
-            <th>বিবরণ</th>
-            <th>জাত</th>
-            <th>উৎপাদন (লক্ষ্যমাত্রা)</th>
-            <th>উৎপাদন (চলতি মাস)</th>
-            <th>উৎপাদন (পূর্বমাস পর্যন্ত)</th>
-            <th>মোট উৎপাদন (চলতি+পূর্ব মাস)</th>
-            <th>ডিএই চালানে প্রাপ্তি</th>
-            <th>পূর্ব বছরের জের</th>
-            <th>সর্বমোট (মোট+ডিএই চালানে প্রাপ্তি+পূর্ব বছরের জের)</th>
-            <th>বিতরণ (চলতি মাস)</th>
-            <th>বিতরণ (পূর্বমাস পর্যন্ত)</th>
-            <th>বিতরণ মোট (চলতি+পূর্ব মাস)</th>
-            <th>ডিএই চালানে প্রদান</th>
-            <th>মৃত/বিনষ্ট রাইটআপ</th>
-            <th>সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ)</th>
-            <th>নীট মজুদ</th>
-            <th>মন্তব্য</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% records.forEach(function(row){ %>
-            <tr>
-                <td colspan="10">No data Found</td>
-            </tr>
-        <% }) %>
-        </tbody>
-    </table>
+<table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+  <thead>
+    <tr>
+      <th>ক্যাটাগরি নাম</th>
+      <th>সাব-ক্যাটাগরি নাম</th>
+      <th>বিবরণ</th>
+      <th>জাত</th>
+      <th>উৎপাদন (লক্ষ্যমাত্রা)</th>
+      <th>উৎপাদন (চলতি মাস)</th>
+      <th>উৎপাদন (পূর্বমাস পর্যন্ত)</th>
+      <th>মোট উৎপাদন (চলতি+পূর্ব মাস)</th>
+      <th>ডিএই চালানে প্রাপ্তি</th>
+      <th>পূর্ব বছরের জের</th>
+      <th>সর্বমোট (মোট+ডিএই চালানে প্রাপ্তি+পূর্ব বছরের জের)</th>
+      <th>বিতরণ (চলতি মাস)</th>
+      <th>বিতরণ (পূর্বমাস পর্যন্ত)</th>
+      <th>বিতরণ মোট (চলতি+পূর্ব মাস)</th>
+      <th>ডিএই চালানে প্রদান</th>
+      <th>মৃত/বিনষ্ট রাইটআপ</th>
+      <th>সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ)</th>
+      <th>নীট মজুদ</th>
+      <th>মন্তব্য</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% records.forEach(function(row){ %>
+    <tr>
+      <td colspan="10">No data Found</td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
 <% } %>
 <script>
-    async function exportToPdf() {
-        const selectedDate = $("#selectedDate").val();
-        const { data } = await axios({
-            url: `/center/generatePdfMonthlyProgress/${selectedDate}`,
-            method: "GET",
-        });
-        var mywindow = window.open("", "PRINT", "height=400,width=600");
-        mywindow.document.write(data.html);
-        mywindow.document.close(); // necessary for IE >= 10
-        mywindow.focus(); // necessary for IE >= 10*/
-        mywindow.print();
-        return true;
-    }
+  async function exportToPdf() {
+    const selectedDate = $("#selectedDate").val();
+    const {
+      data
+    } = await axios({
+      url: `/center/generatePdfMonthlyProgress/${selectedDate}`,
+      method: "GET",
+    });
+    var mywindow = window.open("", "PRINT", "height=400,width=600");
+    mywindow.document.write(data.html);
+    mywindow.document.close(); // necessary for IE >= 10
+    mywindow.focus(); // necessary for IE >= 10*/
+    mywindow.print();
+    return true;
+  }
 </script>
