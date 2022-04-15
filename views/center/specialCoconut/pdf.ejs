@@ -1,122 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>বিশেষ নারিকেল কর্মসূচি</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>বিশেষ নারিকেল কর্মসূচি</title>
 
-    <style>
-        .flex-container {
-            display: flex;
+  <style>
+    .flex-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
 
-            justify-content: center
-        }
-        .table, td, th {
-            border: 1px solid black;
-        }
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .center {
-            text-align: center;
-        }
-        .inline-block-child {
-            display: inline-block;
-        }
-    </style>
+    .flex-container h5 {
+      padding: 0;
+      margin: 0;
+    }
+
+    .table,
+    td,
+    th {
+      border: 1px solid black;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .inline-block-child {
+      display: inline-block;
+    }
+  </style>
 </head>
+
 <body>
 
-<div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
+  <div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
     <div>
-        <h1>বিশেষ নারিকেল কর্মসূচি</h1>
-        <p><b>সেন্টারের নাম :</b><%= centerName.center %></p>
-        <%if (records.length >0){ %>
-            <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
-            <thead>
-            <tr>
-                <th>সেন্টারের নাম</th>
-                <th>মোট বরাদ্দকৃত অর্থের পরিমাণ</th>
-                <th>বীজ ক্রয়ের লক্ষ্যমাত্রা</th>
-                <th>ক্রয়কৃত বীজ নারিকেলের সংখ্যা</th>
-                <th>উৎপাদিত চারার সংখ্যা</th>
-                <th>মরা/বিক্রির অযোগ্য চারার সংখ্যা</th>
-                <th>বিক্রিযোগ্য চারার সংখ্যা (লক্ষ্যমাত্রা)</th>
-                <th>বিক্রিযোগ্য চারার সংখ্যা (অর্জিত)</th>
-                <th>বিক্রিযোগ্য চারার শতকরা হার</th>
-                <th>মোট বিক্রিযোগ্য চারার সংখ্যা</th>
-                <th>বিক্রিত চারার সংখ্যা</th>
-                <th>বিক্রিত চারার মোট মূল্য</th>
-                <th>বর্তমান মজুদ সংখ্যা</th>
-                <th>বিক্রয় লব্দ অর্থের পরিমাণ(ডিডি/এমটি)</th>
-                <th>বিক্রয় লব্দ অর্থের পরিমাণ(তারিখ)</th>
-                <th>বিক্রয় লব্দ অর্থের পরিমাণ(হেড অফিসে প্রেরিত টাকার পরিমাণ)</th>
-                <th>বিক্রয় লব্দ অর্থের পরিমাণ(স্থানীয় ব্যাংকের হিসাব জমা)</th>
-                <th>মন্তব্য</th>
-            </tr>
-            </thead>
-            <tbody>
-                <% records.forEach(function(row){ %>
-                    <tr>
-                        <td><%= row.center %></td>
-                        <td><%= row.boraddo %></td>
-                        <td><%= row.target %></td>
-                        <td><%= row.boughtNarikel %></td>
-                        <td><%= row.seedProduction %></td>
-                        <td><%= row.deadSeed %></td>
-                        <td><%= row.salableSeedTarget %></td>
-                        <td><%= row.salableSeedAchieved %></td>
-                        <td><%= row.salableSeedPercentage %></td>
-                        <td><%= row.salableSeedNumber %></td>
-                        <td><%= row.soldSeed %></td>
-                        <td><%= row.soldSeedPrice %></td>
-                        <td><%= row.presentMojud %></td>
-                        <td><%= row.earnedMoneyDD %></td>
-                        <td><%= row.earnedMoneyDate %></td>
-                        <td><%= row.earnedMoneyHead %></td>
-                        <td><%= row.earnedMoneyLocalBank %></td>
-                        <td><%= row.comment %></td>
-                        
-                    </tr>
-                <% }) %>
-            </tbody>
-        </table>
-        <% }else{ %>
-            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-                <thead>
-                <tr>
-                    <th>সেন্টারের নাম</th>
-                    <th>মোট বরাদ্দকৃত অর্থের পরিমাণ</th>
-                    <th>বীজ ক্রয়ের লক্ষ্যমাত্রা</th>
-                    <th>ক্রয়কৃত বীজ নারিকেলের সংখ্যা</th>
-                    <th>উৎপাদিত চারার সংখ্যা</th>
-                    <th>মরা/বিক্রির অযোগ্য চারার সংখ্যা</th>
-                    <th>বিক্রিযোগ্য চারার সংখ্যা (লক্ষ্যমাত্রা)</th>
-                    <th>বিক্রিযোগ্য চারার সংখ্যা (অর্জিত)</th>
-                    <th>বিক্রিযোগ্য চারার শতকরা হার</th>
-                    <th>মোট বিক্রিযোগ্য চারার সংখ্যা</th>
-                    <th>বিক্রিত চারার সংখ্যা</th>
-                    <th>বিক্রিত চারার মোট মূল্য</th>
-                    <th>বর্তমান মজুদ সংখ্যা</th>
-                    <th>বিক্রয় লব্দ অর্থের পরিমাণ(ডিডি/এমটি)</th>
-                    <th>বিক্রয় লব্দ অর্থের পরিমাণ(তারিখ)</th>
-                    <th>বিক্রয় লব্দ অর্থের পরিমাণ(হেড অফিসে প্রেরিত টাকার পরিমাণ)</th>
-                    <th>বিক্রয় লব্দ অর্থের পরিমাণ(স্থানীয় ব্যাংকের হিসাব জমা)</th>
-                    <th>মন্তব্য</th>
-                </tr>
-                </thead>
-                <tbody>
-                <% records.forEach(function(row){ %>
-                    <tr>
-                        <td colspan="10">No data Found</td>
-                    </tr>
-                <% }) %>
-                </tbody>
-            </table>
-        <% } %>
+      <h1>বিশেষ নারিকেল কর্মসূচি</h1>
+      <p><b>সেন্টারের নাম :</b><%= centerName.center %></p>
+      <%if (records.length >0){ %>
+      <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <th>সেন্টারের নাম</th>
+            <th>মোট বরাদ্দকৃত অর্থের পরিমাণ</th>
+            <th>বীজ ক্রয়ের লক্ষ্যমাত্রা</th>
+            <th>ক্রয়কৃত বীজ নারিকেলের সংখ্যা</th>
+            <th>উৎপাদিত চারার সংখ্যা</th>
+            <th>মরা/বিক্রির অযোগ্য চারার সংখ্যা</th>
+            <th>বিক্রিযোগ্য চারার সংখ্যা (লক্ষ্যমাত্রা)</th>
+            <th>বিক্রিযোগ্য চারার সংখ্যা (অর্জিত)</th>
+            <th>বিক্রিযোগ্য চারার শতকরা হার</th>
+            <th>মোট বিক্রিযোগ্য চারার সংখ্যা</th>
+            <th>বিক্রিত চারার সংখ্যা</th>
+            <th>বিক্রিত চারার মোট মূল্য</th>
+            <th>বর্তমান মজুদ সংখ্যা</th>
+            <th>বিক্রয় লব্দ অর্থের পরিমাণ(ডিডি/এমটি)</th>
+            <th>বিক্রয় লব্দ অর্থের পরিমাণ(তারিখ)</th>
+            <th>বিক্রয় লব্দ অর্থের পরিমাণ(হেড অফিসে প্রেরিত টাকার পরিমাণ)</th>
+            <th>বিক্রয় লব্দ অর্থের পরিমাণ(স্থানীয় ব্যাংকের হিসাব জমা)</th>
+            <th>মন্তব্য</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% records.forEach(function(row){ %>
+          <tr>
+            <td><%= row.center %></td>
+            <td><%= row.boraddo %></td>
+            <td><%= row.target %></td>
+            <td><%= row.boughtNarikel %></td>
+            <td><%= row.seedProduction %></td>
+            <td><%= row.deadSeed %></td>
+            <td><%= row.salableSeedTarget %></td>
+            <td><%= row.salableSeedAchieved %></td>
+            <td><%= row.salableSeedPercentage %></td>
+            <td><%= row.salableSeedNumber %></td>
+            <td><%= row.soldSeed %></td>
+            <td><%= row.soldSeedPrice %></td>
+            <td><%= row.presentMojud %></td>
+            <td><%= row.earnedMoneyDD %></td>
+            <td><%= row.earnedMoneyDate %></td>
+            <td><%= row.earnedMoneyHead %></td>
+            <td><%= row.earnedMoneyLocalBank %></td>
+            <td><%= row.comment %></td>
+
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <% }else{ %>
+      <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <th>সেন্টারের নাম</th>
+            <th>মোট বরাদ্দকৃত অর্থের পরিমাণ</th>
+            <th>বীজ ক্রয়ের লক্ষ্যমাত্রা</th>
+            <th>ক্রয়কৃত বীজ নারিকেলের সংখ্যা</th>
+            <th>উৎপাদিত চারার সংখ্যা</th>
+            <th>মরা/বিক্রির অযোগ্য চারার সংখ্যা</th>
+            <th>বিক্রিযোগ্য চারার সংখ্যা (লক্ষ্যমাত্রা)</th>
+            <th>বিক্রিযোগ্য চারার সংখ্যা (অর্জিত)</th>
+            <th>বিক্রিযোগ্য চারার শতকরা হার</th>
+            <th>মোট বিক্রিযোগ্য চারার সংখ্যা</th>
+            <th>বিক্রিত চারার সংখ্যা</th>
+            <th>বিক্রিত চারার মোট মূল্য</th>
+            <th>বর্তমান মজুদ সংখ্যা</th>
+            <th>বিক্রয় লব্দ অর্থের পরিমাণ(ডিডি/এমটি)</th>
+            <th>বিক্রয় লব্দ অর্থের পরিমাণ(তারিখ)</th>
+            <th>বিক্রয় লব্দ অর্থের পরিমাণ(হেড অফিসে প্রেরিত টাকার পরিমাণ)</th>
+            <th>বিক্রয় লব্দ অর্থের পরিমাণ(স্থানীয় ব্যাংকের হিসাব জমা)</th>
+            <th>মন্তব্য</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% records.forEach(function(row){ %>
+          <tr>
+            <td colspan="10">No data Found</td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <% } %>
     </div>
-</div>
+  </div>
 
 </body>
+
 </html>

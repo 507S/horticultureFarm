@@ -1,110 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>শ্রমিকের সংখ্যা</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>শ্রমিকের সংখ্যা</title>
 
-    <style>
-        .flex-container {
-            display: flex;
+  <style>
+    .flex-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
 
-            justify-content: center
-        }
-        .table, td, th {
-            border: 1px solid black;
-        }
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .center {
-            text-align: center;
-        }
-        .inline-block-child {
-            display: inline-block;
-        }
-    </style>
+    .flex-container h5 {
+      padding: 0;
+      margin: 0;
+    }
+
+    .table,
+    td,
+    th {
+      border: 1px solid black;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .inline-block-child {
+      display: inline-block;
+    }
+  </style>
 </head>
+
 <body>
 
-<div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
+  <div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
     <div>
-        <h1>শ্রমিকের সংখ্যা</h1>
-        <p><b>সেন্টার :</b>সকল সেন্টারের তথ্য</p>
+      <h1>শ্রমিকের সংখ্যা</h1>
+      <p><b>সেন্টার :</b>সকল সেন্টারের তথ্য</p>
 
-        <%if (centers.length >0){ %>
-            <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
-            <thead>
-            <tr>
-                <th>ক্রমিক নং</th>
-                <th>সেন্টারের নাম</th>
-                <th>নিয়মিত শ্রমিকের সংখ্যা</th>
-                <th>অনিয়মিত শ্রমিকের সংখ্যা</th>
-                <th>মোট</th>
-            </tr>
-            </thead>
-            <tbody>
-                <% var subreg=0 %> 
-                <% var subirreg=0 %> 
-                <% var subtotal=0 %> 
-                <% centers.forEach(function(center,index){ %>
-                    <tr>
-                        <td><%=index+1%></td>
-                        <td><%=center.center %></td>
-                        <% var reg=0;%>
-                        <% var irreg=0;%>
-                        <% var total=0;%>
-                       <% workerinfos.forEach(function(row){ %>
-                            <% if (center.id === row.center_id){%>
-                                <%  if(row.regularWorker !== 0){%>
-                                    <%  reg+=1} %>
-                                <%if(row.irregularWorker !== 0){%>
-                                    <%  irreg+=1} %>
-                                <%total = reg+irreg;%>
-                            <%}}) %>
-        
-                        <td><%= reg %></td>
-                        <% subreg+=reg %> 
-                        <td><%= irreg %></td>
-                        <% subirreg+=irreg %> 
-                        <td><%= total %></td>
-                        <% subtotal+=total %> 
-                    </tr> 
-                <% }) %>
-                <tr>
-                    <td colspan="2">মোটঃ সকল সেন্টারের তথ্য</td>
-                    <td><%= subreg %></td>
-                    <td><%= subirreg %></td>
-                    <td><%= subtotal %></td>
-        
-        
-                </tr>
-                    
-            </tbody>
-        </table>
-        <% }else{ %>
-            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-                <thead>
-                <tr>
-                    <th>সেন্টারের নাম</th>
-                    <th>নিয়মিত শ্রমিকের সংখ্যা</th>
-                    <th>অনিয়মিত শ্রমিকের সংখ্যা</th>
-                    <th>মোট</th>
-        
-                </tr>
-                </thead>
-                <tbody>
-                <% centers.forEach(function(row){ %>
-                    <tr>
-                        <td colspan="10">No data Found</td>
-                    </tr>
-                <% }) %>
-                </tbody>
-            </table>
-        <% } %>
+      <%if (centers.length >0){ %>
+      <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <th>ক্রমিক নং</th>
+            <th>সেন্টারের নাম</th>
+            <th>নিয়মিত শ্রমিকের সংখ্যা</th>
+            <th>অনিয়মিত শ্রমিকের সংখ্যা</th>
+            <th>মোট</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% var subreg=0 %>
+          <% var subirreg=0 %>
+          <% var subtotal=0 %>
+          <% centers.forEach(function(center,index){ %>
+          <tr>
+            <td><%=index+1%></td>
+            <td><%=center.center %></td>
+            <% var reg=0;%>
+            <% var irreg=0;%>
+            <% var total=0;%>
+            <% workerinfos.forEach(function(row){ %>
+            <% if (center.id === row.center_id){%>
+            <%  if(row.regularWorker !== 0){%>
+            <%  reg+=1} %>
+            <%if(row.irregularWorker !== 0){%>
+            <%  irreg+=1} %>
+            <%total = reg+irreg;%>
+            <%}}) %>
+
+            <td><%= reg %></td>
+            <% subreg+=reg %>
+            <td><%= irreg %></td>
+            <% subirreg+=irreg %>
+            <td><%= total %></td>
+            <% subtotal+=total %>
+          </tr>
+          <% }) %>
+          <tr>
+            <td colspan="2">মোটঃ সকল সেন্টারের তথ্য</td>
+            <td><%= subreg %></td>
+            <td><%= subirreg %></td>
+            <td><%= subtotal %></td>
+
+
+          </tr>
+
+        </tbody>
+      </table>
+      <% }else{ %>
+      <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <th>সেন্টারের নাম</th>
+            <th>নিয়মিত শ্রমিকের সংখ্যা</th>
+            <th>অনিয়মিত শ্রমিকের সংখ্যা</th>
+            <th>মোট</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <% centers.forEach(function(row){ %>
+          <tr>
+            <td colspan="10">No data Found</td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <% } %>
     </div>
-</div>
+  </div>
 
 </body>
+
 </html>

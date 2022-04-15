@@ -1,15 +1,15 @@
 <%if (records.length >0){ %>
-    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-        <thead>
-        <tr>
-            <th>সেন্টার নাম</th>
-            <th>চারা সংরক্ষণ/মজুদ</th>
-        </tr>
-        </thead>
-        <tbody>
+<table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+  <thead>
+    <tr>
+      <th>সেন্টার নাম</th>
+      <th>চারা সংরক্ষণ/মজুদ</th>
+    </tr>
+  </thead>
+  <tbody>
 
-                <% records.forEach((row) => {  %>
-                    <%
+    <% records.forEach((row) => {  %>
+    <%
                         const currentMonth = selectedDate
                         var startRange = "";
                         var endRange = "";
@@ -99,32 +99,33 @@
                             }
                         })
 
-
+console.log(currentProductionSum + previousMonthProduction + daePraptiSum + prevYearJer)
+console.log(currentBitoronSum + previousMonthBitoronSum + currentDaeProdanSum + currentMritoSum)
                     %>
-            <tr>
-                <td> <%= row.center.center %></td>
-                <td><%= new Number((currentProductionSum + previousMonthProduction + daePraptiSum + prevYearJer) - (currentBitoronSum + previousMonthBitoronSum + currentDaeProdanSum + currentMritoSum)).toLocaleString("bn-BD") %></td>
-            </tr>
-            <%
+    <tr>
+      <td> <%= row.center.center %></td>
+      <td><%= new Number((currentProductionSum + previousMonthProduction + daePraptiSum + prevYearJer) - (currentBitoronSum + previousMonthBitoronSum + currentDaeProdanSum + currentMritoSum)).toLocaleString("bn-BD") %></td>
+    </tr>
+    <%
                 });
             %>
-        </tbody>
-    </table>
+  </tbody>
+</table>
 
 <% }else{ %>
-    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-        <thead>
-        <tr>
-            <th>সেন্টার নাম</th>
-            <th>চারা সংরক্ষণ/মজুদ</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% records.forEach(function(row){ %>
-            <tr>
-                <td colspan="10">No data Found</td>
-            </tr>
-        <% }) %>
-        </tbody>
-    </table>
+<table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+  <thead>
+    <tr>
+      <th>সেন্টার নাম</th>
+      <th>চারা সংরক্ষণ/মজুদ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% records.forEach(function(row){ %>
+    <tr>
+      <td colspan="10">No data Found</td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
 <% } %>

@@ -1,158 +1,160 @@
 <%- include('../includes/header')-%>
-        <div class="wrapper">
-          <%- include('../includes/topbar')-%>
+<div class="wrapper">
+  <%- include('../includes/topbar')-%>
 
-            <div class="page-wrap">
-              <%- include('../includes/sidebar')-%>
-                <div class="main-content">
-                    <div class="container-fluid">
-                        <div class="row clearfix">
+  <div class="page-wrap">
+    <%- include('../includes/sidebar')-%>
+    <div class="main-content">
+      <div class="container-fluid">
+        <div class="row clearfix">
 
-                            <div class="col ">
-                                <div class="widget">
-                                    <div class="widget-body">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="state">
-                                                <h6>চারা উৎপাদন</h6>
-                                                <h4 id="totalProduction"><%= new Number(totalProduction).toLocaleString("bn-BD") %></h4>
-                                            </div>
-                                            <div class="icon">
-                                                <i class="ik ik-award"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col ">
-                                <div class="widget">
-                                    <div class="widget-body">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="state">
-                                                <h6>চারা বিতরণ</h6>
-                                                <h4 id="totalBitoron"> <%= new Number(totalBitoron).toLocaleString("bn-BD") %> </h4>
-                                            </div>
-                                            <div class="icon">
-                                                <i class="ik ik-award"></i>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="col ">
-                                <div class="widget">
-                                    <div class="widget-body">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="state">
-                                                <h6>চারা সংরক্ষণ/মজুদ</h6>
-                                                <h4 id="totalMojud"><%= new Number(totalProduction - totalBitoron).toLocaleString("bn-BD") %></h4>
-                                            </div>
-                                            <div class="icon">
-                                                <i class="ik ik-award"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="col ">
-                                <div class="widget">
-                                    <div class="widget-body">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="state">
-                                                <h6>রাজস্ব আয়</h6>
-                                                <h4 id="totalrajossho"><%= new Number(totalrajossho).toLocaleString("bn-BD") %></h4>
-                                            </div>
-                                            <div class="icon">
-                                                <i class="ik ik-award"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="container gallery-container">
-                            <h1 text-align:center>নোটিশ বোর্ড</h1>
-                            
-                            <div class="tz-gallery">
-                                <div class="row">
-                                    <%if (dashImage.length >0){ %>
-                                        <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-                                        <thead>
-                                        <tr>
-                                            <th>ক্রমিক নং</th>
-                                            <th>টাইটেল</th>
-                                            <th>ফাইল</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                            <% dashImage.forEach(function(row,index){ %>
-                                                <tr>
-                                                    <td><%= index+1 %></td>
-                                                    <td><%= row.title %></td>
-                                                    <td><a  href="<%= row.image %>"><i class="fas fa-file"></i>
-                                                </tr>
-                                            <% }) %>
-                                        </tbody>
-                                    </table>
-                                    <% }else{ %>
-                                        <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
-                                            <thead>
-                                            <tr>
-                                                <th>ক্রমিক নং</th>
-                                                <th>টাইটেল</th>
-                                                <th>ফাইল</th>
-                                                <th>পরিবর্তন/মুছুন</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <% dashImage.forEach(function(row){ %>
-                                                <tr>
-                                                    <td colspan="10">No data Found</td>
-                                                </tr>
-                                            <% }) %>
-                                            </tbody>
-                                        </table>
-                                    <% } %>
-                                    
-
-                                </div>
-                        
-                            </div>
-                        
-                        </div>
-
-                    </div>
+          <div class="col ">
+            <div class="widget">
+              <div class="widget-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="state">
+                    <h6>সর্বমোট উৎপাদন</h6>
+                    <h4 id="totalProduction"><%= new Number(totalProduction).toLocaleString("bn-BD") %></h4>
+                  </div>
+                  <div class="icon">
+                    <i class="ik ik-award"></i>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
+          <div class="col ">
+            <div class="widget">
+              <div class="widget-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="state">
+                    <h6>সর্বমোট বিতরণ</h6>
+                    <h4 id="totalBitoron"> <%= new Number(totalBitoron).toLocaleString("bn-BD") %> </h4>
+                  </div>
+                  <div class="icon">
+                    <i class="ik ik-award"></i>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+          <div class="col ">
+            <div class="widget">
+              <div class="widget-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="state">
+                    <h6>বর্তমান মজুদ</h6>
+                    <h4 id="totalMojud"><%= new Number(totalProduction - totalBitoron).toLocaleString("bn-BD") %></h4>
+                  </div>
+                  <div class="icon">
+                    <i class="ik ik-award"></i>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="col ">
+            <div class="widget">
+              <div class="widget-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="state">
+                    <h6>রাজস্ব জমা</h6>
+                    <h4 id="totalrajossho"><%= new Number(totalrajossho).toLocaleString("bn-BD") %></h4>
+                  </div>
+                  <div class="icon">
+                    <i class="ik ik-award"></i>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
         </div>
-        <%- include('../includes/footer')-%>
-        <script type="text/javascript">
-    $('#center').on("change",function () {
-        var center = $('#center').val();
-        $.ajax({
-            type: "POST",
-            url: "/centerData",
-            data: {center: center},
-            datatype: "json",
-            beforeSend: function() {
-                // setting a timeout
-                $('#loading').show();
-                $('#output').hide();
-            },
-            success: function (data) {
-                $('#totalProduction').html(new Number(data.totalProduction).toLocaleString("bn-BD"));
-                $('#totalBitoron').html(new Number(data.totalBitoron).toLocaleString("bn-BD"));
-                $('#totalMojud').html(new Number(data.totalMojud).toLocaleString("bn-BD"));
-                $('#totalrajossho').html(new Number(data.totalrajossho).toLocaleString("bn-BD"));
-            },
-            complete: function() {
-                $('#loading').hide();
-                $('#output').show();
-            }
-        });
+
+        <div class="container gallery-container">
+          <h1 text-align:center>নোটিশ বোর্ড</h1>
+
+          <div class="tz-gallery">
+            <div class="row">
+              <%if (dashImage.length >0){ %>
+              <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+                <thead>
+                  <tr>
+                    <th>ক্রমিক নং</th>
+                    <th>টাইটেল</th>
+                    <th>ফাইল</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% dashImage.forEach(function(row,index){ %>
+                  <tr>
+                    <td><%= index+1 %></td>
+                    <td><%= row.title %></td>
+                    <td><a href="<%= row.image %>"><i class="fas fa-file"></i>
+                  </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+              <% }else{ %>
+              <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
+                <thead>
+                  <tr>
+                    <th>ক্রমিক নং</th>
+                    <th>টাইটেল</th>
+                    <th>ফাইল</th>
+                    <th>পরিবর্তন/মুছুন</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% dashImage.forEach(function(row){ %>
+                  <tr>
+                    <td colspan="10">No data Found</td>
+                  </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+              <% } %>
+
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../includes/footer')-%>
+<script type="text/javascript">
+  $('#center').on("change", function() {
+    var center = $('#center').val();
+    $.ajax({
+      type: "POST",
+      url: "/centerData",
+      data: {
+        center: center
+      },
+      datatype: "json",
+      beforeSend: function() {
+        // setting a timeout
+        $('#loading').show();
+        $('#output').hide();
+      },
+      success: function(data) {
+        $('#totalProduction').html(new Number(data.totalProduction).toLocaleString("bn-BD"));
+        $('#totalBitoron').html(new Number(data.totalBitoron).toLocaleString("bn-BD"));
+        $('#totalMojud').html(new Number(data.totalMojud).toLocaleString("bn-BD"));
+        $('#totalrajossho').html(new Number(data.totalrajossho).toLocaleString("bn-BD"));
+      },
+      complete: function() {
+        $('#loading').hide();
+        $('#output').show();
+      }
     });
+  });
 </script>

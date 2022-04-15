@@ -1,79 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>News PDF</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News PDF</title>
 
-    <style>
-        .flex-container {
-            display: flex;
+  <style>
+    .flex-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
 
-            justify-content: center
-        }
-        .table, td, th {
-            border: 1px solid black;
-        }
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .center {
-            text-align: center;
-        }
-        .inline-block-child {
-            display: inline-block;
-        }
-        .header{
-            display: flex;
-            width: 100%;
-        }
-        .header > * {
-            width: 33%;
-        }
-        .row{
-            display: flex;
-            width: 100%;
-        }
-        .row > * {
-            width: 50%;
-        }
-    </style>
+    .flex-container h5 {
+      padding: 0;
+      margin: 0;
+    }
+
+    .table,
+    td,
+    th {
+      border: 1px solid black;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .inline-block-child {
+      display: inline-block;
+    }
+
+    .header {
+      display: flex;
+      width: 100%;
+    }
+
+    .header>* {
+      width: 33%;
+    }
+
+    .row {
+      display: flex;
+      width: 100%;
+    }
+
+    .row>* {
+      width: 50%;
+    }
+  </style>
 </head>
+
 <body>
 
-<div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
+  <div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
     <div>
-        <div class="header">
-            <div>
-                <img src="/images/dae.jpg" width="100" alt="dae">
-            </div>
-            <div>
-                <h3>হর্টিকালচার উইং</h3>
-            </div>
-            <div>
-                <img src="/images/bd.png" width="100" alt="bd">
-            </div>
+      <div class="header">
+        <div>
+          <img src="/images/dae.jpg" width="100" alt="dae">
         </div>
-        <h1>মাসিক টপশীট (বিতরণ)</h1>
-        <div class="row">
-            <div><p><b>সেন্টারের নাম :</b><%= centerName %></p></div>
-            <div><p><b>প্রতিবেদনের তারিখ : </b><%= moment(selectedDate).locale("bn").format("MM/YYYY") %></p></div>
+        <div>
+          <h3>হর্টিকালচার উইং</h3>
         </div>
-        <%if (records.length >0){ %>
-            <input type="hidden" id="selectedDate" value="<%= selectedDate %>">
-            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-                <thead>
-                <tr>
-                    <th>আইটেমের নাম</th>
-                    <th>গত মাস পর্যন্ত বিতরণ (সংখ্যা/প্যাকেট)</th>
-                    <th>চলতি মাসে বিতরণ(সংখ্যা/প্যাকেট)</th>
-                    <th>আলোচ্য মাস পর্যন্ত মোট বিতরণ (সংখ্যা/প্যাকেট)</th>
-                </tr>
-                </thead>
-                <tbody>
-                <% cropCatg.forEach(function(row,index){ %>
-                    <%
+        <div>
+          <img src="/images/bd.png" width="100" alt="bd">
+        </div>
+      </div>
+      <h1>মাসিক টপশীট (বিতরণ)</h1>
+      <div class="row">
+        <div>
+          <p><b>সেন্টারের নাম :</b><%= centerName %></p>
+        </div>
+        <div>
+          <p><b>প্রতিবেদনের তারিখ : </b><%= moment(selectedDate).locale("bn").format("MM/YYYY") %></p>
+        </div>
+      </div>
+      <%if (records.length >0){ %>
+      <input type="hidden" id="selectedDate" value="<%= selectedDate %>">
+      <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <th>আইটেমের নাম</th>
+            <th>গত মাস পর্যন্ত বিতরণ (সংখ্যা/প্যাকেট)</th>
+            <th>চলতি মাসে বিতরণ(সংখ্যা/প্যাকেট)</th>
+            <th>আলোচ্য মাস পর্যন্ত মোট বিতরণ (সংখ্যা/প্যাকেট)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% cropCatg.forEach(function(row,index){ %>
+          <%
                         const currentMonth = moment().format("MMM-YYYY").toLowerCase();
                         var totalProductionTarget = 0;
                         var currentBitoronSum = 0;
@@ -120,39 +142,40 @@
                             }
                         })
                     %>
-                    <tr>
-                        <td><%= row.name %></td>
-                        <td><%= new Number(previousMonthBitoron).toLocaleString("bn-BD") %></td>
-                        <td><%= new Number(currentBitoronSum).toLocaleString("bn-BD") %></td>
-                        <td><%= new Number(currentBitoronSum + previousMonthBitoron).toLocaleString("bn-BD") %></td>
-                    </tr>
-                <% }) %>
-                </tbody>
-            </table>
+          <tr>
+            <td><%= row.name %></td>
+            <td><%= new Number(previousMonthBitoron).toLocaleString("bn-BD") %></td>
+            <td><%= new Number(currentBitoronSum).toLocaleString("bn-BD") %></td>
+            <td><%= new Number(currentBitoronSum + previousMonthBitoron).toLocaleString("bn-BD") %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
 
-        <% }
+      <% }
         else{ %>
-            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-                <thead>
-                <tr>
-                    <th>আইটেমের নাম</th>
-                    <th>গত মাস পর্যন্ত বিতরণ (সংখ্যা/প্যাকেট)</th>
-                    <th>চলতি মাসে বিতরণ(সংখ্যা/প্যাকেট)</th>
-                    <th>আলোচ্য মাস পর্যন্ত মোট বিতরণ (সংখ্যা/প্যাকেট)</th>
-                    <th>পরিবর্তন/মুছুন</th>
-                </tr>
-                </thead>
-                <tbody>
-                <% records.forEach(function(row){ %>
-                    <tr>
-                        <td colspan="10">No data Found</td>
-                    </tr>
-                <% }) %>
-                </tbody>
-            </table>
-        <% } %>
+      <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <th>আইটেমের নাম</th>
+            <th>গত মাস পর্যন্ত বিতরণ (সংখ্যা/প্যাকেট)</th>
+            <th>চলতি মাসে বিতরণ(সংখ্যা/প্যাকেট)</th>
+            <th>আলোচ্য মাস পর্যন্ত মোট বিতরণ (সংখ্যা/প্যাকেট)</th>
+            <th>পরিবর্তন/মুছুন</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% records.forEach(function(row){ %>
+          <tr>
+            <td colspan="10">No data Found</td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <% } %>
     </div>
-</div>
+  </div>
 
 </body>
+
 </html>
