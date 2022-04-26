@@ -480,6 +480,7 @@
       var center = $('#center').val();
       var biboron = $('#biboron').val();
       var breed = $('#breed').val();
+
       $.ajax({
         type: "POST",
         url: "/findMojudwithCenter",
@@ -495,7 +496,7 @@
           $('#output').hide();
         },
         success: function(data) {
-          console.log(data)
+          // console.log(data)
           // $('#totalProduction').html(new Number(data.totalProduction).toLocaleString("bn-BD"));
           // $('#totalBitoron').html(new Number(data.totalBitoron).toLocaleString("bn-BD"));
           $('#output').html(data);
@@ -524,6 +525,7 @@
         success: function(data) {
           $('#breed').empty();
           if (data) {
+            // console.log(data)
             $('#breed').append('<option value="none"> জাত বাছুন </option>');
             $.each(data, function(key, value) {
               $('#breed').append('<option value="' + value.id + '">' + value.name + '</option>');
