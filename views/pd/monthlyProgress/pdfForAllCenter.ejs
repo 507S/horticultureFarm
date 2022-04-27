@@ -1,117 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>মাসিক প্রতিবেদন</title>
 
-    <style>
-      .flex-container {
-        display: flex;
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>মাসিক প্রতিবেদন</title>
 
-        justify-content: center;
-      }
-      .table,
-      td,
-      th {
-        border: 1px solid black;
-      }
-      .table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      .center {
-        text-align: center;
-      }
-      .inline-block-child {
-        display: inline-block;
-      }
-    </style>
-  </head>
-  <body>
-    <div
-      style="
-        margin-top: 5px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        background-color: #ffffffa6;
-      "
-      class="center"
-    >
-      <div>
-        <div
-          style="
+  <style>
+    .flex-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .flex-container h5 {
+      padding: 0;
+      margin: 0;
+    }
+
+    .table,
+    td,
+    th {
+      border: 1px solid black;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .inline-block-child {
+      display: inline-block;
+    }
+
+    .header {
+      display: flex;
+      width: 100%;
+    }
+
+    .header>* {
+      width: 33%;
+    }
+
+    .row {
+      display: flex;
+      width: 100%;
+    }
+
+    .row>* {
+      width: 50%;
+    }
+  </style>
+</head>
+
+<body>
+  <div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
+    <div>
+      <div class="header">
+        <div>
+          <img src="/images/dae.jpg" width="100" alt="dae">
+        </div>
+        <div class="flex-container">
+          <h5>গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</h5>
+          <h5>কৃষি সম্প্রসারণ অধিদপ্তর</h5>
+          <h5>হর্টিকালচার উইং</h5>
+        </div>
+        <div>
+          <img src="/images/bd.png" width="100" alt="bd">
+        </div>
+      </div>
+      <div style="
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;
             justify-content: space-between;
-          "
-        >
-          <div
-            style="height: 80px; width: 80px; max-height: 80px; max-width: 80px"
-          >
-            <img
-              src="/landingPage/images/daelogo.png"
-              alt="DAE"
-              style="height: 100%; width: 100%; object-fit: contain"
-            />
-          </div>
-          <div>
-            <h1>গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</h1>
-            <h2>কৃষি সম্প্রসারণ অধিদপ্তর</h2>
-            <h3>হর্টিকালচার উইং</h3>
-            <h3>খামারবাড়ী, ফার্মগেট, ঢাকা-১২১৫</h3>
-            <h3>www.dae.gov.bd</h3>
-            <h2>মাসিক প্রতিবেদন</h2>
-          </div>
-          <div
-            style="height: 80px; width: 80px; max-height: 80px; max-width: 80px"
-          >
-            <img
-              src="/landingPage/images/mujib.png"
-              alt="Homepage"
-              style="height: 100%; width: 100%; object-fit: contain"
-            />
-          </div>
+          ">
+        <p>স্মারক নংঃ</p>
+        <div>
+          <p><b> তারিখ : </b><%= moment(selectedDate).locale("bn").format("MM/YYYY") %></p>
         </div>
-        <div
-          style="
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            justify-content: space-between;
-          "
-        >
-          <p>স্মারক নংঃ</p>
-          <div><p><b> তারিখ : </b><%= moment(selectedDate).locale("bn").format("MM/YYYY") %></p></div>
-        </div>
-        <%if (cropCatg.length >0){ %>
-            <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
-                <thead>
-                <tr>
-                    <th>ক্যাটাগরি নাম</th>
-                    <th>সাব-ক্যাটাগরি নাম</th>
-                    <th>বিবরণ</th>
-                    <th>জাত</th>
-                    <th>উৎপাদন (লক্ষ্যমাত্রা)</th>
-                    <th>উৎপাদন (চলতি মাস)</th>
-                    <th>উৎপাদন (পূর্বমাস পর্যন্ত)</th>
-                    <th>মোট উৎপাদন (চলতি+পূর্ব মাস)</th>
-                    <th>ডিএই চালানে প্রাপ্তি</th>
-                    <th>পূর্ব বছরের জের </th>
-                    <th>সর্বমোট (মোট+ডিএই চালানে প্রাপ্তি+পূর্ব বছরের জের)</th>
-                    <th>বিতরণ (চলতি মাস)</th>
-                    <th>বিতরণ (পূর্বমাস পর্যন্ত)</th>
-                    <th>বিতরণ মোট (চলতি+পূর্ব মাস)</th>
-                    <th>ডিএই চালানে প্রদান</th>
-                    <th>মৃত/বিনষ্ট রাইটআপ</th>
-                    <th>সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ)</th>
-                    <th>নীট মজুদ</th>
-                </tr>
-                </thead>
-                <tbody>
-                <% cropCatg.forEach(function(crop,index){ %>
-                    <%
+      </div>
+      <%if (cropCatg.length >0){ %>
+      <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <th>ক্যাটাগরি নাম</th>
+            <th>সাব-ক্যাটাগরি নাম</th>
+            <th>বিবরণ</th>
+            <th>জাত</th>
+            <th>উৎপাদন (লক্ষ্যমাত্রা)</th>
+            <th>উৎপাদন (চলতি মাস)</th>
+            <th>উৎপাদন (পূর্বমাস পর্যন্ত)</th>
+            <th>মোট উৎপাদন (চলতি+পূর্ব মাস)</th>
+            <th>ডিএই চালানে প্রাপ্তি</th>
+            <th>পূর্ব বছরের জের </th>
+            <th>সর্বমোট (মোট+ডিএই চালানে প্রাপ্তি+পূর্ব বছরের জের)</th>
+            <th>বিতরণ (চলতি মাস)</th>
+            <th>বিতরণ (পূর্বমাস পর্যন্ত)</th>
+            <th>বিতরণ মোট (চলতি+পূর্ব মাস)</th>
+            <th>ডিএই চালানে প্রদান</th>
+            <th>মৃত/বিনষ্ট রাইটআপ</th>
+            <th>সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ)</th>
+            <th>নীট মজুদ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% cropCatg.forEach(function(crop,index){ %>
+          <%
                         var currentMonth = selectedDate
                         var startRange = "";
                         var endRange = "";
@@ -196,8 +196,8 @@
                         // মন্তব্য *********
                         // var montobboSum = "";
                     %>
-                    <% records.forEach(function(row){ %>
-                        <%
+          <% records.forEach(function(row){ %>
+          <%
                             if(row.breed === crop.name){
                                 category = row.category;
                                 subCategory = row.subCategory;
@@ -280,66 +280,66 @@
                                 // })
                             }
                         %>
-                    <% }) %>
-                    <tr>
-                        <td> <%= category %></td>
-                        <td><%= subCategory %></td>
-                        <td><%= biboron %></td>
-                        <td><%= breed %></td>
-                        <td><%= new Number(productionTargetSum).toLocaleString("bn-BD") %></td>
-                        <td><%= new Number(currentProductionSum).toLocaleString("bn-BD") %></td>
-                        <td> <%= new Number(previousMonthProduction).toLocaleString("bn-BD") %> </td>
-                        <td> <%= new Number(currentProductionSum + previousMonthProduction).toLocaleString("bn-BD") %> </td>
-                        <td> <%= new Number(daePraptiSum).toLocaleString("bn-BD") %> </td>
-                        <td> <%= new Number(prevYearJer).toLocaleString("bn-BD") %> </td>
-                        <td> <%= new Number(currentProductionSum + previousMonthProduction + daePraptiSum + prevYearJer).toLocaleString("bn-BD") %> </td>
-                        <td><%= new Number(currentBitoronSum).toLocaleString("bn-BD") %></td>
-                        <td><%= new Number(previousMonthBitoronSum).toLocaleString("bn-BD") %></td>
-                        <td><%= new Number(currentBitoronSum + previousMonthBitoronSum).toLocaleString("bn-BD") %></td>
-                        <td><%= new Number(currentDaeProdanSum).toLocaleString("bn-BD") %></td>
-                        <td><%= new Number(currentMritoSum).toLocaleString("bn-BD") %></td>
-                        <td><%= new Number(currentBitoronSum + previousMonthBitoronSum + currentDaeProdanSum + currentMritoSum).toLocaleString("bn-BD") %></td>
-                        <td><%= new Number((currentProductionSum + previousMonthProduction + daePraptiSum + prevYearJer)-(currentBitoronSum + previousMonthBitoronSum + currentDaeProdanSum + currentMritoSum)).toLocaleString("bn-BD") %></td>
-                    </tr>
-                <% }) %>
-                </tbody>
-            </table>
-        <% }else{ %>
-            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-                <thead>
-                <tr>
-                    <th>ক্যাটাগরি নাম</th>
-                    <th>সাব-ক্যাটাগরি নাম</th>
-                    <th>বিবরণ</th>
-                    <th>জাত</th>
-                    <th>উৎপাদন (লক্ষ্যমাত্রা)</th>
-                    <th>উৎপাদন (চলতি মাস)</th>
-                    <th>উৎপাদন (পূর্বমাস পর্যন্ত)</th>
-                    <th>মোট উৎপাদন (চলতি+পূর্ব মাস)</th>
-                    <th>ডিএই চালানে প্রাপ্তি</th>
-                    <th>পূর্ব বছরের জের</th>
-                    <th>সর্বমোট (মোট+ডিএই চালানে প্রাপ্তি+পূর্ব বছরের জের)</th>
-                    <th>বিতরণ (চলতি মাস)</th>
-                    <th>বিতরণ (পূর্বমাস পর্যন্ত)</th>
-                    <th>বিতরণ মোট (চলতি+পূর্ব মাস)</th>
-                    <th>ডিএই চালানে প্রদান</th>
-                    <th>মৃত/বিনষ্ট রাইটআপ</th>
-                    <th>সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ)</th>
-                    <th>নীট মজুদ</th>
-                    <th>মন্তব্য</th>
-                </tr>
-                </thead>
-                <tbody>
-                <% records.forEach(function(row){ %>
-                    <tr>
-                        <td colspan="10">No data Found</td>
-                    </tr>
-                <% }) %>
-                </tbody>
-            </table>
-        <% } %>
+          <% }) %>
+          <tr>
+            <td> <%= category %></td>
+            <td><%= subCategory %></td>
+            <td><%= biboron %></td>
+            <td><%= breed %></td>
+            <td><%= new Number(productionTargetSum).toLocaleString("bn-BD") %></td>
+            <td><%= new Number(currentProductionSum).toLocaleString("bn-BD") %></td>
+            <td> <%= new Number(previousMonthProduction).toLocaleString("bn-BD") %> </td>
+            <td> <%= new Number(currentProductionSum + previousMonthProduction).toLocaleString("bn-BD") %> </td>
+            <td> <%= new Number(daePraptiSum).toLocaleString("bn-BD") %> </td>
+            <td> <%= new Number(prevYearJer).toLocaleString("bn-BD") %> </td>
+            <td> <%= new Number(currentProductionSum + previousMonthProduction + daePraptiSum + prevYearJer).toLocaleString("bn-BD") %> </td>
+            <td><%= new Number(currentBitoronSum).toLocaleString("bn-BD") %></td>
+            <td><%= new Number(previousMonthBitoronSum).toLocaleString("bn-BD") %></td>
+            <td><%= new Number(currentBitoronSum + previousMonthBitoronSum).toLocaleString("bn-BD") %></td>
+            <td><%= new Number(currentDaeProdanSum).toLocaleString("bn-BD") %></td>
+            <td><%= new Number(currentMritoSum).toLocaleString("bn-BD") %></td>
+            <td><%= new Number(currentBitoronSum + previousMonthBitoronSum + currentDaeProdanSum + currentMritoSum).toLocaleString("bn-BD") %></td>
+            <td><%= new Number((currentProductionSum + previousMonthProduction + daePraptiSum + prevYearJer)-(currentBitoronSum + previousMonthBitoronSum + currentDaeProdanSum + currentMritoSum)).toLocaleString("bn-BD") %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <% }else{ %>
+      <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <th>ক্যাটাগরি নাম</th>
+            <th>সাব-ক্যাটাগরি নাম</th>
+            <th>বিবরণ</th>
+            <th>জাত</th>
+            <th>উৎপাদন (লক্ষ্যমাত্রা)</th>
+            <th>উৎপাদন (চলতি মাস)</th>
+            <th>উৎপাদন (পূর্বমাস পর্যন্ত)</th>
+            <th>মোট উৎপাদন (চলতি+পূর্ব মাস)</th>
+            <th>ডিএই চালানে প্রাপ্তি</th>
+            <th>পূর্ব বছরের জের</th>
+            <th>সর্বমোট (মোট+ডিএই চালানে প্রাপ্তি+পূর্ব বছরের জের)</th>
+            <th>বিতরণ (চলতি মাস)</th>
+            <th>বিতরণ (পূর্বমাস পর্যন্ত)</th>
+            <th>বিতরণ মোট (চলতি+পূর্ব মাস)</th>
+            <th>ডিএই চালানে প্রদান</th>
+            <th>মৃত/বিনষ্ট রাইটআপ</th>
+            <th>সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ)</th>
+            <th>নীট মজুদ</th>
+            <th>মন্তব্য</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% records.forEach(function(row){ %>
+          <tr>
+            <td colspan="10">No data Found</td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <% } %>
     </div>
-</div>
-
+  </div>
 </body>
+
 </html>

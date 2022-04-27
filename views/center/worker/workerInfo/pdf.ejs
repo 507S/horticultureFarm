@@ -37,74 +37,105 @@
     .inline-block-child {
       display: inline-block;
     }
+
+    .header {
+      display: flex;
+      width: 100%;
+    }
+
+    .header>* {
+      width: 33%;
+    }
+
+    .row {
+      display: flex;
+      width: 100%;
+    }
+
+    .row>* {
+      width: 50%;
+    }
   </style>
 </head>
 
 <body>
-
   <div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
     <div>
-      <h1>শ্রমিকের তথ্য</h1>
-      <p><b>সেন্টারের নাম :</b><%= centerName.center %></p>
-      <%if (records.length >0){ %>
-      <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-        <thead>
-          <tr>
-            <th>ক্রমিক নং</th>
-            <th>পদবী</th>
-            <th>নাম</th>
-            <th>পিতার নাম</th>
-            <th>ঠিকানা</th>
-            <th>মোবাইল নং</th>
-            <th>যোগদানের তারিখ</th>
-            <th>এনআইডি নং</th>
-            <th>ব্যাংক একাউন্ট নং</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% records.forEach(function(row,index){ %>
-          <tr>
-            <td><%= index+1 %></td>
-            <td><%= row.podobi %></td>
-            <td><%= row.name %></td>
-            <td><%= row.fname %></td>
-            <td><%= row.address %></td>
-            <td><%= row.mobile %></td>
-            <td><%= row.date %></td>
-            <td><%= row.nid %></td>
-            <td><%= row.bank %></td>
+      <div class="header">
+        <div>
+          <img src="/images/dae.jpg" width="100" alt="dae">
+        </div>
+        <div class="flex-container">
+          <h5>গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</h5>
+          <h5>কৃষি সম্প্রসারণ অধিদপ্তর</h5>
+          <h5>হর্টিকালচার উইং</h5>
+        </div>
+        <div>
+          <img src="/images/bd.png" width="100" alt="bd">
+        </div>
+      </div>
+      <div>
+        <h1>শ্রমিকের তথ্য</h1>
+        <p><b>সেন্টারের নাম :</b><%= centerName.center %></p>
+        <%if (records.length >0){ %>
+        <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+          <thead>
+            <tr>
+              <th>ক্রমিক নং</th>
+              <th>পদবী</th>
+              <th>নাম</th>
+              <th>পিতার নাম</th>
+              <th>ঠিকানা</th>
+              <th>মোবাইল নং</th>
+              <th>যোগদানের তারিখ</th>
+              <th>এনআইডি নং</th>
+              <th>ব্যাংক একাউন্ট নং</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% records.forEach(function(row,index){ %>
+            <tr>
+              <td><%= index+1 %></td>
+              <td><%= row.podobi %></td>
+              <td><%= row.name %></td>
+              <td><%= row.fname %></td>
+              <td><%= row.address %></td>
+              <td><%= row.mobile %></td>
+              <td><%= row.date %></td>
+              <td><%= row.nid %></td>
+              <td><%= row.bank %></td>
 
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
-      <% }else{ %>
-      <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
-        <thead>
-          <tr>
-            <th>ক্রমিক নং</th>
-            <th>পদবী</th>
-            <th>নাম</th>
-            <th>পিতার নাম</th>
-            <th>ঠিকানা</th>
-            <th>মোবাইল নং</th>
-            <th>যোগদানের তারিখ</th>
-            <th>এনআইডি নং</th>
-            <th>ব্যাংক একাউন্ট নং</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% records.forEach(function(row){ %>
-          <tr>
-            <td colspan="10">No data Found</td>
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
-      <% } %>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <% }else{ %>
+        <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
+          <thead>
+            <tr>
+              <th>ক্রমিক নং</th>
+              <th>পদবী</th>
+              <th>নাম</th>
+              <th>পিতার নাম</th>
+              <th>ঠিকানা</th>
+              <th>মোবাইল নং</th>
+              <th>যোগদানের তারিখ</th>
+              <th>এনআইডি নং</th>
+              <th>ব্যাংক একাউন্ট নং</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% records.forEach(function(row){ %>
+            <tr>
+              <td colspan="10">No data Found</td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <% } %>
+      </div>
     </div>
   </div>
-
 </body>
 
 </html>

@@ -1,242 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>মাসিক রাজস্ব অর্থ প্রাপ্তির হিসাব</title>
 
-    <style>
-      .flex-container {
-        display: flex;
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>মাসিক রাজস্ব অর্থ প্রাপ্তির হিসাব</title>
 
-        justify-content: center;
-      }
-      .table,
-      td,
-      th {
-        border: 1px solid black;
-      }
-      .table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      .center {
-        text-align: center;
-      }
-      .inline-block-child {
-        display: inline-block;
-      }
-    </style>
-  </head>
-  <body>
-    <div
-      style="
-        margin-top: 5px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        background-color: #ffffffa6;
-      "
-      class="center"
-    >
-      <div>
-        <div
-          style="
+  <style>
+    .flex-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .flex-container h5 {
+      padding: 0;
+      margin: 0;
+    }
+
+    .table,
+    td,
+    th {
+      border: 1px solid black;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .inline-block-child {
+      display: inline-block;
+    }
+
+    .header {
+      display: flex;
+      width: 100%;
+    }
+
+    .header>* {
+      width: 33%;
+    }
+
+    .row {
+      display: flex;
+      width: 100%;
+    }
+
+    .row>* {
+      width: 50%;
+    }
+  </style>
+</head>
+
+<body>
+  <div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
+    <div>
+      <div class="header">
+        <div>
+          <img src="/images/dae.jpg" width="100" alt="dae">
+        </div>
+        <div class="flex-container">
+          <h5>গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</h5>
+          <h5>কৃষি সম্প্রসারণ অধিদপ্তর</h5>
+          <h5>হর্টিকালচার উইং</h5>
+        </div>
+        <div>
+          <img src="/images/bd.png" width="100" alt="bd">
+        </div>
+      </div>
+      <div style="
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;
             justify-content: space-between;
-          "
-        >
-          <div
-            style="height: 80px; width: 80px; max-height: 80px; max-width: 80px"
-          >
-            <img
-              src="/landingPage/images/daelogo.png"
-              alt="DAE"
-              style="height: 100%; width: 100%; object-fit: contain"
-            />
-          </div>
-          <div>
-            <h1>গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</h1>
-            <h2>কৃষি সম্প্রসারণ অধিদপ্তর</h2>
-            <h3>হর্টিকালচার উইং</h3>
-            <h3>খামারবাড়ী, ফার্মগেট, ঢাকা-১২১৫</h3>
-            <h3>www.dae.gov.bd</h3>
-            <h2>মাসিক রাজস্ব অর্থ প্রাপ্তির হিসাব</h2>
-          </div>
-          <div
-            style="height: 80px; width: 80px; max-height: 80px; max-width: 80px"
-          >
-            <img
-              src="/landingPage/images/mujib.png"
-              alt="Homepage"
-              style="height: 100%; width: 100%; object-fit: contain"
-            />
-          </div>
-        </div>
-        <div
-          style="
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            justify-content: space-between;
-          "
-        >
-          <p>স্মারক নংঃ</p>
-          <p>তারিখঃ <%= new Date().toLocaleDateString();%></p>
-        </div>
-            <%if (centers.length >0){ %>
-                <table class="table table-bordered table-striped" >
-                <thead>
-                <tr>
-                    <th>ক্রমিক নং</th>
-                        <th>সেন্টারের নাম</th>
-                        <th>জুলাই</th>
-                        <th>আগস্ট</th>
-                        <th>সেপ্টে</th>
-                        <th>অক্টো</th>
-                        <th>নভে</th>
-                        <th>ডিসে</th>
-                        <th>জানু</th>
-                        <th>ফেব্রু</th>
-                        <th>মার্চ</th>
-                         <th>এপ্রিল</th>
-                        <th>মে</th>
-                        <th>জুন</th>
-                        <th>সর্বমোট</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <% var subjuly1=0 %> 
-                    <% var subaugust1=0 %> 
-                    <% var subsept1=0 %> 
-                    <% var suboct1=0 %> 
-                    <% var subnov1=0 %> 
-                    <% var subdec1=0 %> 
-                    <% var subjan2=0 %> 
-                    <% var subfeb2=0 %> 
-                    <% var submarch2=0 %> 
-                    <% var subapr2=0 %> 
-                    <% var submay2=0 %> 
-                    <% var subjune2=0 %> 
-                    <% var subtotal=0 %> 
-                    <% centers.forEach(function(center,index){ %>
-                        <tr>
-                        <td><%=index+1%></td>
-                        <td><%=center.center %></td>
-                            <% var july1=0;%>
-                            <% var august1=0;%>
-                            <% var sept1=0;%>
-                            <% var oct1=0;%>
-                            <% var nov1=0;%>
-                            <% var dec1=0;%>
-                            <% var jan2=0;%>
-                            <% var feb2=0;%>
-                            <% var march2=0;%>
-                            <% var apr2=0;%>
-                            <% var may2=0;%>
-                            <% var june2=0;%>
-                            <% var total=0;%>
-                           <% records.forEach(function(row){ %>
-                                <% if (center.id === row.center_id){%>
-                                        <%  july1+=parseInt(row.july1) %>
-                                        <%  august1+=parseInt(row.august1) %>
-                                        <%  sept1+=parseInt(row.sept1) %>
-                                        <%  oct1+=parseInt(row.oct1) %>
-                                        <%  nov1+=parseInt(row.nov1)  %>
-                                        <%  dec1+=parseInt(row.dec1) %>
-                                        <%  jan2+=parseInt(row.jan2) %>
-                                        <%  feb2+=parseInt(row.feb2)  %>
-                                        <%  march2+=parseInt(row.march2) %>
-                                        <%  apr2+=parseInt(row.apr2) %>
-                                        <%  may2+=parseInt(row.may2) %>
-                                        <%  june2+=parseInt(row.june2)  %>
-                                        <%  total+=parseInt(row.total) %>
-            
-                                <%}}) %>
-            
-                           
-                            <td><%= july1 %></td>
-                            <% subjuly1+=parseInt(july1) %> 
-                            <td><%= august1 %></td>
-                            <% subaugust1+=parseInt(august1) %> 
-                            <td><%= sept1 %></td>
-                            <% subsept1+=parseInt(sept1) %> 
-                            <td><%= oct1 %></td>
-                            <% suboct1+=parseInt(oct1) %> 
-                            <td><%= nov1 %></td>
-                            <% subnov1+=parseInt(nov1) %> 
-                            <td><%= dec1 %></td>
-                            <% subdec1+=parseInt(dec1) %> 
-                            <td><%= jan2 %></td>
-                            <% subjan2+=parseInt(jan2) %> 
-                            <td><%= feb2 %></td>
-                            <% subfeb2+=parseInt(feb2) %> 
-                            <td><%= march2 %></td>
-                            <% submarch2+=parseInt(march2) %> 
-                            <td><%= apr2 %></td>
-                            <% subapr2+=parseInt(apr2) %> 
-                            <td><%= may2 %></td>
-                            <% submay2+=parseInt(may2) %> 
-                            <td><%= june2 %></td>
-                            <% subjune2+=parseInt(june2) %> 
-                            <td><%= total %></td>
-                            <% subtotal+=parseInt(total) %> 
-                         
-                        </tr>
-                        <% }) %>
-                        <tr>
-                            <td colspan="2">মোটঃ সকল সেন্টারের তথ্য</td>
-                            <td><%= subjuly1 %></td>
-                            <td><%= subaugust1 %></td>
-                            <td><%= subsept1 %></td>
-                            <td><%= suboct1 %></td>
-                            <td><%= subnov1 %></td>
-                            <td><%= subdec1 %></td>
-                            <td><%= subjan2 %></td>
-                            <td><%= subfeb2 %></td>
-                            <td><%= submarch2 %></td>
-                            <td><%= subapr2 %></td>
-                            <td><%= submay2 %></td>
-                            <td><%= subjune2 %></td>
-                            <td><%= subtotal %></td>
-                
-                
-                        </tr>
-                </tbody>
-            </table>
-            <% }else{ %>
-                <table class="table table-bordered table-striped" >
-                    <thead>
-                    <tr>
-                        <th>ক্রমিক নং</th>
-                        <th>সেন্টারের নাম</th>
-                        <th>জুলাই</th>
-                        <th>আগস্ট</th>
-                        <th>সেপ্টে</th>
-                        <th>অক্টো</th>
-                        <th>নভে</th>
-                        <th>ডিসে</th>
-                        <th>জানু</th>
-                        <th>ফেব্রু</th>
-                        <th>মার্চ</th>
-                         <th>এপ্রিল</th>
-                        <th>মে</th>
-                        <th>জুন</th>
-                        <th>সর্বমোট</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <% centers.forEach(function(row){ %>
-                        <tr>
-                            <td colspan="10">No data Found</td>
-                        </tr>
-                    <% }) %>
-                    </tbody>
-                </table>
-            <% } %>
+          ">
+        <p>স্মারক নংঃ</p>
+        <p>তারিখঃ <%= new Date().toLocaleDateString();%></p>
+      </div>
+      <%if (centers.length >0){ %>
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>ক্রমিক নং</th>
+            <th>সেন্টারের নাম</th>
+            <th>জুলাই</th>
+            <th>আগস্ট</th>
+            <th>সেপ্টে</th>
+            <th>অক্টো</th>
+            <th>নভে</th>
+            <th>ডিসে</th>
+            <th>জানু</th>
+            <th>ফেব্রু</th>
+            <th>মার্চ</th>
+            <th>এপ্রিল</th>
+            <th>মে</th>
+            <th>জুন</th>
+            <th>সর্বমোট</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% var subjuly1=0 %>
+          <% var subaugust1=0 %>
+          <% var subsept1=0 %>
+          <% var suboct1=0 %>
+          <% var subnov1=0 %>
+          <% var subdec1=0 %>
+          <% var subjan2=0 %>
+          <% var subfeb2=0 %>
+          <% var submarch2=0 %>
+          <% var subapr2=0 %>
+          <% var submay2=0 %>
+          <% var subjune2=0 %>
+          <% var subtotal=0 %>
+          <% centers.forEach(function(center,index){ %>
+          <tr>
+            <td><%=index+1%></td>
+            <td><%=center.center %></td>
+            <% var july1=0;%>
+            <% var august1=0;%>
+            <% var sept1=0;%>
+            <% var oct1=0;%>
+            <% var nov1=0;%>
+            <% var dec1=0;%>
+            <% var jan2=0;%>
+            <% var feb2=0;%>
+            <% var march2=0;%>
+            <% var apr2=0;%>
+            <% var may2=0;%>
+            <% var june2=0;%>
+            <% var total=0;%>
+            <% records.forEach(function(row){ %>
+            <% if (center.id === row.center_id){%>
+            <%  july1+=parseInt(row.july1) %>
+            <%  august1+=parseInt(row.august1) %>
+            <%  sept1+=parseInt(row.sept1) %>
+            <%  oct1+=parseInt(row.oct1) %>
+            <%  nov1+=parseInt(row.nov1)  %>
+            <%  dec1+=parseInt(row.dec1) %>
+            <%  jan2+=parseInt(row.jan2) %>
+            <%  feb2+=parseInt(row.feb2)  %>
+            <%  march2+=parseInt(row.march2) %>
+            <%  apr2+=parseInt(row.apr2) %>
+            <%  may2+=parseInt(row.may2) %>
+            <%  june2+=parseInt(row.june2)  %>
+            <%  total+=parseInt(row.total) %>
+
+            <%}}) %>
+
+
+            <td><%= july1 %></td>
+            <% subjuly1+=parseInt(july1) %>
+            <td><%= august1 %></td>
+            <% subaugust1+=parseInt(august1) %>
+            <td><%= sept1 %></td>
+            <% subsept1+=parseInt(sept1) %>
+            <td><%= oct1 %></td>
+            <% suboct1+=parseInt(oct1) %>
+            <td><%= nov1 %></td>
+            <% subnov1+=parseInt(nov1) %>
+            <td><%= dec1 %></td>
+            <% subdec1+=parseInt(dec1) %>
+            <td><%= jan2 %></td>
+            <% subjan2+=parseInt(jan2) %>
+            <td><%= feb2 %></td>
+            <% subfeb2+=parseInt(feb2) %>
+            <td><%= march2 %></td>
+            <% submarch2+=parseInt(march2) %>
+            <td><%= apr2 %></td>
+            <% subapr2+=parseInt(apr2) %>
+            <td><%= may2 %></td>
+            <% submay2+=parseInt(may2) %>
+            <td><%= june2 %></td>
+            <% subjune2+=parseInt(june2) %>
+            <td><%= total %></td>
+            <% subtotal+=parseInt(total) %>
+
+          </tr>
+          <% }) %>
+          <tr>
+            <td colspan="2">মোটঃ সকল সেন্টারের তথ্য</td>
+            <td><%= subjuly1 %></td>
+            <td><%= subaugust1 %></td>
+            <td><%= subsept1 %></td>
+            <td><%= suboct1 %></td>
+            <td><%= subnov1 %></td>
+            <td><%= subdec1 %></td>
+            <td><%= subjan2 %></td>
+            <td><%= subfeb2 %></td>
+            <td><%= submarch2 %></td>
+            <td><%= subapr2 %></td>
+            <td><%= submay2 %></td>
+            <td><%= subjune2 %></td>
+            <td><%= subtotal %></td>
+
+
+          </tr>
+        </tbody>
+      </table>
+      <% }else{ %>
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>ক্রমিক নং</th>
+            <th>সেন্টারের নাম</th>
+            <th>জুলাই</th>
+            <th>আগস্ট</th>
+            <th>সেপ্টে</th>
+            <th>অক্টো</th>
+            <th>নভে</th>
+            <th>ডিসে</th>
+            <th>জানু</th>
+            <th>ফেব্রু</th>
+            <th>মার্চ</th>
+            <th>এপ্রিল</th>
+            <th>মে</th>
+            <th>জুন</th>
+            <th>সর্বমোট</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% centers.forEach(function(row){ %>
+          <tr>
+            <td colspan="10">No data Found</td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <% } %>
     </div>
-</div>
-
+  </div>
 </body>
+
 </html>
