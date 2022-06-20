@@ -78,7 +78,7 @@ router.post('/centerData', async (req, res) => {
     } else {
         monthly_progress = await monthlyProgress.findAll({
             where: {
-                center_id: req.body.center
+                centerId: req.body.center
             }
         });
     }

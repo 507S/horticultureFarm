@@ -2603,6 +2603,121 @@ module.exports.expenseAddPost = async (req, res) => {
     res.send(err);
   }
 };
+module.exports.expenseEdit = async (req, res) => {
+  await expense.findByPk(req.params.id)
+      .then(data => {
+          console.log("inside");
+          res.render('center/expense/expenseEdit', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী ফর্ম', msg: '', success: '', records: data });
+      })
+      .catch(err => {
+          console.log("outside", err);
+
+      })
+};
+module.exports.expenseEditPost = async (req, res) => {
+  var boraddo = req.body.boraddo;
+  var july1 = req.body.july1;
+  var august1 = req.body.august1;
+  var sept1 = req.body.sept1;
+  var oct1 = req.body.oct1;
+  var nov1 = req.body.nov1;
+  var dec1 = req.body.dec1;
+  var jan2 = req.body.jan2;
+  var feb2 = req.body.feb2;
+  var march2 = req.body.march2;
+  var apr2 = req.body.apr2;
+  var may2 = req.body.may2;
+  var june2 = req.body.june2;
+  var comment = req.body.comment;
+  var user_id = req.body.user_id;
+  if (july1 == null) {
+      july1 = 0;
+  };
+  if (august1 == null) {
+      august1 = 0;
+  };
+  if (sept1 == null) {
+      sept1 = 0;
+  };
+  if (oct1 == null) {
+      oct1 = 0;
+  };
+  if (nov1 == null) {
+      nov1 = 0;
+  };
+  if (dec1 == null) {
+      dec1 = 0;
+  };
+  if (jan2 == null) {
+      jan2 = 0;
+  };
+  if (feb2 == null) {
+      feb2 = 0;
+  };
+  if (march2 == null) {
+      march2 = 0;
+  };
+  if (apr2 == null) {
+      apr2 = 0;
+  };
+  if (may2 == null) {
+      may2 = 0;
+  };
+  if (june2 == null) {
+      june2 = 0;
+  };
+  var boraddo = parseInt(boraddo);
+  var july1 = parseInt(july1);
+  var august1 = parseInt(august1);
+  var sept1 = parseInt(sept1);
+  var oct1 = parseInt(oct1);
+  var nov1 = parseInt(nov1);
+  var dec1 = parseInt(dec1);
+  var jan2 = parseInt(jan2);
+  var feb2 = parseInt(feb2);
+  var march2 = parseInt(march2);
+  var apr2 = parseInt(apr2);
+  var may2 = parseInt(may2);
+  var june2 = parseInt(june2);
+  var total = july1 + august1 + sept1 + oct1 + nov1 + dec1 + jan2 + feb2 + march2 + apr2 + may2 + june2;
+  var baki = boraddo - total;
+  await expense.update({
+      boraddo: boraddo,
+      july1: july1,
+      august1: august1,
+      sept1: sept1,
+      oct1: oct1,
+      nov1: nov1,
+      dec1: dec1,
+      jan2: jan2,
+      feb2: feb2,
+      march2: march2,
+      apr2: apr2,
+      may2: may2,
+      june2: june2,
+      total: total,
+      baki: baki,
+      comment: comment,
+  },
+      {
+          where: { id: req.params.id }
+      }).then(data => {
+          res.redirect('/center/expense');
+      }).catch(err => {
+          res.render('errorpage', err);
+      });
+};
+module.exports.expenseDelete = async (req, res) => {
+  var expenseDelete = await expense.findByPk(req.params.id);
+  try {
+      expenseDelete.destroy();
+      res.redirect("/center/expense");
+  }
+  catch {
+      res.render('errorpage', err);
+  }
+
+};
 module.exports.fetchExpenseCode = async (req, res) => {
   await expenseCode
     .findOne({

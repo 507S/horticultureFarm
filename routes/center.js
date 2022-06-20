@@ -17,7 +17,7 @@ router.use(async function (req, res, next) {
 const { fetchMaan, fetchWork, fetchShuchok, fetchEkok, fetchShuchokMaan, expenseAddPost, expenseAdd, fetchExpenseCode, rajosshoAdd, rajosshoAddPost, allCenterInfo,
     fetchRajosshoCode, generatePdfMonthlyProgress, monthlyProgressEdit, monthlyProgressUpdate, monthlyProgressDelete, monthlyProgress, monthlyProgressYear,
     monthlyProgressForm, monthlyProgressFormPost, charaKolomFixed, centersignup, centersignuppost, rajossho, rajosshoYear, rajosshoForm, generatePdfexpense,
-    rajosshoFormPost, expense, expenseYear, expenseForm, expenseFormPost, chak1, chak1Year, chak1Form, chak1FormPost, chak2, chak2Year, chak2Form,
+    rajosshoFormPost, expense, expenseYear, expenseForm, expenseFormPost,expenseEdit,expenseEditPost,expenseDelete, chak1, chak1Year, chak1Form, chak1FormPost, chak2, chak2Year, chak2Form,
     chak2FormPost, revolvingFund, revolvingFundYear, revolvingFundForm, revolvingFundFormPost, specialCoconut, specialCoconutYear, specialCoconutForm,
     specialCoconutFormPost, loan, loanYear, loanForm, loanFormPost, apa, apaYear, apaForm, apaFormPost, allcenter, centerlogin, centerloginpost,
     centerDashboard, topSheet, topSheetYear, generatePdfTopSheet, topSheetBitoron, topSheetBitoronYear, generatePdfTopSheetBitoron, center, centerEdit, centerEditPost, centerDelete, chak1Delete, chak1Edit, chak1EditPost, chak2Delete, chak2Edit, chak2EditPost,
@@ -122,6 +122,9 @@ router.get('/expense', expense);
 router.post('/expenseYear', expenseYear);
 router.get('/expenseForm', expenseForm);
 router.post('/expenseForms', expenseFormPost);
+router.get('/expenseEdit/:id',expenseEdit);
+router.post('/expenseEditPost/:id',expenseEditPost);
+router.get('/expenseDelete/:id',expenseDelete);
 router.get('/expenseAdd/:id', expenseAdd);
 router.post('/expenseAddPost/:id', expenseAddPost);
 router.post('/fetchExpenseCode', fetchExpenseCode);
