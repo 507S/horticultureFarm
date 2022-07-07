@@ -92,6 +92,7 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript">
     function exportToExcel(tableID, filename = ''){
+        console.log("clicked");
         var downloadurl;
         var dataFileType = 'application/vnd.ms-excel';
         var tableSelect = document.getElementById(tableID);

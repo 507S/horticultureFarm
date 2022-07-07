@@ -2879,6 +2879,51 @@ module.exports.monthlyProgressYear = async (req, res) => {
     console.log(e);
   }
 };
+module.exports.monthlyProgressFilter = async (req, res) => {
+  try {
+      // const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
+      const selectedDate = req.body.year.toLowerCase();
+      var data = [];
+      if (req.body.center === "all") {
+          const cropCatg = await cropCategory.findAll({ where: { type: 'jat' } });
+          const allCropCatg = await cropCategory.findAll();
+
+          const monthlyProgressList = await monthlyProgress.findAll({ where: { pd_id: req.session.user_id } });
+
+          monthlyProgressList.map((monthlyProg) => {
+              const timeList = JSON.parse(monthlyProg.timeFrame)
+              if (moment(moment(selectedDate, "MMM-YYYY").format()).isSameOrAfter(moment(timeList[0].time, "MMM-YYYY").format())) {
+                  data.push(monthlyProg);
+              }
+              // timeList.map((eachTime) => {
+              //     if (eachTime.time === selectedDate) {
+              //         data.push(monthlyProg);
+              //     }
+              // })
+          })
+          res.render('pd/monthlyProgress/monthlyProgressCustomTable', { records: data, selectedDate: selectedDate, cropCatg: cropCatg, allCropCatg: allCropCatg }, function (err, html) {
+              res.send(html);
+          });
+      } else {
+          const monthlyProgressList = await monthlyProgress.findAll({ where: { centerId: req.body.center, pd_id: req.session.user_id } });
+
+          monthlyProgressList.map((monthlyProg) => {
+              const timeList = JSON.parse(monthlyProg.timeFrame)
+              if (moment(moment(selectedDate, "MMM-YYYY").format()).isSameOrAfter(moment(timeList[0].time, "MMM-YYYY").format())) {
+                  data.push(monthlyProg);
+              }
+          })
+
+          res.render('pd/monthlyProgress/monthlyProgressTable', { records: data, selectedDate: selectedDate }, function (err, html) {
+              res.send(html);
+          });
+      }
+
+  }
+  catch (e) {
+      console.log(" mpl", e);
+  }
+};
 module.exports.generatePdfMonthlyProgress = async (req, res) => {
   try {
     const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();

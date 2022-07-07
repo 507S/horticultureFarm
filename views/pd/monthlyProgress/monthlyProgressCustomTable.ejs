@@ -2,6 +2,7 @@
     <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
         <thead>
         <tr>
+            <th>সেন্টার আইডি</th>
             <th>ক্যাটাগরি নাম</th>
             <th>সাব-ক্যাটাগরি নাম</th>
             <th>বিবরণ</th>
@@ -126,6 +127,7 @@
             <% records.forEach(function(row){ %>
                 <%
                     if(row.breed === crop.name){
+                        centerId = row.centerId;
                         category = row.category;
                         subCategory = row.subCategory;
                         biboron = row.biboron;
@@ -219,6 +221,7 @@
             <% }) %>
 
             <tr>
+                <td> <%= centerId %></td>
                 <td> <%= category %></td>
                 <td><%= subCategory %></td>
                 <td><%= biboron %></td>

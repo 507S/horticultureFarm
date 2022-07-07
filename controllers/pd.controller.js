@@ -2578,7 +2578,7 @@ module.exports.chak1 = async (req, res) => {
     })
         .then(data => {
             console.log("inside");
-            res.render('pd/employee/chak1/employeeChak1', { title: 'ক্যাডার/নন ক্যাডার কর্মকতা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য', success: '', centers: data });
+            res.render('pd/employee/chak1/employeeChak1', { title: 'ক্যাডার/নন ক্যাডার কর্মকর্তা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য', success: '', centers: data });
         })
         .catch(err => {
             console.log("outside", err);
@@ -2809,7 +2809,7 @@ module.exports.chak2 = async (req, res) => {
     })
         .then(data => {
             console.log("inside");
-            res.render('pd/employee/chak2/employeeChak2', { title: 'হর্টিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা', success: '', centers: data });
+            res.render('pd/employee/chak2/employeeChak2', { title: 'হর্টিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের বিবরণী', success: '', centers: data });
         })
         .catch(err => {
             console.log("outside", err);
@@ -3374,7 +3374,7 @@ module.exports.expense = async (req, res) => {
     })
         .then(data => {
             console.log("inside");
-            res.render('pd/expense/expense', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী', success: '', centers: data });
+            res.render('pd/expense/expense', { title: 'মাসিক খরচের বিবরণী', success: '', centers: data });
         })
         .catch(err => {
             console.log("outside", err);
