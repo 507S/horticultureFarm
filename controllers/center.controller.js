@@ -2857,24 +2857,13 @@ module.exports.monthlyProgressYear = async (req, res) => {
         data.push(monthlyProg);
       }
     });
-
-    if (selectedDate === currentMonth) {
-      res.render(
-        "center/monthlyProgress/monthlyProgressTable",
-        { records: data, selectedDate: currentMonth },
-        function (err, html) {
-          res.send(html);
-        }
-      );
-    } else {
-      res.render(
+    res.render(
         "center/monthlyProgress/monthlyProgressTable",
         { records: data, selectedDate: selectedDate },
         function (err, html) {
           res.send(html);
         }
       );
-    }
   } catch (e) {
     console.log(e);
   }
