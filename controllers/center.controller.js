@@ -2823,7 +2823,7 @@ module.exports.monthlyProgress = async (req, res) => {
 };
 module.exports.monthlyProgressYear = async (req, res) => {
   try {
-    const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
+    // const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
     const selectedDate = req.body.year.toLowerCase();
 
     var data = [];
@@ -3654,12 +3654,12 @@ module.exports.monthlyProgressDelete = async (req, res) => {
     }
   });
 
-  var totalTimeFrame = JSON.parse(progress.timeFrame);
-  totalTimeFrame.forEach((currentTime, index) => {
-    if (currentTime.time === selectedDate) {
-      totalTimeFrame.splice(index, 1);
-    }
-  });
+  // var totalTimeFrame = JSON.parse(progress.timeFrame);
+  // totalTimeFrame.forEach((currentTime, index) => {
+  //   if (currentTime.time === selectedDate) {
+  //     totalTimeFrame.splice(index, 1);
+  //   }
+  // });
 
   await monthlyProgress
     .update(
@@ -3673,7 +3673,7 @@ module.exports.monthlyProgressDelete = async (req, res) => {
         daeProdan: JSON.stringify(currentDaeProdan),
         deadWriteup: JSON.stringify(currentDeadWriteup),
         comment: JSON.stringify(currentComment),
-        timeFrame: JSON.stringify(totalTimeFrame),
+        // timeFrame: JSON.stringify(totalTimeFrame),
       },
       {
         where: { id: req.params.progressId },

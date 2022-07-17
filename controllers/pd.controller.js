@@ -4216,7 +4216,7 @@ module.exports.monthlyProgressDelete = async (req, res) => {
             daeProdan: JSON.stringify(currentDaeProdan),
             deadWriteup: JSON.stringify(currentDeadWriteup),
             comment: JSON.stringify(currentComment),
-            timeFrame: JSON.stringify(totalTimeFrame)
+            // timeFrame: JSON.stringify(totalTimeFrame)
         },
         {
             where: { id: req.params.progressId }

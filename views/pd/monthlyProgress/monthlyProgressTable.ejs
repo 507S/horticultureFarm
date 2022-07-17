@@ -184,7 +184,7 @@
                 <td><%= montobboSum %></td>
                 <td>
                     <a class="btn btn-primary btn-xs" href="/pd/monthlyProgressEdit/<%= row.id %>/<%= selectedDate %>"><i class="fa fa-edit"></i></a>
-                    <a class="btn btn-danger btn-xs" href="/pd/monthlyProgressDelete/<%= row.id %>/<%= selectedDate %>"><i class="fa fa-trash"></i></a>
+                    <a class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete?')" href="/pd/monthlyProgressDelete/<%= row.id %>/<%= selectedDate %>"><i class="fa fa-trash"></i></a>
                 </td>
             </tr>
         <% }) %>

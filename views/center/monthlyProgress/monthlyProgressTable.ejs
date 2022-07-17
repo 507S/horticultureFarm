@@ -22,7 +22,9 @@
       <th>সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ)</th>
       <th>নীট মজুদ</th>
       <th>মন্তব্য</th>
+      <% if(selectedDate === moment().format("MMM-YYYY").toLowerCase()) {%>
       <th>যোগ</th>
+      <% }%>
     </tr>
   </thead>
   <tbody>
@@ -183,10 +185,12 @@
       <td><%= new Number(currentBitoronSum + previousMonthBitoronSum + currentDaeProdanSum + currentMritoSum).toLocaleString("bn-BD") %></td> <!--  সর্বমোট (মোট+ডিএই চালানে প্রদান+মৃত/বিনষ্ট রাইটআপ) -->
       <td><%= new Number((currentProductionSum + previousMonthProduction + daePraptiSum + prevYearJer) - (currentBitoronSum + previousMonthBitoronSum + currentDaeProdanSum + currentMritoSum)).toLocaleString("bn-BD") %></td> <!--  নীট মজুদ -->
       <td><%= montobboSum %></td> <!-- মন্তব্য  -->
+      <% if(selectedDate === currentMonth) {%>
       <td>
         <a class="btn btn-primary btn-xs" href="/center/monthlyProgressEdit/<%= row.id %>/<%= selectedDate %>"><i class="fa fa-plus"></i></a>
         <!-- <a class="btn btn-danger btn-xs" href="/center/monthlyProgressDelete/<%= row.id %>/<%= selectedDate %>"><i class="fa fa-trash"></i></a> -->
       </td>
+      <% }%>
     </tr>
     <% }) %>
   </tbody>
