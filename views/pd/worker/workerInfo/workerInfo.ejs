@@ -71,12 +71,6 @@
         </div>
 
 
-        <button onclick="exportToPdf()" class="btn btn-success">
-          Download PDF
-        </button>
-        <button onclick="exportToExcel('tblCustomers', 'worker-info')" class="btn btn-success">Export Table Data To Excel File</button>
-
-
         <div id="output"></div>
         <!--                    <div id="loading" class="loading"><img src="{{ asset('assets/img/icon/loading.gif') }}" alt=""></div>-->
       </div>
@@ -212,7 +206,7 @@
   });
 
 
-  $('#center').on("change ", function() {
+  $('#center').on("change", function() {
     var center = $('#center').val();
     $.ajax({
       type: "POST",
@@ -236,4 +230,9 @@
       }
     });
   });
+
+  $(document).ready(function() {
+        $('#tblexportData').DataTable();
+        $('.dataTables_length').addClass('bs-select');
+    } );
 </script>

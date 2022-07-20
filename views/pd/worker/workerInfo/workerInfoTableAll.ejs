@@ -40,7 +40,7 @@
     <% if (center.id === row.center_id){%>
     <% if (indexes === 0){%>
     <tr>
-      <td rowspan="<%=centerIndex%>"><%=index%></td>
+      <td rowspan="<%=centerIndex%>"><%=index+1%></td>
       <td rowspan="<%=centerIndex%>"><%=center.center %></td>
       <td><%= row.podobi %></td>
       <td><%= row.name %></td>
@@ -64,7 +64,6 @@
       <td><%= row.date %></td>
       <td><%= row.nid %></td>
       <td><%= row.bank %></td>
-
     </tr>
     <%} %>
     <%}}) %>
@@ -78,7 +77,6 @@
     <tr>
       <th>ক্রমিক নং</th>
       <th>সেন্টারের নাম</th>
-
       <th>পদবী</th>
       <th>নাম</th>
       <th>পিতার নাম</th>
@@ -98,3 +96,7 @@
   </tbody>
 </table>
 <% } %>
+<button onclick="exportToPdf()" class="btn btn-success">
+  Download PDF
+</button>
+<button onclick="exportToExcel('tblexportData', 'worker-info-All Center')" class="btn btn-success">Export Table Data To Excel File</button>
