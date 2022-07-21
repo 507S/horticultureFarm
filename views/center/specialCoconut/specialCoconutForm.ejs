@@ -87,12 +87,22 @@
                                         </div>
                                     </div>
 
+                                    <% if(records.length > 0){ %>
+                                        <% records.forEach(function(row){ %>
+                                    <div class="form-group">
+                                        <label for="salableSeedPercentage" class="col-md-3 control-label">বিক্রিযোগ্য চারার শতকরা হার</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="salableSeedPercentage" value="<%=row.salableSeedPercentage%>">
+                                        </div>
+                                    </div>
+                                    <% })} else { %>
                                     <div class="form-group">
                                         <label for="salableSeedPercentage" class="col-md-3 control-label">বিক্রিযোগ্য চারার শতকরা হার</label>
                                         <div class="col-md-9">
                                         <input type="text" class="form-control" name="salableSeedPercentage" placeholder="বিক্রিযোগ্য চারার শতকরা হার">
                                         </div>
                                     </div>
+                                    <% } %>
                                    
                                     <div class="form-group">
                                         <label for="salableSeedNumber" class="col-md-3 control-label">মোট বিক্রিযোগ্য চারার সংখ্যা</label>
@@ -114,14 +124,22 @@
                                             <input type="text" class="form-control" name="soldSeedPrice" placeholder="বিক্রিত চারার মোট মূল্য">
                                         </div>
                                     </div>
-
+                                    <% if(records.length > 0){ %>
+                                        <% records.forEach(function(row){ %>
                                     <div class="form-group">
                                         <label for="presentMojud" class="col-md-3 control-label">বর্তমান মজুদ সংখ্যা</label>
                                         <div class="col-md-9">
-                                        <input type="text" class="form-control" name="presentMojud" placeholder="বর্তমান মজুদ সংখ্যা">
+                                        <input type="text" class="form-control" name="presentMojud" value="<%=row.presentMojud%>">
                                         </div>
                                     </div>
-
+                                    <% })} else { %>
+                                        <div class="form-group">
+                                            <label for="presentMojud" class="col-md-3 control-label">বর্তমান মজুদ সংখ্যা</label>
+                                            <div class="col-md-9">
+                                            <input type="text" class="form-control" name="presentMojud" placeholder="বর্তমান মজুদ সংখ্যা">
+                                            </div>
+                                        </div>
+                                        <% } %>
                                     <div class="form-group">
                                         <label for="earnedMoneyDD" class="col-md-3 control-label">বিক্রয় লব্দ অর্থের পরিমাণ(ডিডি/এমটি)</label>
                                         <div class="col-md-9">
@@ -158,12 +176,29 @@
                                         <div class="col-md-9">
                                             <label for="year">বছর :</label>
                                         <select id="year" name="year" required>
+                                            <% const currentMonth = moment().format("MMM-YYYY").toLowerCase();
+                                            if (moment().format("M") < 7){
+                                                startYear = moment(currentMonth).subtract(1, "year").format('yyyy')
+                                                endYear = moment(currentMonth).format('yyyy')
+                                            }else{
+                                                startYear =moment(currentMonth).format('yyyy')
+                                                endYear = moment(currentMonth).add(1, "year").format('yyyy')
+                                            }
+                                            const sEndYear = endYear.toString().slice(2,4)
+                                            var valueStr = `${startYear}-${sEndYear}`
+                                            
+                                            const finalEnlishToBanglaNumber={'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'};
+                                            for (const x in finalEnlishToBanglaNumber) {
+                                                valueStr = valueStr.replace(new RegExp(x, 'g'), finalEnlishToBanglaNumber[x]);
+                                            }    
+
+                                            %>
+                                            <option value="<%= startYear.toString() %>"><%= valueStr %></option>
                                             <option value="2017">২০১৭-১৮</option>
                                             <option value="2018">২০১৮-১৯</option>
                                             <option value="2019">২০১৯-২০</option>
                                             <option value="2020">২০২০-২১</option>
                                             <option value="2021">২০২১-২২</option>
-                                            <option value="2022">২০২২-২৩</option>
                                         </select>
                                         </div>
                                     </div>

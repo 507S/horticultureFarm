@@ -1222,12 +1222,33 @@ module.exports.specialCoconutYear = async (req, res) => {
     });
 };
 module.exports.specialCoconutForm = async (req, res) => {
-  res.render("center/specialCoconut/specialCoconutForm", {
-    title: "বিশেষ নারিকেল কর্মসূচি",
-    msg: "",
-    success: "",
-    user_id: req.session.user_id,
-  });
+  const currentMonth = moment().format("MMM-YYYY").toLowerCase();
+  if (moment().format("M") < 7) {
+    startYear = moment(currentMonth).subtract(1, "year").format('yyyy')
+    endYear = moment(currentMonth).format('yyyy')
+  } else {
+    startYear = moment(currentMonth).format('yyyy')
+    endYear = moment(currentMonth).add(1, "year").format('yyyy')
+  }
+  await specialCoconut
+    .findAll({
+      where: { year: startYear.toString(), center_id: req.session.user_id },
+    })
+    .then((data) => {
+    res.render(
+      "center/specialCoconut/specialCoconutForm", {
+      title: "বিশেষ নারিকেল কর্মসূচি",
+      msg: "",
+      success: "",
+      user_id: req.session.user_id,
+      records: data
+    }, function (err, html) {
+        res.send(html);
+      });
+    })
+    .catch((err) => {
+      console.log("outside", err);
+    });
 };
 module.exports.specialCoconutFormPost = async (req, res) => {
   var center = req.body.center;
@@ -1279,7 +1300,7 @@ module.exports.specialCoconutFormPost = async (req, res) => {
       res.redirect("/center/specialCoconutForm");
     })
     .catch((err) => {
-      res.render("errorpage", err);
+      console.log(err);
     });
 };
 module.exports.generatePdfspecialCoconut = async (req, res) => {
@@ -2605,14 +2626,14 @@ module.exports.expenseAddPost = async (req, res) => {
 };
 module.exports.expenseEdit = async (req, res) => {
   await expense.findByPk(req.params.id)
-      .then(data => {
-          console.log("inside");
-          res.render('center/expense/expenseEdit', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী ফর্ম', msg: '', success: '', records: data });
-      })
-      .catch(err => {
-          console.log("outside", err);
+    .then(data => {
+      console.log("inside");
+      res.render('center/expense/expenseEdit', { title: 'খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী ফর্ম', msg: '', success: '', records: data });
+    })
+    .catch(err => {
+      console.log("outside", err);
 
-      })
+    })
 };
 module.exports.expenseEditPost = async (req, res) => {
   var boraddo = req.body.boraddo;
@@ -2631,40 +2652,40 @@ module.exports.expenseEditPost = async (req, res) => {
   var comment = req.body.comment;
   var user_id = req.body.user_id;
   if (july1 == null) {
-      july1 = 0;
+    july1 = 0;
   };
   if (august1 == null) {
-      august1 = 0;
+    august1 = 0;
   };
   if (sept1 == null) {
-      sept1 = 0;
+    sept1 = 0;
   };
   if (oct1 == null) {
-      oct1 = 0;
+    oct1 = 0;
   };
   if (nov1 == null) {
-      nov1 = 0;
+    nov1 = 0;
   };
   if (dec1 == null) {
-      dec1 = 0;
+    dec1 = 0;
   };
   if (jan2 == null) {
-      jan2 = 0;
+    jan2 = 0;
   };
   if (feb2 == null) {
-      feb2 = 0;
+    feb2 = 0;
   };
   if (march2 == null) {
-      march2 = 0;
+    march2 = 0;
   };
   if (apr2 == null) {
-      apr2 = 0;
+    apr2 = 0;
   };
   if (may2 == null) {
-      may2 = 0;
+    may2 = 0;
   };
   if (june2 == null) {
-      june2 = 0;
+    june2 = 0;
   };
   var boraddo = parseInt(boraddo);
   var july1 = parseInt(july1);
@@ -2682,39 +2703,39 @@ module.exports.expenseEditPost = async (req, res) => {
   var total = july1 + august1 + sept1 + oct1 + nov1 + dec1 + jan2 + feb2 + march2 + apr2 + may2 + june2;
   var baki = boraddo - total;
   await expense.update({
-      boraddo: boraddo,
-      july1: july1,
-      august1: august1,
-      sept1: sept1,
-      oct1: oct1,
-      nov1: nov1,
-      dec1: dec1,
-      jan2: jan2,
-      feb2: feb2,
-      march2: march2,
-      apr2: apr2,
-      may2: may2,
-      june2: june2,
-      total: total,
-      baki: baki,
-      comment: comment,
+    boraddo: boraddo,
+    july1: july1,
+    august1: august1,
+    sept1: sept1,
+    oct1: oct1,
+    nov1: nov1,
+    dec1: dec1,
+    jan2: jan2,
+    feb2: feb2,
+    march2: march2,
+    apr2: apr2,
+    may2: may2,
+    june2: june2,
+    total: total,
+    baki: baki,
+    comment: comment,
   },
-      {
-          where: { id: req.params.id }
-      }).then(data => {
-          res.redirect('/center/expense');
-      }).catch(err => {
-          res.render('errorpage', err);
-      });
+    {
+      where: { id: req.params.id }
+    }).then(data => {
+      res.redirect('/center/expense');
+    }).catch(err => {
+      res.render('errorpage', err);
+    });
 };
 module.exports.expenseDelete = async (req, res) => {
   var expenseDelete = await expense.findByPk(req.params.id);
   try {
-      expenseDelete.destroy();
-      res.redirect("/center/expense");
+    expenseDelete.destroy();
+    res.redirect("/center/expense");
   }
   catch {
-      res.render('errorpage', err);
+    res.render('errorpage', err);
   }
 
 };
@@ -2858,59 +2879,59 @@ module.exports.monthlyProgressYear = async (req, res) => {
       }
     });
     res.render(
-        "center/monthlyProgress/monthlyProgressTable",
-        { records: data, selectedDate: selectedDate },
-        function (err, html) {
-          res.send(html);
-        }
-      );
+      "center/monthlyProgress/monthlyProgressTable",
+      { records: data, selectedDate: selectedDate },
+      function (err, html) {
+        res.send(html);
+      }
+    );
   } catch (e) {
     console.log(e);
   }
 };
 module.exports.monthlyProgressFilter = async (req, res) => {
   try {
-      // const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
-      const selectedDate = req.body.year.toLowerCase();
-      var data = [];
-      if (req.body.center === "all") {
-          const cropCatg = await cropCategory.findAll({ where: { type: 'jat' } });
-          const allCropCatg = await cropCategory.findAll();
+    // const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
+    const selectedDate = req.body.year.toLowerCase();
+    var data = [];
+    if (req.body.center === "all") {
+      const cropCatg = await cropCategory.findAll({ where: { type: 'jat' } });
+      const allCropCatg = await cropCategory.findAll();
 
-          const monthlyProgressList = await monthlyProgress.findAll({ where: { pd_id: req.session.user_id } });
+      const monthlyProgressList = await monthlyProgress.findAll({ where: { pd_id: req.session.user_id } });
 
-          monthlyProgressList.map((monthlyProg) => {
-              const timeList = JSON.parse(monthlyProg.timeFrame)
-              if (moment(moment(selectedDate, "MMM-YYYY").format()).isSameOrAfter(moment(timeList[0].time, "MMM-YYYY").format())) {
-                  data.push(monthlyProg);
-              }
-              // timeList.map((eachTime) => {
-              //     if (eachTime.time === selectedDate) {
-              //         data.push(monthlyProg);
-              //     }
-              // })
-          })
-          res.render('pd/monthlyProgress/monthlyProgressCustomTable', { records: data, selectedDate: selectedDate, cropCatg: cropCatg, allCropCatg: allCropCatg }, function (err, html) {
-              res.send(html);
-          });
-      } else {
-          const monthlyProgressList = await monthlyProgress.findAll({ where: { centerId: req.body.center, pd_id: req.session.user_id } });
+      monthlyProgressList.map((monthlyProg) => {
+        const timeList = JSON.parse(monthlyProg.timeFrame)
+        if (moment(moment(selectedDate, "MMM-YYYY").format()).isSameOrAfter(moment(timeList[0].time, "MMM-YYYY").format())) {
+          data.push(monthlyProg);
+        }
+        // timeList.map((eachTime) => {
+        //     if (eachTime.time === selectedDate) {
+        //         data.push(monthlyProg);
+        //     }
+        // })
+      })
+      res.render('pd/monthlyProgress/monthlyProgressCustomTable', { records: data, selectedDate: selectedDate, cropCatg: cropCatg, allCropCatg: allCropCatg }, function (err, html) {
+        res.send(html);
+      });
+    } else {
+      const monthlyProgressList = await monthlyProgress.findAll({ where: { centerId: req.body.center, pd_id: req.session.user_id } });
 
-          monthlyProgressList.map((monthlyProg) => {
-              const timeList = JSON.parse(monthlyProg.timeFrame)
-              if (moment(moment(selectedDate, "MMM-YYYY").format()).isSameOrAfter(moment(timeList[0].time, "MMM-YYYY").format())) {
-                  data.push(monthlyProg);
-              }
-          })
+      monthlyProgressList.map((monthlyProg) => {
+        const timeList = JSON.parse(monthlyProg.timeFrame)
+        if (moment(moment(selectedDate, "MMM-YYYY").format()).isSameOrAfter(moment(timeList[0].time, "MMM-YYYY").format())) {
+          data.push(monthlyProg);
+        }
+      })
 
-          res.render('pd/monthlyProgress/monthlyProgressTable', { records: data, selectedDate: selectedDate }, function (err, html) {
-              res.send(html);
-          });
-      }
+      res.render('pd/monthlyProgress/monthlyProgressTable', { records: data, selectedDate: selectedDate }, function (err, html) {
+        res.send(html);
+      });
+    }
 
   }
   catch (e) {
-      console.log(" mpl", e);
+    console.log(" mpl", e);
   }
 };
 module.exports.generatePdfMonthlyProgress = async (req, res) => {
