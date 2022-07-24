@@ -1387,12 +1387,26 @@ module.exports.revolvingFundYear = async (req, res) => {
     });
 };
 module.exports.revolvingFundForm = async (req, res) => {
-  res.render("center/revolvingFund/revolvingFundForm", {
-    title: "রিভলভিং ফান্ড",
-    msg: "",
-    success: "",
-    user_id: req.session.user_id,
-  });
+  await revolvingFund
+    .findAll({
+      where: { center_id: req.session.user_id },
+    })
+    .then((data) => {
+      res.render(
+        "center/revolvingFund/revolvingFundForm",
+        {
+          records: data,
+          title: "রিভলভিং ফান্ড ফর্ম",
+          msg: "",
+          success: "",
+          user_id: req.session.user_id,
+        }
+      );
+    })
+    .catch((err) => {
+      console.log("outside", err);
+
+    });
 };
 module.exports.revolvingFundFormPost = async (req, res) => {
   var prapti = req.body.prapti;
