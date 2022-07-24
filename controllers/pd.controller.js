@@ -2348,7 +2348,7 @@ module.exports.specialCoconutForm = async (req, res) => {
     })
     .then((data) => {
     res.render(
-      "center/specialCoconut/specialCoconutForm", {
+      "pd/specialCoconut/specialCoconutForm", {
       title: "বিশেষ নারিকেল কর্মসূচি",
       msg: "",
       success: "",
