@@ -621,6 +621,7 @@ module.exports.workerInfoFormPost = async (req, res) => {
   var mobile = req.body.mobile;
   var date = req.body.date;
   var nid = req.body.nid;
+  var birthDate = req.body.birthDate;
   var bank = req.body.bank;
 
   var user_id = req.body.user_id;
@@ -641,6 +642,7 @@ module.exports.workerInfoFormPost = async (req, res) => {
       mobile: mobile,
       date: date,
       nid: nid,
+      birthDate: birthDate,
       bank: bank,
       regularWorker: regularWorker,
       irregularWorker: irregularWorker,
@@ -664,28 +666,38 @@ module.exports.workerInfoEdit = async (req, res) => {
     })
 };
 module.exports.workerInfoEditPost = async (req, res) => {
-  var center = req.body.center;
-  var porichito = req.body.porichito;
-  var kormokorta = req.body.kormokorta;
-  var nijDistrict = req.body.nijDistrict;
   var podobi = req.body.podobi;
+  var name = req.body.name;
+  var fname = req.body.fname;
+  var address = req.body.address;
+  var mobile = req.body.mobile;
+  var date = req.body.date;
+  var nid = req.body.nid;
   var birthDate = req.body.birthDate;
-  var firstdate = req.body.firstdate;
-  var presentDate = req.body.presentDate;
-  var pastWorkstation = req.body.pastWorkstation;
-  var comment = req.body.comment;
+  var bank = req.body.bank;
+
   var user_id = req.body.user_id;
+  if (podobi === "নিয়মিত") {
+    var regularWorker = 1;
+    var irregularWorker = 0;
+  }
+  if (podobi === "অনিয়মিত") {
+    var regularWorker = 0;
+    var irregularWorker = 1;
+  }
   await workerInfo.update({
-    center: center,
-    porichito: porichito,
-    kormokorta: kormokorta,
-    nijDistrict: nijDistrict,
     podobi: podobi,
+    name: name,
+    fname: fname,
+    address: address,
+    mobile: mobile,
+    date: date,
+    nid: nid,
     birthDate: birthDate,
-    firstdate: firstdate,
-    presentDate: presentDate,
-    pastWorkstation: pastWorkstation,
-    comment: comment,
+    bank: bank,
+    regularWorker: regularWorker,
+    irregularWorker: irregularWorker,
+    center_id: user_id,
   },
     {
       where: { id: req.params.id }
@@ -1235,14 +1247,14 @@ module.exports.specialCoconutForm = async (req, res) => {
       where: { year: startYear.toString(), center_id: req.session.user_id },
     })
     .then((data) => {
-    res.render(
-      "center/specialCoconut/specialCoconutForm", {
-      title: "বিশেষ নারিকেল কর্মসূচি",
-      msg: "",
-      success: "",
-      user_id: req.session.user_id,
-      records: data
-    }, function (err, html) {
+      res.render(
+        "center/specialCoconut/specialCoconutForm", {
+        title: "বিশেষ নারিকেল কর্মসূচি",
+        msg: "",
+        success: "",
+        user_id: req.session.user_id,
+        records: data
+      }, function (err, html) {
         res.send(html);
       });
     })

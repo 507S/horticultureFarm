@@ -26,6 +26,9 @@ module.exports = (sequelize, Sequelize) => {
       nid: {
         type: Sequelize.STRING
       },
+      birthDate: {
+        type: Sequelize.STRING
+      },
       bank: {
         type: Sequelize.STRING
       },
