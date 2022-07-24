@@ -2334,7 +2334,33 @@ module.exports.specialCoconutFilter = async (req, res) => {
 };
 
 module.exports.specialCoconutForm = async (req, res) => {
-    res.render('pd/specialCoconut/specialCoconutForm', { title: 'বিশেষ নারিকেল কর্মসূচি', msg: '', success: '', user_id: req.session.user_id });
+    const currentMonth = moment().format("MMM-YYYY").toLowerCase();
+  if (moment().format("M") < 7) {
+    startYear = moment(currentMonth).subtract(1, "year").format('yyyy')
+    endYear = moment(currentMonth).format('yyyy')
+  } else {
+    startYear = moment(currentMonth).format('yyyy')
+    endYear = moment(currentMonth).add(1, "year").format('yyyy')
+  }
+  await specialCoconut
+    .findAll({
+      where: { year: startYear.toString(), center_id: req.session.user_id },
+    })
+    .then((data) => {
+    res.render(
+      "center/specialCoconut/specialCoconutForm", {
+      title: "বিশেষ নারিকেল কর্মসূচি",
+      msg: "",
+      success: "",
+      user_id: req.session.user_id,
+      records: data
+    }, function (err, html) {
+        res.send(html);
+      });
+    })
+    .catch((err) => {
+      console.log("outside", err);
+    });
 };
 
 module.exports.specialCoconutFormPost = async (req, res) => {
