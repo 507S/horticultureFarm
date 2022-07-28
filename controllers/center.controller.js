@@ -894,6 +894,37 @@ module.exports.apaYear = async (req, res) => {
       console.log(err);
     });
 };
+module.exports.apaEdit = async (req, res) => {
+  await apa.findByPk(req.params.id)
+    .then(data => {
+      res.render('center/apa/apaEdit', { title: 'এপিএ', msg: '', success: '', records: data });
+    })
+    .catch(err => {
+      console.log("outside", err);
+    })
+};
+module.exports.apaEditPost = async (req, res) => {
+  var firstThree = parseFloat(req.body.firstThree);
+  var secondThree = parseFloat(req.body.secondThree);
+  var thirdThree = parseFloat(req.body.thirdThree);
+  var fourthThree = parseFloat(req.body.fourthThree);
+  var total = firstThree + secondThree + thirdThree + fourthThree;
+  var user_id = req.params.id;
+  await apa.update({
+    firstThree: firstThree,
+    secondThree: secondThree,
+    thirdThree: thirdThree,
+    fourthThree: fourthThree,
+    total: total,
+  },
+    {
+      where: { id: user_id }
+    }).then(data => {
+      res.redirect('/center/apa');
+    }).catch(err => {
+      res.render('errorpage', err);
+    });
+};
 module.exports.apaForm = async (req, res) => {
   try {
     const apaCodes = await apaCode.findAll();

@@ -22,7 +22,7 @@ const { fetchMaan, fetchWork, fetchShuchok, fetchEkok, fetchShuchokMaan, expense
     specialCoconutFormPost, loan, loanYear, loanForm, loanFormPost, apa, apaYear, apaForm, apaFormPost, allcenter, centerlogin, centerloginpost,
     centerDashboard, topSheet, topSheetYear, generatePdfTopSheet, topSheetBitoron, topSheetBitoronYear, generatePdfTopSheetBitoron, center, centerEdit, centerEditPost, centerDelete, chak1Delete, chak1Edit, chak1EditPost, chak2Delete, chak2Edit, chak2EditPost,
     fetchPodobiList, workerInfoDelete, workerInfoEdit, workerInfoEditPost, generatePdfworkerInfo, generatePdfworkerNum, generatePdfapa, generatePdfloan, generatePdfspecialCoconut, generatePdfrevolvingFund, generatePdfchak1, generatePdfchak2, generatePdfrajossho,
-    workerInfo, workerInfoForm, workerInfoFormPost, workerNum, fetchSubCategory, fetchBiboron, fetchBreed } = require('../controllers/center.controller');
+    workerInfo, workerInfoForm, workerInfoFormPost, workerNum, fetchSubCategory, fetchBiboron, fetchBreed, apaEdit, apaEditPost } = require('../controllers/center.controller');
 
 
 router.get('/', allcenter);
@@ -63,6 +63,8 @@ router.post('/generatePdfworkerNum', generatePdfworkerNum);
 
 router.get('/apa', apa);
 router.post('/apaYear', apaYear);
+router.get('/apaEdit/:id', apaEdit);
+router.post('/apaEditPost/:id', apaEditPost);
 router.get('/apaForm', apaForm);
 router.post('/apaForms', apaFormPost);
 router.post('/fetchMaan', fetchMaan);
