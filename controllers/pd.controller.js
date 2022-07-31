@@ -782,7 +782,7 @@ module.exports.adminInfo = async (req, res) => {
     await pd.findAll()
         .then(data => {
             console.log("inside");
-            res.render('pd/adminInfo/adminInfo', { title: 'সেন্ট্রাল এডমিন তথ্য', success: '', records: data });
+            res.render('pd/adminInfo/adminInfo', { title: 'সেন্ট্রাল এডমিন তথ্য', success: '', records: data, id: req.session.user_id });
         })
         .catch(err => {
             console.log("outside", err);

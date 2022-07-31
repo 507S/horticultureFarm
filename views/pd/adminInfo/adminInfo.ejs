@@ -15,26 +15,30 @@
 
                      <div class="table-responsive" id="output">
                         <%if (records.length >0){ %>
-                            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+                            <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
                             <thead>
                             <tr>
                                 <th>এডমিন ইউজার নাম</th>
+                                <% if(id != 8) { %>
                                 <th>ইউজার আইডি ও পাসওয়ার্ড পরিবর্তন</th>
+                                <% } %> 
                             </tr>
                             </thead>
                             <tbody>
                                 <% records.forEach(function(row){ %>
                                     <tr>
                                         <td><%= row.uname %></td>
+                                        <% if(id != 8) { %>
                                         <td><a class="btn btn-primary btn-xs" href="/pd/adminInfoEdit/<%= row.id %>"><i class="fa fa-wrench"></i></a>
-                                        </td> 
+                                        </td>
+                                        <% } %> 
                                        
                                     </tr>
                                 <% }) %>
                             </tbody>
                         </table>
                         <% }else{ %>
-                            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+                            <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
                                 <thead>
                                 <tr>
                                     <th>এডমিন ইউজার নাম</th>
