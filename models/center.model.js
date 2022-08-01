@@ -23,6 +23,18 @@ module.exports = (sequelize, Sequelize) => {
       email: {
         type: Sequelize.STRING
       },
+      centerHeadInfo: {
+        type: Sequelize.STRING
+      },
+      centerContactInfo: {
+        type: Sequelize.STRING
+      },
+      employeeName: {
+        type: Sequelize.STRING
+      },
+      centerHeadName: {
+        type: Sequelize.STRING
+      },
       uname: {
         type: Sequelize.STRING
       },

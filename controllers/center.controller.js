@@ -311,6 +311,10 @@ module.exports.centerEditPost = async (req, res) => {
   var podobi = req.body.podobi;
   var mobile = req.body.mobile;
   var email = req.body.email;
+  var centerHeadInfo = req.body.centerHeadInfo;
+  var centerContactInfo = req.body.centerContactInfo;
+  var employeeName = req.body.employeeName;
+  var centerHeadName = req.body.centerHeadName;
 
   await center
     .update(
@@ -319,6 +323,10 @@ module.exports.centerEditPost = async (req, res) => {
         podobi: podobi,
         mobile: mobile,
         email: email,
+        centerHeadInfo: centerHeadInfo,
+        centerContactInfo: centerContactInfo,
+        employeeName: employeeName,
+        centerHeadName: centerHeadName,
       },
       {
         where: { id: req.params.id },
