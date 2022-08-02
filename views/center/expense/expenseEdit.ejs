@@ -20,14 +20,46 @@
                                             </p>
                                         </div>
                                         <div class="panel-body">
-                                            <form action="/pd/expenseEditPost/<%=records.id%>" id="FieldTrialForm"
+                                            <form action="/center/expenseEditPost/<%=records.id%>" id="FieldTrialForm"
                                                 class="form-horizontal" method="post" role="form">
                                                 <div id="signupalert" style="display:none" class="alert alert-danger">
                                                     <p>Error:</p>
                                                     <span></span>
                                                 </div>
 
-
+                                                <% var monthNum = moment().format("M");
+                                                var monthsB = {
+                                                    1: 'জানু',
+                                                    2: 'ফেব্রু',
+                                                    3: 'মার্চ',
+                                                    4: 'এপ্রিল',
+                                                    5: 'মে',
+                                                    6: 'জুন',
+                                                    7: 'জুলাই',
+                                                    8: 'আগস্ট',
+                                                    9: 'সেপ্টে',
+                                                    10: 'অক্টো',
+                                                    11: 'নভে',
+                                                    12: 'ডিসে',
+                                                  };
+                                                  var monthsE = {
+                                                    1: 'jan2',
+                                                    2: 'feb2',
+                                                    3: 'march2',
+                                                    4: 'apr2',
+                                                    5: 'may2',
+                                                    6: 'june2',
+                                                    7: 'july1',
+                                                    8: 'august1',
+                                                    9: 'sept1',
+                                                    10: 'oct1',
+                                                    11: 'nov1',
+                                                    12: 'dec1',
+                                                  };
+                                                  const currentMonthB = monthsB[monthNum];
+                                                  const currentMonthE = monthsE[monthNum]
+                                                  %>
+                                                  <%= console.log(currentMonthB, currentMonthE) %>
                                                 <div class="form-group">
                                                     <label for="boraddo" class="col-md-3 control-label">চলতি অর্থ বছরের
                                                         প্রাপ্ত বরাদ্দ</label>
@@ -37,8 +69,17 @@
                                                             value="<%= records.boraddo %>">
                                                     </div>
                                                 </div>
-
+                                                
                                                 <div class="form-group">
+                                                    <label for="<%= currentMonthE %>" class="col-md-3 control-label"><%= currentMonthB %></label>
+                                                    <div class="col-md-9">
+                                                        <input type="number" class="form-control" name="<%= currentMonthE %>"
+                                                            placeholder="<%= currentMonthB %>" value="<%= records[currentMonthE] %>">
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group" style="display: none;">
                                                     <label for="july1" class="col-md-3 control-label">জুলাই</label>
                                                     <div class="col-md-9">
                                                         <input type="number" class="form-control" name="july1"
@@ -46,7 +87,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group">
+                                                <div class="form-group" style="display: none;">
                                                     <label for="august1" class="col-md-3 control-label">আগস্ট</label>
                                                     <div class="col-md-9">
                                                         <input type="number" class="form-control" name="august1"
@@ -54,7 +95,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group">
+                                                <div class="form-group" style="display: none;">
                                                     <label for="sept1" class="col-md-3 control-label">সেপ্টে</label>
                                                     <div class="col-md-9">
                                                         <input type="number" class="form-control" name="sept1"
@@ -62,7 +103,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group">
+                                                <div class="form-group" style="display: none;">
                                                     <label for="oct1" class="col-md-3 control-label">অক্টো</label>
                                                     <div class="col-md-9">
                                                         <input type="number" class="form-control" name="oct1"
@@ -70,7 +111,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group">
+                                                <div class="form-group" style="display: none;">
                                                     <label for="nov1" class="col-md-3 control-label">নভে</label>
                                                     <div class="col-md-9">
                                                         <input type="number" class="form-control" name="nov1"
@@ -78,7 +119,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group">
+                                                <div class="form-group" style="display: none;">
                                                     <label for="dec1" class="col-md-3 control-label">ডিসে</label>
                                                     <div class="col-md-9">
                                                         <input type="number" class="form-control" name="dec1"
@@ -86,7 +127,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group">
+                                                <div class="form-group" style="display: none;">
                                                     <label for="jan2" class="col-md-3 control-label">জানু</label>
                                                     <div class="col-md-9">
                                                         <input type="number" class="form-control" name="jan2"
@@ -94,14 +135,14 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group">
+                                                <div class="form-group" style="display: none;">
                                                     <label for="feb2" class="col-md-3 control-label">ফেব্রু</label>
                                                     <div class="col-md-9">
                                                         <input type="number" class="form-control" name="feb2"
                                                             placeholder="ফেব্রু" value="<%= records.feb2 %>">
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group" style="display: none;">
                                                     <label for="march2" class="col-md-3 control-label">মার্চ</label>
                                                     <div class="col-md-9">
                                                         <input type="number" class="form-control" name="march2"
@@ -109,7 +150,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group">
+                                                <div class="form-group" style="display: none;">
                                                     <label for="apr2" class="col-md-3 control-label">এপ্রিল</label>
                                                     <div class="col-md-9">
                                                         <input type="number" class="form-control" name="apr2"
@@ -117,7 +158,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group">
+                                                <div class="form-group" style="display: none;">
                                                     <label for="may2" class="col-md-3 control-label">মে</label>
                                                     <div class="col-md-9">
                                                         <input type="number" class="form-control" name="may2"
@@ -125,7 +166,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group">
+                                                <div class="form-group" style="display: none;">
                                                     <label for="june2" class="col-md-3 control-label">জুন</label>
                                                     <div class="col-md-9">
                                                         <input type="number" class="form-control" name="june2"
