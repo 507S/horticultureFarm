@@ -154,6 +154,7 @@ module.exports.centerDashboard = async (req, res) => {
     }
 
     var totalProduct = 0;
+   
     var totalBitoron = 0;
     var totalMojud = 0;
     var totalrajossho = 0;
@@ -162,6 +163,9 @@ module.exports.centerDashboard = async (req, res) => {
       const productTotalParse = JSON.parse(row.productionTotal);
       const bitoronParse = JSON.parse(row.bitoronTotal);
       const mojudParse = JSON.parse(row.mojud);
+      if(parseInt(row.lastYearJer) > 0){
+        totalProduct += parseInt(row.lastYearJer);
+      }
       productTotalParse.forEach((prodTotal) => {
         if (
           prodTotal.startTime === startRange &&
@@ -3106,6 +3110,7 @@ module.exports.monthlyProgressFormPost = async (req, res) => {
   var daePrapti = req.body.daePrapti;
   var bitoronCurrentMonth = req.body.bitotonCurrentMonth;
   var daeProdan = req.body.daeProdan;
+  var lastYearJer = req.body.lastYearJer;
   var deadWriteup = req.body.deadWriteup;
   var comment = req.body.comment;
   var user_id = req.body.user_id;
@@ -3215,6 +3220,7 @@ module.exports.monthlyProgressFormPost = async (req, res) => {
         bitoronCurrentMonth: JSON.stringify(currentBitoron),
         bitoronTotal: JSON.stringify(totalBitoron),
         daeProdan: JSON.stringify(currentDaeProdan),
+        lastYearJer: lastYearJer,
         deadWriteup: JSON.stringify(currentDeadWriteup),
         comment: JSON.stringify(currentComment),
         timeFrame: JSON.stringify(time),
@@ -3398,6 +3404,7 @@ module.exports.monthlyProgressFormPost = async (req, res) => {
             productionCurrent: JSON.stringify(currentProduction),
             productionTotal: JSON.stringify(totalProduction),
             daePrapti: JSON.stringify(currentDaePraptis),
+            lastYearJer: lastYearJer,
             bitoronCurrentMonth: JSON.stringify(currentBitoron),
             bitoronTotal: JSON.stringify(totalBitoron),
             daeProdan: JSON.stringify(currentDaeProdan),

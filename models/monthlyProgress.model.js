@@ -41,6 +41,9 @@ module.exports = (sequelize, Sequelize) => {
       daeProdan: {
         type: Sequelize.TEXT('long')
       },
+      lastYearJer:{
+        type: Sequelize.STRING
+      },
       deadWriteup: {
         type: Sequelize.TEXT('long')
       },
