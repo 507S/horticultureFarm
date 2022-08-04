@@ -36,11 +36,11 @@
                                         <div class="col-md-9">
                                             <select name="khat" id="khat" class="form-control">
                                                 <option value="">খাতের নাম</option>
-                                                <% expenseCodes.forEach(function(row){ %>
-                                                    <% if (row.khat != null) {%>
-                                                        <option value=<%= row.id %>><%= row.khat %></option>
+                                                <% for(let i=0; i < khats.length; i++){ %>
+                                                    <% if (khats[i] != null) {%>
+                                                        <option value=<%= ids[i] %>><%= khats[i] %></option>
                                                     <% } %>
-                                                <% }) %>
+                                                <% } %>
                                             </select>
                                         </div>
                                     </div>

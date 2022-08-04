@@ -2365,12 +2365,32 @@ module.exports.expenseYear = async (req, res) => {
 module.exports.expenseForm = async (req, res) => {
   try {
     var expenseCodes = await expenseCode.findAll();
+    var data = await expense.findAll({ where: { year: moment().format('YYYY'), center_id: req.session.user_id } });
+    const khats = [];
+    const ids = [];
+
+    for(let code of expenseCodes){
+      let flag = 1;
+      for(let row of data){
+        if(row.khat === code.khat){
+          flag = 0;
+          break;
+        }
+      }
+      if(flag){
+        khats.push(code.khat);
+        ids.push(code.id);
+      }
+    }
+
     res.render("center/expense/expenseForm", {
       title: "খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী",
       msg: "",
       success: "",
       user_id: req.session.user_id,
       expenseCodes: expenseCodes,
+      khats: khats,
+      ids: ids,
     });
   } catch (e) {
     console.log(e);
