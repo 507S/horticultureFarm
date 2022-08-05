@@ -4236,32 +4236,37 @@ module.exports.monthlyProgressDelete = async (req, res) => {
             totalTimeFrame.splice(index, 1)
         }
     })
+    try{
+        progress.destroy();
+        res.redirect('/pd/monthlyProgress');
+    } catch {
+        res.render('errorpage', err);
+    }
 
 
-
-    await monthlyProgress.update(
-        {
-            productionTarget: JSON.stringify(totalProductionTarget),
-            productionCurrent: JSON.stringify(currentProduction),
-            productionTotal: JSON.stringify(totalProduction),
-            daePrapti: JSON.stringify(currentDaePraptis),
-            bitoronCurrentMonth: JSON.stringify(currentBitoron),
-            bitoronTotal: JSON.stringify(totalBitoron),
-            daeProdan: JSON.stringify(currentDaeProdan),
-            deadWriteup: JSON.stringify(currentDeadWriteup),
-            comment: JSON.stringify(currentComment),
-            // timeFrame: JSON.stringify(totalTimeFrame)
-        },
-        {
-            where: { id: req.params.progressId }
-        }
-    )
-        .then(data => {
-            console.log('productionTotal=', data);
-            res.redirect('/pd/monthlyProgress');
-        }).catch(err => {
-            console.log("err", err);
-        });
+    // await monthlyProgress.update(
+    //     {
+    //         productionTarget: JSON.stringify(totalProductionTarget),
+    //         productionCurrent: JSON.stringify(currentProduction),
+    //         productionTotal: JSON.stringify(totalProduction),
+    //         daePrapti: JSON.stringify(currentDaePraptis),
+    //         bitoronCurrentMonth: JSON.stringify(currentBitoron),
+    //         bitoronTotal: JSON.stringify(totalBitoron),
+    //         daeProdan: JSON.stringify(currentDaeProdan),
+    //         deadWriteup: JSON.stringify(currentDeadWriteup),
+    //         comment: JSON.stringify(currentComment),
+    //         timeFrame: JSON.stringify(totalTimeFrame)
+    //     },
+    //     {
+    //         where: { id: req.params.progressId }
+    //     }
+    // )
+    //     .then(data => {
+    //         console.log('productionTotal=', data);
+    //         res.redirect('/pd/monthlyProgress');
+    //     }).catch(err => {
+    //         console.log("err", err);
+    //     });
 
 
 
