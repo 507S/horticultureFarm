@@ -59,9 +59,6 @@
 
     // current production (  উৎপাদন  )*******
     var currentProductionSum = 0;
-    if(parseInt(row.lastYearJer) >= 0){ 
-      currentProductionSum = parseInt(row.lastYearJer);
-    }
     var previousMonthProduction = 0;
     const currentProd = JSON.parse(row.productionCurrent)
     currentProd.forEach(function(prodCurrent){
@@ -84,6 +81,9 @@
 
     // মোট উৎপাদন (চলতি+পূর্ব মাস) *********
     var totalProductionSum = 0;
+    if(parseInt(row.lastYearJer) >= 0){ 
+      totalProductionSum = parseInt(row.lastYearJer);
+    }
     const TotalProduction = JSON.parse(row.productionTotal)
     TotalProduction.forEach(function(prodTotal){
         if ( moment(selectedDate).isAfter(prodTotal.startTime) &&  moment(selectedDate).isBefore(prodTotal.endTime) ){

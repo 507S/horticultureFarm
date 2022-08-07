@@ -162,6 +162,9 @@
 
                         // মোট উৎপাদন (চলতি+পূর্ব মাস) *********
                         var totalProductionSum = 0;
+                        if(parseInt(row.lastYearJer) >= 0){ 
+                          totalProductionSum = parseInt(row.lastYearJer);
+                        }
                         const TotalProduction = JSON.parse(row.productionTotal)
                         TotalProduction.forEach(function(prodTotal){
                             if ( moment(selectedDate).isAfter(prodTotal.startTime) &&  moment(selectedDate).isBefore(prodTotal.endTime) ){
@@ -180,6 +183,9 @@
 
                         // পূর্ব বছরের জের *********
                         var prevYearJer = 0;
+                        if(parseInt(row.lastYearJer) >= 0){ 
+                          prevYearJer = parseInt(row.lastYearJer);
+                        }
                         currentDaePrapti.forEach(function(daePraptiCurrent){
                             if ( moment( daePraptiCurrent.time ).isAfter(prevEconomicStart) &&  moment( daePraptiCurrent.time ).isBefore(prevEconomicEnd) ) {
                                 prevYearJer += parseInt(daePraptiCurrent.amount)
