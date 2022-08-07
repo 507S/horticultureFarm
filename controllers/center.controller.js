@@ -1977,12 +1977,35 @@ module.exports.rajosshoYear = async (req, res) => {
 module.exports.rajosshoForm = async (req, res) => {
   try {
     var rajosshoCodes = await rajosshoCode.findAll();
+    var data = await rajossho.findAll({
+      where: { year: moment().format('YYYY'), center_id: req.session.user_id },
+    });
+
+    const upokhats = [];
+    const ids = [];
+
+    for(let code of rajosshoCodes){
+      let flag = 1;
+      for(let row of data){
+        if(row.upokhat === code.upokhat){
+          flag = 0;
+          break;
+        }
+      }
+      if(flag){
+        upokhats.push(code.upokhat);
+        ids.push(code.id);
+      }
+    }
+
     res.render("center/rajossho/rajosshoForm", {
       title: "মাসিক রাজস্ব অর্থ প্রাপ্তির হিসাব",
       msg: "",
       success: "",
       user_id: req.session.user_id,
       rajosshoCodes: rajosshoCodes,
+      upokhats: upokhats,
+      ids: ids,
     });
   } catch (e) {
     console.log(e);
