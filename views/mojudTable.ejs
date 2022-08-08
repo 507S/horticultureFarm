@@ -61,6 +61,9 @@
 
                         // পূর্ব বছরের জের *********
                         var prevYearJer = 0;
+                        if(parseInt(row.lastYearJer) >= 0){ 
+                          prevYearJer = parseInt(row.lastYearJer);
+                        }
                         currentDaePrapti.forEach(function(daePraptiCurrent){
                             if ( moment( daePraptiCurrent.time ).isAfter(prevEconomicStart) &&  moment( daePraptiCurrent.time ).isBefore(prevEconomicEnd) ) {
                                 prevYearJer += parseInt(daePraptiCurrent.amount)
