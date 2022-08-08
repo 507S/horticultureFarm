@@ -2407,7 +2407,7 @@ module.exports.expenseForm = async (req, res) => {
     }
 
     res.render("center/expense/expenseForm", {
-      title: "খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী",
+      title: "খরচের (বি-স্টেটমেন্ট) হিসাব বিবরণী",
       msg: "",
       success: "",
       user_id: req.session.user_id,
@@ -2541,7 +2541,7 @@ module.exports.expenseAdd = async (req, res) => {
     .then((data) => {
 
       res.render("center/expense/expenseAdd", {
-        title: "খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণী",
+        title: "খরচের (বি-স্টেটমেন্ট) হিসাব বিবরণী",
         msg: "",
         success: "",
         records: data,
