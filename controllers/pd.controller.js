@@ -3408,7 +3408,7 @@ module.exports.expense = async (req, res) => {
     })
         .then(data => {
             console.log("inside");
-            res.render('pd/expense/expense', { title: 'মাসিক খরচের বিবরণী', success: '', centers: data });
+            res.render('pd/expense/expense', { title: 'খরচের (বি-স্টেটমেন্ট) হিসাব বিবরণী', success: '', centers: data });
         })
         .catch(err => {
             console.log("outside", err);
