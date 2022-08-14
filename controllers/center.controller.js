@@ -137,6 +137,7 @@ module.exports.centerDashboard = async (req, res) => {
     });
     const rajosshos = await rajossho.findAll({
       where: {
+        year: moment().format('YYYY'),
         center_id: req.session.user_id,
       },
     });

@@ -137,7 +137,7 @@ module.exports.pdDashboard = async (req, res) => {
             attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname', 'password', 'pd_id', 'createdAt', 'updatedAt']
         });
         const monthly_progress = await monthlyProgress.findAll();
-        const rajosshos = await rajossho.findAll();
+        const rajosshos = await rajossho.findAll({ where: { year: moment().format('YYYY') } });
         const apaCodes = await apaCode.findAll();
         const expenseCodess = await expenseCode.findAll();
         const rajosshoCodess = await rajosshoCode.findAll();
