@@ -29,6 +29,9 @@ module.exports = (sequelize, Sequelize) => {
     presentDate: {
       type: Sequelize.STRING
     },
+    pastDate: {
+      type: Sequelize.STRING
+    },
     pastWorkstation: {
       type: Sequelize.STRING
     },
