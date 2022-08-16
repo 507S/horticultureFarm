@@ -53,7 +53,7 @@ const bcrypt = require('bcryptjs');
 
 const { request, response } = require('express');
 const express = require('express');
-const { FORCE } = require('sequelize/types/index-hints');
+// const { FORCE } = require('sequelize/types/index-hints');
 
 module.exports.centertable = async (req, res) => {
     res.json({ message: "hello center" });
