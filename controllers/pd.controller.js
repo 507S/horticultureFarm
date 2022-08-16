@@ -53,6 +53,7 @@ const bcrypt = require('bcryptjs');
 
 const { request, response } = require('express');
 const express = require('express');
+const { FORCE } = require('sequelize/types/index-hints');
 
 module.exports.centertable = async (req, res) => {
     res.json({ message: "hello center" });
@@ -4376,6 +4377,8 @@ module.exports.newcropCategoryList = async (req, res) => {
 
 };
 module.exports.newcropCategoryListEdit = async (req, res) => {
+    var childcropCategoryList= await cropCategory.findAll({where: {parent_id: req.params.id}});
+    console.log(childcropCategoryList);
     try {
         data = await cropCategory.findByPk(req.params.id)
         console.log("inside", data);
@@ -4401,7 +4404,9 @@ module.exports.newcropCategoryListPost = async (req, res) => {
 };
 module.exports.newcropCategoryListDelete = async (req, res) => {
     var newcropCategoryListDelete = await cropCategory.findByPk(req.params.id);
+    var childcropCategoryList= await cropCategory.findAll({where: {parent_id: req.params.id}});
     try {
+        childcropCategoryList.destroy({force: true});
         newcropCategoryListDelete.destroy();
         res.redirect("/pd/cropCategoryTable");
     }

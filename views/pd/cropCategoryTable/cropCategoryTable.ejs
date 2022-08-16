@@ -116,7 +116,9 @@
                                         <% crop.forEach((row) => {
                                         if (row.type === 'biboron'){
                                         %>
-                                            <span  style="margin-right: 2px"> <%= row.name %> </span> |
+                                            <span  style="margin-right: 2px"> <%= row.name %> </span>
+                                            <a  href="/pd/newcropCategoryListEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                                            <a  href="/pd/newcropCategoryListDelete/<%= row.id %>"><i class="fa fa-trash"></i></a> |
                                         <%
                                         }
                                         })
