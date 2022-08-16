@@ -30,7 +30,7 @@
                                         %>
                                             <span style="margin-right: 2px"> <%= row.name %> </span>
                                             <a  href="/pd/newcropCategoryListEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
-                                            <a  href="/pd/newcropCategoryListDelete/<%= row.id %>"><i class="fa fa-trash"></i></a> |
+                                            <a  onclick="return confirm('Are you sure to delete?')" href="/pd/newcropCategoryListDelete/<%= row.id %>"><i class="fa fa-trash"></i></a> |
                                         <%
                                         }
                                         })
@@ -74,7 +74,7 @@
                                         %>
                                             <span style="margin-right: 2px"> <%= row.name %> </span>
                                             <a  href="/pd/newcropCategoryListEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
-                                            <a  href="/pd/newcropCategoryListDelete/<%= row.id %>"><i class="fa fa-trash"></i></a> |
+                                            <a  onclick="return confirm('Are you sure to delete?')" href="/pd/newcropCategoryListDelete/<%= row.id %>"><i class="fa fa-trash"></i></a> |
                                         <%
                                         }
                                         })
@@ -118,7 +118,7 @@
                                         %>
                                             <span  style="margin-right: 2px"> <%= row.name %> </span>
                                             <a  href="/pd/newcropCategoryListEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
-                                            <a  href="/pd/newcropCategoryListDelete/<%= row.id %>"><i class="fa fa-trash"></i></a> |
+                                            <a  onclick="return confirm('Are you sure to delete?')" href="/pd/newcropCategoryListDelete/<%= row.id %>"><i class="fa fa-trash"></i></a> |
                                         <%
                                         }
                                         })

@@ -4406,7 +4406,9 @@ module.exports.newcropCategoryListDelete = async (req, res) => {
     var newcropCategoryListDelete = await cropCategory.findByPk(req.params.id);
     var childcropCategoryList= await cropCategory.findAll({where: {parent_id: req.params.id}});
     try {
-        childcropCategoryList.destroy({force: true});
+        childcropCategoryList.forEach((row) => {
+            row.destroy();
+        })
         newcropCategoryListDelete.destroy();
         res.redirect("/pd/cropCategoryTable");
     }
