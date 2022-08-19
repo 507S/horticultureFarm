@@ -4390,7 +4390,7 @@ module.exports.newcropCategoryListEdit = async (req, res) => {
     }
 };
 module.exports.newcropCategoryListPost = async (req, res) => {
-    var name = req.body.name;
+    var name = req.body.newName;
     await cropCategory.update({
         name: name,
     },
