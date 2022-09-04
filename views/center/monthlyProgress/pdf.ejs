@@ -63,7 +63,7 @@
     <div>
       <div class="header">
         <div>
-          <img src="/images/dae.jpg" width="100" alt="dae">
+          <img src="/images/bd.png" width="100" alt="bd">
         </div>
         <div class="flex-container">
           <h5>গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</h5>
@@ -71,7 +71,7 @@
           <h5>হর্টিকালচার উইং</h5>
         </div>
         <div>
-          <img src="/images/bd.png" width="100" alt="bd">
+          <img src="/images/dae.jpg" width="100" alt="dae">
         </div>
       </div>
       <h4>মাসিক প্রতিবেদন</h4>
@@ -80,7 +80,7 @@
           <p><b>সেন্টারের নাম :</b><%= centerName %></p>
         </div>
         <div>
-          <p><b>প্রতিবেদনের তারিখ : </b><%= moment(selectedDate).locale("bn").format("DD MMM, YYYY") %></p>
+          <p><b>প্রতিবেদনের তারিখ : </b><%= moment().locale("bn").format("DD MMM, YYYY") %></p>
         </div>
       </div>
       <%if (records.length >0){ %>

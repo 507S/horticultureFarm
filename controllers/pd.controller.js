@@ -3815,7 +3815,32 @@ module.exports.monthlyProgressFilter = async (req, res) => {
             res.render('pd/monthlyProgress/monthlyProgressCustomTable', { records: data, selectedDate: selectedDate, cropCatg: cropCatg, allCropCatg: allCropCatg }, function (err, html) {
                 res.send(html);
             });
-        } else {
+        }
+        else if(req.body.center === "summary"){
+            try {
+                var centers = await center.findAll({
+                    order: [
+                        ['serialNum', 'ASC'],
+                    ],
+                    attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname', 'password', 'pd_id', 'createdAt', 'updatedAt']
+                }); var data = await monthlyProgress.findAll({ where: { pd_id: req.session.user_id } });
+                data.forEach((row) => {
+                    const prodTarget = JSON.parse(row.productionTarget);
+                    console.log(prodTarget[0].amount);
+                })
+                res.render(
+                    'pd/monthlyProgress/monthlyProgressTableAll',
+                    { records: data, centers: centers },
+                    function (err, html) {
+                        res.send(html);
+                    }
+                );
+            }
+            catch (err) {
+                console.log(err);
+            }
+        } 
+        else {
             const monthlyProgressList = await monthlyProgress.findAll({ where: { centerId: req.body.center, pd_id: req.session.user_id } });
 
             monthlyProgressList.map((monthlyProg) => {
