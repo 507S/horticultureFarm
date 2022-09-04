@@ -1569,7 +1569,7 @@ module.exports.chak1 = async (req, res) => {
     })
     .then((data) => {
       res.render("center/employee/chak1/employeeChak1", {
-        title: "ক্যাডার/নন ক্যাডার কর্মকতা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য",
+        title: "ক্যাডার/নন ক্যাডার কর্মকর্তা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য",
         success: "",
         records: data,
       });
@@ -1758,7 +1758,7 @@ module.exports.chak2 = async (req, res) => {
     .then((data) => {
       res.render("center/employee/chak2/employeeChak2", {
         title:
-          "হর্টিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা",
+          "হর্টিকালচার সেন্টারের কর্মকর্তা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা",
         success: "",
         records: data,
       });
