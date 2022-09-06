@@ -1648,9 +1648,10 @@ module.exports.chak1FormPost = async (req, res) => {
     });
 };
 module.exports.chak1Edit = async (req, res) => {
+  var podobiLists = await podobiList.findAll();
   await chak1.findByPk(req.params.id)
     .then(data => {
-      res.render('center/employee/chak1/employeeChak1Edit', { title: 'ক্যাডার/নন ক্যাডার কর্মকতা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য', msg: '', success: '', records: data });
+      res.render('center/employee/chak1/employeeChak1Edit', { title: 'ক্যাডার/নন ক্যাডার কর্মকতা/কর্মচারীদের নাম ও পদবী সহ শূন্য পদের তথ্য',podobiLists: podobiLists, msg: '', success: '', records: data });
     })
     .catch(err => {
       console.log("outside", err);
