@@ -3,7 +3,7 @@ dotenv.config()
 const { DBUSER, DBPASSWORD, DB } = process.env;
 //console.log(DBUSER, DBPASSWORD)
 module.exports = {
-  HOST: "localhost",
+  HOST: "127.0.0.1",
   USER: DBUSER,
   PASSWORD: DBPASSWORD,
   DB: DB,

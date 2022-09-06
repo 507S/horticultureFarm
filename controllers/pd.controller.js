@@ -632,7 +632,7 @@ module.exports.center = async (req, res) => {
         order: [
             ['serialNum', 'ASC'],
         ],
-        attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'centerHeadInfo', 'centerContactInfo', 'employeeName', 'centerHeadName', 'uname', 'password', 'pd_id', 'createdAt', 'updatedAt']
+        attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'centerHeadInfo', 'uname', 'password', 'pd_id', 'createdAt', 'updatedAt']
     })
 
         .then(data => {
@@ -683,9 +683,6 @@ module.exports.centerEditPost = async (req, res) => {
     var mobile = req.body.mobile;
     var email = req.body.email;
     var centerHeadInfo = req.body.centerHeadInfo;
-    var centerContactInfo = req.body.centerContactInfo;
-    var employeeName = req.body.employeeName;
-    var centerHeadName = req.body.centerHeadName;
 
     await center.update({
         serialNum: serialNum,
@@ -695,9 +692,6 @@ module.exports.centerEditPost = async (req, res) => {
         mobile: mobile,
         email: email,
         centerHeadInfo: centerHeadInfo,
-        centerContactInfo: centerContactInfo,
-        employeeName: employeeName,
-        centerHeadName: centerHeadName,
     },
         {
             where: { id: req.params.id }
