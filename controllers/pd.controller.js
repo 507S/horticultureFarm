@@ -2706,6 +2706,7 @@ module.exports.chak1EditPost = async (req, res) => {
     var birthDate = req.body.birthDate;
     var firstdate = req.body.firstdate;
     var presentDate = req.body.presentDate;
+    var pastDate = req.body.pastDate;
     var pastWorkstation = req.body.pastWorkstation;
     var comment = req.body.comment;
 
@@ -2719,6 +2720,7 @@ module.exports.chak1EditPost = async (req, res) => {
         birthDate: birthDate,
         firstdate: firstdate,
         presentDate: presentDate,
+        pastDate: pastDate,
         pastWorkstation: pastWorkstation,
         comment: comment,
 
