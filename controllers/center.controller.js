@@ -2051,9 +2051,10 @@ module.exports.fetchPodobiList = async (req, res) => {
     });
 };
 module.exports.chak2Edit = async (req, res) => {
+  var podobiLists = await podobiList.findAll();
   await chak2.findByPk(req.params.id)
     .then(data => {
-      res.render('center/employee/chak2/employeeChak2Edit', { title: 'হর্টিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা', msg: '', success: '', records: data });
+      res.render('center/employee/chak2/employeeChak2Edit', { title: 'হর্টিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের সংখ্যা', msg: '', success: '', records: data,podobiLists: podobiLists });
     })
     .catch(err => {
       console.log("outside", err);
