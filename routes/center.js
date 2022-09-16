@@ -19,7 +19,7 @@ const { fetchMaan, fetchWork, fetchShuchok, fetchEkok, fetchShuchokMaan, expense
     monthlyProgressForm, monthlyProgressFormPost, charaKolomFixed, centersignup, centersignuppost, rajossho, rajosshoYear, rajosshoForm, generatePdfexpense,
     rajosshoFormPost, expense, expenseYear, expenseForm, expenseFormPost,expenseEdit,expenseEditPost,expenseDelete, chak1, chak1Year, chak1Form, chak1FormPost, chak2, chak2Year, chak2Form,
     chak2FormPost, revolvingFund, revolvingFundYear, revolvingFundForm, revolvingFundFormPost,revolvingFundEdit,revolvingFundEditPost, specialCoconut, specialCoconutYear, specialCoconutForm,
-    specialCoconutFormPost,specialCoconutEdit,specialCoconutEditPost, loan, loanYear, loanForm, loanFormPost, apa, apaYear, apaForm, apaFormPost, allcenter, centerlogin, centerloginpost,
+    specialCoconutFormPost,specialCoconutEdit,specialCoconutEditPost, loan, loanYear, loanForm, loanFormPost,loanEdit, loanEditPost, apa, apaYear, apaForm, apaFormPost, allcenter, centerlogin, centerloginpost,
     centerDashboard, topSheet, topSheetYear, generatePdfTopSheet, topSheetBitoron, topSheetBitoronYear, generatePdfTopSheetBitoron, center, centerEdit, centerEditPost, centerDelete, chak1Delete, chak1Edit, chak1EditPost, chak2Delete, chak2Edit, chak2EditPost,
     fetchPodobiList, workerInfoDelete, workerInfoEdit, workerInfoEditPost, generatePdfworkerInfo, generatePdfworkerNum, generatePdfapa, generatePdfloan, generatePdfspecialCoconut, generatePdfrevolvingFund, generatePdfchak1, generatePdfchak2, generatePdfrajossho,
     workerInfo, workerInfoForm, workerInfoFormPost, workerNum, fetchSubCategory, fetchBiboron, fetchBreed, apaEdit, apaEditPost } = require('../controllers/center.controller');
@@ -78,6 +78,8 @@ router.get('/loan', loan);
 router.post('/loanYear', loanYear);
 router.get('/loanForm', loanForm);
 router.post('/loanForms', loanFormPost);
+router.get('/loanEdit/:id',loanEdit);
+router.post('/loanEditPost/:id',loanEditPost);
 router.post('/generatePdfloan', generatePdfloan);
 
 router.get('/specialCoconut', specialCoconut);
