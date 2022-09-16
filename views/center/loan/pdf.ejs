@@ -50,6 +50,7 @@
       <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
         <thead>
           <tr>
+            <th>মাসের নাম</th>
             <th>ঋণ বাবদ বরাদ্দ অর্থ</th>
             <th>বিগত অর্থবছরে বিতরণকৃত অর্থের পরিমাণ</th>
             <th>বিগত অর্থবছরে আদায়কৃত টাকার পরিমাণ</th>
@@ -63,6 +64,7 @@
         <tbody>
           <% records.forEach(function(row){ %>
           <tr>
+            <td><%= row.currentMonth %></td>
             <td><%= row.boraddo %></td>
             <td><%= row.bitoron1 %></td>
             <td><%= row.aday1 %></td>
@@ -80,6 +82,7 @@
       <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
         <thead>
           <tr>
+            <th>মাসের নাম</th>
             <th>ঋণ বাবদ বরাদ্দ অর্থ</th>
             <th>বিগত অর্থবছরে বিতরণকৃত অর্থের পরিমাণ</th>
             <th>বিগত অর্থবছরে আদায়কৃত টাকার পরিমাণ</th>

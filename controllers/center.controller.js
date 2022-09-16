@@ -1158,6 +1158,7 @@ module.exports.loanForm = async (req, res) => {
   });
 };
 module.exports.loanFormPost = async (req, res) => {
+  var currentMonth = req.body.currentMonth;
   var boraddo = req.body.boraddo;
   var bitoron1 = req.body.bitoron1;
   var aday1 = req.body.aday1;
@@ -1171,6 +1172,7 @@ module.exports.loanFormPost = async (req, res) => {
 
   await loan
     .create({
+      currentMonth: currentMonth,
       boraddo: boraddo,
       bitoron1: bitoron1,
       aday1: aday1,
@@ -1208,6 +1210,7 @@ module.exports.loanEdit = async (req, res) => {
   })
 };
 module.exports.loanEditPost = async (req, res) => {
+  var currentMonth = req.body.currentMonth;
   var boraddo = req.body.boraddo;
   var bitoron1 = req.body.bitoron1;
   var aday1 = req.body.aday1;
@@ -1221,6 +1224,7 @@ module.exports.loanEditPost = async (req, res) => {
 
   await loan
     .update({
+      currentMonth: currentMonth,
       boraddo: boraddo,
       bitoron1: bitoron1,
       aday1: aday1,
