@@ -5,7 +5,7 @@ module.exports = (sequelize, Sequelize) => {
       primaryKey: true,
       autoIncrement:true
     },
-    center: {
+    currentMonth: {
       type: Sequelize.STRING
     },
     boraddo: {

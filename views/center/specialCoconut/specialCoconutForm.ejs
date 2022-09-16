@@ -31,23 +31,28 @@
                             </button>
                         </div>
                     <% } %>
-                                    <% if(records.length > 0){ %>
-                                        <% records.forEach(function(row){ %>
+                                    
                                     <div class="form-group">
-                                        <label for="center" class="col-md-3 control-label">সেন্টারের নাম</label>
+                                        <label for="currentMonth" class="col-md-3 control-label">মাসের নাম</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="center" value="<%= row.center %>">
+                                            <select id="currentMonth" name="currentMonth">
+                                                <option value="">Choose Month</option>
+                                                <option value="January">জানুয়ারি</option>
+                                                <option value="February">ফেব্রুয়ারি</option>
+                                                <option value="March">মার্চ</option>
+                                                <option value="April">এপ্রিল</option>
+                                                <option value="May">মে</option>
+                                                <option value="June">জুন</option>
+                                                <option value="July">জুলাই</option>
+                                                <option value="August">আগস্ট</option>
+                                                <option value="September">সেপ্টেম্বর</option>
+                                                <option value="October">অক্টোবর</option>
+                                                <option value="November">নভেম্বর</option>
+                                                <option value="December">ডিসেম্বর</option>
+                                            </select>
                                         </div>
                                     </div>
-                                    <% })} else { %>
-                                        <div class="form-group">
-                                            <label for="center" class="col-md-3 control-label">সেন্টারের নাম</label>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control" name="center" placeholder="সেন্টারের নাম">
-                                            </div>
-                                        </div>
 
-                                    <% } %>
                                     
                                     <div class="form-group">
                                         <label for="boraddo" class="col-md-3 control-label">মোট বরাদ্দকৃত অর্থের পরিমাণ</label>
@@ -98,22 +103,13 @@
                                         </div>
                                     </div>
 
-                                    <% if(records.length > 0){ %>
-                                        <% records.forEach(function(row){ %>
-                                    <div class="form-group">
-                                        <label for="salableSeedPercentage" class="col-md-3 control-label">বিক্রিযোগ্য চারার শতকরা হার</label>
-                                        <div class="col-md-9">
-                                        <input type="text" class="form-control" name="salableSeedPercentage" value="<%=row.salableSeedPercentage%>">
-                                        </div>
-                                    </div>
-                                    <% })} else { %>
+                                    
                                     <div class="form-group">
                                         <label for="salableSeedPercentage" class="col-md-3 control-label">বিক্রিযোগ্য চারার শতকরা হার</label>
                                         <div class="col-md-9">
                                         <input type="text" class="form-control" name="salableSeedPercentage" placeholder="বিক্রিযোগ্য চারার শতকরা হার">
                                         </div>
                                     </div>
-                                    <% } %>
                                    
                                     <div class="form-group">
                                         <label for="salableSeedNumber" class="col-md-3 control-label">মোট বিক্রিযোগ্য চারার সংখ্যা</label>
@@ -135,22 +131,13 @@
                                             <input type="text" class="form-control" name="soldSeedPrice" placeholder="বিক্রিত চারার মোট মূল্য">
                                         </div>
                                     </div>
-                                    <% if(records.length > 0){ %>
-                                        <% records.forEach(function(row){ %>
-                                    <div class="form-group">
-                                        <label for="presentMojud" class="col-md-3 control-label">বর্তমান মজুদ সংখ্যা</label>
-                                        <div class="col-md-9">
-                                        <input type="text" class="form-control" name="presentMojud" value="<%=row.presentMojud%>">
-                                        </div>
-                                    </div>
-                                    <% })} else { %>
+                                    
                                         <div class="form-group">
                                             <label for="presentMojud" class="col-md-3 control-label">বর্তমান মজুদ সংখ্যা</label>
                                             <div class="col-md-9">
                                             <input type="text" class="form-control" name="presentMojud" placeholder="বর্তমান মজুদ সংখ্যা">
                                             </div>
                                         </div>
-                                        <% } %>
                                     <div class="form-group">
                                         <label for="earnedMoneyDD" class="col-md-3 control-label">বিক্রয় লব্দ অর্থের পরিমাণ(ডিডি/এমটি)</label>
                                         <div class="col-md-9">

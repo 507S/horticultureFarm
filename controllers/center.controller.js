@@ -1355,7 +1355,7 @@ module.exports.specialCoconutForm = async (req, res) => {
     });
 };
 module.exports.specialCoconutFormPost = async (req, res) => {
-  var center = req.body.center;
+  var currentMonth = req.body.currentMonth;
   var boraddo = req.body.boraddo;
   var target = req.body.target;
   var boughtNarikel = req.body.boughtNarikel;
@@ -1378,7 +1378,7 @@ module.exports.specialCoconutFormPost = async (req, res) => {
 
   await specialCoconut
     .create({
-      center: center,
+      currentMonth: currentMonth,
       boraddo: boraddo,
       target: target,
       boughtNarikel: boughtNarikel,
@@ -1427,7 +1427,7 @@ module.exports.specialCoconutEdit = async(req,res) => {
     });
 }
 module.exports.specialCoconutEditPost = async(req,res) => {
-  var center = req.body.center;
+  var currentMonth = req.body.currentMonth;
   var boraddo = req.body.boraddo;
   var target = req.body.target;
   var boughtNarikel = req.body.boughtNarikel;
@@ -1450,7 +1450,7 @@ module.exports.specialCoconutEditPost = async(req,res) => {
 
   await specialCoconut
     .update({
-      center: center,
+      currentMonth: currentMonth,
       boraddo: boraddo,
       target: target,
       boughtNarikel: boughtNarikel,

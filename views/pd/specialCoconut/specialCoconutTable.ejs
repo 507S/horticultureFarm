@@ -2,7 +2,7 @@
     <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
     <thead>
     <tr>
-        <th>সেন্টারের নাম</th>
+        <th>মাসের নাম</th>
         <th>মোট বরাদ্দকৃত অর্থের পরিমাণ</th>
         <th>বীজ ক্রয়ের লক্ষ্যমাত্রা</th>
         <th>ক্রয়কৃত বীজ নারিকেলের সংখ্যা</th>
@@ -25,7 +25,7 @@
     <tbody>
         <% records.forEach(function(row){ %>
             <tr>
-                <td><%= row.center %></td>
+                <td><%= row.currentMonth %></td>
                 <td><%= row.boraddo %></td>
                 <td><%= row.target %></td>
                 <td><%= row.boughtNarikel %></td>
@@ -52,7 +52,7 @@
     <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
         <thead>
         <tr>
-            <th>সেন্টারের নাম</th>
+            <th>মাসের নাম</th>
             <th>মোট বরাদ্দকৃত অর্থের পরিমাণ</th>
             <th>বীজ ক্রয়ের লক্ষ্যমাত্রা</th>
             <th>ক্রয়কৃত বীজ নারিকেলের সংখ্যা</th>
