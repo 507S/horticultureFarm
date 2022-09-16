@@ -37,6 +37,14 @@
     .inline-block-child {
       display: inline-block;
     }
+    .header {
+      display: flex;
+      width: 100%;
+    }
+
+    .header>* {
+      width: 33%;
+    }
   </style>
 </head>
 
@@ -44,6 +52,19 @@
 
   <div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
     <div>
+      <div class="header">
+        <div>
+          <img src="/images/bd.png" width="100" alt="bd">
+        </div>
+        <div class="flex-container">
+          <h5>গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</h5>
+          <h5>কৃষি সম্প্রসারণ অধিদপ্তর</h5>
+          <h5>হর্টিকালচার উইং</h5>
+        </div>
+        <div>
+          <img src="/images/dae.jpg" width="100" alt="dae">
+        </div>
+      </div>
       <h1>ঋণ বিতরণ ও আদায় এর অগ্রগতির প্রতিবেদন</h1>
       <p><b>সেন্টারের নাম :</b><%= centerName.center %></p>
       <%if (records.length >0){ %>
