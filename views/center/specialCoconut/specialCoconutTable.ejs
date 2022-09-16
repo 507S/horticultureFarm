@@ -20,6 +20,7 @@
         <th>বিক্রয় লব্দ অর্থের পরিমাণ(হেড অফিসে প্রেরিত টাকার পরিমাণ)</th>
         <th>বিক্রয় লব্দ অর্থের পরিমাণ(স্থানীয় ব্যাংকের হিসাব জমা)</th>
         <th>মন্তব্য</th>
+        <th>পরিবর্তন</th>
     </tr>
     </thead>
     <tbody>
@@ -43,7 +44,9 @@
                 <td><%= row.earnedMoneyHead %></td>
                 <td><%= row.earnedMoneyLocalBank %></td>
                 <td><%= row.comment %></td>
-               
+                <td>
+                    <a class="btn btn-primary btn-xs" href="/center/specialCoconutEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                </td>
             </tr>
         <% }) %>
     </tbody>
@@ -70,6 +73,7 @@
             <th>বিক্রয় লব্দ অর্থের পরিমাণ(হেড অফিসে প্রেরিত টাকার পরিমাণ)</th>
             <th>বিক্রয় লব্দ অর্থের পরিমাণ(স্থানীয় ব্যাংকের হিসাব জমা)</th>
             <th>মন্তব্য</th>
+            <th>পরিবর্তন</th>
         </tr>
         </thead>
         <tbody>

@@ -19,7 +19,7 @@ const { fetchMaan, fetchWork, fetchShuchok, fetchEkok, fetchShuchokMaan, expense
     monthlyProgressForm, monthlyProgressFormPost, charaKolomFixed, centersignup, centersignuppost, rajossho, rajosshoYear, rajosshoForm, generatePdfexpense,
     rajosshoFormPost, expense, expenseYear, expenseForm, expenseFormPost,expenseEdit,expenseEditPost,expenseDelete, chak1, chak1Year, chak1Form, chak1FormPost, chak2, chak2Year, chak2Form,
     chak2FormPost, revolvingFund, revolvingFundYear, revolvingFundForm, revolvingFundFormPost, specialCoconut, specialCoconutYear, specialCoconutForm,
-    specialCoconutFormPost, loan, loanYear, loanForm, loanFormPost, apa, apaYear, apaForm, apaFormPost, allcenter, centerlogin, centerloginpost,
+    specialCoconutFormPost,specialCoconutEdit,specialCoconutEditPost, loan, loanYear, loanForm, loanFormPost, apa, apaYear, apaForm, apaFormPost, allcenter, centerlogin, centerloginpost,
     centerDashboard, topSheet, topSheetYear, generatePdfTopSheet, topSheetBitoron, topSheetBitoronYear, generatePdfTopSheetBitoron, center, centerEdit, centerEditPost, centerDelete, chak1Delete, chak1Edit, chak1EditPost, chak2Delete, chak2Edit, chak2EditPost,
     fetchPodobiList, workerInfoDelete, workerInfoEdit, workerInfoEditPost, generatePdfworkerInfo, generatePdfworkerNum, generatePdfapa, generatePdfloan, generatePdfspecialCoconut, generatePdfrevolvingFund, generatePdfchak1, generatePdfchak2, generatePdfrajossho,
     workerInfo, workerInfoForm, workerInfoFormPost, workerNum, fetchSubCategory, fetchBiboron, fetchBreed, apaEdit, apaEditPost } = require('../controllers/center.controller');
@@ -84,6 +84,8 @@ router.get('/specialCoconut', specialCoconut);
 router.post('/specialCoconutYear', specialCoconutYear);
 router.get('/specialCoconutForm', specialCoconutForm);
 router.post('/specialCoconutForms', specialCoconutFormPost);
+router.get('/specialCoconutEdit/:id',specialCoconutEdit);
+router.post('/specialCoconutEditPost/:id',specialCoconutEditPost);
 router.post('/generatePdfspecialCoconut', generatePdfspecialCoconut);
 
 router.get('/revolvingFund', revolvingFund);
