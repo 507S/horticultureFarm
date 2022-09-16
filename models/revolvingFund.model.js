@@ -5,6 +5,9 @@ module.exports = (sequelize, Sequelize) => {
       primaryKey: true,
       autoIncrement:true
     },
+    currentMonth: {
+      type: Sequelize.STRING
+    },
     prapti: {
       type: Sequelize.STRING
     },

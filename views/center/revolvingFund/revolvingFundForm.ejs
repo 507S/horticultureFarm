@@ -32,6 +32,26 @@
                         </div>
                     <% } %>
                                     <div class="form-group">
+                                        <label for="currentMonth" class="col-md-3 control-label">মাসের নাম</label>
+                                        <div class="col-md-9">
+                                            <select id="currentMonth" name="currentMonth">
+                                                <option value="">Choose Month</option>
+                                                <option value="January">জানুয়ারি</option>
+                                                <option value="February">ফেব্রুয়ারি</option>
+                                                <option value="March">মার্চ</option>
+                                                <option value="April">এপ্রিল</option>
+                                                <option value="May">মে</option>
+                                                <option value="June">জুন</option>
+                                                <option value="July">জুলাই</option>
+                                                <option value="August">আগস্ট</option>
+                                                <option value="September">সেপ্টেম্বর</option>
+                                                <option value="October">অক্টোবর</option>
+                                                <option value="November">নভেম্বর</option>
+                                                <option value="December">ডিসেম্বর</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="prapti" class="col-md-3 control-label">অর্থ প্রাপ্তি HDDA তে জমা</label>
                                         <div class="col-md-9">
                                             <input type="text" class="form-control" name="prapti" placeholder="অর্থ প্রাপ্তি HDDA তে জমা">
@@ -51,21 +71,7 @@
                                             <input type="text" class="form-control" name="pastOrtho" placeholder="অর্থ উত্তোলন (পূর্ববর্তী মাস পর্যন্ত উত্তোলন)">
                                         </div>
                                     </div>
-                                    <% if(records.length > 0){ %>
-                                        <% records.forEach(function(row){ %>
-                                    <div class="form-group">
-                                        <label for="totalOrtho" class="col-md-3 control-label">অর্থ উত্তোলন (এ পর্যন্ত মোট উত্তোলন)</label>
-                                        <div class="col-md-9">
-                                        <input type="text" class="form-control" name="totalOrtho" value="<%= row.totalOrtho %>">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="bank" class="col-md-3 control-label">ব্যাংকে স্থিতি</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="bank" value="<%= row.bank %>">
-                                        </div>
-                                    </div>
-                                    <% })} else{ %>
+                                    
                                         <div class="form-group">
                                             <label for="totalOrtho" class="col-md-3 control-label">অর্থ উত্তোলন (এ পর্যন্ত মোট উত্তোলন)</label>
                                             <div class="col-md-9">
@@ -78,7 +84,6 @@
                                                 <input type="text" class="form-control" name="bank" placeholder="ব্যাংকে স্থিতি">
                                             </div>
                                         </div>
-                                    <% } %>
 
                                     <div class="form-group">
                                         <label for="soldPast" class="col-md-3 control-label">বিক্রিত অর্থ জমা (পূর্ববর্তী মাস পর্যন্ত জমা)</label>
@@ -93,22 +98,14 @@
                                             <input type="text" class="form-control" name="soldPresent" placeholder="বিক্রিত অর্থ জমা (বর্তমান মাসে জমা)">
                                         </div>
                                     </div>
-                                    <% if(records.length > 0){ %>
-                                        <% records.forEach(function(row){ %>
-                                    <div class="form-group">
-                                        <label for="soldTotal" class="col-md-3 control-label">বিক্রিত অর্থ জমা (মোট জমা)</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="soldTotal" value="<%= row.soldTotal %>">
-                                        </div>
-                                    </div>
-                                    <% })} else{ %>
+                                    
                                         <div class="form-group">
                                             <label for="soldTotal" class="col-md-3 control-label">বিক্রিত অর্থ জমা (মোট জমা)</label>
                                             <div class="col-md-9">
                                                 <input type="text" class="form-control" name="soldTotal" placeholder="বিক্রিত অর্থ জমা (মোট জমা)">
                                             </div>
                                         </div>
-                                    <% } %>
+                                        
                                     <div class="form-group">
                                         <label for="chara" class="col-md-3 control-label">চারা/কলমের নাম</label>
                                         <div class="col-md-9">

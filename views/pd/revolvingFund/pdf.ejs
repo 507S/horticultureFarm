@@ -88,6 +88,7 @@
       <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
         <thead>
           <tr>
+            <th>মাসের নাম</th>
             <th>অর্থ প্রাপ্তি HDDA তে জমা</th>
             <th>অর্থ উত্তোলন (বর্তমান মাসে উত্তোলন)</th>
             <th>অর্থ উত্তোলন (পূর্ববর্তী মাস পর্যন্ত উত্তোলন)</th>
@@ -111,6 +112,7 @@
         <tbody>
           <% records.forEach(function(row){ %>
           <tr>
+            <td><%= row.currentMonth %></td>
             <td><%= row.prapti %></td>
             <td><%= row.presentOrtho %></td>
             <td><%= row.pastOrtho %></td>
@@ -138,6 +140,7 @@
       <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
         <thead>
           <tr>
+            <th>মাসের নাম</th>
             <th>অর্থ প্রাপ্তি HDDA তে জমা</th>
             <th>অর্থ উত্তোলন (বর্তমান মাসে উত্তোলন)</th>
             <th>অর্থ উত্তোলন (পূর্ববর্তী মাস পর্যন্ত উত্তোলন)</th>

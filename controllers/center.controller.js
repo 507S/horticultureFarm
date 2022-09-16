@@ -1589,6 +1589,7 @@ module.exports.revolvingFundForm = async (req, res) => {
     });
 };
 module.exports.revolvingFundFormPost = async (req, res) => {
+  var currentMonth = req.body.currentMonth;
   var prapti = req.body.prapti;
   var presentOrtho = req.body.presentOrtho;
   var pastOrtho = req.body.pastOrtho;
@@ -1612,6 +1613,7 @@ module.exports.revolvingFundFormPost = async (req, res) => {
 
   await revolvingFund
     .create({
+      currentMonth: currentMonth,
       prapti: prapti,
       presentOrtho: presentOrtho,
       pastOrtho: pastOrtho,
@@ -1638,6 +1640,7 @@ module.exports.revolvingFundFormPost = async (req, res) => {
       res.redirect("/center/revolvingFundForm");
     })
     .catch((err) => {
+      console.log(err);
       res.render("errorpage", err);
     });
 };
@@ -1662,6 +1665,7 @@ module.exports.revolvingFundEdit = async(req,res) => {
     });
 }
 module.exports.revolvingFundEditPost = async (req, res) => {
+  var currentMonth = req.body.currentMonth;
   var prapti = req.body.prapti;
   var presentOrtho = req.body.presentOrtho;
   var pastOrtho = req.body.pastOrtho;
@@ -1685,6 +1689,7 @@ module.exports.revolvingFundEditPost = async (req, res) => {
 
   await revolvingFund
     .update({
+      currentMonth: currentMonth,
       prapti: prapti,
       presentOrtho: presentOrtho,
       pastOrtho: pastOrtho,
