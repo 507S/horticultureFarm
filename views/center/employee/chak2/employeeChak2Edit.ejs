@@ -90,3 +90,27 @@
         </div>
     </div>
 <%- include('../../../includes/footer')-%>
+<script>
+    $('#name').on("change",function () {
+        var podobi = $('#name').val();
+        // alert(category)
+        $.ajax({
+            type: "POST",
+            url: "/center/fetchPodobiList",
+            data: {podobi: podobi},
+            datatype: "json",
+            beforeSend: function() {
+                // setting a timeout
+                $('#loading').show();
+                $('#output').hide();
+            },
+            success: function (grade) {
+                $("#grade").val(grade);
+            },
+            complete: function() {
+                $('#loading').hide();
+                $('#output').show();
+            }
+        });
+    });    
+</script>
