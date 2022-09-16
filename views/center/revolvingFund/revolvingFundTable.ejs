@@ -20,7 +20,7 @@
         <th>চারা/কলম বিতরণ(সংখ্যায়) (মৃত/অবিক্রয়যোগ্য সংখ্যা(মোট))</th>
         <th>মোট বিতরণ (বিক্রি/মৃত)</th>
         <th>নীট মজুদ</th>
-   
+        <th>পরিবর্তন</th>
     </tr>
     </thead>
     <tbody>
@@ -44,7 +44,9 @@
                 <td><%= row.bitoronDead %></td>
                 <td><%= row.bitoronTotal %></td>
                 <td><%= row.totalMojud %></td>
-                
+                <td>
+                    <a class="btn btn-primary btn-xs" href="/center/revolvingFundEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                </td>
             </tr>
         <% }) %>
     </tbody>
@@ -71,6 +73,7 @@
             <th>চারা/কলম বিতরণ(সংখ্যায়) (মৃত/অবিক্রয়যোগ্য সংখ্যা(মোট))</th>
             <th>মোট বিতরণ (বিক্রি/মৃত)</th>
             <th>নীট মজুদ</th>
+            <th>পরিবর্তন</th>
         </tr>
         </thead>
         <tbody>

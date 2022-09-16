@@ -18,7 +18,7 @@ const { fetchMaan, fetchWork, fetchShuchok, fetchEkok, fetchShuchokMaan, expense
     fetchRajosshoCode, generatePdfMonthlyProgress, monthlyProgressEdit, monthlyProgressUpdate, monthlyProgressDelete, monthlyProgress, monthlyProgressYear,
     monthlyProgressForm, monthlyProgressFormPost, charaKolomFixed, centersignup, centersignuppost, rajossho, rajosshoYear, rajosshoForm, generatePdfexpense,
     rajosshoFormPost, expense, expenseYear, expenseForm, expenseFormPost,expenseEdit,expenseEditPost,expenseDelete, chak1, chak1Year, chak1Form, chak1FormPost, chak2, chak2Year, chak2Form,
-    chak2FormPost, revolvingFund, revolvingFundYear, revolvingFundForm, revolvingFundFormPost, specialCoconut, specialCoconutYear, specialCoconutForm,
+    chak2FormPost, revolvingFund, revolvingFundYear, revolvingFundForm, revolvingFundFormPost,revolvingFundEdit,revolvingFundEditPost, specialCoconut, specialCoconutYear, specialCoconutForm,
     specialCoconutFormPost,specialCoconutEdit,specialCoconutEditPost, loan, loanYear, loanForm, loanFormPost, apa, apaYear, apaForm, apaFormPost, allcenter, centerlogin, centerloginpost,
     centerDashboard, topSheet, topSheetYear, generatePdfTopSheet, topSheetBitoron, topSheetBitoronYear, generatePdfTopSheetBitoron, center, centerEdit, centerEditPost, centerDelete, chak1Delete, chak1Edit, chak1EditPost, chak2Delete, chak2Edit, chak2EditPost,
     fetchPodobiList, workerInfoDelete, workerInfoEdit, workerInfoEditPost, generatePdfworkerInfo, generatePdfworkerNum, generatePdfapa, generatePdfloan, generatePdfspecialCoconut, generatePdfrevolvingFund, generatePdfchak1, generatePdfchak2, generatePdfrajossho,
@@ -92,6 +92,8 @@ router.get('/revolvingFund', revolvingFund);
 router.post('/revolvingFundYear', revolvingFundYear);
 router.get('/revolvingFundForm', revolvingFundForm);
 router.post('/revolvingFundForms', revolvingFundFormPost);
+router.get('/revolvingFundEdit/:id',revolvingFundEdit);
+router.post('/revolvingFundEditPost/:id',revolvingFundEditPost);
 router.post('/generatePdfrevolvingFund', generatePdfrevolvingFund);
 
 router.get('/chak1', chak1);
