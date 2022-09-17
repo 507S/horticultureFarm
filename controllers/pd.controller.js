@@ -2296,6 +2296,74 @@ module.exports.loanFormPost = async (req, res) => {
     });
 
 };
+module.exports.loanEdit = async (req, res) => {
+    await loan.findByPk(req.params.id)
+    .then((data)=> {
+      res.render("pd/loan/loanEdit", {
+        title: "ঋণ বিতরণ ও আদায় এর অগ্রগতির প্রতিবেদন",
+        msg: "",
+        success: "",
+        user_id: req.session.user_id,
+        records: data
+      }, function(err,html){
+        res.send(html);
+      });
+    })
+    .catch((err) => {
+      console.log("outside",err);
+    })
+  };
+  module.exports.loanEditPost = async (req, res) => {
+    var currentMonth = req.body.currentMonth;
+    var boraddo = req.body.boraddo;
+    var bitoron1 = req.body.bitoron1;
+    var aday1 = req.body.aday1;
+    var left1 = req.body.left1;
+    var bitoron2 = req.body.bitoron2;
+    var aday2 = req.body.aday2;
+    var left2 = req.body.left2;
+    var comment = req.body.comment;
+    var year = req.body.year;
+    var user_id = req.body.user_id;
+    
+    // console.log("inside");
+    await loan
+      .update({
+        currentMonth: currentMonth,
+        boraddo: boraddo,
+        bitoron1: bitoron1,
+        aday1: aday1,
+        left1: left1,
+        bitoron2: bitoron2,
+        aday2: aday2,
+        left2: left2,
+        comment: comment,
+        year: year,
+        center_id: user_id,
+      }, 
+      {
+        where: {id: req.params.id}
+      }
+      )
+      .then((data) => {
+        // req.flash("message", "Successfully added");
+        res.redirect("/pd/loan");
+      })
+      .catch((err) => {
+        res.render("errorpage", err);
+      });
+  };
+  module.exports.loanDelete = async (req, res) => {
+    var loanDelete = await loan.findByPk(req.params.id);
+    try {
+        loanDelete.destroy();
+      res.redirect("/pd/loan");
+    }
+    catch {
+      res.render('errorpage', err);
+    }
+  
+  };
 module.exports.generatePdfloan = async (req, res) => {
     try {
         var centerNames = await center.findOne({

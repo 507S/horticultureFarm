@@ -11,6 +11,7 @@
         <th>চলতি অর্থবছরে আদায়কৃত টাকার পরিমাণ</th>
         <th>চলতি অর্থবছরে অবশিষ্ট টাকার পরিমাণ</th>
         <th>মন্তব্য</th>
+        <th>পরিবর্তন/মুছুন</th>
     </tr>
     </thead>
     <tbody>
@@ -25,7 +26,9 @@
                 <td><%= row.aday2 %></td>
                 <td><%= row.left2 %></td>
                 <td><%= row.comment %></td>
-                
+                <td><a class="btn btn-primary btn-xs" href="/pd/loanEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger btn-xs" href="/pd/loanDelete/<%= row.id %>"><i class="fa fa-trash"></i></a>
+                </td>
             </tr>
         <% }) %>
     </tbody>
@@ -43,6 +46,7 @@
             <th>চলতি অর্থবছরে আদায়কৃত টাকার পরিমাণ</th>
             <th>চলতি অর্থবছরে অবশিষ্ট টাকার পরিমাণ</th>
             <th>মন্তব্য</th>
+            <th>পরিবর্তন/মুছুন</th>
         </tr>
         </thead>
         <tbody>

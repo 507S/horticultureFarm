@@ -1,0 +1,136 @@
+<%- include('../../includes/header')-%>
+        <div class="wrapper">
+          <%- include('../../includes/topbar')-%>
+            <div class="page-wrap">
+              <%- include('../../includes/sidebar')-%>
+              <div class="main-content">
+                <div class="container-fluid">
+                    <div class="row clearfix">
+                    <div id="signupbox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <div class="panel-title"><h2>ঋণ বিতরণ ও আদায় এর অগ্রগতির সম্পাদনা ফর্ম</h2></div>
+                                <p><%
+                                if(success !=''){ %>
+                                <%= success %>
+                                    <% } %>
+                                </p>
+                                </div>  
+                            <div class="panel-body" >
+                                <form action="/pd/loanEditPost/<%=records.id%>" id="FieldTrialForm" class="form-horizontal" method="post"  role="form">
+                                    <div id="signupalert" style="display:none" class="alert alert-danger">
+                                        <p>Error:</p>
+                                        <span></span>
+                                    </div>
+                                    <% if(messages.message){ %>
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong><%= messages.message %></strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <% } %>
+                                    <div class="form-group">
+                                        <label for="currentMonth" class="col-md-3 control-label">মাসের নাম</label>
+                                        <div class="col-md-9">
+                                            <select id="currentMonth" name="currentMonth">
+                                                <option value="জানুয়ারি">জানুয়ারি</option>
+                                                <option value="ফেব্রুয়ারি">ফেব্রুয়ারি</option>
+                                                <option value="মার্চ">মার্চ</option>
+                                                <option value="এপ্রিল">এপ্রিল</option>
+                                                <option value="মে">মে</option>
+                                                <option value="জুন">জুন</option>
+                                                <option value="জুলাই">জুলাই</option>
+                                                <option value="আগস্ট">আগস্ট</option>
+                                                <option value="সেপ্টেম্বর">সেপ্টেম্বর</option>
+                                                <option value="অক্টোবর">অক্টোবর</option>
+                                                <option value="নভেম্বর">নভেম্বর</option>
+                                                <option value="ডিসেম্বর">ডিসেম্বর</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="boraddo" class="col-md-3 control-label">ঋণ বাবদ বরাদ্দ অর্থ</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="boraddo" value="<%= records.boraddo %>">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="bitoron1" class="col-md-3 control-label">বিগত অর্থবছরে বিতরণকৃত অর্থের পরিমাণ</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="bitoron1" value="<%= records.bitoron1 %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="aday1" class="col-md-3 control-label">বিগত অর্থবছরে আদায়কৃত টাকার পরিমাণ</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="aday1" value="<%= records.aday1 %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="left1" class="col-md-3 control-label">বিগত অর্থবছরে অবশিষ্ট টাকার পরিমাণ</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="left1" value="<%= records.left1 %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="bitoron2" class="col-md-3 control-label">চলতি অর্থবছরে বিতরণকৃত অর্থের পরিমাণ</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="bitoron2" value="<%= records.bitoron2 %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="aday2" class="col-md-3 control-label">চলতি অর্থবছরে আদায়কৃত টাকার পরিমাণ</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="aday2" value="<%= records.aday2 %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="left2" class="col-md-3 control-label">চলতি অর্থবছরে অবশিষ্ট টাকার পরিমাণ</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="left2" value="<%= records.left2 %>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="comment" class="col-md-3 control-label">মন্তব্য</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="comment" value="<%= records.comment %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <!-- <label for="year" class="col-md-3 control-label">বছর</label> -->
+                                        <div class="col-md-9">
+                                            <input type="hidden" class="form-control" name="year" value="<%= records.year %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-9">
+                                            <input type="hidden" class="form-control" name="user_id" placeholder="id" value="<%= records.center_id %>" >
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <!-- Button -->                                        
+                                        <div class="col-md-offset-3 col-md-9">
+                                        <input type="submit" name="submit" value="submit" class="btn btn-primary">   
+                                        </div>
+                                    </div>
+                                        
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<%- include('../../includes/footer')-%>
