@@ -21,7 +21,7 @@
         <th>চতুর্থ ত্রৈমাসিক অর্জন</th>
         <th>মোট</th>
         <th>শতকরা হার</th>
-
+        <th>পরিবর্তন/মুছুন</th>
     </tr>
     </thead>
     <tbody>
@@ -45,7 +45,9 @@
                 <td><%= new Number(row.fourthThree).toLocaleString("bn-BD") %></td>
                 <td><%= new Number(row.total).toLocaleString("bn-BD") %></td>
                 <td><%= new Number(row.percentage).toLocaleString("bn-BD") %></td>
-
+                <td><a class="btn btn-primary btn-xs" href="/pd/apaEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger btn-xs" href="/pd/apaDelete/<%= row.id %>"><i class="fa fa-trash"></i></a>
+                </td>
             </tr>
         <% }) %>
     </tbody>
@@ -73,6 +75,7 @@
         <th>চতুর্থ ত্রৈমাসিক অর্জন</th>
         <th>মোট</th>
         <th>শতকরা হার</th>
+        <th>পরিবর্তন/মুছুন</th>
         </tr>
         </thead>
         <tbody>

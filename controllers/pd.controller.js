@@ -2090,6 +2090,48 @@ module.exports.apaFormPost = async (req, res) => {
     });
 
 };
+module.exports.apaEdit = async (req, res) => {
+    await apa.findByPk(req.params.id)
+      .then(data => {
+        res.render('pd/apa/apaEdit', { title: 'এপিএ', msg: '', success: '', records: data });
+      })
+      .catch(err => {
+        console.log("outside", err);
+      })
+  };
+  module.exports.apaEditPost = async (req, res) => {
+    var firstThree = parseFloat(req.body.firstThree);
+    var secondThree = parseFloat(req.body.secondThree);
+    var thirdThree = parseFloat(req.body.thirdThree);
+    var fourthThree = parseFloat(req.body.fourthThree);
+    var total = firstThree + secondThree + thirdThree + fourthThree;
+    var user_id = req.params.id;
+    await apa.update({
+      firstThree: firstThree,
+      secondThree: secondThree,
+      thirdThree: thirdThree,
+      fourthThree: fourthThree,
+      total: total,
+    },
+      {
+        where: { id: user_id }
+      }).then(data => {
+        res.redirect('/pd/apa');
+      }).catch(err => {
+        res.render('errorpage', err);
+      });
+  };
+  module.exports.apaDelete = async (req, res) => {
+    var apaDelete = await apa.findByPk(req.params.id);
+    try {
+        apaDelete.destroy();
+      res.redirect("/pd/apa");
+    }
+    catch {
+      res.render('errorpage', err);
+    }
+  
+  };
 module.exports.apaCategoryTable = async (req, res) => {
     await apaCode.findAll()
         .then(data => {
