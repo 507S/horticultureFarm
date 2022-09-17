@@ -1,0 +1,201 @@
+<%- include('../../includes/header')-%>
+        <div class="wrapper">
+          <%- include('../../includes/topbar')-%>
+            <div class="page-wrap">
+              <%- include('../../includes/sidebar')-%>
+              <div class="main-content">
+                <div class="container-fluid">
+                    <div class="row clearfix">
+                    <div id="signupbox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <div class="panel-title"><h2>রিভলভিং ফান্ড ফর্ম</h2></div>
+                                <p><%
+                                if(success !=''){ %>
+                                <%= success %>
+                                    <% } %>
+                                </p>
+                                </div>  
+                            <div class="panel-body" >
+                                <form action="/pd/revolvingFundEditPost/<%=records.id%>" id="FieldTrialForm" class="form-horizontal" method="post"  role="form">
+                                    <div id="signupalert" style="display:none" class="alert alert-danger">
+                                        <p>Error:</p>
+                                        <span></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="currentMonth" class="col-md-3 control-label">মাসের নাম</label>
+                                        <div class="col-md-9">
+                                            <select id="currentMonth" name="currentMonth">
+                                                <option value="জানুয়ারি">জানুয়ারি</option>
+                                                <option value="ফেব্রুয়ারি">ফেব্রুয়ারি</option>
+                                                <option value="মার্চ">মার্চ</option>
+                                                <option value="এপ্রিল">এপ্রিল</option>
+                                                <option value="মে">মে</option>
+                                                <option value="জুন">জুন</option>
+                                                <option value="জুলাই">জুলাই</option>
+                                                <option value="আগস্ট">আগস্ট</option>
+                                                <option value="সেপ্টেম্বর">সেপ্টেম্বর</option>
+                                                <option value="অক্টোবর">অক্টোবর</option>
+                                                <option value="নভেম্বর">নভেম্বর</option>
+                                                <option value="ডিসেম্বর">ডিসেম্বর</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="prapti" class="col-md-3 control-label">অর্থ প্রাপ্তি HDDA তে জমা</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="prapti" value="<%= records.prapti %>">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="presentOrtho" class="col-md-3 control-label">অর্থ উত্তোলন (বর্তমান মাসে উত্তোলন)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="presentOrtho" value="<%= records.presentOrtho %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="pastOrtho" class="col-md-3 control-label">অর্থ উত্তোলন (পূর্ববর্তী মাস পর্যন্ত উত্তোলন)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="pastOrtho" value="<%= records.pastOrtho %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="totalOrtho" class="col-md-3 control-label">অর্থ উত্তোলন (এ পর্যন্ত মোট উত্তোলন)</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="totalOrtho" value="<%= records.totalOrtho %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="bank" class="col-md-3 control-label">ব্যাংকে স্থিতি</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="bank" value="<%= records.bank %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="soldPast" class="col-md-3 control-label">বিক্রিত অর্থ জমা (পূর্ববর্তী মাস পর্যন্ত জমা)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="soldPast" value="<%= records.soldPast %>">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="soldPresent" class="col-md-3 control-label">বিক্রিত অর্থ জমা (বর্তমান মাসে জমা)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="soldPresent" value="<%= records.soldPresent %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="soldTotal" class="col-md-3 control-label">বিক্রিত অর্থ জমা (মোট জমা)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="soldTotal" value="<%= records.soldTotal %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="chara" class="col-md-3 control-label">চারা/কলমের নাম</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="chara" value="<%= records.chara %>">
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="form-group">
+                                        <label for="productionTarget" class="col-md-3 control-label">চারা/কলম উৎপাদন(সংখ্যায়) (লক্ষ্যমাত্রা)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="productionTarget" value="<%= records.productionTarget %>">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="productionPast" class="col-md-3 control-label">চারা/কলম উৎপাদন(সংখ্যায়) (পূর্ববর্তী মাস পর্যন্ত উৎপাদন)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="productionPast" value="<%= records.productionPast %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="productionPresent" class="col-md-3 control-label">চারা/কলম উৎপাদন(সংখ্যায়) (বর্তমান মাসে উৎপাদন)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="productionPresent" value="<%= records.productionPresent %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="productionTotal" class="col-md-3 control-label">চারা/কলম উৎপাদন(সংখ্যায়) (মোট উৎপাদন)</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="productionTotal" value="<%= records.productionTotal %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="bitoronPast" class="col-md-3 control-label">চারা/কলম বিতরণ(সংখ্যায়) (পূর্ববর্তী মাস পর্যন্ত বিতরণ)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="bitoronPast" value="<%= records.bitoronPast %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="bitoronPresent" class="col-md-3 control-label">চারা/কলম বিতরণ(সংখ্যায়) (বর্তমান মাসে বিতরণ)</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="bitoronPresent" value="<%= records.bitoronPresent %>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="bitoronDead" class="col-md-3 control-label">চারা/কলম বিতরণ(সংখ্যায়) (মৃত/অবিক্রয়যোগ্য সংখ্যা(মোট))</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="bitoronDead" value="<%= records.bitoronDead %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="bitoronTotal" class="col-md-3 control-label">মোট বিতরণ (বিক্রি/মৃত)</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="bitoronTotal" value="<%= records.bitoronTotal %>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="totalMojud" class="col-md-3 control-label">নীট মজুদ</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="totalMojud" value="<%= records.totalMojud %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <!-- <label for="year" class="col-md-3 control-label">বছর</label> -->
+                                        <div class="col-md-9">
+                                            <input type="hidden" class="form-control" name="year" value="<%= records.year %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-9">
+                                            <input type="hidden" class="form-control" name="user_id" placeholder="id" value="<%= records.center_id %>" >
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <!-- Button -->                                        
+                                        <div class="col-md-offset-3 col-md-9">
+                                        <input type="submit" name="submit" value="submit" class="btn btn-primary">   
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                        
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<%- include('../../includes/footer')-%>

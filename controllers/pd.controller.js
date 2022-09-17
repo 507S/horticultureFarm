@@ -2663,6 +2663,96 @@ module.exports.revolvingFundFormPost = async (req, res) => {
     });
 
 };
+module.exports.revolvingFundEdit = async(req,res) => {
+    await revolvingFund.findByPk(req.params.id)
+      .then((data) => {
+        res.render(
+          "pd/revolvingFund/revolvingFundEdit",
+          {
+            records: data,
+            title: "রিভলভিং ফান্ড ফর্ম",
+            msg: "",
+            success: "",
+            user_id: req.session.user_id,
+            records: data
+          }
+        );
+      })
+      .catch((err) => {
+        console.log("outside", err);
+  
+      });
+  }
+  module.exports.revolvingFundEditPost = async (req, res) => {
+    var currentMonth = req.body.currentMonth;
+    var prapti = req.body.prapti;
+    var presentOrtho = req.body.presentOrtho;
+    var pastOrtho = req.body.pastOrtho;
+    var totalOrtho = req.body.totalOrtho;
+    var bank = req.body.bank;
+    var soldPast = req.body.soldPast;
+    var soldPresent = req.body.soldPresent;
+    var soldTotal = req.body.soldTotal;
+    var chara = req.body.chara;
+    var productionTarget = req.body.productionTarget;
+    var productionPast = req.body.productionPast;
+    var productionPresent = req.body.productionPresent;
+    var productionTotal = req.body.productionTotal;
+    var bitoronPast = req.body.bitoronPast;
+    var bitoronPresent = req.body.bitoronPresent;
+    var bitoronDead = req.body.bitoronDead;
+    var bitoronTotal = req.body.bitoronTotal;
+    var totalMojud = req.body.totalMojud;
+    var year = req.body.year;
+    var user_id = req.body.user_id;
+  
+    await revolvingFund
+      .update({
+        currentMonth: currentMonth,
+        prapti: prapti,
+        presentOrtho: presentOrtho,
+        pastOrtho: pastOrtho,
+        totalOrtho: totalOrtho,
+        bank: bank,
+        soldPast: soldPast,
+        soldPresent: soldPresent,
+        soldTotal: soldTotal,
+        chara: chara,
+        productionTarget: productionTarget,
+        productionPast: productionPast,
+        productionPresent: productionPresent,
+        productionTotal: productionTotal,
+        bitoronPast: bitoronPast,
+        bitoronPresent: bitoronPresent,
+        bitoronDead: bitoronDead,
+        bitoronTotal: bitoronTotal,
+        totalMojud: totalMojud,
+        year: year,
+        center_id: user_id,
+      },
+      {
+        where: {id: req.params.id}
+      }
+      )
+      .then((data) => {
+        // req.flash("message", "Successfully added");
+        res.redirect("/pd/revolvingFund");
+      })
+      .catch((err) => {
+        res.render("errorpage", err);
+      });
+  };
+  module.exports.revolvingFundDelete = async (req, res) => {
+    var revolvingFundDelete = await revolvingFund.findByPk(req.params.id);
+    try {
+        revolvingFundDelete.destroy();
+      res.redirect("/pd/revolvingFund");
+    }
+    catch {
+      res.render('errorpage', err);
+    }
+  
+  };
 module.exports.generatePdfrevolvingFund = async (req, res) => {
     try {
         var centerNames = await center.findOne({

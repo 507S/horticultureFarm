@@ -18,7 +18,7 @@ const {apaUddessho,apaMaan,karjokrom,suchok,ekok,suchokMaan,newKhorochCode,newRa
     winterVegFormPost,summerVeg,summerVegForm,summerVegFormPost,otherFlower,otherFlowerForm,otherFlowerFormPost,generatePdfworkerInfo,generatePdfworkerNum,generatePdfapa,generatePdfloan,generatePdfspecialCoconut,generatePdfrevolvingFund,generatePdfchak1,generatePdfchak2,generatePdfrajossho,
     seasonalFlower,seasonalFlowerForm,seasonalFlowerFormPost,workerInfo,workerInfoFilter,workerInfoForm,apaCategoryTable,uploaddashImage,workerInfoDelete,apaCodeEditPost,apaCodeEdit,apaCodeDelete,
     generatePdfcharaKolom,generatePdffolMosholla,generatePdfwinterVeg,generatePdfsummerVeg,generatePdfotherFlower,generatePdfseasonalFlower,newcropCategoryListDelete,
-    workerInfoFormPost,workerNum,workerNumFilter,monthlyProgressEdit,monthlyProgressUpdate,monthlyProgressDelete,generatePdfMonthlyProgress,generatePdfTopSheet,generatePdfTopSheetBitoron,generatePdfcenter, apaDelete, loanEdit, loanEditPost,loanDelete} = require('../controllers/pd.controller');
+    workerInfoFormPost,workerNum,workerNumFilter,monthlyProgressEdit,monthlyProgressUpdate,monthlyProgressDelete,generatePdfMonthlyProgress,generatePdfTopSheet,generatePdfTopSheetBitoron,generatePdfcenter, apaDelete, loanEdit, loanEditPost,loanDelete, revolvingFundEdit, revolvingFundEditPost, revolvingFundDelete} = require('../controllers/pd.controller');
 
 
 router.get('/',allcenter);
@@ -164,6 +164,9 @@ router.get('/revolvingFund',revolvingFund);
 router.post('/revolvingFundFilter',revolvingFundFilter);
 router.get('/revolvingFundForm',revolvingFundForm);
 router.post('/revolvingFundForms',revolvingFundFormPost);
+router.get('/revolvingFundEdit/:id',revolvingFundEdit);
+router.post('/revolvingFundEditPost/:id',revolvingFundEditPost);
+router.get('/revolvingFundDelete/:id',revolvingFundDelete);
 router.post('/generatePdfrevolvingFund',generatePdfrevolvingFund);
 
 router.get('/chak1',chak1);
