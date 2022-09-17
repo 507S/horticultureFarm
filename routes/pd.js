@@ -18,7 +18,7 @@ const {apaUddessho,apaMaan,karjokrom,suchok,ekok,suchokMaan,newKhorochCode,newRa
     winterVegFormPost,summerVeg,summerVegForm,summerVegFormPost,otherFlower,otherFlowerForm,otherFlowerFormPost,generatePdfworkerInfo,generatePdfworkerNum,generatePdfapa,generatePdfloan,generatePdfspecialCoconut,generatePdfrevolvingFund,generatePdfchak1,generatePdfchak2,generatePdfrajossho,
     seasonalFlower,seasonalFlowerForm,seasonalFlowerFormPost,workerInfo,workerInfoFilter,workerInfoForm,apaCategoryTable,uploaddashImage,workerInfoDelete,apaCodeEditPost,apaCodeEdit,apaCodeDelete,
     generatePdfcharaKolom,generatePdffolMosholla,generatePdfwinterVeg,generatePdfsummerVeg,generatePdfotherFlower,generatePdfseasonalFlower,newcropCategoryListDelete,
-    workerInfoFormPost,workerNum,workerNumFilter,monthlyProgressEdit,monthlyProgressUpdate,monthlyProgressDelete,generatePdfMonthlyProgress,generatePdfTopSheet,generatePdfTopSheetBitoron,generatePdfcenter, apaDelete, loanEdit, loanEditPost,loanDelete, revolvingFundEdit, revolvingFundEditPost, revolvingFundDelete} = require('../controllers/pd.controller');
+    workerInfoFormPost,workerNum,workerNumFilter,monthlyProgressEdit,monthlyProgressUpdate,monthlyProgressDelete,generatePdfMonthlyProgress,generatePdfTopSheet,generatePdfTopSheetBitoron,generatePdfcenter, apaDelete, loanEdit, loanEditPost,loanDelete, revolvingFundEdit, revolvingFundEditPost, revolvingFundDelete, specialCoconutEdit, specialCoconutEditPost, specialCoconutDelete} = require('../controllers/pd.controller');
 
 
 router.get('/',allcenter);
@@ -158,6 +158,9 @@ router.get('/specialCoconut',specialCoconut);
 router.post('/specialCoconutFilter',specialCoconutFilter);
 router.get('/specialCoconutForm',specialCoconutForm);
 router.post('/specialCoconutForms',specialCoconutFormPost);
+router.get('/specialCoconutEdit/:id',specialCoconutEdit);
+router.post('/specialCoconutEditPost/:id',specialCoconutEditPost);
+router.get('/specialCoconutDelete/:id',specialCoconutDelete);
 router.post('/generatePdfspecialCoconut',generatePdfspecialCoconut);
 
 router.get('/revolvingFund',revolvingFund);

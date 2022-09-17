@@ -1,0 +1,196 @@
+<%- include('../../includes/header')-%>
+        <div class="wrapper">
+          <%- include('../../includes/topbar')-%>
+            <div class="page-wrap">
+              <%- include('../../includes/sidebar')-%>
+              <div class="main-content">
+                <div class="container-fluid">
+                    <div class="row clearfix">
+                    <div id="signupbox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <div class="panel-title"><h2>বিশেষ নারিকেল সম্পাদনা ফর্ম</h2></div>
+                                <p><%
+                                if(success !=''){ %>
+                                <%= success %>
+                                    <% } %>
+                                </p>
+                                </div>  
+                            <div class="panel-body" >
+                                <form action="/pd/specialCoconutEditPost/<%=records.id%>" id="FieldTrialForm" class="form-horizontal" method="post"  role="form">
+                                    <div id="signupalert" style="display:none" class="alert alert-danger">
+                                        <p>Error:</p>
+                                        <span></span>
+                                    </div>
+
+                                    
+                                    <div class="form-group">
+                                        <label for="currentMonth" class="col-md-3 control-label">মাসের নাম</label>
+                                        <div class="col-md-9">
+                                            <select id="currentMonth" name="currentMonth" value="<%= records.currentMonth %>">
+                                                <!-- <option value="">Choose Month</option> -->
+                                                <option value="জানুয়ারি">জানুয়ারি</option>
+                                                <option value="ফেব্রুয়ারি">ফেব্রুয়ারি</option>
+                                                <option value="মার্চ">মার্চ</option>
+                                                <option value="এপ্রিল">এপ্রিল</option>
+                                                <option value="মে">মে</option>
+                                                <option value="জুন">জুন</option>
+                                                <option value="জুলাই">জুলাই</option>
+                                                <option value="আগস্ট">আগস্ট</option>
+                                                <option value="সেপ্টেম্বর">সেপ্টেম্বর</option>
+                                                <option value="অক্টোবর">অক্টোবর</option>
+                                                <option value="নভেম্বর">নভেম্বর</option>
+                                                <option value="ডিসেম্বর">ডিসেম্বর</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    
+                                    <div class="form-group">
+                                        <label for="boraddo" class="col-md-3 control-label">মোট বরাদ্দকৃত অর্থের পরিমাণ</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="boraddo" value="<%= records.boraddo %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="target" class="col-md-3 control-label">বীজ ক্রয়ের লক্ষ্যমাত্রা</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="target" value="<%= records.target %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="boughtNarikel" class="col-md-3 control-label">ক্রয়কৃত বীজ নারিকেলের সংখ্যা</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="boughtNarikel" value="<%= records.boughtNarikel %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="seedProduction" class="col-md-3 control-label">উৎপাদিত চারার সংখ্যা</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="seedProduction" value="<%= records.seedProduction %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="deadSeed" class="col-md-3 control-label">মরা/বিক্রির অযোগ্য চারার সংখ্যা</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="deadSeed" value="<%= records.deadSeed %>">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="salableSeedTarget" class="col-md-3 control-label">বিক্রিযোগ্য চারার সংখ্যা (লক্ষ্যমাত্রা)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="salableSeedTarget" value="<%= records.salableSeedTarget %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="salableSeedAchieved" class="col-md-3 control-label">বিক্রিযোগ্য চারার সংখ্যা (অর্জিত)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="salableSeedAchieved" value="<%= records.salableSeedAchieved %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="salableSeedPercentage" class="col-md-3 control-label">বিক্রিযোগ্য চারার শতকরা হার</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="salableSeedPercentage" value="<%= records.salableSeedPercentage %>">
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="form-group">
+                                        <label for="salableSeedNumber" class="col-md-3 control-label">মোট বিক্রিযোগ্য চারার সংখ্যা</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="salableSeedNumber" value="<%= records.salableSeedNumber %>">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="soldSeed" class="col-md-3 control-label">বিক্রিত চারার সংখ্যা</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="soldSeed" value="<%= records.soldSeed %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="soldSeedPrice" class="col-md-3 control-label">বিক্রিত চারার মোট মূল্য</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="soldSeedPrice" value="<%= records.soldSeedPrice %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="presentMojud" class="col-md-3 control-label">বর্তমান মজুদ সংখ্যা</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="presentMojud" value="<%= records.presentMojud %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="earnedMoneyDD" class="col-md-3 control-label">বিক্রয় লব্দ অর্থের পরিমাণ(ডিডি/এমটি)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="earnedMoneyDD" value="<%= records.earnedMoneyDD %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="earnedMoneyDate" class="col-md-3 control-label">বিক্রয় লব্দ অর্থের পরিমাণ(তারিখ)</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="earnedMoneyDate" value="<%= records.earnedMoneyDate %>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="earnedMoneyHead" class="col-md-3 control-label">বিক্রয় লব্দ অর্থের পরিমাণ(হেড অফিসে প্রেরিত টাকার পরিমাণ)</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="earnedMoneyHead" value="<%= records.earnedMoneyHead %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="earnedMoneyLocalBank" class="col-md-3 control-label">বিক্রয় লব্দ অর্থের পরিমাণ(স্থানীয় ব্যাংকের হিসাব জমা)</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="earnedMoneyLocalBank" value="<%= records.earnedMoneyLocalBank %>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="comment" class="col-md-3 control-label">মন্তব্য</label>
+                                        <div class="col-md-9">
+                                        <input type="text" class="form-control" name="comment" value="<%= records.comment %>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <!-- <label for="year" class="col-md-3 control-label">বছর</label> -->
+                                        <div class="col-md-9">
+                                            <input type="hidden" class="form-control" name="year" value="<%= records.year %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-9">
+                                            <input type="hidden" class="form-control" name="user_id" placeholder="id" value="<%= records.center_id %>" >
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <!-- Button -->                                        
+                                        <div class="col-md-offset-3 col-md-9">
+                                        <input type="submit" name="submit" value="submit" class="btn btn-primary">   
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                        
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<%- include('../../includes/footer')-%>

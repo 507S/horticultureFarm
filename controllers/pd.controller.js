@@ -2527,6 +2527,92 @@ module.exports.specialCoconutFormPost = async (req, res) => {
     });
 
 };
+module.exports.specialCoconutEdit = async(req,res) => {
+    await specialCoconut.findByPk(req.params.id)
+      .then((data) => {
+        res.render(
+          'pd/specialCoconut/specialCoconutEdit', {
+          title: "বিশেষ নারিকেল কর্মসূচি",
+          msg: "",
+          success: "",
+          user_id: req.session.user_id,
+          records: data
+        }, function (err, html) {
+          res.send(html);
+        });
+      })
+      .catch((err) => {
+        console.log("outside", err);
+      });
+  }
+  module.exports.specialCoconutEditPost = async(req,res) => {
+    var currentMonth = req.body.currentMonth;
+    var boraddo = req.body.boraddo;
+    var target = req.body.target;
+    var boughtNarikel = req.body.boughtNarikel;
+    var seedProduction = req.body.seedProduction;
+    var deadSeed = req.body.deadSeed;
+    var salableSeedTarget = req.body.salableSeedTarget;
+    var salableSeedAchieved = req.body.salableSeedAchieved;
+    var salableSeedPercentage = req.body.salableSeedPercentage;
+    var salableSeedNumber = req.body.salableSeedNumber;
+    var soldSeed = req.body.soldSeed;
+    var soldSeedPrice = req.body.soldSeedPrice;
+    var presentMojud = req.body.presentMojud;
+    var earnedMoneyDD = req.body.earnedMoneyDD;
+    var earnedMoneyDate = req.body.earnedMoneyDate;
+    var earnedMoneyHead = req.body.earnedMoneyHead;
+    var earnedMoneyLocalBank = req.body.earnedMoneyLocalBank;
+    var comment = req.body.comment;
+    var year = req.body.year;
+    var user_id = req.body.user_id;
+  
+    await specialCoconut
+      .update({
+        currentMonth: currentMonth,
+        boraddo: boraddo,
+        target: target,
+        boughtNarikel: boughtNarikel,
+        seedProduction: seedProduction,
+        deadSeed: deadSeed,
+        salableSeedTarget: salableSeedTarget,
+        salableSeedAchieved: salableSeedAchieved,
+        salableSeedPercentage: salableSeedPercentage,
+        salableSeedNumber: salableSeedNumber,
+        soldSeed: soldSeed,
+        soldSeedPrice: soldSeedPrice,
+        presentMojud: presentMojud,
+        earnedMoneyDD: earnedMoneyDD,
+        earnedMoneyDate: earnedMoneyDate,
+        earnedMoneyHead: earnedMoneyHead,
+        earnedMoneyLocalBank: earnedMoneyLocalBank,
+        comment: comment,
+        year: year,
+        center_id: user_id,
+      },
+      {
+        where: {id: req.params.id}  
+      }
+      )
+      .then((data) => {
+        // req.flash("message", "Successfully added");
+        res.redirect("/pd/specialCoconut");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  module.exports.specialCoconutDelete = async (req, res) => {
+    var specialCoconutDelete = await specialCoconut.findByPk(req.params.id);
+    try {
+        specialCoconutDelete.destroy();
+      res.redirect("/pd/specialCoconut");
+    }
+    catch {
+      res.render('errorpage', err);
+    }
+  
+  };
 module.exports.generatePdfspecialCoconut = async (req, res) => {
     try {
         var centerNames = await center.findOne({
