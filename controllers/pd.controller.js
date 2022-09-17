@@ -3126,7 +3126,7 @@ module.exports.chak2 = async (req, res) => {
     })
         .then(data => {
             console.log("inside");
-            res.render('pd/employee/chak2/employeeChak2', { title: 'হর্টিকালচার সেন্টারের কর্মকতা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের বিবরণী', success: '', centers: data });
+            res.render('pd/employee/chak2/employeeChak2', { title: 'হর্টিকালচার সেন্টারের কর্মকর্তা/কর্মচারীদের মঞ্জুরীকৃত পদ ও শুণ্য পদের বিবরণী', success: '', centers: data });
         })
         .catch(err => {
             console.log("outside", err);
