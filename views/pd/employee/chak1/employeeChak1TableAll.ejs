@@ -39,7 +39,7 @@
                         <% if (indexes === 0){%>
                         <tr>
                             <td rowspan="<%=centerIndex%>"><%=index+1%></td>
-                            <td rowspan="<%=centerIndex%>"><%=center.center %></td>
+                            <td><%=center.center %></td>
                             <td><%= row.porichito %></td>
                             <td><%= row.kormokorta %></td>
                             <td><%= row.nijDistrict %></td>
@@ -56,6 +56,9 @@
 
                         <%}else{%>
                             <tr>
+                                <td>
+                                    <%=center.center %>
+                                </td>
                                 <td><%= row.porichito %></td>
                                 <td><%= row.kormokorta %></td>
                                 <td><%= row.nijDistrict %></td>

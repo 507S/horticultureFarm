@@ -2016,7 +2016,7 @@ module.exports.apa = async (req, res) => {
         attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname', 'password', 'pd_id', 'createdAt', 'updatedAt']
     })
         .then(data => {
-            res.render('pd/apa/apa', { title: 'এপিএ', success: '', centers: data });
+            res.render('pd/apa/apa', { title: 'বার্ষিক কর্ম সম্পাদন চুক্তি অর্থবছর', success: '', centers: data });
         })
         .catch(err => {
             console.log("outside", err);

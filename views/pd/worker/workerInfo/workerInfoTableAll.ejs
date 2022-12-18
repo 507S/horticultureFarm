@@ -42,7 +42,7 @@
     <% if (indexes === 0){%>
     <tr>
       <td rowspan="<%=centerIndex%>"><%=index+1%></td>
-      <td rowspan="<%=centerIndex%>"><%=center.center %></td>
+      <td><%=center.center %></td>
       <td><%= row.podobi %></td>
       <td><%= row.name %></td>
       <td><%= row.fname %></td>
@@ -58,6 +58,9 @@
 
     <%}else{%>
     <tr>
+            <td>
+              <%=center.center %>
+            </td>
       <td><%= row.podobi %></td>
       <td><%= row.name %></td>
       <td><%= row.fname %></td>

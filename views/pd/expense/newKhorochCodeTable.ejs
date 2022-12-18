@@ -1,72 +1,90 @@
 <%- include('../../includes/header')-%>
-        <div id="wrapper" class="wrapper">
-          <%- include('../../includes/topbar')-%>
-            <div class="page-wrap">
-              <%- include('../../includes/sidebar')-%>
-              <div class="main-content">
-                <div class="container-fluid">
-                    <div class="row clearfix">
-                        <div class="col-md-10">
-                            <h1 class="text-center"><%= title %></h1>
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-md-12">
-                            <a href="/pd/newKhorochCodeForm" class="btn btn-success btn-group-sm ">খরচের (বিএস্টেটমেন্ট) হিসাব বিবরণীর কোডসমূহ এর ফর্ম</a>
-                        </div>
-
-                    </div>
-                     <div class="table-responsive" id="output">
-                        <%if (records.length >0){ %>
-                            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-                            <thead>
-                            <tr>
-                                <th>ক্রমিক নং</th>
-                                <th>খাতের নাম</th>
-                                <th>কোড নং</th>
-                               <th>পরিবর্তন/মুছুন</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <% records.forEach(function(row,index){ %>
-                                    <tr>
-                                        <td><%= index+1 %></td>
-                                        <td><%= row.khat %></td>
-                                        <td><%= row.code %></td>
-                                        <td><a class="btn btn-primary btn-xs" href="/pd/newKhorochTableEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
-                                            <a class="btn btn-danger btn-xs" href="/pd/newKhorochTableDelete/<%= row.id %>"><i class="fa fa-trash"></i></a>
-                                        </td>                                                                           
-                                    </tr>
-                                <% }) %>
-                            </tbody>
-                        </table>
-                        <% }else{ %>
-                            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-                                <thead>
-                                <tr>
-                                    <th>খাতের নাম</th>
-                                    <th>কোড নং</th>
-                                
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <% records.forEach(function(row){ %>
-                                    <tr>
-                                        <td colspan="10">No data Found</td>
-                                    </tr>
-                                <% }) %>
-                                </tbody>
-                            </table>
-                        <% } %>
-
-                    </div>
-
-
-                   <div id="output"></div>
-                 
-                </div>
-            </div>
+<div id="wrapper" class="wrapper">
+  <%- include('../../includes/topbar')-%>
+  <div class="page-wrap">
+    <%- include('../../includes/sidebar')-%>
+    <div class="main-content">
+      <div class="container-fluid">
+        <div class="row clearfix">
+          <div class="col-md-10">
+            <h1 class="text-center"><%= title %></h1>
+          </div>
         </div>
-    </div>
+        <div class="row mb-2">
+          <div class="col-md-12">
+            <a
+              href="/pd/newKhorochCodeForm"
+              class="btn btn-success btn-group-sm"
+              >খরচের হিসাব বিবরণীর ফর্ম</a
+            >
+          </div>
+        </div>
+        <div class="table-responsive" id="output">
+          <%if (records.length >0){ %>
+          <table
+            class="table table-bordered table-striped"
+            id="tblCustomers"
+            cellspacing="0"
+            cellpadding="0"
+          >
+            <thead>
+              <tr>
+                <th>ক্রমিক নং</th>
+                <th>খাতের নাম</th>
+                <th>কোড নং</th>
+                <th>পরিবর্তন/মুছুন</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% records.forEach(function(row,index){ %>
+              <tr>
+                <td><%= index+1 %></td>
+                <td><%= row.khat %></td>
+                <td><%= row.code %></td>
+                <td>
+                  <a
+                    class="btn btn-primary btn-xs"
+                    href="/pd/newKhorochTableEdit/<%= row.id %>"
+                    ><i class="fa fa-edit"></i
+                  ></a>
+                  <a
+                    class="btn btn-danger btn-xs"
+                    href="/pd/newKhorochTableDelete/<%= row.id %>"
+                    ><i class="fa fa-trash"></i
+                  ></a>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+          <% }else{ %>
+          <table
+            class="table table-bordered table-striped"
+            id="tblCustomers"
+            cellspacing="0"
+            cellpadding="0"
+          >
+            <thead>
+              <tr>
+                <th>খাতের নাম</th>
+                <th>কোড নং</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% records.forEach(function(row){ %>
+              <tr>
+                <td colspan="10">No data Found</td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+          <% } %>
+        </div>
 
-    <%- include('../../includes/footer')-%>
+        <div id="output"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../../includes/footer')-%>

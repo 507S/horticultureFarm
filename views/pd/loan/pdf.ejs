@@ -1,147 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ঋণ বিতরণ ও আদায় এর অগ্রগতির প্রতিবেদন</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ঋণ বিতরণ ও আদায় এর অগ্রগতির প্রতিবেদন</title>
+    <style>
+      .flex-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
 
-  <style>
-    .flex-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
+      .flex-container h5 {
+        padding: 0;
+        margin: 0;
+      }
 
-    .flex-container h5 {
-      padding: 0;
-      margin: 0;
-    }
+      .table,
+      td,
+      th {
+        border: 1px solid black;
+      }
 
-    .table,
-    td,
-    th {
-      border: 1px solid black;
-    }
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+      }
 
-    .table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+      .center {
+        text-align: center;
+      }
 
-    .center {
-      text-align: center;
-    }
+      .inline-block-child {
+        display: inline-block;
+      }
 
-    .inline-block-child {
-      display: inline-block;
-    }
+      .header {
+        display: flex;
+        width: 100%;
+      }
 
-    .header {
-      display: flex;
-      width: 100%;
-    }
+      .header > * {
+        width: 33%;
+      }
 
-    .header>* {
-      width: 33%;
-    }
+      .row {
+        display: flex;
+        width: 100%;
+      }
 
-    .row {
-      display: flex;
-      width: 100%;
-    }
+      .row > * {
+        width: 50%;
+      }
+    </style>
+  </head>
 
-    .row>* {
-      width: 50%;
-    }
-  </style>
-</head>
-
-<body>
-  <div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
-    <div>
-      <div class="header">
-        <div>
-          <img src="/images/bd.png" width="100" alt="bd">
+  <body>
+    <div
+      style="
+        margin-top: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        background-color: #ffffffa6;
+      "
+      class="center"
+    >
+      <div>
+        <div class="header">
+          <div>
+            <img src="/images/bd.png" width="100" alt="bd" />
+          </div>
+          <div class="flex-container">
+            <h5>গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</h5>
+            <h5>কৃষি সম্প্রসারণ অধিদপ্তর</h5>
+            <h5>হর্টিকালচার উইং</h5>
+          </div>
+          <div>
+            <img src="/images/dae.jpg" width="100" alt="dae" />
+          </div>
         </div>
-        <div class="flex-container">
-          <h5>গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</h5>
-          <h5>কৃষি সম্প্রসারণ অধিদপ্তর</h5>
-          <h5>হর্টিকালচার উইং</h5>
-        </div>
-        <div>
-          <img src="/images/dae.jpg" width="100" alt="dae">
-        </div>
-      </div>
-      <p><b>সেন্টারের নাম :</b><%= centerName.center %></p>
-      <div style="
+        <h1>ঋণ বিতরণ ও আদায় এর অগ্রগতির প্রতিবেদন</h1>
+        <p><b>সেন্টারের নাম :</b><%= centerName.center %></p>
+        <div
+          style="
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;
             justify-content: space-between;
-          ">
-        <p>স্মারক নংঃ</p>
-        <p>তারিখঃ <%= new Date().toLocaleDateString();%></p>
+          "
+        >
+          <p>স্মারক নংঃ</p>
+          <p>তারিখঃ <%= new Date().toLocaleDateString();%></p>
+        </div>
+        <%if (records.length >0){ %>
+        <table
+          class="table table-bordered table-striped"
+          id="tblexportData"
+          cellspacing="0"
+          cellpadding="0"
+        >
+          <thead>
+            <tr>
+              <th>মাসের নাম</th>
+              <th>ঋণ বাবদ বরাদ্দ অর্থ</th>
+              <th>বিগত অর্থবছরে বিতরণকৃত অর্থের পরিমাণ</th>
+              <th>বিগত অর্থবছরে আদায়কৃত টাকার পরিমাণ</th>
+              <th>বিগত অর্থবছরে অবশিষ্ট টাকার পরিমাণ</th>
+              <th>চলতি অর্থবছরে বিতরণকৃত অর্থের পরিমাণ</th>
+              <th>চলতি অর্থবছরে আদায়কৃত টাকার পরিমাণ</th>
+              <th>চলতি অর্থবছরে অবশিষ্ট টাকার পরিমাণ</th>
+              <th>মন্তব্য</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% records.forEach(function(row){ %>
+            <tr>
+              <td><%= row.currentMonth %></td>
+              <td><%= row.boraddo %></td>
+              <td><%= row.bitoron1 %></td>
+              <td><%= row.aday1 %></td>
+              <td><%= row.left1 %></td>
+              <td><%= row.bitoron2 %></td>
+              <td><%= row.aday2 %></td>
+              <td><%= row.left2 %></td>
+              <td><%= row.comment %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <% }else{ %>
+        <table
+          class="table table-bordered table-striped"
+          id="tblCustomers"
+          cellspacing="0"
+          cellpadding="0"
+        >
+          <thead>
+            <tr>
+              <th>মাসের নাম</th>
+              <th>ঋণ বাবদ বরাদ্দ অর্থ</th>
+              <th>বিগত অর্থবছরে বিতরণকৃত অর্থের পরিমাণ</th>
+              <th>বিগত অর্থবছরে আদায়কৃত টাকার পরিমাণ</th>
+              <th>বিগত অর্থবছরে অবশিষ্ট টাকার পরিমাণ</th>
+              <th>চলতি অর্থবছরে বিতরণকৃত অর্থের পরিমাণ</th>
+              <th>চলতি অর্থবছরে আদায়কৃত টাকার পরিমাণ</th>
+              <th>চলতি অর্থবছরে অবশিষ্ট টাকার পরিমাণ</th>
+              <th>মন্তব্য</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% records.forEach(function(row){ %>
+            <tr>
+              <td colspan="10">No data Found</td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <% } %>
       </div>
-      <%if (records.length >0){ %>
-      <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
-        <thead>
-          <tr>
-            <th>মাসের নাম</th>
-            <th>ঋণ বাবদ বরাদ্দ অর্থ</th>
-            <th>বিগত অর্থবছরে বিতরণকৃত অর্থের পরিমাণ</th>
-            <th>বিগত অর্থবছরে আদায়কৃত টাকার পরিমাণ</th>
-            <th>বিগত অর্থবছরে অবশিষ্ট টাকার পরিমাণ</th>
-            <th>চলতি অর্থবছরে বিতরণকৃত অর্থের পরিমাণ</th>
-            <th>চলতি অর্থবছরে আদায়কৃত টাকার পরিমাণ</th>
-            <th>চলতি অর্থবছরে অবশিষ্ট টাকার পরিমাণ</th>
-            <th>মন্তব্য</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% records.forEach(function(row){ %>
-          <tr>
-            <td><%= row.currentMonth %></td>
-            <td><%= row.boraddo %></td>
-            <td><%= row.bitoron1 %></td>
-            <td><%= row.aday1 %></td>
-            <td><%= row.left1 %></td>
-            <td><%= row.bitoron2 %></td>
-            <td><%= row.aday2 %></td>
-            <td><%= row.left2 %></td>
-            <td><%= row.comment %></td>
-
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
-      <% }else{ %>
-      <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-        <thead>
-          <tr>
-            <th>মাসের নাম</th>
-            <th>ঋণ বাবদ বরাদ্দ অর্থ</th>
-            <th>বিগত অর্থবছরে বিতরণকৃত অর্থের পরিমাণ</th>
-            <th>বিগত অর্থবছরে আদায়কৃত টাকার পরিমাণ</th>
-            <th>বিগত অর্থবছরে অবশিষ্ট টাকার পরিমাণ</th>
-            <th>চলতি অর্থবছরে বিতরণকৃত অর্থের পরিমাণ</th>
-            <th>চলতি অর্থবছরে আদায়কৃত টাকার পরিমাণ</th>
-            <th>চলতি অর্থবছরে অবশিষ্ট টাকার পরিমাণ</th>
-            <th>মন্তব্য</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% records.forEach(function(row){ %>
-          <tr>
-            <td colspan="10">No data Found</td>
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
-      <% } %>
     </div>
-  </div>
-</body>
-
+  </body>
 </html>

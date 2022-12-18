@@ -1,198 +1,201 @@
 <%- include('../../includes/header')-%>
-        <div id="wrapper" class="wrapper" >
-            <%- include('../../includes/topbar')-%>
-            <div class="page-wrap">
-                <%- include('../../includes/sidebar')-%>
-                <div class="main-content">
-                    <div class="container-fluid">
-                        <div class="row clearfix">
-                            <div class="col-md-10">
-                                <h1 class="text-center"><%= title %></h1>
-                            </div>
-                            <div class="col-md-4">
-                                <select id="center" name="center" required>
-                                    <option value="">সেন্টার বাছুনঃ</option>
-                                    <% if (centers.length >0){ %>
-                                        <% centers.forEach(function (center) { %>
-                                            <option value="<%= center.id %>"><%= center.center %></option>
-                                        <% }) %>
-                                    <% } %>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="year">অর্থবছর:</label>
+<div id="wrapper" class="wrapper">
+  <%- include('../../includes/topbar')-%>
+  <div class="page-wrap">
+    <%- include('../../includes/sidebar')-%>
+    <div class="main-content">
+      <div class="container-fluid">
+        <div class="row clearfix">
+          <div class="col-md-10">
+            <h1 class="text-center"><%= title %></h1>
+          </div>
+          <div class="col-md-4">
+            <select id="center" name="center" required>
+              <option value="">সেন্টার বাছুনঃ</option>
+              <option value="all">সকল সেন্টারের তথ্য</option>
+              <% if (centers.length >0){ %> <% centers.forEach(function (center)
+              { %>
+              <option value="<%= center.id %>"><%= center.center %></option>
+              <% }) %> <% } %>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label for="year">অর্থবছর:</label>
 
-                                <select id="year" name="year">
-                                    <option value="2020" selected>২০২০-২১</option>
-                                    <option value="2021">২০২১-২২</option>
-                                    <option value="2022">২০২২-২৩</option>
-                                    <option value="2023">২০২৩-২৪</option>
-                                    <option value="2021">২০২৪-২৫</option>
-                                    <option value="2022">২০২৫-২৬</option>
-                                    <option value="2023">২০২৬-২৭</option>
-                                    <option value="2021">২০২৭-২৮</option>
-                                    <option value="2022">২০২৮-২৯</option>
-                                    <option value="2023">২০২৯-৩০</option>
-                                    <option value="2021">২০৩০-৩১</option>
-                                    <option value="2022">২০৩১-৩২</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <input type="submit" value="Submit" id="submit" class="btn btn-success">
-                            </div>
-                        </div>
-                        <!-- <div class="row mb-2">
+            <select id="year" name="year">
+              <option value="2020" selected>২০২০-২১</option>
+              <option value="2021">২০২১-২২</option>
+              <option value="2022">২০২২-২৩</option>
+              <option value="2023">২০২৩-২৪</option>
+              <option value="2021">২০২৪-২৫</option>
+              <option value="2022">২০২৫-২৬</option>
+              <option value="2023">২০২৬-২৭</option>
+              <option value="2021">২০২৭-২৮</option>
+              <option value="2022">২০২৮-২৯</option>
+              <option value="2023">২০২৯-৩০</option>
+              <option value="2021">২০৩০-৩১</option>
+              <option value="2022">২০৩১-৩২</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <input
+              type="submit"
+              value="Submit"
+              id="submit"
+              class="btn btn-success"
+            />
+          </div>
+        </div>
+        <!-- <div class="row mb-2">
                             <div class="col-md-12">
                                 <a href="/center/apaForm" class="btn btn-success btn-group-sm ">এপিএ ফর্ম</a>
                             </div>
 
                         </div> -->
 
-                        <div class="table-responsive" id="output"></div>
+        <div class="table-responsive" id="output"></div>
 
-                        <button onclick="exportToPdf()" class="btn btn-success">
-                            Download PDF
-                        </button>
-                        <button onclick="exportToExcel('tblexportData', 'এপিএ')" class="btn btn-success">Export Table Data To Excel File</button>
+        <button onclick="exportToPdf()" class="btn btn-success">
+          Download PDF
+        </button>
+        <button
+          onclick="exportToExcel('tblexportData', 'এপিএ')"
+          class="btn btn-success"
+        >
+          Export Table Data To Excel File
+        </button>
 
-
-                        <div id="output"></div>
+        <div id="output"></div>
         <!--                    <div id="loading" class="loading"><img src="{{ asset('assets/img/icon/loading.gif') }}" alt=""></div>-->
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-
-   
 <%- include('../../includes/footer')-%>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-    async function exportToPdf() {
-        var year = $('#year').val();
-        var center = $('#center').val();
-        const { data } = await axios.post(`/pd/generatePdfapa`,{year: year, center:center});
-        var mywindow = window.open("", "PRINT", "height=400,width=600");
-        mywindow.document.write(data.html);
-        mywindow.document.close(); // necessary for IE >= 10
-        mywindow.focus(); // necessary for IE >= 10*/
-        mywindow.print();
-        return true;
-    }
+  async function exportToPdf() {
+    var year = $("#year").val();
+    var center = $("#center").val();
+    const { data } = await axios.post(`/pd/generatePdfapa`, {
+      year: year,
+      center: center,
+    });
+    var mywindow = window.open("", "PRINT", "height=400,width=600");
+    mywindow.document.write(data.html);
+    mywindow.document.close(); // necessary for IE >= 10
+    mywindow.focus(); // necessary for IE >= 10*/
+    mywindow.print();
+    return true;
+  }
 </script>
 <script type="text/javascript">
-    function exportToExcel(tableID, filename = ''){
-        var downloadurl;
-        var dataFileType = 'application/vnd.ms-excel';
-        var tableSelect = document.getElementById(tableID);
-        var tableHTMLData = tableSelect.outerHTML.replace(/ /g, '%20');
-        
-        // Specify file name
-        filename = filename?filename+'.xls':'export_excel_data.xls';
-        
-        // Create download link element
-        downloadurl = document.createElement("a");
-        
-        document.body.appendChild(downloadurl);
-        
-        if(navigator.msSaveOrOpenBlob){
-            var blob = new Blob(['\ufeff', tableHTMLData], {
-                type: dataFileType
-            });
-            navigator.msSaveOrOpenBlob( blob, filename);
-        }else{
-            // Create a link to the file
-            downloadurl.href = 'data:' + dataFileType + ', ' + tableHTMLData;
-        
-            // Setting the file name
-            downloadurl.download = filename;
-            
-            //triggering the function
-            downloadurl.click();
-        }
+  function exportToExcel(tableID, filename = "") {
+    var downloadurl;
+    var dataFileType = "application/vnd.ms-excel";
+    var tableSelect = document.getElementById(tableID);
+    var tableHTMLData = tableSelect.outerHTML.replace(/ /g, "%20");
+
+    // Specify file name
+    filename = `report-${new Date().toLocaleDateString()}.xlsx`;
+
+    // Create download link element
+    downloadurl = document.createElement("a");
+
+    document.body.appendChild(downloadurl);
+
+    if (navigator.msSaveOrOpenBlob) {
+      var blob = new Blob(["\ufeff", tableHTMLData], {
+        type: dataFileType,
+      });
+      navigator.msSaveOrOpenBlob(blob, filename);
+    } else {
+      // Create a link to the file
+      downloadurl.href = "data:" + dataFileType + ", " + tableHTMLData;
+
+      // Setting the file name
+      downloadurl.download = filename;
+
+      //triggering the function
+      downloadurl.click();
     }
-     
-    </script>
+  }
+</script>
 
 <script>
-        
-    $(document).ready(function(){
-        
-      $('.dropdown a.test').on("click", function(e){
-        $(this).next('ul').toggle();
-        e.stopPropagation();
-        e.preventDefault();
-      });
+  $(document).ready(function () {
+    $(".dropdown a.test").on("click", function (e) {
+      $(this).next("ul").toggle();
+      e.stopPropagation();
+      e.preventDefault();
     });
+  });
 </script>
 
 <script type="text/javascript">
-   
-    $("body").on("click", "#btnExport", function () {
-        html2canvas($('#tblCustomers')[0], {
-            onrendered: function (canvas) {
-                var data = canvas.toDataURL();
-                var docDefinition = {
-                    content: [{
-                        image: data,
-                        width: 650
-                    }]
-                };
-                pdfMake.createPdf(docDefinition).download("farmer-details.pdf");
-            }
-        });
+  $("body").on("click", "#btnExport", function () {
+    html2canvas($("#tblCustomers")[0], {
+      onrendered: function (canvas) {
+        var data = canvas.toDataURL();
+        var docDefinition = {
+          content: [
+            {
+              image: data,
+              width: 650,
+            },
+          ],
+        };
+        pdfMake.createPdf(docDefinition).download("farmer-details.pdf");
+      },
     });
+  });
 
-    $( "#content-wrapper" ).load( "no url rn",function() {
-        var year = $('#year').val();
-        var center = 0;
-        $.ajax({
-            type: "POST",
-            url: "/pd/apaFilter",
-            data: {year: year, center:center},
-            datatype: "json",
-            beforeSend: function() {
-                // setting a timeout
-                $('#loading').show();
-                $('#output').hide();
-
-            },
-            success: function (data) {
-                $('#output').html(data);
-                $('#tblCustomers').DataTable();
-            },
-            complete: function() {
-                $('#loading').hide();
-                $('#output').show();
-            }
-        });
+  $("#content-wrapper").load("no url rn", function () {
+    var year = $("#year").val();
+    var center = 0;
+    $.ajax({
+      type: "POST",
+      url: "/pd/apaFilter",
+      data: { year: year, center: center },
+      datatype: "json",
+      beforeSend: function () {
+        // setting a timeout
+        $("#loading").show();
+        $("#output").hide();
+      },
+      success: function (data) {
+        $("#output").html(data);
+        $("#tblCustomers").DataTable();
+      },
+      complete: function () {
+        $("#loading").hide();
+        $("#output").show();
+      },
     });
+  });
 
-
-    $('#submit').on("click",function () {
-        var year = $('#year').val();
-        var center = $('#center').val();
-        $.ajax({
-            type: "POST",
-            url: "/pd/apaFilter",
-            data: {year: year, center:center},
-            datatype: "json",
-            beforeSend: function() {
-                // setting a timeout
-                $('#loading').show();
-                $('#output').hide();
-            },
-            success: function (data) {
-                $('#output').html(data);
-                $('#tblCustomers').DataTable();
-            },
-            complete: function() {
-                $('#loading').hide();
-                $('#output').show();
-            }
-        });
+  $("#submit").on("click", function () {
+    var year = $("#year").val();
+    var center = $("#center").val();
+    $.ajax({
+      type: "POST",
+      url: "/pd/apaFilter",
+      data: { year: year, center: center },
+      datatype: "json",
+      beforeSend: function () {
+        // setting a timeout
+        $("#loading").show();
+        $("#output").hide();
+      },
+      success: function (data) {
+        $("#output").html(data);
+        $("#tblCustomers").DataTable();
+      },
+      complete: function () {
+        $("#loading").hide();
+        $("#output").show();
+      },
     });
-
-    
-
+  });
 </script>
