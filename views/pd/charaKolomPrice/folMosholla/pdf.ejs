@@ -1,132 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>হর্টিকালচার সেন্টারের ফল/মসলা ও শাক-সবজি বিক্রয় মূল্য</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>হর্টিকালচার সেন্টারের ফল/মসলা ও শাক-সবজি বিক্রয় মূল্য</title>
+    <style>
+      .flex-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
 
-  <style>
-    .flex-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
+      .flex-container h5 {
+        padding: 0;
+        margin: 0;
+      }
 
-    .flex-container h5 {
-      padding: 0;
-      margin: 0;
-    }
+      .table,
+      td,
+      th {
+        border: 1px solid black;
+      }
 
-    .table,
-    td,
-    th {
-      border: 1px solid black;
-    }
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+      }
 
-    .table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+      .center {
+        text-align: center;
+      }
 
-    .center {
-      text-align: center;
-    }
+      .inline-block-child {
+        display: inline-block;
+      }
 
-    .inline-block-child {
-      display: inline-block;
-    }
+      .header {
+        display: flex;
+        width: 100%;
+      }
 
-    .header {
-      display: flex;
-      width: 100%;
-    }
+      .header > * {
+        width: 33%;
+      }
 
-    .header>* {
-      width: 33%;
-    }
+      .row {
+        display: flex;
+        width: 100%;
+      }
 
-    .row {
-      display: flex;
-      width: 100%;
-    }
+      .row > * {
+        width: 50%;
+      }
+    </style>
+  </head>
 
-    .row>* {
-      width: 50%;
-    }
-  </style>
-</head>
-
-<body>
-  <div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
-    <div>
-      <div class="header">
-        <div>
-          <img src="/images/dae.jpg" width="100" alt="dae">
+  <body>
+    <div
+      style="
+        margin-top: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        background-color: #ffffffa6;
+      "
+      class="center"
+    >
+      <div>
+        <div class="header">
+          <div>
+            <img src="/images/bd.png" width="100" alt="bd" />
+          </div>
+          <div class="flex-container">
+            <h5>গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</h5>
+            <h5>কৃষি সম্প্রসারণ অধিদপ্তর</h5>
+            <h5>হর্টিকালচার উইং</h5>
+          </div>
+          <div>
+            <img src="/images/dae.jpg" width="100" alt="dae" />
+          </div>
         </div>
-        <div class="flex-container">
-          <h5>গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</h5>
-          <h5>কৃষি সম্প্রসারণ অধিদপ্তর</h5>
-          <h5>হর্টিকালচার উইং</h5>
-        </div>
-        <div>
-          <img src="/images/bd.png" width="100" alt="bd">
-        </div>
-      </div>
-      <div style="
+        <div
+          style="
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;
             justify-content: space-between;
-          ">
-        <p>স্মারক নংঃ</p>
-        <p>তারিখঃ <%= new Date().toLocaleDateString();%></p>
+          "
+        >
+          <p>স্মারক নংঃ</p>
+          <p>তারিখঃ <%= new Date().toLocaleDateString();%></p>
+        </div>
+        <%if (records.length >0){ %>
+        <table
+          class="table table-bordered table-striped"
+          id="tblCustomers"
+          cellspacing="0"
+          cellpadding="0"
+        >
+          <thead>
+            <tr>
+              <th>ক্রমিক নং</th>
+              <th>আইটেমের নাম</th>
+              <th>পরিমাণ (সংখ্যা/কেজি/লিটার)</th>
+              <th>চলতি অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% records.forEach(function(row,index){ %>
+            <tr>
+              <td><%= index+1 %></td>
+              <td><%= row.item %></td>
+              <td><%= row.amount %></td>
+              <td><%= row.cholti %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <% }else{ %>
+        <table
+          class="table table-bordered table-striped"
+          id="tblCustomers"
+          cellspacing="0"
+          cellpadding="0"
+        >
+          <thead>
+            <tr>
+              <th>ক্রমিক নং</th>
+              <th>আইটেমের নাম</th>
+              <th>পরিমাণ (সংখ্যা/কেজি/লিটার)</th>
+              <th>চলতি অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% records.forEach(function(row){ %>
+            <tr>
+              <td colspan="10">No data Found</td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <% } %>
       </div>
-      <%if (records.length >0){ %>
-      <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-        <thead>
-          <tr>
-            <th>ক্রমিক নং</th>
-            <th>আইটেমের নাম</th>
-            <th>পরিমাণ (সংখ্যা/কেজি/লিটার)</th>
-            <th>চলতি অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
-
-          </tr>
-        </thead>
-        <tbody>
-          <% records.forEach(function(row,index){ %>
-          <tr>
-            <td><%= index+1 %></td>
-            <td><%= row.item %></td>
-            <td><%= row.amount %></td>
-            <td><%= row.cholti %></td>
-
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
-      <% }else{ %>
-      <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-        <thead>
-          <tr>
-            <th>ক্রমিক নং</th>
-            <th>আইটেমের নাম</th>
-            <th>পরিমাণ (সংখ্যা/কেজি/লিটার)</th>
-            <th>চলতি অর্থবছরে অনুমোদিত বিক্রয়মূল্য</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% records.forEach(function(row){ %>
-          <tr>
-            <td colspan="10">No data Found</td>
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
-      <% } %>
     </div>
-  </div>
-</body>
-
+  </body>
 </html>
