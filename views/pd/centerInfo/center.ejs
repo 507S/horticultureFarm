@@ -1,135 +1,157 @@
 <%- include('../../includes/header')-%>
-        <div id="wrapper" class="wrapper">
-          <%- include('../../includes/topbar')-%>
-            <div class="page-wrap">
-              <%- include('../../includes/sidebar')-%>
-              <div class="main-content">
-                <div class="container-fluid">
-                    <div class="row clearfix">
-                        <div class="col-md-10">
-                            <h1 class="text-center"><%= title %></h1>
-                        </div>
-                        
-                    </div>
-                  
-
-                     <div class="table-responsive" id="output">
-                        <%if (records.length >0){ %>
-                            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-                            <thead>
-                            <tr>
-                                <th>serialNum</th>
-                                <th>সেন্টারের নাম</th>
-                                <th>সেন্টারের ইউজার নাম</th>
-                                <th>সেন্টার প্রধানের নাম</th>
-                                <th>পদবী</th>
-                                <th>মোবাইল নং</th>
-                                <th>ই-মেইল</th>
-                                <th>পরিবর্তন/মুছুন</th>
-                                <th>ইউজার আইডি ও পাসওয়ার্ড পরিবর্তন</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <% records.forEach(function(row){ %>
-                                    <tr>
-                                        <td><%= row.serialNum %></td>
-                                        <td><%= row.center %></td>
-                                        <td><%= row.uname %></td>
-                                        <td><%= row.kormokorta %></td>
-                                        <td><%= row.podobi %></td>
-                                        <td><%= row.mobile %></td>
-                                        <td><%= row.email %></td>
-                                        <td><a class="btn btn-primary btn-xs" href="/pd/centerEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
-                                            <a class="btn btn-danger btn-xs" href="/pd/centerDelete/<%= row.id %>"><i class="fa fa-trash"></i></a>
-                                        </td> 
-                                        <td><a class="btn btn-primary btn-xs" href="/pd/centerPasswordEdit/<%= row.id %>"><i class="fa fa-wrench"></i></a>
-                                        </td> 
-                                       
-                                    </tr>
-                                <% }) %>
-                            </tbody>
-                        </table>
-                        <% }else{ %>
-                            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-                                <thead>
-                                <tr>
-                                    <th>সেন্টারের নাম</th>
-                                    <th>সেন্টারের ইউজার নাম</th>
-                                    <th>সেন্টার প্রধানের নাম</th>
-                                    <th>পদবী</th>
-                                    <th>মোবাইল নং</th>
-                                    <th>ই-মেইল</th>
-                                    <th>ইউজার আইডি ও পাসওয়ার্ড পরিবর্তন</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <% records.forEach(function(row){ %>
-                                    <tr>
-                                        <td colspan="10">No data Found</td>
-                                    </tr>
-                                <% }) %>
-                                </tbody>
-                            </table>
-                        <% } %>
-
-                    </div>
-
-
-                   <div id="output"></div>
-                   <button onclick="exportToPdf()" class="btn btn-success">
-                    Download PDF
-                </button>
-
-
-                </div>
-            </div>
+<div id="wrapper" class="wrapper">
+  <%- include('../../includes/topbar')-%>
+  <div class="page-wrap">
+    <%- include('../../includes/sidebar')-%>
+    <div class="main-content">
+      <div class="container-fluid">
+        <div class="row clearfix">
+          <div class="col-md-10">
+            <h1 class="text-center"><%= title %></h1>
+          </div>
         </div>
+
+        <div class="table-responsive" id="output">
+          <%if (records.length >0){ %>
+          <table
+            class="table table-bordered table-striped"
+            id="tblCustomers"
+            cellspacing="0"
+            cellpadding="0"
+          >
+            <thead>
+              <tr>
+                <th>serialNum</th>
+                <th>সেন্টারের নাম</th>
+                <th>সেন্টারের ইউজার নাম</th>
+                <th>সেন্টার প্রধানের নাম</th>
+                <th>পদবী</th>
+                <th>মোবাইল নং</th>
+                <th>ই-মেইল</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% records.forEach(function(row){ %>
+              <tr>
+                <td><%= row.serialNum %></td>
+                <td><%= row.center %></td>
+                <td><%= row.uname %></td>
+                <td><%= row.kormokorta %></td>
+                <td><%= row.podobi %></td>
+                <td><%= row.mobile %></td>
+                <td><%= row.email %></td>
+                <td>
+                  <a
+                    class="btn btn-primary btn-xs"
+                    href="/pd/centerEdit/<%= row.id %>"
+                    ><i class="fa fa-edit"></i
+                  ></a>
+                  <a
+                    class="btn btn-danger btn-xs"
+                    href="/pd/centerDelete/<%= row.id %>"
+                    ><i class="fa fa-trash"></i
+                  ></a>
+                </td>
+                <td>
+                  <a
+                    class="btn btn-primary btn-xs"
+                    href="/pd/centerPasswordEdit/<%= row.id %>"
+                    ><i class="fa fa-wrench"></i
+                  ></a>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+          <% }else{ %>
+          <table
+            class="table table-bordered table-striped"
+            id="tblCustomers"
+            cellspacing="0"
+            cellpadding="0"
+          >
+            <thead>
+              <tr>
+                <th>সেন্টারের নাম</th>
+                <th>সেন্টারের ইউজার নাম</th>
+                <th>সেন্টার প্রধানের নাম</th>
+                <th>পদবী</th>
+                <th>মোবাইল নং</th>
+                <th>ই-মেইল</th>
+                <th>ইউজার আইডি ও পাসওয়ার্ড পরিবর্তন</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% records.forEach(function(row){ %>
+              <tr>
+                <td colspan="10">No data Found</td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+          <% } %>
+        </div>
+
+        <div id="output"></div>
+        <button onclick="exportToPdf()" class="btn btn-success">
+          Download PDF
+        </button>
+        <button
+          onclick="exportToExcel('tblCustomers', 'সেন্টারসমূহের তথ্য')"
+          class="btn btn-success"
+        >
+          Export Table Data To Excel File
+        </button>
+      </div>
     </div>
+  </div>
+</div>
 
-    <%- include('../../includes/footer')-%>
+<%- include('../../includes/footer')-%>
 
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script>
-        async function exportToPdf() {
-            const { data } = await axios.post(`/pd/generatePdfcenter`);
-            var mywindow = window.open("", "PRINT", "height=400,width=600");
-            mywindow.document.write(data.html);
-            mywindow.document.close(); // necessary for IE >= 10
-            mywindow.focus(); // necessary for IE >= 10*/
-            mywindow.print();
-            return true;
-        }
-    </script>
-    <script type="text/javascript">
-        function exportToExcel(tableID, filename = ''){
-            var downloadurl;
-            var dataFileType = 'application/vnd.ms-excel';
-            var tableSelect = document.getElementById(tableID);
-            var tableHTMLData = tableSelect.outerHTML.replace(/ /g, '%20');
-            
-            // Specify file name
-            filename = filename?filename+'.xls':'export_excel_data.xls';
-            
-            // Create download link element
-            downloadurl = document.createElement("a");
-            
-            document.body.appendChild(downloadurl);
-            
-            if(navigator.msSaveOrOpenBlob){
-                var blob = new Blob(['\ufeff', tableHTMLData], {
-                    type: dataFileType
-                });
-                navigator.msSaveOrOpenBlob( blob, filename);
-            }else{
-                // Create a link to the file
-                downloadurl.href = 'data:' + dataFileType + ', ' + tableHTMLData;
-            
-                // Setting the file name
-                downloadurl.download = filename;
-                
-                //triggering the function
-                downloadurl.click();
-            }
-        }
-         
-        </script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  async function exportToPdf() {
+    const { data } = await axios.post(`/pd/generatePdfcenter`);
+    var mywindow = window.open("", "PRINT", "height=400,width=600");
+    mywindow.document.write(data.html);
+    mywindow.document.close(); // necessary for IE >= 10
+    mywindow.focus(); // necessary for IE >= 10*/
+    mywindow.print();
+    return true;
+  }
+</script>
+<script type="text/javascript">
+  function exportToExcel(tableID, filename = "") {
+    if (window.confirm("Are you sure you want to download the excel file?")) {
+      var downloadurl;
+      var dataFileType = "application/vnd.ms-excel";
+      var tableSelect = document.getElementById(tableID);
+      var tableHTMLData = tableSelect.outerHTML.replace(/ /g, "%20");
+
+      // Specify file name
+      filename = `center-info-${new Date().toLocaleDateString()}.xls`;
+
+      // Create download link element
+      downloadurl = document.createElement("a");
+
+      document.body.appendChild(downloadurl);
+
+      if (navigator.msSaveOrOpenBlob) {
+        var blob = new Blob(["\ufeff", tableHTMLData], {
+          type: dataFileType,
+        });
+        navigator.msSaveOrOpenBlob(blob, filename);
+      } else {
+        // Create a link to the file
+        downloadurl.href = "data:" + dataFileType + ", " + tableHTMLData;
+
+        // Setting the file name
+        downloadurl.download = filename;
+
+        //triggering the function
+        downloadurl.click();
+      }
+    }
+  }
+</script>

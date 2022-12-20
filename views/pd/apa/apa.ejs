@@ -23,7 +23,7 @@
             <label for="year">অর্থবছর:</label>
 
             <select id="year" name="year">
-              <option value="2020" selected>২০২০-২১</option>
+              <option value="2020">২০২০-২১</option>
               <option value="2021">২০২১-২২</option>
               <option value="2022">২০২২-২৩</option>
               <option value="2023">২০২৩-২৪</option>
@@ -98,7 +98,7 @@
     var tableHTMLData = tableSelect.outerHTML.replace(/ /g, "%20");
 
     // Specify file name
-    filename = `report-${new Date().toLocaleDateString()}.xlsx`;
+    filename = `apa-${new Date().toLocaleDateString()}.xls`;
 
     // Create download link element
     downloadurl = document.createElement("a");

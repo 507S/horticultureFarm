@@ -59,9 +59,9 @@
                       <select name="khat" id="khat" class="form-control">
                         <option value="">খাতের নাম</option>
                         <% for(let i=0; i < khats.length; i++){ if (khats[i] !=
-                        null) {
+                        null) { %>
                         <option value="<%= ids[i] %>"><%= khats[i] %></option>
-                        } } %>
+                        <% } } %>
                       </select>
                     </div>
                   </div>
@@ -287,22 +287,6 @@
                     <div class="col-md-9">
                       <label for="year">বছর :</label>
                       <select id="year" name="year" required>
-                        <% const currentMonth =
-                        moment().format("MMM-YYYY").toLowerCase(); if
-                        (moment().format("M") < 7){ startYear =
-                        moment(currentMonth).subtract(1, "year").format('yyyy')
-                        endYear = moment(currentMonth).format('yyyy') }else{
-                        startYear =moment(currentMonth).format('yyyy') endYear =
-                        moment(currentMonth).add(1, "year").format('yyyy') }
-                        const sEndYear = endYear.toString().slice(2,4) var
-                        valueStr = `${startYear}-${sEndYear}` const
-                        finalEnlishToBanglaNumber={'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'};
-                        for (const x in finalEnlishToBanglaNumber) { valueStr =
-                        valueStr.replace(new RegExp(x, 'g'),
-                        finalEnlishToBanglaNumber[x]); } %>
-                        <option value="<%= startYear.toString() %>" selected>
-                          <%= valueStr %>
-                        </option>
                         <option value="2021">২০২১-২২</option>
                         <option value="2022">২০২২-২৩</option>
                         <option value="2023">২০২৩-২৪</option>

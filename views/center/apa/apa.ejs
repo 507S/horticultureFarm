@@ -1,151 +1,147 @@
 <%- include('../../includes/header')-%>
-        <div id="wrapper" class="wrapper" >
-            <%- include('../../includes/topbar')-%>
-            <div class="page-wrap">
-                <%- include('../../includes/sidebar')-%>
-                <div class="main-content">
-                    <div class="container-fluid">
-                        <div class="row clearfix">
-                            <div class="col-md-10">
-                                <h1 class="text-center"><%= title %></h1>
-                            </div>
-                            <div class="col-md-2">
-                                <label for="year">Choose a year:</label>
+<div id="wrapper" class="wrapper">
+  <%- include('../../includes/topbar')-%>
+  <div class="page-wrap">
+    <%- include('../../includes/sidebar')-%>
+    <div class="main-content">
+      <div class="container-fluid">
+        <div class="row clearfix">
+          <div class="col-md-10">
+            <h1 class="text-center"><%= title %></h1>
+          </div>
+          <div class="col-md-2">
+            <label for="year">Choose a year:</label>
 
-                                <select id="year" name="year">
-                                    <option value="">Choose year</option>
-                                    <option value="2021"selected>২০২১-২২</option>
-                                    <option value="2022">২০২২-২৩</option>
-                                    <option value="2023">২০২৩-২৪</option>
-                                    <option value="2024">২০২৪-২৫</option>
-                                    <option value="2025">২০২৫-২৬</option>
-                                    <option value="2026">২০২৬-২৭</option>
-                                    <option value="2027">২০২৭-২৮</option>
-                                    <option value="2028">২০২৮-২৯</option>
-                                    <option value="2029">২০২৯-৩০</option>
-                                    <option value="2030">২০৩০-৩১</option>
-                                    <option value="2031">২০৩১-৩২</option>
-                                    <option value="2032">২০৩২-৩৩</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-12">
-                                <a href="/center/apaForm" class="btn btn-success btn-group-sm ">এপিএ ফর্ম</a>
-                            </div>
-
-                        </div>
-
-                        <div class="table-responsive" id="output"></div>
-
-                        <button onclick="exportToPdf()" class="btn btn-success">
-                            Download PDF
-                        </button>
-                        <div id="output"></div>
-        <!--                    <div id="loading" class="loading"><img src="{{ asset('assets/img/icon/loading.gif') }}" alt=""></div>-->
-                    </div>
-                </div>
-            </div>
+            <select id="year" name="year">
+              <option value="">Choose year</option>
+              <option value="2021">২০২১-২২</option>
+              <option value="2022">২০২২-২৩</option>
+              <option value="2023">২০২৩-২৪</option>
+              <option value="2024">২০২৪-২৫</option>
+              <option value="2025">২০২৫-২৬</option>
+              <option value="2026">২০২৬-২৭</option>
+              <option value="2027">২০২৭-২৮</option>
+              <option value="2028">২০২৮-২৯</option>
+              <option value="2029">২০২৯-৩০</option>
+              <option value="2030">২০৩০-৩১</option>
+              <option value="2031">২০৩১-৩২</option>
+              <option value="2032">২০৩২-৩৩</option>
+            </select>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-md-12">
+            <a href="/center/apaForm" class="btn btn-success btn-group-sm"
+              >এপিএ ফর্ম</a
+            >
+          </div>
         </div>
 
+        <div class="table-responsive" id="output"></div>
 
-   
+        <button onclick="exportToPdf()" class="btn btn-success">
+          Download PDF
+        </button>
+        <div id="output"></div>
+        <!--                    <div id="loading" class="loading"><img src="{{ asset('assets/img/icon/loading.gif') }}" alt=""></div>-->
+      </div>
+    </div>
+  </div>
+</div>
+
 <%- include('../../includes/footer')-%>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-    async function exportToPdf() {
-        var year = $('#year').val();
-        var center = $('#center').val();
-        const { data } = await axios.post(`/center/generatePdfapa`,{year: year, center:center});
-        var mywindow = window.open("", "PRINT", "height=400,width=600");
-        mywindow.document.write(data.html);
-        mywindow.document.close(); // necessary for IE >= 10
-        mywindow.focus(); // necessary for IE >= 10*/
-        mywindow.print();
-        return true;
-    }
+  async function exportToPdf() {
+    var year = $("#year").val();
+    var center = $("#center").val();
+    const { data } = await axios.post(`/center/generatePdfapa`, {
+      year: year,
+      center: center,
+    });
+    var mywindow = window.open("", "PRINT", "height=400,width=600");
+    mywindow.document.write(data.html);
+    mywindow.document.close(); // necessary for IE >= 10
+    mywindow.focus(); // necessary for IE >= 10*/
+    mywindow.print();
+    return true;
+  }
 </script>
 <script>
-        
-    $(document).ready(function(){
-        
-      $('.dropdown a.test').on("click", function(e){
-        $(this).next('ul').toggle();
-        e.stopPropagation();
-        e.preventDefault();
-      });
+  $(document).ready(function () {
+    $(".dropdown a.test").on("click", function (e) {
+      $(this).next("ul").toggle();
+      e.stopPropagation();
+      e.preventDefault();
     });
+  });
 </script>
 
 <script type="text/javascript">
-   
-    $("body").on("click", "#btnExport", function () {
-        html2canvas($('#tblCustomers')[0], {
-            onrendered: function (canvas) {
-                var data = canvas.toDataURL();
-                var docDefinition = {
-                    content: [{
-                        image: data,
-                        width: 650
-                    }]
-                };
-                pdfMake.createPdf(docDefinition).download("farmer-details.pdf");
-            }
-        });
+  $("body").on("click", "#btnExport", function () {
+    html2canvas($("#tblCustomers")[0], {
+      onrendered: function (canvas) {
+        var data = canvas.toDataURL();
+        var docDefinition = {
+          content: [
+            {
+              image: data,
+              width: 650,
+            },
+          ],
+        };
+        pdfMake.createPdf(docDefinition).download("farmer-details.pdf");
+      },
     });
+  });
 
-    $("#wrapper").load( "no url rn",function() {
-        
-        var year = $('#year').val();
-        $.ajax({
-            type: "POST",
-            url: "/center/apaYear",
-            data: {year: year},
-            datatype: "json",
-            beforeSend: function() {
-                // setting a timeout
-                $('#loading').show();
-                $('#output').hide();
-
-            },
-            success: function (data) {
-                $('#output').html(data);
-                $('#tblCustomers').DataTable();
-            },
-            complete: function() {
-                $('#loading').hide();
-                $('#output').show();
-            }
-        });
+  $("#wrapper").load("no url rn", function () {
+    var year = $("#year").val();
+    $.ajax({
+      type: "POST",
+      url: "/center/apaYear",
+      data: { year: year },
+      datatype: "json",
+      beforeSend: function () {
+        // setting a timeout
+        $("#loading").show();
+        $("#output").hide();
+      },
+      success: function (data) {
+        $("#output").html(data);
+        $("#tblCustomers").DataTable();
+      },
+      complete: function () {
+        $("#loading").hide();
+        $("#output").show();
+      },
     });
+  });
 
-    $('#year').on("change",function () {
-        var year = $('#year').val();
-        $.ajax({
-            type: "POST",
-            url: "/center/apaYear",
-            data: {year: year},
-            datatype: "json",
-            beforeSend: function() {
-                // setting a timeout
-                $('#loading').show();
-                $('#output').hide();
-            },
-            success: function (data) {
-                $('#output').html(data);
-                $('#tblCustomers').DataTable();
-            },
-            complete: function() {
-                $('#loading').hide();
-                $('#output').show();
-            }
-        });
+  $("#year").on("change", function () {
+    var year = $("#year").val();
+    $.ajax({
+      type: "POST",
+      url: "/center/apaYear",
+      data: { year: year },
+      datatype: "json",
+      beforeSend: function () {
+        // setting a timeout
+        $("#loading").show();
+        $("#output").hide();
+      },
+      success: function (data) {
+        $("#output").html(data);
+        $("#tblCustomers").DataTable();
+      },
+      complete: function () {
+        $("#loading").hide();
+        $("#output").show();
+      },
     });
+  });
 
-    $(document).ready(function() {
-        $('#tblCustomers').DataTable();
-    } );
-
-    
-
+  $(document).ready(function () {
+    $("#tblCustomers").DataTable();
+  });
 </script>
