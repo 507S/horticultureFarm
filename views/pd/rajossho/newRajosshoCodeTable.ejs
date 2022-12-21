@@ -1,15 +1,15 @@
 <%- include('../../includes/header')-%>
-        <div id="wrapper" class="wrapper">
-          <%- include('../../includes/topbar')-%>
-            <div class="page-wrap">
-              <%- include('../../includes/sidebar')-%>
-              <div class="main-content">
-                <div class="container-fluid">
-                    <div class="row clearfix">
-                        <div class="col-md-10">
-                            <h1 class="text-center"><%= title %></h1>
-                        </div>
-                        <!-- <div class="col-md-2">
+<div id="wrapper" class="wrapper">
+  <%- include('../../includes/topbar')-%>
+  <div class="page-wrap">
+    <%- include('../../includes/sidebar')-%>
+    <div class="main-content">
+      <div class="container-fluid">
+        <div class="row clearfix">
+          <div class="col-md-10">
+            <h1 class="text-center"><%= title %></h1>
+          </div>
+          <!-- <div class="col-md-2">
                             <label for="year">Choose a year:</label>
 
                             <select id="year" name="year">
@@ -23,71 +23,90 @@
                                 <option value="2023">২০২৩-২৪</option>
                             </select>
                         </div> -->
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-md-12">
-                            <a href="/pd/newRajosshoCodeForm" class="btn btn-success btn-group-sm ">মাসিক রাজস্ব অর্থ প্রাপ্তির কোডসমূহ ফর্ম</a>
-                        </div>
-
-                    </div>
-
-                     <div class="table-responsive" id="output">
-                        <%if (records.length >0){ %>
-                            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-                            <thead>
-                            <tr>
-                                <th>ক্রমিক নং</th>
-                                <th>উপখাত</th>
-                                <th>রাজস্বের কোড</th>
-                               <th>পরিবর্তন/মুছুন</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <% records.forEach(function(row,index){ %>
-                                    <tr>
-                                        <td><%= index+1 %></td>
-                                        <td><%= row.upokhat %></td>
-                                        <td><%= row.code %></td>
-                                        <td><a class="btn btn-primary btn-xs" href="/pd/newRajosshoCodeTableEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
-                                            <a class="btn btn-danger btn-xs" href="/pd/newRajosshoCodeTableDelete/<%= row.id %>"><i class="fa fa-trash"></i></a>
-                                        </td>                                                                           
-                                    </tr>
-                                <% }) %>
-                            </tbody>
-                        </table>
-                        <% }else{ %>
-                            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
-                                <thead>
-                                <tr>
-                                    <th>উপখাত</th>
-                                    <th>রাজস্বের কোড</th>
-                                
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <% records.forEach(function(row){ %>
-                                    <tr>
-                                        <td colspan="10">No data Found</td>
-                                    </tr>
-                                <% }) %>
-                                </tbody>
-                            </table>
-                        <% } %>
-
-                    </div>
-
-
-                   <div id="output"></div>
-                 
-<!--                    <div id="loading" class="loading"><img src="{{ asset('assets/img/icon/loading.gif') }}" alt=""></div>-->
-                </div>
-            </div>
         </div>
+        <div class="row mb-2">
+          <div class="col-md-12">
+            <a
+              href="/pd/newRajosshoCodeForm"
+              class="btn btn-success btn-group-sm"
+              >মাসিক রাজস্ব অর্থ প্রাপ্তির কোডসমূহ ফর্ম</a
+            >
+          </div>
+        </div>
+
+        <div class="table-responsive" id="output">
+          <%if (records.length >0){ %>
+          <table
+            class="table table-bordered table-striped"
+            id="tblexportData"
+            cellspacing="0"
+            cellpadding="0"
+          >
+            <thead>
+              <tr>
+                <th>ক্রমিক নং</th>
+                <th>উপখাত</th>
+                <th>রাজস্বের কোড</th>
+                <th>পরিবর্তন/মুছুন</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% records.forEach(function(row,index){ %>
+              <tr>
+                <td><%= index+1 %></td>
+                <td><%= row.upokhat %></td>
+                <td><%= row.code %></td>
+                <td>
+                  <a
+                    class="btn btn-primary btn-xs"
+                    href="/pd/newRajosshoCodeTableEdit/<%= row.id %>"
+                    ><i class="fa fa-edit"></i
+                  ></a>
+                  <a
+                    class="btn btn-danger btn-xs"
+                    href="/pd/newRajosshoCodeTableDelete/<%= row.id %>"
+                    ><i class="fa fa-trash"></i
+                  ></a>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+          <% }else{ %>
+          <table
+            class="table table-bordered table-striped"
+            id="tblCustomers"
+            cellspacing="0"
+            cellpadding="0"
+          >
+            <thead>
+              <tr>
+                <th>উপখাত</th>
+                <th>রাজস্বের কোড</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% records.forEach(function(row){ %>
+              <tr>
+                <td colspan="10">No data Found</td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+          <% } %>
+        </div>
+
+        <div id="output"></div>
+
+        <!--                    <div id="loading" class="loading"><img src="{{ asset('assets/img/icon/loading.gif') }}" alt=""></div>-->
+      </div>
     </div>
+  </div>
+</div>
 
-    <%- include('../../includes/footer')-%>
+<%- include('../../includes/footer')-%>
 
-    <!-- <script>
+<!-- <script>
         
         $(document).ready(function(){
             
