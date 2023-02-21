@@ -4264,26 +4264,26 @@ module.exports.monthlyProgressUpdate = async (req, res) => {
         var editDate = req.body.editDate.toLowerCase();
 
 
-        const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
+        const currentMonth = moment().format("MMM-YYYY").toLowerCase();
 
         const progress = await monthlyProgress.findByPk(req.params.progressId)
 
         /////////
         var startRange = "";
         var endRange = "";
-        if (res.locals.moment().format("M") < 7) {
-            startRange = "jul" + "-" + res.locals.moment().subtract(1, "year").format('yyyy')
-            endRange = "jul" + "-" + res.locals.moment().format('yyyy')
+        if (moment().format("M") < 7) {
+            startRange = "jul" + "-" + moment().subtract(1, "year").format('yyyy')
+            endRange = "jul" + "-" + moment().format('yyyy')
         } else {
-            startRange = "jul" + "-" + res.locals.moment().format('yyyy')
-            endRange = "jul" + "-" + res.locals.moment().add(1, "year").format('yyyy')
+            startRange = "jul" + "-" + moment().format('yyyy')
+            endRange = "jul" + "-" + moment().add(1, "year").format('yyyy')
         }
 
 
         ///////// moment(currentMonth).isAfter(bitorTotal.startTime) &&  moment(currentMonth).isBefore(bitorTotal.endTime)
         var totalProductionTarget = JSON.parse(progress.productionTarget);
         totalProductionTarget.forEach((prodTargetTotal, index) => {
-            if (res.locals.moment(editDate).isAfter(prodTargetTotal.startTime) && res.locals.moment(editDate).isBefore(prodTargetTotal.endTime)) {
+            if (moment(editDate).isAfter(prodTargetTotal.startTime, "MMM-YYYY") && moment(editDate).isBefore(prodTargetTotal.endTime, "MMM-YYYY")) {
                 totalProductionTarget[index].amount = parseInt(productionTarget)
             }
         })
@@ -4306,7 +4306,7 @@ module.exports.monthlyProgressUpdate = async (req, res) => {
             if (prodCurrent.time === currentMonth) {
                 currentProductionSum += parseInt(prodCurrent.amount)
             }
-            else if (res.locals.moment(prodCurrent.time).isSameOrAfter(startRange) && res.locals.moment(prodCurrent.time).isSameOrBefore(endRange)) {
+            else if (moment(prodCurrent.time).isSameOrAfter(startRange, "MMM-YYYY") && moment(prodCurrent.time).isSameOrBefore(endRange, "MMM-YYYY")) {
                 previousMonthProduction += parseInt(prodCurrent.amount)
             }
         })
@@ -4314,7 +4314,7 @@ module.exports.monthlyProgressUpdate = async (req, res) => {
         var totalProduction = JSON.parse(progress.productionTotal);
         if (productionCurrent) {
             totalProduction.forEach((prodTotal, index) => {
-                if (res.locals.moment(editDate).isAfter(prodTotal.startTime) && res.locals.moment(editDate).isBefore(prodTotal.endTime)) {
+                if (moment(editDate).isAfter(prodTotal.startTime, "MMM-YYYY") && moment(editDate).isBefore(prodTotal.endTime, "MMM-YYYY")) {
                     totalProduction[index].amount = previousMonthProduction + parseInt(productionCurrent)
                 }
             })
@@ -4348,14 +4348,14 @@ module.exports.monthlyProgressUpdate = async (req, res) => {
             if (BitoCurrent.time === currentMonth) {
                 currentBitoronSum += parseInt(BitoCurrent.amount)
             }
-            else if (res.locals.moment(BitoCurrent.time).isAfter(startRange) && res.locals.moment(BitoCurrent.time).isBefore(endRange)) {
+            else if (moment(BitoCurrent.time).isAfter(startRange, "MMM-YYYY") && moment(BitoCurrent.time).isBefore(endRange, "MMM-YYYY")) {
                 previousMonthBitoronSum += parseInt(BitoCurrent.amount)
             }
         })
         var totalBitoron = JSON.parse(progress.bitoronTotal);
         if (bitoronCurrentMonth) {
             totalBitoron.forEach((bitoronTotal, index) => {
-                if (res.locals.moment(editDate).isAfter(bitoronTotal.startTime) && res.locals.moment(editDate).isBefore(bitoronTotal.endTime)) {
+                if (moment(editDate).isAfter(bitoronTotal.startTime, "MMM-YYYY") && moment(editDate).isBefore(bitoronTotal.endTime, "MMM-YYYY")) {
                     totalBitoron[index].amount = previousMonthBitoronSum + parseInt(bitoronCurrentMonth)
                 }
             })

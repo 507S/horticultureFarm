@@ -31,7 +31,7 @@
     <% records.forEach(function(row){ %>
 
     <%
-    const currentMonth = moment().format("MMM-YYYY").toLowerCase();
+    const currentMonth = moment(new Date()).format("MMM-YYYY").toLowerCase();
     var startRange = "";
     var endRange = "";
 
