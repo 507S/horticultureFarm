@@ -38,7 +38,54 @@
                 <td><%= row.uname %></td>
                 <td><%= row.kormokorta %></td>
                 <td><%= row.podobi %></td>
-                <td><%= row.mobile %></td>
+                <td>
+
+                  <script type="text/javascript">
+                    function formatMobileNumber(mobileNumber) {
+                      // Remove all non-digit characters from the mobile number
+                      var formattedNumber = mobileNumber.replace(/\D/g, "");
+
+                      // Check if the mobile number has a total of 22 digits (two 11-digit numbers)
+                      if (formattedNumber.length === 22) {
+                        // Split the mobile number into two 11-digit numbers
+                        var mobile1 = formattedNumber.substr(0, 11);
+                        var mobile2 = formattedNumber.substr(11);
+
+                        // Format each mobile number as desired (e.g., add spaces, dashes, etc.)
+                        mobile1 = formatBanglaNumber(mobile1);
+                        mobile2 = formatBanglaNumber(mobile2);
+
+                        // Combine the formatted mobile numbers with a separator
+                        formattedNumber = mobile1 + " / " + mobile2;
+                      }
+                      else if (formattedNumber.length === 11) {
+                        // Format the single mobile number as desired (e.g., add spaces, dashes, etc.)
+                        formattedNumber = formatBanglaNumber(formattedNumber);
+                      }
+
+                      return formattedNumber;
+                    }
+
+                    // Function to format a number using Bengali numerals
+                    function formatBanglaNumber(number) {
+                      var bengaliDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+
+                      var formattedNumber = "+৮৮০-";
+                      for (var i = 0; i < number.length; i++) {
+                        var digit = parseInt(number[i]);
+                        if (!isNaN(digit)) {
+                          formattedNumber += bengaliDigits[digit];
+                        } else {
+                          formattedNumber += number[i];
+                        }
+                      }
+
+                      return formattedNumber;
+                    }
+                    document.write(formatMobileNumber("<%= row.mobile %>"));
+                  </script>
+
+                  </td>
                 <td><%= row.email %></td>
                 <td>
                   <a
