@@ -4072,6 +4072,77 @@ module.exports.monthlyProgress = async (req, res) => {
 
 };
 
+// module.exports.monthlyProgressFilter = async (req, res) => {
+//     try {
+//         // const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
+//         const selectedDate = req.body.year.toLowerCase();
+//         var data = [];
+//         if (req.body.center === "all") {
+//             const cropCatg = await cropCategory.findAll({ where: { type: 'jat' } });
+//             const allCropCatg = await cropCategory.findAll();
+
+//             const monthlyProgressList = await monthlyProgress.findAll({ where: { pd_id: req.session.user_id } });
+
+//             monthlyProgressList.map((monthlyProg) => {
+//                 const timeList = JSON.parse(monthlyProg.timeFrame)
+//                 if (moment(moment(selectedDate, "MMM-YYYY").format()).isSameOrAfter(moment(timeList[0].time, "MMM-YYYY").format())) {
+//                     data.push(monthlyProg);
+//                 }
+//                 // timeList.map((eachTime) => {
+//                 //     if (eachTime.time === selectedDate) {
+//                 //         data.push(monthlyProg);
+//                 //     }
+//                 // })
+//             })
+//             res.render('pd/monthlyProgress/monthlyProgressCustomTable', { records: data, selectedDate: selectedDate, cropCatg: cropCatg, allCropCatg: allCropCatg }, function (err, html) {
+//                 res.send(html);
+//             });
+//         }
+//         else if(req.body.center === "summary"){
+//             try {
+//                 var centers = await center.findAll({
+//                     order: [
+//                         ['serialNum', 'ASC'],
+//                     ],
+//                     attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname', 'password', 'pd_id', 'createdAt', 'updatedAt']
+//                 }); var data = await monthlyProgress.findAll({ where: { pd_id: req.session.user_id } });
+//                 data.forEach((row) => {
+//                     const prodTarget = JSON.parse(row.productionTarget);
+//                     console.log(prodTarget[0].amount);
+//                 })
+//                 res.render(
+//                     'pd/monthlyProgress/monthlyProgressTableAll',
+//                     { records: data, centers: centers },
+//                     function (err, html) {
+//                         res.send(html);
+//                     }
+//                 );
+//             }
+//             catch (err) {
+//                 console.log(err);
+//             }
+//         } 
+//         else {
+//             const monthlyProgressList = await monthlyProgress.findAll({ where: { centerId: req.body.center, pd_id: req.session.user_id } });
+
+//             monthlyProgressList.map((monthlyProg) => {
+//                 const timeList = JSON.parse(monthlyProg.timeFrame)
+//                 if (moment(moment(selectedDate, "MMM-YYYY").format()).isSameOrAfter(moment(timeList[0].time, "MMM-YYYY").format())) {
+//                     data.push(monthlyProg);
+//                 }
+//             })
+
+//             res.render('pd/monthlyProgress/monthlyProgressTable', { records: data, selectedDate: selectedDate }, function (err, html) {
+//                 res.send(html);
+//             });
+//         }
+
+//     }
+//     catch (e) {
+//         console.log(" mpl", e);
+//     }
+// };
+
 module.exports.monthlyProgressFilter = async (req, res) => {
     try {
         // const currentMonth = res.locals.moment().format("MMM-YYYY").toLowerCase();
@@ -4098,39 +4169,42 @@ module.exports.monthlyProgressFilter = async (req, res) => {
                 res.send(html);
             });
         }
-        else if(req.body.center === "summary"){
+        else if (req.body.center === "summary") {
             try {
-                var centers = await center.findAll({
-                    order: [
-                        ['serialNum', 'ASC'],
-                    ],
-                    attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname', 'password', 'pd_id', 'createdAt', 'updatedAt']
-                }); var data = await monthlyProgress.findAll({ where: { pd_id: req.session.user_id } });
-                data.forEach((row) => {
-                    const prodTarget = JSON.parse(row.productionTarget);
-                    console.log(prodTarget[0].amount);
-                })
-                res.render(
-                    'pd/monthlyProgress/monthlyProgressTableAll',
-                    { records: data, centers: centers },
-                    function (err, html) {
-                        res.send(html);
-                    }
-                );
+              var centers = await center.findAll({
+                order: [
+                  ['serialNum', 'ASC'],
+                ],
+                attributes: ['id', 'center', 'serialNum', 'kormokorta', 'podobi', 'mobile', 'email', 'uname', 'password', 'pd_id', 'createdAt', 'updatedAt']
+              });
+          
+              var monthlyProgressList = await monthlyProgress.findAll({ where: { pd_id: req.session.user_id } });
+              var data = [];
+          
+              monthlyProgressList.forEach((monthlyProg) => {
+                const timeList = JSON.parse(monthlyProg.timeFrame);
+                if (moment(selectedDate, "MMM-YYYY").isSame(moment(timeList[0].time, "MMM-YYYY"), 'month')) {
+                  data.push(monthlyProg);
+                }
+              });
+          
+              res.render('pd/monthlyProgress/monthlyProgressTableAll', { records: data, centers: centers }, function (err, html) {
+                res.send(html);
+              });
+            } catch (err) {
+              console.log(err);
             }
-            catch (err) {
-                console.log(err);
-            }
-        } 
+          }           
         else {
             const monthlyProgressList = await monthlyProgress.findAll({ where: { centerId: req.body.center, pd_id: req.session.user_id } });
 
             monthlyProgressList.map((monthlyProg) => {
-                const timeList = JSON.parse(monthlyProg.timeFrame)
-                if (moment(moment(selectedDate, "MMM-YYYY").format()).isSameOrAfter(moment(timeList[0].time, "MMM-YYYY").format())) {
+                const timeList = JSON.parse(monthlyProg.timeFrame);
+                if (moment(selectedDate, "MMM-YYYY").isSame(moment(timeList[0].time, "MMM-YYYY"), 'month')) {
                     data.push(monthlyProg);
                 }
-            })
+            });
+            
 
             res.render('pd/monthlyProgress/monthlyProgressTable', { records: data, selectedDate: selectedDate }, function (err, html) {
                 res.send(html);
