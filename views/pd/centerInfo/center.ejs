@@ -1,202 +1,202 @@
 <%- include('../../includes/header')-%>
-<div id="wrapper" class="wrapper">
-  <%- include('../../includes/topbar')-%>
-  <div class="page-wrap">
-    <%- include('../../includes/sidebar')-%>
-    <div class="main-content">
-      <div class="container-fluid">
-        <div class="row clearfix">
-          <div class="col-md-10">
-            <h1 class="text-center"><%= title %></h1>
+  <div id="wrapper" class="wrapper">
+    <%- include('../../includes/topbar')-%>
+      <div class="page-wrap">
+        <%- include('../../includes/sidebar')-%>
+          <div class="main-content">
+            <div class="container-fluid">
+              <div class="row clearfix">
+                <div class="col-md-10">
+                  <h1 class="text-center">
+                    <%= title %>
+                  </h1>
+                </div>
+              </div>
+
+              <div class="table-responsive" id="output">
+                <%if (records.length>0){ %>
+                  <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+                    <thead>
+                      <tr>
+                        <th>serialNum</th>
+                        <th>সেন্টারের নাম</th>
+                        <th>সেন্টারের ইউজার নাম</th>
+                        <th>সেন্টার প্রধানের নাম</th>
+                        <th>পদবী</th>
+                        <th>মোবাইল নং</th>
+                        <th>ই-মেইল</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% records.forEach(function(row){ %>
+                        <tr>
+                          <td>
+                            <%= row.serialNum %>
+                          </td>
+                          <td>
+                            <%= row.center %>
+                          </td>
+                          <td>
+                            <%= row.uname %>
+                          </td>
+                          <td>
+                            <%= row.kormokorta %>
+                          </td>
+                          <td>
+                            <%= row.podobi %>
+                          </td>
+                          <td>
+
+                            <script type="text/javascript">
+                              function formatMobileNumber(mobileNumber) {
+                                // Check if the mobile number contains any non-digit Bengali characters
+                                var hasBengaliNumeralOne = /১/.test(mobileNumber);
+
+                                // If it contains the Bengali numeral "১", assume it is already in the desired format and return it as is
+                                if (hasBengaliNumeralOne) {
+                                  var formatMobileNumber = "+৮৮০-" + mobileNumber;
+                                  return "+৮৮০-" + mobileNumber;
+                                }
+                                // Remove all non-digit characters from the mobile number
+                                var formattedNumber = mobileNumber.replace(/\D/g, "");
+
+                                // Check if the mobile number has a total of 22 digits (two 11-digit numbers)
+                                if (formattedNumber.length === 22) {
+                                  // Split the mobile number into two 11-digit numbers
+                                  var mobile1 = formattedNumber.substr(0, 11);
+                                  var mobile2 = formattedNumber.substr(11);
+
+                                  // Format each mobile number as desired (e.g., add spaces, dashes, etc.)
+                                  mobile1 = formatBanglaNumber(mobile1);
+                                  mobile2 = formatBanglaNumber(mobile2);
+
+                                  // Combine the formatted mobile numbers with a separator
+                                  formattedNumber = mobile1 + " / " + mobile2;
+                                }
+                                else if (formattedNumber.length === 11) {
+                                  // Format the single mobile number as desired (e.g., add spaces, dashes, etc.)
+                                  formattedNumber = formatBanglaNumber(formattedNumber);
+                                }
+
+                                return formattedNumber;
+                              }
+
+                              // Function to format a number using Bengali numerals
+                              function formatBanglaNumber(number) {
+                                var bengaliDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+
+                                var formattedNumber = "+৮৮০-";
+                                for (var i = 0; i < number.length; i++) {
+                                  var digit = parseInt(number[i]);
+                                  if (!isNaN(digit)) {
+                                    formattedNumber += bengaliDigits[digit];
+                                  } else {
+                                    formattedNumber += number[i];
+                                  }
+                                }
+
+                                return formattedNumber;
+                              }
+                              document.write(formatMobileNumber("<%= row.mobile %>"));
+                            </script>
+
+                          </td>
+                          <td>
+                            <%= row.email %>
+                          </td>
+                          <td>
+                            <a class="btn btn-primary btn-xs" href="/pd/centerEdit/<%= row.id %>"><i
+                                class="fa fa-edit"></i></a>
+                            <a class="btn btn-danger btn-xs" href="/pd/centerDelete/<%= row.id %>"><i
+                                class="fa fa-trash"></i></a>
+                          </td>
+                          <td>
+                            <a class="btn btn-primary btn-xs" href="/pd/centerPasswordEdit/<%= row.id %>"><i
+                                class="fa fa-wrench"></i></a>
+                          </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                  </table>
+                  <% }else{ %>
+                    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+                      <thead>
+                        <tr>
+                          <th>সেন্টারের নাম</th>
+                          <th>সেন্টারের ইউজার নাম</th>
+                          <th>সেন্টার প্রধানের নাম</th>
+                          <th>পদবী</th>
+                          <th>মোবাইল নং</th>
+                          <th>ই-মেইল</th>
+                          <th>ইউজার আইডি ও পাসওয়ার্ড পরিবর্তন</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% records.forEach(function(row){ %>
+                          <tr>
+                            <td colspan="10">No data Found</td>
+                          </tr>
+                          <% }) %>
+                      </tbody>
+                    </table>
+                    <% } %>
+              </div>
+
+              <div id="output"></div>
+              <button onclick="exportToPdf()" class="btn btn-success">
+                Download PDF
+              </button>
+              <button onclick="exportToExcel('tblCustomers', 'সেন্টারসমূহের তথ্য')" class="btn btn-success">
+                Export Table Data To Excel File
+              </button>
+            </div>
           </div>
-        </div>
-
-        <div class="table-responsive" id="output">
-          <%if (records.length >0){ %>
-          <table
-            class="table table-bordered table-striped"
-            id="tblCustomers"
-            cellspacing="0"
-            cellpadding="0"
-          >
-            <thead>
-              <tr>
-                <th>serialNum</th>
-                <th>সেন্টারের নাম</th>
-                <th>সেন্টারের ইউজার নাম</th>
-                <th>সেন্টার প্রধানের নাম</th>
-                <th>পদবী</th>
-                <th>মোবাইল নং</th>
-                <th>ই-মেইল</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% records.forEach(function(row){ %>
-              <tr>
-                <td><%= row.serialNum %></td>
-                <td><%= row.center %></td>
-                <td><%= row.uname %></td>
-                <td><%= row.kormokorta %></td>
-                <td><%= row.podobi %></td>
-                <td>
-
-                  <script type="text/javascript">
-                    function formatMobileNumber(mobileNumber) {
-                      // Remove all non-digit characters from the mobile number
-                      var formattedNumber = mobileNumber.replace(/\D/g, "");
-
-                      // Check if the mobile number has a total of 22 digits (two 11-digit numbers)
-                      if (formattedNumber.length === 22) {
-                        // Split the mobile number into two 11-digit numbers
-                        var mobile1 = formattedNumber.substr(0, 11);
-                        var mobile2 = formattedNumber.substr(11);
-
-                        // Format each mobile number as desired (e.g., add spaces, dashes, etc.)
-                        mobile1 = formatBanglaNumber(mobile1);
-                        mobile2 = formatBanglaNumber(mobile2);
-
-                        // Combine the formatted mobile numbers with a separator
-                        formattedNumber = mobile1 + " / " + mobile2;
-                      }
-                      else if (formattedNumber.length === 11) {
-                        // Format the single mobile number as desired (e.g., add spaces, dashes, etc.)
-                        formattedNumber = formatBanglaNumber(formattedNumber);
-                      }
-
-                      return formattedNumber;
-                    }
-
-                    // Function to format a number using Bengali numerals
-                    function formatBanglaNumber(number) {
-                      var bengaliDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
-
-                      var formattedNumber = "+৮৮০-";
-                      for (var i = 0; i < number.length; i++) {
-                        var digit = parseInt(number[i]);
-                        if (!isNaN(digit)) {
-                          formattedNumber += bengaliDigits[digit];
-                        } else {
-                          formattedNumber += number[i];
-                        }
-                      }
-
-                      return formattedNumber;
-                    }
-                    document.write(formatMobileNumber("<%= row.mobile %>"));
-                  </script>
-
-                  </td>
-                <td><%= row.email %></td>
-                <td>
-                  <a
-                    class="btn btn-primary btn-xs"
-                    href="/pd/centerEdit/<%= row.id %>"
-                    ><i class="fa fa-edit"></i
-                  ></a>
-                  <a
-                    class="btn btn-danger btn-xs"
-                    href="/pd/centerDelete/<%= row.id %>"
-                    ><i class="fa fa-trash"></i
-                  ></a>
-                </td>
-                <td>
-                  <a
-                    class="btn btn-primary btn-xs"
-                    href="/pd/centerPasswordEdit/<%= row.id %>"
-                    ><i class="fa fa-wrench"></i
-                  ></a>
-                </td>
-              </tr>
-              <% }) %>
-            </tbody>
-          </table>
-          <% }else{ %>
-          <table
-            class="table table-bordered table-striped"
-            id="tblCustomers"
-            cellspacing="0"
-            cellpadding="0"
-          >
-            <thead>
-              <tr>
-                <th>সেন্টারের নাম</th>
-                <th>সেন্টারের ইউজার নাম</th>
-                <th>সেন্টার প্রধানের নাম</th>
-                <th>পদবী</th>
-                <th>মোবাইল নং</th>
-                <th>ই-মেইল</th>
-                <th>ইউজার আইডি ও পাসওয়ার্ড পরিবর্তন</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% records.forEach(function(row){ %>
-              <tr>
-                <td colspan="10">No data Found</td>
-              </tr>
-              <% }) %>
-            </tbody>
-          </table>
-          <% } %>
-        </div>
-
-        <div id="output"></div>
-        <button onclick="exportToPdf()" class="btn btn-success">
-          Download PDF
-        </button>
-        <button
-          onclick="exportToExcel('tblCustomers', 'সেন্টারসমূহের তথ্য')"
-          class="btn btn-success"
-        >
-          Export Table Data To Excel File
-        </button>
       </div>
-    </div>
   </div>
-</div>
 
-<%- include('../../includes/footer')-%>
+  <%- include('../../includes/footer')-%>
 
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script>
-  async function exportToPdf() {
-    const { data } = await axios.post(`/pd/generatePdfcenter`);
-    var mywindow = window.open("", "PRINT", "height=400,width=600");
-    mywindow.document.write(data.html);
-    mywindow.document.close(); // necessary for IE >= 10
-    mywindow.focus(); // necessary for IE >= 10*/
-    mywindow.print();
-    return true;
-  }
-</script>
-<script type="text/javascript">
-  function exportToExcel(tableID, filename = "") {
-    var downloadurl;
-    var dataFileType = "application/vnd.ms-excel";
-    var tableSelect = document.getElementById(tableID);
-    var tableHTMLData = tableSelect.outerHTML.replace(/ /g, "%20");
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      async function exportToPdf() {
+        const { data } = await axios.post(`/pd/generatePdfcenter`);
+        var mywindow = window.open("", "PRINT", "height=400,width=600");
+        mywindow.document.write(data.html);
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10*/
+        mywindow.print();
+        return true;
+      }
+    </script>
+    <script type="text/javascript">
+      function exportToExcel(tableID, filename = "") {
+        var downloadurl;
+        var dataFileType = "application/vnd.ms-excel";
+        var tableSelect = document.getElementById(tableID);
+        var tableHTMLData = tableSelect.outerHTML.replace(/ /g, "%20");
 
-    // Specify file name
-    filename = `center-info-${new Date().toLocaleDateString()}.xls`;
+        // Specify file name
+        filename = `center-info-${new Date().toLocaleDateString()}.xls`;
 
-    // Create download link element
-    downloadurl = document.createElement("a");
+        // Create download link element
+        downloadurl = document.createElement("a");
 
-    document.body.appendChild(downloadurl);
+        document.body.appendChild(downloadurl);
 
-    if (navigator.msSaveOrOpenBlob) {
-      var blob = new Blob(["\ufeff", tableHTMLData], {
-        type: dataFileType,
-      });
-      navigator.msSaveOrOpenBlob(blob, filename);
-    } else {
-      // Create a link to the file
-      downloadurl.href = "data:" + dataFileType + ", " + tableHTMLData;
+        if (navigator.msSaveOrOpenBlob) {
+          var blob = new Blob(["\ufeff", tableHTMLData], {
+            type: dataFileType,
+          });
+          navigator.msSaveOrOpenBlob(blob, filename);
+        } else {
+          // Create a link to the file
+          downloadurl.href = "data:" + dataFileType + ", " + tableHTMLData;
 
-      // Setting the file name
-      downloadurl.download = filename;
+          // Setting the file name
+          downloadurl.download = filename;
 
-      //triggering the function
-      downloadurl.click();
-    }
-  }
-</script>
+          //triggering the function
+          downloadurl.click();
+        }
+      }
+    </script>
